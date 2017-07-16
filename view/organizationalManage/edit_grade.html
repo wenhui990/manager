@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="wangjian" content="web" />
+		<title>新建班级</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+	</head>
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn edit_save_grade" type="button" value="保存"/>
+					<input class="commonbtn back_grademanage" type="button" value="返回"/>
+				</div>
+			</div>
+			<div class="list_btm">
+				
+				<div class="form-horizontal">
+					<div class="form-group">
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">班级名称</span>
+						</label>
+						<div class="col-sm-7">
+							<input type="text" name="grade_name" id="grade_name" value="" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">班主任</span>
+						</label>
+						<div class="col-sm-7">
+							<span class="charge_teacher_name">班主任名字</span>　&nbsp;
+							<button class="btn-sm select_charge_teacher">选择</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">任课教师</span>
+						</label>
+						<div class="col-sm-7">
+							<button class="btn-sm add_teacher" style="float: right;">新增</button> <br /><br />
+							
+							<table class="table teacher_lists" border="1">
+								<thead>
+									<th>科目</th>
+									<th>任课教师</th>
+									<th>操作</th>
+								</thead>
+								<tbody class="teacher_subject">
+									<!--<tr>
+										<td>
+											<select name="" class="form-control subjectlist">
+												<option value="1">数学</option>
+												<option value="2">语文</option>
+												<option value="3">英语</option>
+											</select>
+										</td>
+										<td class="teacher1">张三</td>
+										<td>
+											<a href="javascript:;" class="edit_teacher">编辑</a>&nbsp;
+											<a href="javascript:;" class="delete_teacher">删除</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<select name="" class="form-control subjectlist">
+												<option value="1">数学</option>
+												<option value="2" selected="">语文</option>
+												<option value="3">英语</option>
+											</select>
+										</td>
+										<td class="teacher1">张三</td>
+										<td>
+											<a href="javascript:;" class="edit_teacher">编辑</a>&nbsp;
+											<a href="javascript:;" class="delete_teacher">删除</a>
+										</td>
+									</tr>-->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+			
+			</div>
+		</div>	
+					
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/organizationalManage/add_grade.js" ></script>
+	<script src="../../js/angular.min.js" type="text/javascript" charset="utf-8"></script>
+</html>

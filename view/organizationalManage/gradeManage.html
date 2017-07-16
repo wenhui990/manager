@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>班级管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../assets/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../assets/ace.min.css" />
+		<link rel="stylesheet" href="../../assets/ace-rtl.min.css" />
+		<link rel="stylesheet" href="../../assets/ace-skins.min.css" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="../../assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script type="text/javascript" src="../../index_files/jquery-1.9.1.min.js"></script>
+		<script src="../../assets/ace-extra.min.js"></script>
+		<script src="../../assets/ace-elements.min.js"></script>
+		<script src="../../assets/ace.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="../../assets/html5shiv.js"></script>
+		<script src="../../assets/respond.min.js"></script>
+		<![endif]-->
+
+		<style type="text/css">
+		.layui-layer-content {
+				height: 178px !important;
+			}
+			
+			.commonbtn {
+				height: 32px;
+				padding: 0 20px;
+				background: #03a8ed;
+				color: #fff;
+				border-radius: 5px;
+				border: none;
+				margin-right: 20px;
+			}
+			.box_border{
+				border: 1px solid #e6e6e6;
+			}
+		
+		</style>
+	</head>
+
+	<body style="background: #fff;">
+		<div class="main container-fluid clearFix" style="overflow: inherit;padding: 20px;">
+			<!--<h3 class="text-center">初中数学人教版7年级上知识结构</h3>-->
+			<div class="lefttree fl col-sm-3" style="min-height: 250px;height: auto;">
+				<ul class="nav nav-list box_border">
+					<li class="">
+						<a href="" class="dropdown-toggle">
+							<i class="icon-dashboard "></i>
+							<span class="menu-text"> XX学校 </span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+					</li>
+					<li class="open">
+						<a href="#" class="dropdown-toggle">
+							<i class="icon-desktop"></i>
+							<span class="menu-text"> 小学 </span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu" style="display: block;">
+							<li class="">
+								<a href="javascript:;">
+									<i class="icon-double-angle-right"></i> 一年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 二年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 三年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 四年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 五年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;" class="">
+									<i class="icon-double-angle-right"></i> 六年级
+									<b class="arrow icon-angle-down"></b>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li class="">
+						<a href="avascript:;" class="dropdown-toggle">
+							<i class="icon-dashboard "></i>
+							<span class="menu-text"> 初中 </span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu" style="display: none;">
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 一年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 二年级
+								</a>
+							</li>
+
+							<li>
+								<a href="avascript:;">
+									<i class="icon-double-angle-right"></i> 三年级
+								</a>
+							</li>
+
+						</ul>
+					</li>
+
+					<li>
+						<a href="" class="dropdown-toggle">
+							<i class="icon-text-width"></i>
+							<span class="menu-text"> 高中 </span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu" style="display: none;">
+							<li>
+								<a href="">
+									<i class="icon-double-angle-right"></i> 一年级
+								</a>
+							</li>
+
+							<li>
+								<a href="buttons.html">
+									<i class="icon-double-angle-right"></i> 二年级
+								</a>
+							</li>
+
+							<li>
+								<a href="treeview.html">
+									<i class="icon-double-angle-right"></i> 三年级
+								</a>
+							</li>
+						</ul>
+					</li>
+
+				</ul>
+			</div>
+			<div class="rightContent fr col-sm-9">
+				<div class="box_border" style="margin-bottom: 20px;padding: 10px 20px;">
+					<div class="btngroup">
+						<span class="add_grade btn btn-info">添加班级</span>
+						<span class="back_school btn btn-info">返回</span>
+					</div>
+				</div>
+				<div class="box_border" style="padding: 10px 20px;">
+					<table border="1" class="table" >
+						<thead>
+							<th>班级名称</th>
+							<th>班主任</th>
+							<th>任课教师</th>
+							<th>操作</th>
+						</thead>
+						<tbody class="grade_lists">
+							<tr>
+								<td>一年级（1）班</td>
+								<td>李四</td>
+								<td>语文:李四；数学:张三；英语:王五</td>
+								<td>
+									<a href="javascript:;" class="edit_class">编辑</a>
+									<a href="javascript:;" class="delete_class">删除</a>
+								</td>
+							</tr>
+							<tr>
+								<td>一年级（1）班</td>
+								<td></td>
+								<td></td>
+								<td>
+									<a href="javascript:;" class="edit_class">编辑</a>
+									<a href="javascript:;" class="delete_class">删除</a>
+								</td>
+							</tr>
+							<tr>
+								<td>一年级（1）班</td>
+								<td></td>
+								<td></td>
+								<td>
+									<a href="javascript:;" class="edit_class">编辑</a>
+									<a href="javascript:;" class="delete_class">删除</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!--根节点-->
+
+	</body>
+
+	<script>
+		/*	$('#pageTool').Paging({pagesize:10,count:100,callback:function(page,size,count){
+									console.log(arguments)
+									alert('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')
+									}});*/
+
+		/*setTimeout(function(){
+			$(".mask-tree").show()
+			console.log($(".mask-tree"))
+			 $(".tree").treemenu({delay:300}).openActive();
+		},10)*/
+		function aa() {
+			var aa = $("#treeDemo li a.curSelectedNode").children("span.node_name").html();
+			alert(aa);
+		}
+		
+		//获取url中字段
+		function getUrlParams() {
+			var params = {};
+			var url = window.location.href;
+			var idx = url.indexOf("?");
+			if(idx > 0) {
+				var queryStr = url.substring(idx + 1);
+				var args = queryStr.split("&");
+				for(var i = 0, a, nv; a = args[i]; i++) {
+					nv = args[i] = a.split("=");
+					params[nv[0]] = nv.length > 1 ? nv[1] : true;
+				}
+			}
+			return params;
+		};	
+		var teacerjson;
+		//点击保存后班级管理页面显示新添加的班级
+		if(getUrlParams().obj){
+			teacerjson = JSON.parse(decodeURIComponent(getUrlParams().obj));
+			console.log(decodeURIComponent(getUrlParams().obj));
+			var subjecname ='';
+			$.each(teacerjson.subjects,function(i,e){
+				subjecname += e.subjecname+':'+e.teachername+';';
+			})
+			$('.grade_lists').append('<tr>'+
+								'<td>'+teacerjson.gradeName+'</td>'+
+								'<td>'+teacerjson.chargeTeacherName+'</td>'+
+								'<td>'+subjecname+'</td>'+
+								'<td><a href="javascript:;" class="edit_class">编辑</a><a href="javascript:;" class="delete_class">删除</a></td></tr>');
+		}
+		
+		
+		//侧导航点击
+		$('.nav-list').find("li").click(function(e){
+			console.log($(this));
+//			$('.nav-list').find('li').removeClass('active');
+			$(this).addClass('active').siblings().removeClass('active');
+		})
+		
+		//点击返回班级管理
+		$('.back_school').click(function (){
+			$('.grade_mange_title',window.parent.document).remove();
+			window.location.href='schoolManage.html';
+		});
+		
+		//添加班级
+		$('.add_grade').click(function (){
+			$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html" style="color: rgb(51, 51, 51); cursor: default;">新建班级</span></li>');
+			window.location.href='add_grade.html';
+		});
+		
+		//编辑班级
+		$('.edit_class').click(function (){
+			$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html?id=123" style="color: rgb(51, 51, 51); cursor: default;">编辑班级</span></li>');
+			window.location.href='add_grade.html?id=123&obj='+teacerjson;
+		});
+	</script>
+
+</html>

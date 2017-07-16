@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>试题知识点导入成功</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../plugin/webuploader/webuploader.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/setPoint/setPoint.css"/>
+	</head>
+	<body>
+		<div class="main container-fluid">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn" type="button" value="保存"/>
+					<a href="#"><input class="commonbtn" type="button" value="返回"/></a>
+				</div>
+			</div>
+			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="examname" class="col-sm-1 control-label" style="padding-top: 0;">考试名称</label>
+						<div class="col-sm-3">
+							天门中学初三年级3月统考			
+						</div>
+						<label for="examname" class="col-sm-1 control-label" style="padding-top: 0;">科目</label>
+						<div class="col-sm-7">
+							数学			
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="examname" class="col-sm-1 control-label">试卷扫描件</label>
+						<div class="col-sm-2 ReleaseLiveBrought">
+							<div id="uploader-demo" class="uploader-demo">
+								<!--用来存放item-->					
+								<div class="q">
+									<div id="fileList" class="uploader-list"></div>
+									<div class="filePicker fileP" id="filePicker2" data="false">请选择图片</div>
+								</div>
+		
+								<div class="lists swiper-container swiper-container-horizontal swiper-container-free-mode">
+									<div id="btnContainera" class="filePicker1 filePicker fileP"
+										data="false"></div>
+									<div class="list swiper-wrapper">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-9">
+							<span style="color: #cfcfcf;line-height: 40px;">
+								允许上传多张图片
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-1"></div>
+						<div class="col-sm-2">
+							<div class="lists swiper-container swiper-container-horizontal swiper-container-free-mode">
+								<div id="btnContainera" class="filePicker1 filePicker fileP"
+									data="false"></div>
+								<div class="list swiper-wrapper">
+									<img src="../../images/tx.jpg"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-9"></div>
+					</div>
+				</form>
+			</div>
+			<div class="state">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="examname" class="col-sm-1 control-label">试题知识点</label>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-1 text-center">
+							<div class="fr" style="width: 20px;">客观题</div>
+						</div>
+						<div class="col-sm-11">
+							<div class="table-responsive" style="width: 90%;">
+								<table id="pointTable" class="table addlist text-center" style="border: 1px solid #CFCFCF;border-top: none;">
+									<tr>
+										<td><strong>题号</strong></td>
+										<td><strong>小题名</strong></td>
+										<td><strong>对应知识点1</strong></td>
+										<td><strong>对应知识点2</strong></td>
+										<td><strong>对应知识点3</strong></td>
+									</tr>
+									<tr>
+										<td>001</td>
+										<td>1</td>
+										<td>1.1有理数</td>
+										<td>1.2模式</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>002</td>
+										<td>1</td>
+										<td>1.1有理数</td>
+										<td>1.2模式</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>003</td>
+										<td>1</td>
+										<td>1.1有理数</td>
+										<td>1.2模式</td>
+										<td></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-1">
+							<div class="fr" style="width: 20px;">主观题</div>
+						</div>
+						<div class="col-sm-11">
+							<div class="table-responsive" style="width: 90%;">
+								<table id="pointTable" class="table addlist text-center" style="border: 1px solid #CFCFCF;border-top: none;">
+									<tr>
+										<td><strong>题号</strong></td>
+										<td><strong>小题名</strong></td>
+										<td><strong>对应知识点1</strong></td>
+										<td><strong>对应知识点2</strong></td>
+										<td><strong>对应知识点3</strong></td>
+									</tr>
+									<tr>
+										<td>001</td>
+										<td>1</td>
+										<td>1.1有理数</td>
+										<td>1.2模式</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>002</td>
+										<td>1</td>
+										<td>1.1有理数</td>
+										<td>1.2模式</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>003</td>
+										<td>1</td>
+										<td>1.1有理数</td>
+										<td>1.2模式</td>
+										<td></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/webuploader/webuploader.js"></script>
+	<script type="text/javascript" src="../../js/adAddPicture.js"></script>
+	<script type="text/javascript">
+		//显示导入的文件名
+		$(".file").on("change","input[type='file']",function(){
+		    var filePath=$(this).val();
+		    if(filePath.indexOf("xlsx")!=-1){
+		        $(".fileerrorTip").html("").hide();
+		        var arr=filePath.split('\\');
+		        var fileName=arr[arr.length-1];
+		        $(".showFileName").html(fileName);
+		    }else{
+		        $(".showFileName").html("");
+		        $(".fileerrorTip").html("您未上传文件，或者您上传文件类型有误！").show();
+		        return false 
+		    }
+		})
+	</script>
+</html>
+
+

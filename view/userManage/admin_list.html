@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>管理员用户管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+	</head>
+
+	<body>
+		<div class="main container-fluid">
+			<div class="row head">
+				<h3 class="col-xs-2">查询区</h3>
+				<div class="col-sm-9 col-xs-3"></div>
+			</div>
+			<div class="row state">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="secondname" class="col-sm-1 control-label text-center">姓名</label>
+						<div class="col-sm-2">
+							<input type="text" name="" class="form-control admin_name" />
+						</div>
+
+						<label for="secondname" class="col-sm-1 control-label text-center">手机号</label>
+						<div class="col-sm-2">
+							<input type="tel" name="" class="form-control admin_phone" />
+						</div>
+
+						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
+						<div class="col-sm-2">
+							<select name="" class="form-control admin_state" data-live-search="true">
+								<option>全部</option>
+								<option>禁用</option>
+								<option>启用</option>
+							</select>
+						</div>
+						<div class="search_01 col-sm-2 col-sm-offset-1">查询</div>
+					</div>
+
+					
+				</form>
+			</div>
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn addAdmin" type="button" value="新建用户" />
+				</div>
+			</div>
+			<div class="numshu_btm">
+				<div class="list_btm">
+					<div class="table-responsive">
+						<table class="table table-condensed addlist" style="text-align: center;">
+							<tr>
+								<td><strong>序号</strong></td>
+								<td><strong>姓名</strong></td>
+								<td><strong>手机号</strong></td>
+								<td><strong>所属角色</strong></td>
+								<td><strong>用户状态</strong></td>
+								<td><strong>操作</strong></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>李四</td>
+								<td>18888888888</td>
+								<td>市局管理员</td>
+								<td>已启用</td>
+								<td>
+									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>
+									<a href="javascript:;" onclick="editAdmin()">编辑</a>
+									<a href="javascript:;" onclick="off()">禁用</a>
+									<a href="javascript:;" onclick="delteAdmin()">删除</a>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>李白</td>
+								<td>18888888888</td>
+								<td>超级管理员</td>
+								<td>已启用</td>
+								<td>
+									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>
+									<a href="javascript:;" onclick="editAdmin()">编辑</a>
+									<a href="javascript:;" onclick="off()">禁用</a>
+									<a href="javascript:;" onclick="delteAdmin()">删除</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="row pro_list_btm">
+						<div class="col-xs-6 col-sm-3 text-center">
+
+						</div>
+						<div class="col-xs-7 col-sm-9">
+							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<!--<script type="text/javascript" src="../../js/knowledge/knowledge_list.js" ></script>-->
+	<script>
+		//分页
+//		function page(max,num){
+			$('#pageToolbar').Paging({
+				pagesize: 10,
+				count: 85,
+				toolbar: false,
+				callback: function(page, size, count) {
+					console.log(page+'***'+size+'------'+count)
+					$('.addlist').html('');
+					$('.addlist').append('<tr>'+
+									'<td>222='+page+'</td>'+
+									'<td>三环中学222</td>'+
+									'<td>李四222</td>'+
+									'<td>18888888888</td>'+
+									'<td>语文222</td>'+
+									'<td>初三1班，初三2班222</td>'+
+									'<td>已启用222</td>'+
+									'<td>'+
+									'	<a href="javascript:;" onclick="seeAdmin()">查看</a>'+
+									'	<a href="javascript:;" onclick="editAdmin()">编辑</a>'+
+									'	<a href="javascript:;" onclick="off()">禁用</a>'+
+									'	<a href="javascript:;" onclick="delteAdmin()">删除</a>'+
+									'</td></tr>');
+				}
+			});
+//		}
+		//点击新建管理员
+		$('.addAdmin').click(function() {
+			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建用户</span></li>');
+			window.location.href='admin_add.html';
+		});
+		
+		//点击查看
+		function seeAdmin(t){
+			var $trs = $(t).parents('tr');
+			var tname = $trs.find('td').eq(1).text(),
+				tphone = $trs.find('td').eq(2).text(),
+				trole = $trs.find('td').eq(3).text(),
+				tstatus = $trs.find('td').eq(4).text(),
+				tnotes = '';
+			var teacherhtml = '<p>管理员姓名：'+tname+'</p><p>手机号：'+tphone+'</p><p>所属角色：'+trole+'<p>用户状态：'+tstatus+'</p><p>备注：</p>';
+			layer.open({
+				title: "",
+				content: teacherhtml,
+				skin: 'layui-layer-lana',
+				shadeClose: 'true',
+				btn: ['确定', "取消"],
+				yes: function(index, layero) {
+					layer.close(index);
+				},
+				btn2: function(index, layero) {
+					//按钮【按钮二】的回调
+					layer.close(index);
+				},
+				cancel: function() {
+					//右上角关闭回调
+				}
+			});
+		}
+		
+		//点击编辑
+		function editAdmin(){
+			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑教师</span></li>');
+			window.location.href='admin_edit.html';
+		}
+		
+		//点击禁用用户
+		function off() {
+			layer.open({
+				title: "",
+				content: '确定禁用该用户吗？',
+				skin: 'layui-layer-lana',
+				shadeClose: 'true',
+				btn: ['确定', "取消"],
+				yes: function(index, layero) {
+					layer.close(index);
+				},
+				btn2: function(index, layero) {
+					//按钮【按钮二】的回调
+					layer.close(index);
+				},
+				cancel: function() {
+					//右上角关闭回调
+				}
+			});
+		}
+		
+		//点击删除用户
+		function delteAdmin(){
+			layer.open({
+				title: "",
+				content: '确定删除该用户吗？',
+				skin: 'layui-layer-lana',
+				shadeClose: 'true',
+				btn: ['确定', "取消"],
+				yes: function(index, layero) {
+					layer.close(index);
+				},
+				btn2: function(index, layero) {
+					//按钮【按钮二】的回调
+					layer.close(index);
+				}
+			});
+		}
+	</script>
+
+</html>

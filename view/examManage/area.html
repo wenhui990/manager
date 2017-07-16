@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>选择上级管理机构</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../plugin/treemuee/jquery.treemenu.css" />
+		
+	</head>
+	<body>
+		<div class="mask-tree" style="display: none; padding-left:30px; height:500px;">
+			<ul class="tree">
+			  	<li><a href="#" class="cActive" data-id = "0" data-flag="">领信教育</a>
+				    <ul>
+				      	<li><a href="#" class="cActive" data-id="1" data-flag="">北京市教育局</a>
+					        <ul>
+					        	<li><a href="#" class="cActive" data-id="2" data-flag="">北京市朝阳区教育局</a></li>
+					          	<li><a href="#" class="cActive" data-id="3" data-flag="">北京市海淀区教育局</a></li>
+						    </ul>
+				      	</li>
+				      	<li><a href="#" class="cActive" data-id="4" data-flag="">河北省教育局</a>
+					        <ul>
+					          	<li><a class="cActive" href="#" data-id="5" data-flag="">石家庄市教育局</a>
+					          	  	<ul>
+								        <li><a class="cActive" href="#" data-id="6" data-flag="">石家庄市第二十八中学</a></li>
+								        <li><a href="#" class="cActive" data-id="7" data-flag="">石家庄市第十七中学</a></li>
+								        <li><a href="#" class="cActive" data-id="8" data-flag="">石家庄市第二十三中学</a></li>
+							        </ul>
+					          </li>
+					        </ul>
+				      	</li>
+				    </ul>
+			  	</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/treemuee/jquery.treemenu.js" ></script>
+	<script>
+		console.log($(".mask-tree"))
+		setTimeout(function(){
+			var body = $('body');
+			body.find(".cActive").on("click", function() {
+				if ($(this).hasClass("active")) {
+					$(this).attr('data-flag', false);
+					$(this).next().find('.cActive').attr('data-flag', false);
+					$(this).removeClass("active");
+					$(this).next().find('.cActive').removeClass("activea");
+					
+				} else {
+					$(this).attr('data-flag', true);
+					$(this).next().find('.cActive').attr('data-flag', true);
+					$(this).addClass("active");
+					$(this).next().find('.cActive').addClass("activea");
+				}
+
+			});
+			$(".mask-tree").show()
+			console.log($(".mask-tree"))
+			 $(".tree").treemenu({delay:300}).openActive();
+		},10)
+		
+		/*$(function(){
+       			 $(".tree").treemenu({delay:300}).openActive();
+			});*/
+	</script>
+</html>

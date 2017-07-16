@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="wangjian" content="web" />
+		<title>教材管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/zTreeStyle/zTreeStyle.css"/>
+		<link rel="stylesheet" href="../../../css/common/common.css" />
+		<link rel="stylesheet" href="../../../css/knowledge/textbook.css" />
+	</head>
+	<body ng-app="app" ng-controller="ctrl">
+		<div class="main container-fluid" style="overflow:inherit;">
+			<div class="head numshu_btm">
+				
+				<label class="control-label">当前状态:</label>
+				<span class="term changeTrem">上学期</span>
+				<span class="term">下学期</span>
+			</div>
+			
+			<div class="oMain">
+				<div class="tTree">
+					<ul id="treeDemo" class="ztree" style="min-height: 240px;"></ul>
+				</div>
+				<dl class="grade">
+					<dt>年级</dt>
+					<dd>一年级</dd>
+					<dd>二年级</dd>
+					<dd>一年级</dd>
+					<dd>二年级</dd>
+					<dd>一年级</dd>
+					<dd>二年级</dd>
+				</dl>
+				<div class="mainList">
+					<div class="head">
+						<span class="term changeTrem" data-toggle="modal" data-target="#myModal">添加教材</span>
+						<span class="term changeTrem">返回</span>
+					</div>
+					<div class="numshu_btm">
+					<div class="list_btm">
+					<div class="table-responsive">
+						<table class="table table-condensed addlist" style="text-align: center;">
+							<tr>
+								<td><strong>科目</strong></td>
+								<td><strong>上学期素材</strong></td>
+								<td><strong>下学期素材</strong></td>
+								<td><strong>操作</strong></td>
+								
+							</tr>
+							<tr>
+								<td>数学</td>
+								
+								<td>
+									<span>人教版</span>
+									<span>七年级上</span>
+								</td>
+								<td>
+									<span>人教版</span>
+									<span>七年级下</span>
+								</td>
+								
+								<td>
+									<a href="javascript:;" data-toggle="modal" data-target="#myModal">编辑</a>
+									<a href="javascript:;">删除</a>
+								</td>
+							</tr>
+							<tr>
+								<td>数学</td>
+								
+								<td>
+									<span>人教版</span>
+									<span>七年级上</span>
+								</td>
+								<td>
+									<span>人教版</span>
+									<span>七年级下</span>
+								</td>
+								
+								<td>
+									<a href="javascript:;">编辑</a>
+									<a href="javascript:;">删除</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				</div>
+				</div>
+			</div>
+			
+		</div>	
+		
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							添加教材
+						</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class="control-label col-sm-2 ">科目</label>
+								<div class="col-sm-4">
+									<select name="" class="form-control selectpicker"  data-live-search="true">
+										<option>语文</option>
+										<option>数学</option>
+										<option>英语</option>
+										<option>物理</option>
+										<option>化学</option>
+										<option>生物</option>
+										<option>政治</option>
+										<option>地理</option>
+										<option>历史</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">上学期教材</label>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2">版本</label>
+								<div class="col-sm-3">
+									<select name="" class="form-control selectpicker" >
+										<option>人教版</option>
+										<option>冀教版</option>
+									</select>
+								</div>
+								<label class="control-label col-sm-2 ">年级/课本</label>
+								<div class="col-sm-3">
+									<select name="" class="form-control selectpicker" >
+										<option>七年级数学</option>
+										<option>七年级语文</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group addVerJ">
+								<label class="col-sm-3 addVerJc">+添加教材</label>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">下学期教材</label>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-2">版本</label>
+								<div class="col-sm-3">
+									<select name="" class="form-control selectpicker" >
+										<option>人教版</option>
+										<option>冀教版</option>
+									</select>
+								</div>
+								<label class="control-label col-sm-2 ">年级/课本</label>
+								<div class="col-sm-3">
+									<select name="" class="form-control selectpicker" >
+										<option>七年级数学</option>
+										<option>七年级语文</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group addVerJ">
+								<label class="col-sm-3 addVerJc">+添加教材</label>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary">
+							确定
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>			
+	</body>
+	<script type="text/javascript" src="../../../js/common/jquery.min2.0.js" ></script>
+	<script type="text/javascript" src="../../../js/angular.min.js"></script>
+	<script type="text/javascript" src="../../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
+	
+	<script type="text/javascript" src="../../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<script type="text/javascript" src="../../../plugin/ztree/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../../js/textbook/textbook.js"></script>
+</html>

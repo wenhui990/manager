@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>考试管理列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+	</head>
+	<body>
+		<div class="main container-fluid">
+			<div class="row head">
+				<h3 class="col-xs-2">查询区</h3>
+				<div class="col-sm-9 col-xs-3"></div>
+			</div>
+			<div class="row state">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="examname" class="col-sm-1 control-label text-center ">考试名称</label>
+						<div class="col-sm-2">
+							<input class="form-control" id="examname" type="text" placeholder="请输入考试名称">			
+						</div>
+						<div  class="col-sm-1"></div>
+						<label for="secondname" class="col-sm-1 control-label text-center"></label>
+						<div class="col-sm-2"></div>
+						<div class="search_01 col-sm-offset-2">查询</div>
+					</div>
+				</form>
+			</div>
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<a href="addExam.html"><input class="commonbtn" type="button" value="添加考试"/></a>
+				</div>
+			</div>
+			<div class="numshu_btm">
+				<div class="row head list-shu">
+					<h3 class="col-xs-2">列表区</h3>
+				</div>
+				<div class="list_btm">
+					<div class="table-responsive">
+						<table id="examTable" class="table addlist text-center">
+							<tr>
+								<td><strong>序号</strong></td>
+								<td><strong>考试名称</strong></td>
+								<td><strong>地区</strong></td>
+								<td><strong>学校</strong></td>
+								<td><strong>年级</strong></td>
+								<td><strong>学年</strong></td>
+								<td><strong>科目</strong></td>
+								<td><strong>操作</strong></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td><span class="overwidth">天门市初三年级3月统考</span></td>
+								<td>天门市</td>
+								<td><span class="overwidth">天门市多宝镇中心学校</span></td>
+								<td>初三年级</td>
+								<td>2016-2017</td>
+								<td><span class="overwidth">语文，数学，英语，物理，化学</span></td>
+								<td>
+									<a href="setPoint.html">设置知识点</a>
+									<a href="editExam.html">编辑考试</a>
+									<a href="#" class="list_delete">删除考试</a>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td><span class="overwidth">天门市初三年级3月统考</span></td>
+								<td>天门市</td>
+								<td><span class="overwidth">天门市多宝镇中心学校</span></td>
+								<td>初三年级</td>
+								<td>2016-2017</td>
+								<td><span class="overwidth">语文，数学，英语，物理，化学</span></td>
+								<td>
+									<a href="setPoint.html">设置知识点</a>
+									<a href="editExam.html">编辑考试</a>
+									<a href="#" class="list_delete">删除考试</a>
+								</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td><span class="overwidth">天门市初三年级3月统考</span></td>
+								<td>天门市</td>
+								<td><span class="overwidth">天门市多宝镇中心学校</span></td>
+								<td>初三年级</td>
+								<td>2016-2017</td>
+								<td><span class="overwidth">语文，数学，英语，物理，化学</span></td>
+								<td>
+									<a href="setPoint.html">设置知识点</a>
+									<a href="editExam.html">编辑考试</a>
+									<a href="#" class="list_delete">删除考试</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				
+					<div class="row">
+						<p class="pull-left" style="margin-left:30px">
+							共<span><!--{{pageDate.totalCount}}-->5</span>条记录，每页显示
+							<select ng-model="selectPageSize" ng-change="search()"
+						ng-options="x.name for x in selectPageSizes">
+							</select>
+							条
+						</p>
+						<div class="pull-right" style="margin-right:30px">
+							<div id="pageToolbar"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/common/delete_alert.js" ></script>
+	<script>
+		
+	/*	$('#pageTool').Paging({pagesize:10,count:100,callback:function(page,size,count){
+			console.log(arguments)
+			alert('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')
+			}});*/
+		$('#pageToolbar').Paging({pagesize:10,count:85,toolbar:true,callback:function(page,size,count){
+			console.log(page)
+		}});
+	</script>
+</html>

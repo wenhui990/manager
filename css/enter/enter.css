@@ -1,0 +1,8 @@
+html,body{width: 100%;height: 100%;background: url(../../images/enter/enter-bg1.jpg) no-repeat center center; }
+.main{width: 600px;height: 394px;background: url(../../images/enter/input-bg.png) no-repeat left top; position: absolute; left: 50%;top: 50%;margin-left: -300px;margin-top: -187px;}
+.cont{width: 300px;height: 172px;position: absolute;left: 150px;top: 130px;}
+.hint{height: 48px;line-height: 48px;text-align: center;font-size: 14px;color: red;}
+._style{font-size: 16px;font-weight: bold;color: #333333;}
+input[type="text"],input[type="password"]{width: 198px;height: 28px;border: 1px solid #5ab4b2;}
+._cont{margin-top: 12px;margin-bottom: 20px;}
+button{display: inline-block;width: 82px;height: 29px;text-align: center;line-height: 29px;color: #FFFFFF;background:url(../../images/enter/denglu.png) no-repeat left top;cursor: pointer;margin-left: 85px;border:none;font-size: 14px;}

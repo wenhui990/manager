@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>权限管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+	</head>
+
+	<body>
+		<div class="main container-fluid">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn addRole" type="button" value="新建角色" />
+				</div>
+			</div>
+			<div class="numshu_btm">
+				<div class="list_btm">
+					<div class="table-responsive">
+						<table class="table table-condensed" style="text-align: center;">
+							<thead>
+								<tr>
+									<td><strong>序号</strong></td>
+									<td><strong>角色名称</strong></td>
+									<td><strong>角色描述</strong></td>
+									<td><strong>操作</strong></td>
+								</tr>
+							</thead>
+							<tbody class="addlist">
+								<tr>
+									<td>1</td>
+									<td>市局管理员</td>
+									<td>这是角色描述的内容</td>
+									<td>
+										<a href="javascript:;" onclick="configUser()">配置用户</a>
+										<a href="javascript:;" onclick="configGurisdiction()">配置权限</a>
+										<a href="javascript:;" onclick="editUser()">编辑</a>
+										<a href="javascript:;" onclick="delteAdmin()">删除</a>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>市局管理员</td>
+									<td>这是角色描述的内容</td>
+									<td>
+										<a href="javascript:;" onclick="configUser()">配置用户</a>
+										<a href="javascript:;" onclick="configGurisdiction()">配置权限</a>
+										<a href="javascript:;" onclick="editUser()">编辑</a>
+										<a href="javascript:;" onclick="delteAdmin()">删除</a>
+									</td>
+								</tr>
+							</tbody>	
+						</table>
+					</div>
+					<div class="row pro_list_btm">
+						<div class="col-xs-6 col-sm-3 text-center">
+
+						</div>
+						<div class="col-xs-7 col-sm-9">
+							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<!--<script type="text/javascript" src="../../js/knowledge/knowledge_list.js" ></script>-->
+	<script>
+		//分页
+//		function page(max,num){
+			$('#pageToolbar').Paging({
+				pagesize: 5,
+				count: 25,
+				toolbar: true,
+				changePagesize:function(p){
+					console.log(p);
+				},
+				callback: function(page, size, count) {
+					console.log(page+'***'+size+'------'+count);
+					$('.ui-select-pagesize').hide();
+					$('.addlist').html('');
+					$('.addlist').append('<tr>'+
+									'<td>222='+page+'</td>'+
+									'<td>三环中学222</td>'+
+									'<td>18888888888</td>'+
+									'<td>'+
+									'	<a href="javascript:;" onclick="configUser(this)">配置用户</a>'+
+									'	<a href="javascript:;" onclick="configGurisdiction()">配置权限</a>'+
+									'	<a href="javascript:;" onclick="editUser()">编辑</a>'+
+									'	<a href="javascript:;" onclick="delteAdmin()">删除</a>'+
+									'</td></tr>');
+				}
+			});
+//		}
+		
+		$('.ui-select-pagesize').hide();
+		//点击新建角色
+		$('.addRole').click(function() {
+			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/role_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建角色</span></li>');
+			window.location.href='role_add.html';
+		});
+		
+		//配置用户
+		function configUser(){
+			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/config_user.html" style="color: rgb(51, 51, 51); cursor: default;">配置用户</span></li>');
+			window.location.href='config_user.html';
+		}
+		
+		//配置权限
+		function configGurisdiction(){
+			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/config_gurisdiction.html" style="color: rgb(51, 51, 51); cursor: default;">配置权限</span></li>');
+			window.location.href='config_gurisdiction.html';
+		}
+		
+		//点击编辑
+		function editUser(){
+			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/role_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑用户</span></li>');
+			window.location.href='role_edit.html';
+		}
+		
+		//点击删除用户
+		function delteAdmin(){
+			layer.open({
+				title: "",
+				content: '确定删除该用户吗？',
+				skin: 'layui-layer-lana',
+				shadeClose: 'true',
+				btn: ['确定', "取消"],
+				yes: function(index, layero) {
+					layer.close(index);
+				},
+				btn2: function(index, layero) {
+					//按钮【按钮二】的回调
+					layer.close(index);
+				}
+			});
+		}
+	</script>
+
+</html>

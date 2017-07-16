@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css"/>
+		<style type="text/css">
+			ul,li{
+				list-style-type: none;
+			}
+			input[type=button]{
+				outline: none;
+			}
+			.menuContent{
+				float:left;width:330px;height:230px;background: #FFFFFF;border: 1px solid #CCCCCC;overflow: auto;
+			}
+			.btnBox{
+				float:left;width:140px;height:232px;text-align:center;position: relative;
+			}
+			#select{
+				position: absolute;top:35%;left:50%;margin-left:-22px;width: 44px;height:30px;line-height:30px;border-radius:5px;border:none;background: #03a8ed;color: #fff;
+			}
+			#delete{
+				position: absolute;bottom:35%;left:50%;margin-left:-60px;width: 120px;height:30px;line-height:30px;border-radius:5px;border:none;background: #03a8ed;color: #fff
+			}
+			.selected{
+				float:left;width:310px;height:210px;background: #FFFFFF;border: 1px solid #CCCCCC;overflow: auto;
+			}
+			.knows{
+				line-height: 25px;
+			}
+			.del{
+				float: right;margin-top:5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div id="menuContent" class="menuContent">
+			    <ul id="treeDemo" class="ztree" style="margin-top:0; width:300px; height: 220px;"></ul>
+			</div>
+			<div class="btnBox">
+				<input id="select" type="button" value="选择" />
+				<input id="delete" type="button" value="清空已选知识点" />
+			</div>
+			<ul id="selectedKnow" class="selected" style="margin: 0;padding:10px;">
+				<li class="knows">
+					
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js" ></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../js/knowledge/knowledgeSet.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+</html>

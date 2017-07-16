@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>知识点管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+	</head>
+	<body>
+		<div class="main container-fluid">
+			<div class="row head">
+				<h3 class="col-xs-2">查询区</h3>
+				<div class="col-sm-9 col-xs-3"></div>
+			</div>
+			<div class="row state">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="secondname" class="col-sm-1 control-label text-center">学段</label>
+						<div class="col-sm-2">
+							<select id="lunch" class="selectpicker form-control secondname" >
+						      	<option value="1">全部</option>
+								<option value="2">小学</option>
+								<option value="3">初中</option>
+								<option value="4">高中</option>
+						      </select>
+							
+						</div>
+						
+						<label for="secondname" class="col-sm-1 control-label text-center">科目</label>
+						<div class="col-sm-2">
+							<select name="" class="form-control selectpicker"  data-live-search="true">
+								<option>语文</option>
+								<option>数学</option>
+								<option>英语</option>
+								<option>物理</option>
+								<option>化学</option>
+								<option>生物</option>
+								<option>政治</option>
+								<option>地理</option>
+								<option>历史</option>
+							</select>		
+						</div>
+						<label for="secondname" class="col-sm-1 control-label" style="text-align: center;">知识点结构类型</label>
+						<div class="col-sm-2 control-label">
+							<div>
+								<input type="radio" name="versions" id="schedule" checked="checked" value="1"/>
+								<label for="schedule">课标版</label>
+							</div>
+							<div>
+								<input type="radio" name="versions" id="noSchedule" value="2"/>
+								<label for="noSchedule">非课标版</label>
+							</div>
+						</div>
+						<div class="search_01 col-sm-offset-2">查询</div>
+					</div>
+					<div class="form-group versionsClass">
+						<label for="secondname" class="col-sm-1 control-label text-center">版本</label>
+						<div class="col-sm-2">
+							<select name="" class="form-control selectpicker">
+								<option value="">全部</option>
+								
+							</select>
+						</div>
+						<label for="secondname" class="col-sm-1 control-label text-center">年级/课本</label>
+						<div class="col-sm-2">
+							<select name="" class="form-control selectpicker">
+								<option value="">全部</option>
+								
+							</select>		
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn addRole" type="button" value="新建知识结构"/>
+				</div>
+			</div>
+			<div class="numshu_btm">
+			<div class="row head _head">
+				<h3 class="col-xs-2 col-sm-3">列表区</h3>
+			</div>
+			<div class="list_btm">
+			<div class="table-responsive">
+				<table class="table table-condensed addlist" style="text-align: center;">
+					<tr>
+						<td><strong>序号</strong></td>
+						<td><strong>学段</strong></td>
+						<td><strong>科目</strong></td>
+						<td><strong>知识结构标准类型</strong></td>
+						<td><strong>版本</strong></td>
+						<td><strong>年级/课本</strong></td>
+						<td><strong>启用状态</strong></td>
+						<td><strong>操作</strong></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>初中</td>
+						<td>数学</td>
+						<td>课标版</td>
+						<td>--</td>
+						<td>--</td>
+						<td>已启用</td>
+						<td>
+							<a href="javascript:;">修改</a>
+							<a href="javascript:;" onclick="off()">禁用</a>
+							<a href="javascript:;">设置知识点</a>
+						</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>初中</td>
+						<td>数学</td>
+						<td>课标版</td>
+						<td>--</td>
+						<td>--</td>
+						<td>已启用</td>
+						<td>
+							<a href="javascript:;">修改</a>
+							<a href="javascript:;" onclick="off()">禁用</a>
+							<a href="javascript:;" onclick="off()">设置知识点</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="row pro_list_btm">
+				<div class="col-xs-6 col-sm-3 text-center">
+				
+				</div>
+				<div class="col-xs-7 col-sm-9">
+					<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+				</div>
+			</div>
+		</div>
+		</div>
+		</div>
+					
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js" ></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/knowledge/knowledge_list.js" ></script>
+	<script>
+	
+		$('#pageToolbar').Paging({pagesize:10,count:85,toolbar:true,callback:function(page,size,count){
+			console.log(page)
+		}});
+		$('.addRole').click(function (){
+			window.location.href='add_knowledge.html';
+		});
+		function off()
+		{
+			layer.open({
+                title: "",
+                content: '确定禁用该用户吗？',
+                skin: 'layui-layer-lana',
+                shadeClose: 'true',
+                btn: ['确定',"取消"],
+                yes: function(index, layero) {
+                    layer.close(index);
+                },
+                btn2: function(index, layero) {
+                    //按钮【按钮二】的回调
+                    layer.close(index);
+                },
+                cancel: function() {
+                    //右上角关闭回调
+                }
+            });
+		}
+		
+	</script>
+	
+</html>

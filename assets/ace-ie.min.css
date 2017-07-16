@@ -1,0 +1,240 @@
+.sidebar {
+	LEFT: 0px
+}
+.sidebar:before {
+	DISPLAY: none
+}
+.ace-nav > LI.white-opaque {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCFFFFFF',endColorstr='#CCFFFFFF',GradientType=0)
+}
+.ace-nav > LI.dark-opaque {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33000000',endColorstr='#33000000',GradientType=0)
+}
+.infobox > .infobox-icon > [class*='icon-']:before {
+	COLOR: #fff
+}
+.infobox-dark > .badge {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33FFFFFF',endColorstr='#33FFFFFF',GradientType=0) !important
+}
+.widget-box-overlay {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#55000000',endColorstr='#55000000',GradientType=0) !important
+}
+.widget-toolbar-light {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#D8FFFFFF',endColorstr='#D8FFFFFF',GradientType=0) !important
+}
+INPUT[type=checkbox].ace {
+	Z-INDEX: auto; POSITION: static; WIDTH: auto; HEIGHT: auto
+}
+INPUT[type=radio].ace {
+	Z-INDEX: auto; POSITION: static; WIDTH: auto; HEIGHT: auto
+}
+INPUT[type=checkbox].ace + .lbl {
+	MIN-WIDTH: auto; MIN-HEIGHT: auto
+}
+INPUT[type=radio].ace + .lbl {
+	MIN-WIDTH: auto; MIN-HEIGHT: auto
+}
+INPUT[type=checkbox].ace-switch.ace {
+	WIDTH: auto
+}
+INPUT[type=checkbox].ace-switch.ace + .lbl {
+	MARGIN: 0px; MIN-HEIGHT: auto
+}
+INPUT[type=checkbox].ace-switch-7.ace {
+	WIDTH: auto
+}
+.ace-file-input INPUT[type=file] {
+	Z-INDEX: 1; POSITION: absolute; FILTER: alpha(opacity=0); WIDTH: 100%; HEIGHT: 30px; CURSOR: pointer
+}
+.ace-file-input INPUT[type=file]:hover + .file-label {
+	BORDER-BOTTOM-COLOR: #f59942; BORDER-TOP-COLOR: #f59942; BORDER-RIGHT-COLOR: #f59942; BORDER-LEFT-COLOR: #f59942
+}
+.ace-file-multiple INPUT[type=file] {
+	HEIGHT: 100%
+}
+.ace-file-input .remove {
+	Z-INDEX: 2
+}
+.ace-file-input .selected.file-label .file-name {
+	WIDTH: 50%
+}
+.ace-file-multiple .selected.file-label .file-name {
+	WIDTH: auto
+}
+.wizard-steps LI:first-child:before {
+	MAX-WIDTH: 100%; LEFT: 0px
+}
+.login-layout .widget-box {
+	POSITION: static; DISPLAY: none; VISIBILITY: visible
+}
+.login-layout .visible.widget-box {
+	DISPLAY: block
+}
+.pricing-box-small:hover {
+	ZOOM: 1.04; TOP: -3px; LEFT: -1px
+}
+.ace-thumbnails > LI > A > IMG {
+	WIDTH: auto !important
+}
+.ace-thumbnails > LI > :first-child > .text {
+	DISPLAY: none
+}
+.ace-thumbnails > LI:hover > :first-child > .text {
+	DISPLAY: block
+}
+.ace-thumbnails > LI > .tools {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8C000000',endColorstr='#8C000000',GradientType=0) !important
+}
+.ace-thumbnails > LI > :first-child > .text {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8C000000',endColorstr='#8C000000',GradientType=0) !important
+}
+#cboxLoadingGraphic > [class*='icon-'] {
+	DISPLAY: inline-block; BACKGROUND: url(images/loading.gif) #fff no-repeat center 50%
+}
+#cboxLoadingGraphic > [class*='icon-']:before {
+	DISPLAY: none
+}
+.widget-box-overlay > [class*='icon-'] {
+	WIDTH: 24px; DISPLAY: inline-block; BACKGROUND: url(images/loading.gif) no-repeat center 50%; HEIGHT: 24px; MARGIN-LEFT: 46%
+}
+.widget-box-overlay > [class*='icon-']:before {
+	DISPLAY: none
+}
+.btn-light.btn-app.btn {
+	BORDER-BOTTOM: #d9d9d9 1px solid; BORDER-LEFT: #d9d9d9 1px solid; BORDER-TOP: #d9d9d9 1px solid; BORDER-RIGHT: #d9d9d9 1px solid
+}
+.btn-yellow.btn-app.btn {
+	BORDER-BOTTOM: #fee188 1px solid; BORDER-LEFT: #fee188 1px solid; BORDER-TOP: #fee188 1px solid; BORDER-RIGHT: #fee188 1px solid
+}
+.grid3 {
+	WIDTH: 31%
+}
+.grid4 {
+	WIDTH: 23%
+}
+.dialogdiv.itemdiv > .body:before {
+	DISPLAY: none
+}
+.fc-event-hori {
+	BORDER-BOTTOM-STYLE: none !important; BORDER-RIGHT-STYLE: none !important; BORDER-TOP-STYLE: none !important; BORDER-LEFT-STYLE: none !important
+}
+.fc-event-vert {
+	BORDER-BOTTOM-STYLE: none !important; BORDER-RIGHT-STYLE: none !important; BORDER-TOP-STYLE: none !important; BORDER-LEFT-STYLE: none !important
+}
+[class*='tab-color-'] .nav-tabs > LI > A > [class*='icon-']:first-child {
+	COLOR: #666 !important
+}
+.dropdown-preview > .dropdown-menu {
+	WIDTH: 180px
+}
+.ui-datepicker {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.ui-autocomplete {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.ui-menu {
+	BORDER-BOTTOM: #ccc 1px solid; BORDER-LEFT: #ccc 1px solid; BORDER-TOP: #ccc 1px solid; BORDER-RIGHT: #ccc 1px solid
+}
+.ui-widget-overlay {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#44000000',endColorstr='#44000000',GradientType=0) !important
+}
+.message-content {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#CCFFFFFF',endColorstr='#CCFFFFFF',GradientType=0) !important
+}
+.gritter-item-wrapper {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EA323232',endColorstr='#EA323232',GradientType=0) !important
+}
+.gritter-info.gritter-item-wrapper {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EA315185',endColorstr='#EA315185',GradientType=0) !important
+}
+.gritter-error.gritter-item-wrapper {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EA992812',endColorstr='#EA992812',GradientType=0) !important
+}
+.gritter-success.gritter-item-wrapper {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EA59834B',endColorstr='#EA59834B',GradientType=0) !important
+}
+.gritter-warning.gritter-item-wrapper {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EABE701F',endColorstr='#EABE701F',GradientType=0) !important
+}
+.gritter-light.gritter-item-wrapper {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2F5F5F5',endColorstr='#F2F5F5F5',GradientType=0) !important
+}
+.gritter-light.gritter-info {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2E8F2FF',endColorstr='#F2E8F2FF',GradientType=0) !important
+}
+.gritter-light.gritter-error {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2FFEBEB',endColorstr='#F2FFEBEB',GradientType=0) !important
+}
+.gritter-light.gritter-success {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2EFFAE3',endColorstr='#F2EFFAE3',GradientType=0) !important
+}
+.gritter-light.gritter-warning {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2FCF8E3',endColorstr='#F2FCF8E3',GradientType=0) !important
+}
+.widget-header .wysiwyg-toolbar .btn-group > .btn {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40FFFFFF',endColorstr='#40FFFFFF',GradientType=0) !important; BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.widget-body .md-header .btn {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40FFFFFF',endColorstr='#40FFFFFF',GradientType=0) !important; BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.widget-header .wysiwyg-toolbar .btn-group > .active.btn {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40000000',endColorstr='#40000000',GradientType=0) !important; BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.widget-body .md-header .btn-inverse {
+	FILTER: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40000000',endColorstr='#40000000',GradientType=0) !important; BACKGROUND: none transparent scroll repeat 0% 0%
+}
+.widget-body .md-header .btn {
+	DISPLAY: none
+}
+.widget-body .md-header .btn-inverse {
+	DISPLAY: none
+}
+BODY.skin-3 {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.skin-3 .sidebar {
+	BACKGROUND-COLOR: #d6d6d6
+}
+.skin-3 .menu-min .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #eef8ff
+}
+BODY.skin-2 {
+	BACKGROUND-COLOR: #505050
+}
+.skin-2 .sidebar {
+	BACKGROUND-COLOR: #505050
+}
+.skin-2 .nav-list > LI:hover > A > SPAN {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI:hover > A > [class*='icon-']:first-child {
+	COLOR: #fff
+}
+.skin-2 .menu-min .nav-list > LI > A:hover > [class*='icon-']:first-child {
+	COLOR: #fff
+}
+.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: #0b6cbc; BORDER-LEFT-COLOR: transparent
+}
+.skin-1.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: transparent
+}
+.skin-1.rtl .menu-min .nav-list LI.active:hover > A:after {
+	BORDER-RIGHT-COLOR: #242a2b
+}
+.skin-2.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: transparent
+}
+.skin-2.rtl .menu-min .nav-list LI.active:hover > A:after {
+	BORDER-RIGHT-COLOR: #292929; BORDER-LEFT-COLOR: transparent
+}
+.skin-2.rtl .nav-list LI.open.active > .submenu > LI.active > A:after {
+	BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: transparent
+}
+.skin-3.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: transparent
+}
+.skin-3.rtl .nav-list LI.active > A:before {
+	BORDER-RIGHT-COLOR: #a4c6dd; BORDER-LEFT-COLOR: transparent
+}

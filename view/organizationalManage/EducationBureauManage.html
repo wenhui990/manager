@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>教育局管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/noBiaoSetKnowledge.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
+		<style type="text/css">
+			.layui-layer-content {
+				height: 178px !important;
+			}
+		</style>
+	</head>
+
+	<body style="background: #fff;">
+		<div class="main container-fluid clearFix" style="overflow: inherit">
+			<!--<h3 class="text-center">初中数学人教版7年级上知识结构</h3>-->
+			<div class="lefttree fl" style="min-height: 250px;height: auto;">
+				<ul id="treeDemo" class="ztree" style="min-height: 240px;overflow: hidden;"></ul>
+			</div>
+			<div class="rightContent fr parentTree">
+				<div class="row head">
+					<div class="btngroup">
+						<span class="combtn ebm_save">保存</span>
+						<span class="combtn ebm_delete">删除当前机构</span>
+						<span class="combtn ebm_add">新建下级机构</span>
+					</div>
+				</div>
+				<div class="list_btm">
+					<form class="form-horizontal pad_t_20 pad_l_40" role="form">
+						<input type="hidden" name="ebm_hidden" id="ebm_hidden" value="" />
+						<div class="highlevel">所选机构</div>
+						<div class="form-group row_2">
+							<div class="col-sm-6 row_2">
+								<label class="col-sm-5 control-label _list_name"><span class="" style="padding-left: 15px;">上级机构名称</span></label>
+								<div class="col-sm-6">
+									<div class="form-control oParentName"></div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row_2">
+							<div class="col-sm-6 row_2">
+								<label class="col-sm-5 control-label _list_name"><span class="warn" style="padding-left: 15px;">机构名称</span></label>
+								<div class="col-sm-6">
+									<input type="text" name="" id="" value="12" class="form-control oName" />
+								</div>
+							</div>
+						</div>
+						<div class="form-group row_2">
+							<div class="col-sm-6 row_2">
+								<label class="col-sm-5 control-label _list_name"><span class="" style="padding-left: 15px;">机构排序</span></label>
+								<div class="col-sm-6">
+									<!--<input type="text" name="" id="" value="12" class="form-control oSort" />-->
+									<select name="" class="form-control oSort">
+										<option value="11">xx教育局</option>
+										<option value="22">县教育局</option>
+										<option value="33">xx县教育局</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div id="menuContent" class="menuContent" style="display:none; position: absolute;background: #FFFFFF;border: 1px solid #CCCCCC;overflow: auto;">
+				<ul id="treeDemo1" class="ztree" style="margin-top:0; width:300px; height: 300px;"></ul>
+			</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js"></script>
+	<script type="text/javascript" src="../../js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/organizationalManage/noBiaoSetKnowledge.js"></script>
+	<script type="text/javascript" src="../../js/organizationalManage/noBiaoZtree.js"></script>
+
+	<script>
+		/*	$('#pageTool').Paging({pagesize:10,count:100,callback:function(page,size,count){
+					console.log(arguments)
+					alert('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')
+					}});*/
+
+		/*setTimeout(function(){
+			$(".mask-tree").show()
+			console.log($(".mask-tree"))
+			 $(".tree").treemenu({delay:300}).openActive();
+		},10)*/
+		function aa() {
+			var aa = $("#treeDemo li a.curSelectedNode").children("span.node_name").html();
+			alert(aa);
+		}
+	</script>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>编辑考试</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../plugin/treemuee/jquery.treemenu.css" />
+		<style>
+			.lefttree , .come_back{
+				height:500px;
+			}
+			.come_back{
+				position:relative;
+				width:8%;
+			}
+			.add, .remove{
+				width:40px;
+				height:30px;
+				font-size:20px;
+				text-align:center;
+				line-height:30px;
+				border:1px solid rgb(204, 210, 216);
+				border-radius:5px;
+				position:absolute;
+				left:50%;
+				margin-left:-20px;
+				cursor:pointer;
+			}
+			.add{
+				top:46%;
+				margin-top:-18px;
+			}
+			.remove{
+				bottom:46%;
+				margin-bottom:-18px;
+			}
+			.beselect ,.selected{
+				margin-left:30px;
+			}
+			.beselect li span,.selected li span{
+				float:left;
+				margin-right:30px;
+			}
+			.beselect li,.selected li{
+				margin-bottom:10px;
+				cursor:pointer;
+				width: 80%;
+			    border-radius: 6px;
+			    padding-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="main container-fluid">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn save" type="button" value="保存"/>
+					<input class="commonbtn back" type="button" value="返回"/>
+				</div>
+			</div>
+			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;">
+				<div class="form-group" style="height: 34px;"> 
+					<label for="exam" class="col-sm-1 control-label text-center warn">考试名称</label>
+					<div class="col-sm-2">
+						天门市初三年级3月统考				
+					</div>
+					<div class="col-sm-9"></div>
+				</div>
+				<div class="form-group" style="height: 34px;">
+					<label for="exam" class="col-sm-1 control-label text-center warn">地区</label>
+					<span class="fl" style="line-height:32px;">天门市</span>
+					<div class="col-sm-2">
+						<input id="addr" class="commonbtn" type="button" value="请选择"/>				
+					</div>
+				</div>
+				<div class="form-group clearFix">
+					<label class="col-sm-1 control-label text-center warn">学校</label>
+					<div class="lefttree fl" style="width:30%;padding:10px 0 0 20px;">
+						<label class="control-label">待选学校</label>
+						<ul id="beselect" class="beselect">
+							<li class="clearFix">天门市多宝镇中心学校1</li>
+							<li class="clearFix">天门市多宝镇中心学校2</li>
+							<li class="clearFix">天门市多宝镇中心学校3</li>
+							<li class="clearFix">天门市多宝镇中心学校4</li>
+							<li class="clearFix">天门市多宝镇中心学校5</li>
+						</ul>
+					</div>
+					<div class="come_back fl">
+						<div id="add" class="add btn-primary" style="top: 36%;">></div>
+						<div id="addAll" class="add btn-primary">>></div>
+						<div id="remove" class="remove btn-primary"><</div>
+						<div id="removeAll" class="remove btn-primary" style="bottom: 36%;"><<</div>
+					</div>
+					<div class="lefttree fl" style="width:30%;padding:10px 0 0 20px;">
+						<label class="control-label">已选学校</label>
+						<ul id="selected" class="selected">
+							
+						</ul>
+					</div>
+				</div>
+				<div class="form-group" style="height: 34px;"> 
+					<label for="exam" class="col-sm-1 control-label text-center warn">年级</label>
+					<div class="col-sm-2">
+						<select id="exam" class="form-control _select">
+							<option value="">请选择</option>
+							<option value="">一年级</option>
+							<option value="">二年级</option>
+							<option value="">三年级</option>
+							<option value="">四年级</option>
+							<option value="">五年级</option>
+							<option value="">六年级</option>
+							<option value="">七年级</option>
+							<option value="">八年级</option>
+							<option value="">九年级</option>
+							<option value="">高一年级</option>
+							<option value="">高二年级</option>
+							<option value="">高三年级</option>
+						</select>				
+					</div>
+					<div class="col-sm-9"></div>
+				</div>
+			</div>
+		</div>			
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/examManage/addExam.js" ></script>
+	
+</html>
+
+

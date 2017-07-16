@@ -1,0 +1,53 @@
+/*文本填充改变颜色*/
+input:-webkit-autofill{-webkit-box-shadow: 0 0 0px 1000px white inset;}
+
+.search_01{width: 70px;height:28px;cursor: pointer;line-height: 28px;color: #FFFFFF; background: #4dd368;font-size: 14px;font-weight: bold;text-align: center;display: inline-block;border-radius: 4px;-moz-border-radius: 4px;-webkit-border-radius:4px ;margin-right: 20px;}
+
+
+/*-复选框-*/
+.piaochecked {
+	
+position: relative;
+left: 10px;
+top: 10px;
+width: 14px;
+height: 14px;
+float: left;
+cursor: pointer;
+margin-left: 10px;
+text-align: center;
+background-image:url(../../images/check-off.png);
+background-repeat: no-repeat;
+background-position: 0px 0px;
+}
+
+.on_check {
+background-position: 0px 0px;
+background-image:url(../../images/check-on.png);
+}
+.radioclass {
+position: absolute;
+top: -5px;
+left: 0;
+margin: 0;
+padding: 0;
+display: inline;
+width: 14px;
+height: 20px;
+opacity: 0;
+cursor: pointer;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+filter: alpha(opacity=0);
+
+}
+/**/
+._del_hig{line-height: 46px;}
+._delete{display: inline-block;width: 48px;height: 14px;background: url(../../images/delete.png) no-repeat left top;cursor: pointer;}
+
+h3{
+	margin-top:10px;
+}
+
+.school_lists th{
+	text-align: center;
+}

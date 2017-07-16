@@ -1,0 +1,42 @@
+._list_name{width: 150px;display: inline-block; vertical-align: top;line-height: 30px;}
+._filePicker{width: 100px;height: 40px;margin-bottom: 10px;}
+._filePicker>div{width:100% !important;height: 100% !important;left: 0 !important;}
+.uploader-list{overflow: hidden;width: 500px;}
+.thumbnail{float: left}
+._delete{cursor: pointer;}
+._cont{width: 200px;display: inline-block;padding-left: 12px;}
+._delete1{cursor: pointer;}
+.list_btmTop{padding-top: 20px;overflow-x:auto}
+
+
+/*--tree--*/
+.parentLefttree{
+	position: relative;
+	cursor: pointer;
+	padding-right: 25px;
+}
+.lefttree1{
+	width: 400px;
+	min-height: 250px;
+	height: auto;
+	position: absolute;
+	left: 0;
+	top: 32px;
+	background: #FFFFFF;
+	z-index: 999999999999999999999999;
+	display: none;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled]{
+	background-color:#FFFFFF;
+}
+.oInputS{
+	cursor: pointer !important;
+	
+	background: url(../../images/select-bg_03.png) no-repeat right center;
+	 background-position-x: 95%;
+}
+
+#teacherTab td{
+	min-width: 80px;
+}

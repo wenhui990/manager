@@ -1,0 +1,11 @@
+$(function(){
+	$("input[name=versions]").on("click",function(){
+		if($("#noSchedule").prop("checked")){
+			$(".versionsClass").show()
+			console.log($(this).val())
+		}else{
+			$(".versionsClass").hide()
+			console.log($(this).val())
+		}
+	})
+})

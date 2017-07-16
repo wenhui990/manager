@@ -1,0 +1,12 @@
+
+/*------字体样式-------*/
+body{font-size: 12px;padding: 44px 166px 0 55px;}
+h1,h2,h3,h4,h5,h6{font-size: 16px; font-weight: normal;}
+strong,label{font-size: 14px;}
+span{color: #1188ff; cursor: pointer;margin: 0 12px;}
+
+td{border-bottom: 1px solid #ddd;line-height: 24px !important;}
+
+
+._return{width: 118px;height: 36px; line-height: 36px;display: inline-block;color: #35383c; text-align: center;border-radius: 5px;border: 1px solid #cccccc;margin-top: 30px;}
+._return:hover{color:#35383c;text-decoration: none;}

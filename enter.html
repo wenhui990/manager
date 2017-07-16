@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/enter/enter.css" />
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/ace-ie.min.css" />
+		  <script type="text/javascript" src="assets/jquery-1.10.2.js" ></script>
+		<![endif]-->
+		
+		
+		
+		
+		
+		<script src="./index_files/ace-extra.min.js"></script>
+		<!--[if lt IE 9]>
+		<script src="assets/html5shiv.js"></script>
+		<script src="assets/respond.min.js"></script>
+		<![endif]-->
+		<!--[if !IE]>
+		<script src="./index_files/jquery-1.9.1.min.js"></script>
+		<!-- <![endif]>
+		<!--[if IE]
+         <script type="text/javascript">window.jQuery || document.write("<script src='assets/jquery-1.10.2.min.js'>"+"<"+"script>");</script>
+        <![endif]-->
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='assets/jquery.mobile.custom.min.js'>" + "<" + "script>");
+		</script>
+		<script src="./index_files/bootstrap.min.js"></script>
+		<script src="./index_files/jquery-1.9.1.min.js"></script>
+		
+		<script src="./index_files/typeahead-bs2.min.js"></script>
+		<!--[if lte IE 8]>
+		  <script src="assets/excanvas.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="main">
+			<div class="cont">
+				<div class="hint"></div>
+				<div>
+					<label class="_style" for="txt">登录账号：</label>
+					<input type="text" class="_text" id="txt"/>
+				</div>
+				<div class="_cont">
+					<label class="_style" for="pas">登录密码：</label>
+					<input type="password" class="_password" id="pas"/>
+				</div>
+				<div>
+					<button>登录</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-1.11.2.min.js" ></script>
+	<script type="text/javascript" src="js/enter/enter.js" ></script>
+	<script>
+		
+		$(document).on("keydown",function(event){
+			if(event.keyCode==13){
+			fnEnter()
+			}
+		});
+		$("button").on("click",function(){
+			fnEnter()
+		})
+	function fnEnter(){
+		if($("._text").val()==""){
+			$(".hint").text("请输入账号")
+		}else if($("._password").val()==""){
+			$(".hint").text("请输入密码")
+		}else{
+			$(".hint").text("");
+			window.location.href="index.html"
+		}
+	}
+	</script>
+	
+</html>

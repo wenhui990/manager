@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>章节目录管理列表</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../../css/common/common.css" />
+	</head>
+	<body>
+		<div class="main container-fluid">
+			<div class="row head">
+				<h3 class="col-xs-2">查询区</h3>
+				<div class="col-sm-9 col-xs-3"></div>
+			</div>
+			<div class="row state">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="" class="col-sm-1 control-label text-center ">知识结构标准</label>
+						<div class="col-sm-2">
+							<select class="form-control _select">
+								<option value="">全部</option>
+							</select>			
+						</div>
+						<label for="" class="col-sm-1 control-label text-center ">学段</label>
+						<div class="col-sm-2">
+							<select class="form-control _select">
+								<option value="">全部</option>
+								<option value="">小学</option>
+								<option value="">初中</option>
+								<option value="">高中</option>
+							</select>			
+						</div>
+						<label for="" class="col-sm-1 control-label text-center ">科目</label>
+						<div class="col-sm-2">
+							<select class="form-control _select">
+								<option value="">全部</option>
+								<option value="">语文</option>
+								<option value="">数学</option>
+								<option value="">英语</option>
+								<option value="">物理</option>
+								<option value="">化学</option>
+								<option value="">生物</option>
+								<option value="">政治</option>
+								<option value="">地理</option>
+								<option value="">历史</option>
+							</select>			
+						</div>
+						
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-1 control-label text-center ">版本</label>
+						<div class="col-sm-2">
+							<select class="form-control _select">
+								<option value="">全部</option>
+							</select>			
+						</div>
+						<label for="" class="col-sm-1 control-label text-center ">年级/课本</label>
+						<div class="col-sm-2">
+							<select class="form-control _select">
+								<option value="">全部</option>
+								<option value="">一年级上</option>
+								<option value="">一年级下</option>
+								<option value="">二年级上</option>
+								<option value="">二年级下</option>
+								<option value="">三年级上</option>
+								<option value="">三年级下</option>
+								<option value="">四年级上</option>
+								<option value="">四年级下</option>
+								<option value="">五年级上</option>
+								<option value="">五年级下</option>
+								<option value="">六年级上</option>
+								<option value="">六年级下</option>
+								<option value="">七年级上</option>
+								<option value="">七年级下</option>
+								<option value="">八年级上</option>
+								<option value="">八年级下</option>
+								<option value="">九年级上</option>
+								<option value="">九年级下</option>
+								<option value="">必修1</option>
+								<option value="">必修2</option>
+								<option value="">必修3</option>
+								<option value="">必修4</option>
+								<option value="">必修5</option>
+								<option value="">选修1</option>
+								<option value="">选修2</option>
+								<option value="">选修3</option>
+								<option value="">选修4</option>
+								<option value="">选修5</option>
+								<option value="">选修6</option>
+								<option value="">选修7</option>
+								<option value="">选修8</option>
+								<option value="">选修9</option>
+								<option value="">选修10</option>
+							</select>			
+						</div>
+						<label for="statue" class="col-sm-1 control-label text-center ">启用状态</label>
+						<div class="col-sm-2">
+							<select id="statue" class="form-control _select">
+								<option value="">全部</option>
+								<option value="">已启用</option>
+								<option value="">已禁用</option>
+							</select>			
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="search_0 col-sm-offset-">查询</div>
+					</div>
+				</form>
+			</div>
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<a href="addChapter.html"><input class="commonbtn" type="button" value="新建"/></a>
+				</div>
+			</div>
+			<div class="numshu_btm">
+				<div class="row head list-shu">
+					<h3 class="col-xs-2">列表区</h3>
+				</div>
+				<div class="list_btm">
+					<div class="table-responsive">
+						<table id="examTable" class="table addlist text-center">
+							<tr>
+								<td><strong>序号</strong></td>
+								<td><strong>知识结构标准类型</strong></td>
+								<td><strong>学段</strong></td>
+								<td><strong>科目</strong></td>
+								<td><strong>版本</strong></td>
+								<td><strong>年级/课本</strong></td>
+								<td><strong>启用状态</strong></td>
+								<td><strong>操作</strong></td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>课标版</td>
+								<td>初中</td>
+								<td>数学</td>
+								<td>人教版</td>
+								<td>七年级上</td>
+								<td>已启用</td>
+								<td>
+									<a href="editChapter.html">修改</a>
+									<a>禁用</a>
+									<a href="setChapter.html">设置知识点</a>
+								</td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>非课标版</td>
+								<td>初中</td>
+								<td>数学</td>
+								<td>人教版</td>
+								<td>七年级上</td>
+								<td>已启用</td>
+								<td>
+									<a href="editChapter.html">修改</a>
+									<a>禁用</a>
+									<a href="../knowledge/biaoSetKnowledge.html">设置章节</a>
+								</td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>非课标版</td>
+								<td>初中</td>
+								<td>数学</td>
+								<td>人教版</td>
+								<td>七年级上</td>
+								<td>已启用</td>
+								<td>
+									<a href="editChapter.html">修改</a>
+									<a>禁用</a>
+									<a href="../knowledge/biaoSetKnowledge.html">设置章节</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				
+					<div class="row">
+						<p class="pull-left" style="margin-left:30px">
+							共<span><!--{{pageDate.totalCount}}-->5</span>条记录，每页显示
+							<select ng-model="selectPageSize" ng-change="search()"
+						ng-options="x.name for x in selectPageSizes">
+							</select>
+							条
+						</p>
+						<div class="pull-right" style="margin-right:30px">
+							<div id="pageToolbar"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../../plugin/paging/paging.js"></script>
+	<script>
+		
+	/*	$('#pageTool').Paging({pagesize:10,count:100,callback:function(page,size,count){
+			console.log(arguments)
+			alert('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')
+			}});*/
+		$('#pageToolbar').Paging({pagesize:10,count:85,toolbar:true,callback:function(page,size,count){
+			console.log(page)
+		}});
+	</script>
+</html>
+

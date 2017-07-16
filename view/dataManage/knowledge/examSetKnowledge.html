@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="wangjian" content="web" />
+		<title>试题知识点设置页面</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/webuploader/webuploader.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css"/>
+		<link rel="stylesheet" href="../../css/knowledge/examSetKnowledge.css" />
+	</head>
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn save" type="button" value="保存"/>
+					<input class="commonbtn back" type="button" value="返回"/>
+				</div>  
+			</div>
+			<div class="list_btm list_btmTop">
+				<div class="form-horizontal">
+					<div class="form-group">
+						
+						<label class="col-sm-4 control-label _list_name">考试名称</span></label>
+						<div class="col-sm-3">
+							<div class="form-control">翠英中学7年级11月月考</div>
+						</div>
+						
+					</div>
+					<div class="form-group">
+						
+						<label class="col-sm-4 control-label _list_name">科目</span></label>
+						<div class="col-sm-3">
+							<div class="form-control">数学</div>	
+						</div>
+						
+					</div>
+					<div class="form-group">
+						<label class="control-label _list_name text-center" ></span>试卷扫描件</label>
+						<div class="_cont ">
+							<div id="uploader-demo">
+								 <div class="filePicker _filePicker">选择图片</div>
+							    <!--用来存放item-->
+							    <div id="fileList" class="uploader-list"></div>
+							 </div>
+						</div>
+						<span class="control-label _list_name">最多允许上传8张图片</span>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label _list_name">知识结构标准</span></label>
+						<div class="col-sm-2">
+							<select class="form-control biaoChange">
+								<option value="1">标准版</option>
+								<option value="2">其他</option>
+							</select>
+						</div>
+						<label class="col-sm-2 control-label _list_name">知识结构标准</span></label>
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option>人教版</option>
+								<option>其他</option>
+							</select>
+						</div>
+						<label class="col-sm-2 control-label _list_name">年级</span></label>
+						<div class="col-sm-2">
+							<select class="form-control">
+								<option>七年级上</option>
+								<option>七年级下</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-4 control-label _list_name">试题知识点</span></label>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label _list_name">客观题</span></label>
+						<div class="col-sm-10">
+							<div class="table-responsive" >
+								<table id="teacherTab" class="table table-condensed addlist table-bordered" style="text-align: center;">
+									<tr>
+										<td><strong>题号</strong></td>
+										<td><strong>小题名</strong></td>
+										<td><strong>选择知识点</strong></td>
+										<td><strong>对应知识点1</strong></td>
+										<td><strong>对应知识点2</strong></td>
+										<td><strong>对应知识点3</strong></td>
+										<td><strong>对应知识点4</strong></td>
+										<td><strong>对应知识点5</strong></td>
+										<td><strong>对应知识点6</strong></td>
+										<td><strong>对应知识点7</strong></td>
+										<td><strong>对应知识点8</strong></td>
+										<td><strong>对应知识点9</strong></td>
+										<td><strong>对应知识点10</strong></td>
+									</tr>
+									<tr>
+										<td>
+											<div class="form-control">001</div>
+										</td>
+										<td>
+											<div class="form-control">30</div>
+										</td>
+										<td>
+											<span onclick="showMenu();">设置</span>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label _list_name">主观题</span></label>
+						<div class="col-sm-10">
+							<div class="table-responsive" >
+								<table id="teacherTab" class="table table-condensed addlist table-bordered" style="text-align: center;">
+									<tr>
+										<td><strong>题号</strong></td>
+										<td><strong>小题名</strong></td>
+										<td><strong>小题细分</strong></td>
+										<td><strong>选择知识点</strong></td>
+										<td><strong>对应知识点1</strong></td>
+										<td><strong>对应知识点2</strong></td>
+										<td><strong>对应知识点3</strong></td>
+										<td><strong>对应知识点4</strong></td>
+										<td><strong>对应知识点5</strong></td>
+										<td><strong>对应知识点6</strong></td>
+										<td><strong>对应知识点7</strong></td>
+										<td><strong>对应知识点8</strong></td>
+										<td><strong>对应知识点9</strong></td>
+										<td><strong>对应知识点10</strong></td>
+									</tr>
+									<tr>
+										<td>001</td>
+										<td>032</td>
+										<td>032(1)</td>
+										<td>
+											<span onclick="showMenu();">设置</span>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+										<td>
+											<input class="form-control"  type="text" readonly value=""/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<!--<div id="menuContent" class="menuContent" style="display:none; position: absolute;background: #FFFFFF;border: 1px solid #CCCCCC;overflow: auto;">
+		    <ul id="treeDemo1" class="ztree" style="margin-top:0; width:300px; height: 300px;"></ul>
+		</div>-->
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js" ></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<!--<script type="text/javascript" src="../../js/knowledge/examSetZtree.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>-->
+	<script type="text/javascript" src="../../plugin/webuploader/webuploader.js" ></script>
+	<script type="text/javascript" src="../../js/knowledge/addPicture.js" ></script>
+	<script type="text/javascript" src="../../js/knowledge/examSetKnowledge.js" ></script>
+	<script type="text/javascript">
+		//弹出树菜单
+		function showMenu(){
+			layer.open({
+				type: 2,
+				title:"选择地区",
+				maxmin: true,
+				skin:"demo-class",
+				closeBtn: 1,
+				area: ['820px', '340px'],
+				content: ['alertKnowledge.html', 'no'], //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+				btn: ['确定'],
+				a:1,
+				success:function(layero, index){// 获取子页面的数据
+				 	
+				},
+				yes: function(index, layero) {
+					//按钮【按钮一】的回调
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+				},
+				btn2: function(index, layero) {
+					//按钮【按钮二】的回调
+					console.log(index)
+				}
+			});
+		}
+	</script>
+</html>

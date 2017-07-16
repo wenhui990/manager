@@ -1,0 +1,1043 @@
+.skin-1 {
+	BACKGROUND-COLOR: #4a4f56
+}
+.skin-1 .navbar {
+	BACKGROUND: #2c6aa0
+}
+.skin-1 .sidebar {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #222a2d
+}
+.skin-1 .sidebar:before {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #222a2d
+}
+.skin-1 .nav-list > LI {
+	BORDER-BOTTOM-COLOR: #3f4e54; BORDER-TOP-COLOR: #3f4e54; BORDER-TOP-WIDTH: 0px; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .nav-list > LI > A {
+	BACKGROUND-COLOR: #222a2d; COLOR: #b1bac1
+}
+.skin-1 .menu-min .nav-list > LI.open > A {
+	BACKGROUND-COLOR: #222a2d; COLOR: #b1bac1
+}
+.skin-1 .nav-list > LI:hover > A {
+	BACKGROUND-COLOR: #414b51; COLOR: #e1eaf1
+}
+.skin-1 .nav-list > LI > A > .arrow {
+	COLOR: #b1bac1
+}
+.skin-1 .nav-list > LI.open > A > .arrow {
+	COLOR: #85c0ec
+}
+.skin-1 .nav-list > LI .submenu > LI > A {
+	BORDER-TOP-COLOR: #afbdc9
+}
+.skin-1 .nav-list > LI.active .submenu > LI > A {
+	BORDER-TOP-COLOR: #70818e
+}
+.skin-1 .nav-list LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 10px; BORDER-TOP-WIDTH: 16px; BORDER-BOTTOM-WIDTH: 16px; BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-WIDTH: 10px; TOP: 2px
+}
+.skin-1 .nav-list > LI.open.active > UL.submenu > LI.active > A:after {
+	TOP: 1px
+}
+.skin-1 .nav-list > LI.active:after {
+	DISPLAY: none
+}
+.skin-1 .menu-min .nav-list > LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 6px; BORDER-TOP-WIDTH: 10px; BORDER-BOTTOM-WIDTH: 10px; BORDER-LEFT-WIDTH: 6px; TOP: 8px
+}
+.skin-1 .menu-min .nav-list > LI.active:hover > A:after {
+	BORDER-RIGHT-COLOR: #242a2b
+}
+.skin-1 .nav-list > LI.open > A {
+	BACKGROUND-COLOR: #222a2d; COLOR: #85c0ec
+}
+.skin-1 .nav-list > LI.open > A:hover {
+	BACKGROUND-COLOR: #222a2d; COLOR: #85c0ec
+}
+.skin-1 .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #141a1b; COLOR: #55a0dc
+}
+.skin-1 .nav-list > LI.active > A:hover {
+	BACKGROUND-COLOR: #141a1b; COLOR: #55a0dc
+}
+.skin-1 .menu-min .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #141a1b; COLOR: #55a0dc
+}
+.skin-1 .menu-min .nav-list > LI.active > A:hover {
+	BACKGROUND-COLOR: #141a1b; COLOR: #55a0dc
+}
+.skin-1 .nav-list > LI > UL.submenu {
+	BACKGROUND-COLOR: #3a4344; BORDER-TOP-COLOR: #5a6364
+}
+.skin-1 .nav-list > LI.active > UL.submenu {
+	BACKGROUND-COLOR: #141a1b; BORDER-TOP-COLOR: #2f3e44
+}
+.skin-1 .nav-list > LI > .submenu > LI > A {
+	BORDER-BOTTOM-COLOR: #5a6364; COLOR: #d1dae1
+}
+.skin-1 .nav-list > LI > .submenu > LI:first-child > A {
+	BORDER-TOP-COLOR: transparent
+}
+.skin-1 .nav-list > LI > .submenu > LI > A:hover {
+	COLOR: #8ab4de
+}
+.skin-1 .nav-list > LI > .submenu > LI.active > A {
+	BORDER-BOTTOM-COLOR: #2f3e44; COLOR: #55a0dc
+}
+.skin-1 .nav-list > LI > .submenu > LI > A > [class*='icon-']:first-child {
+	DISPLAY: none
+}
+.skin-1 .menu-min .nav-list > LI:hover > A {
+	COLOR: #e1eaf1
+}
+.skin-1 .menu-min .nav-list > LI > A > .menu-text {
+	BACKGROUND-COLOR: #414b51
+}
+.skin-1 .menu-min .nav-list > LI.active > A > .menu-text {
+	BACKGROUND-COLOR: #242a2b
+}
+.skin-1 .menu-min .nav-list > LI.active:hover > A {
+	COLOR: #55a0dc
+}
+.skin-1 .menu-min .nav-list > LI.active > A > .menu-text {
+	COLOR: #55a0dc
+}
+.skin-1 .menu-min .nav-list > LI > A.active {
+	BACKGROUND-COLOR: #141a1b
+}
+.skin-1 .menu-min .nav-list > LI.active.open > A {
+	BACKGROUND-COLOR: #141a1b
+}
+.skin-1 .menu-min .nav-list > LI > A > .menu-text {
+	BORDER-BOTTOM-COLOR: #3f4e54; MARGIN-TOP: 1px; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #242a2b
+}
+.skin-1 .menu-min .nav-list > LI > UL.submenu {
+	BORDER-BOTTOM-COLOR: #3f4e54; MARGIN-TOP: 1px; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #242a2b
+}
+.skin-1 .nav-list > LI > .submenu > LI:before {
+	BORDER-BOTTOM-COLOR: #929ba3; BORDER-TOP-COLOR: #929ba3; BORDER-RIGHT-COLOR: #929ba3; BORDER-LEFT-COLOR: #929ba3
+}
+.skin-1 .nav-list > LI > .submenu:before {
+	BORDER-BOTTOM-COLOR: #929ba3; BORDER-TOP-COLOR: #929ba3; BORDER-RIGHT-COLOR: #929ba3; BORDER-LEFT-COLOR: #929ba3
+}
+.skin-1 .nav-list > LI.active > .submenu > LI:before {
+	BORDER-BOTTOM-COLOR: #3f4e54; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .nav-list > LI.active > .submenu:before {
+	BORDER-BOTTOM-COLOR: #3f4e54; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .menu-min .nav-list > LI > A.dropdown-toggle > .menu-text {
+	BORDER-BOTTOM-COLOR: #5a606a
+}
+.skin-1 .sidebar-collapse {
+	BORDER-BOTTOM-COLOR: #3f4e54; BACKGROUND-COLOR: #141a1b; BORDER-TOP-COLOR: #3f4e54; BORDER-TOP-WIDTH: 1px; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .sidebar-collapse:before {
+	BORDER-BOTTOM-COLOR: #3f4e54; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .sidebar-collapse > [class*='icon-'] {
+	BACKGROUND-COLOR: #222a2d
+}
+.skin-1 .sidebar-shortcuts {
+	BORDER-BOTTOM-COLOR: #3f4e54; BACKGROUND-COLOR: #141a1b; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .sidebar-shortcuts-mini {
+	BORDER-BOTTOM-COLOR: #3f4e54; BACKGROUND-COLOR: #141a1b; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .sidebar > .nav-search {
+	BORDER-BOTTOM-COLOR: #3f4e54; BACKGROUND-COLOR: #141a1b; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1 .menu-min .sidebar-shortcuts-large {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #141a1b; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 0px; box-shadow: none
+}
+.skin-1 .breadcrumbs {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #f0f0f0; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+
+@media Unknown    
+{
+.skin-1 .sidebar {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; box-shadow: none
+}
+.skin-1 .nav-list LI.active > A:after {
+	DISPLAY: none
+}
+.skin-1 .menu-min .nav-list > LI.open.active > A:after {
+	DISPLAY: none
+}
+.skin-1 .menu-min .nav-list > LI.active:hover > A:after {
+	DISPLAY: block
+}
+    }
+.skin-1 .nav-list > LI > .submenu > LI > .submenu A {
+	BORDER-TOP-COLOR: #7b858c
+}
+.skin-1 .nav-list > LI.active > .submenu > LI > .submenu A {
+	BORDER-TOP-COLOR: #545b60
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu > LI A {
+	COLOR: #d1dae1; FONT-SIZE: 13px
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu > LI A > [class*='icon-']:first-child {
+	
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu > LI A:hover {
+	COLOR: #8ab4de; TEXT-DECORATION: none
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu > LI A:hover > [class*='icon-']:first-child {
+	COLOR: #55a0dc
+}
+.skin-1 .nav-list > LI .submenu LI.open > A {
+	COLOR: #85c0ec
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu > LI.open > A {
+	COLOR: #85c0ec
+}
+.skin-1 .nav-list > LI .submenu LI.open > A > [class*='icon-']:first-child {
+	
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu > LI.open > A > [class*='icon-']:first-child {
+	
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu LI.active > A {
+	COLOR: #61a8dd
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu LI.active > A > [class*='icon-']:first-child {
+	
+}
+.skin-1 .nav-list > LI .submenu LI > .submenu LI.active > A:hover {
+	COLOR: #85c0ec
+}
+.skin-1 .nav-list > LI .submenu LI > A > .arrow {
+	COLOR: #bbb
+}
+.skin-1 .nav-list > LI > .submenu > LI.open > A > .arrow {
+	
+}
+.skin-1 .nav-list > LI > .submenu > LI > A:hover > .arrow {
+	
+}
+.skin-1 .nav-list > LI > .submenu > LI > .submenu > LI.open > A > .arrow {
+	
+}
+.skin-1 .nav-list > LI > .submenu > LI > .submenu > LI > A:hover > .arrow {
+	
+}
+.skin-2 {
+	BACKGROUND-COLOR: #5c5c5c
+}
+.skin-2 .navbar {
+	BACKGROUND: #c6487e
+}
+.skin-2 .sidebar {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #505050
+}
+.skin-2 .sidebar:before {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #505050
+}
+.skin-2 .nav-list > LI {
+	BORDER-BOTTOM-COLOR: #444; BORDER-TOP-COLOR: #444; BORDER-TOP-WIDTH: 0px; BORDER-RIGHT-COLOR: #444; BORDER-LEFT-COLOR: #444
+}
+.skin-2 .nav-list > LI:unknown {
+	BORDER-BOTTOM-WIDTH: 0px
+}
+.skin-2 .nav-list > LI > A {
+	BACKGROUND-COLOR: #393939
+}
+.skin-2 .menu-min .nav-list > LI.open > A {
+	BACKGROUND-COLOR: #393939
+}
+.skin-2 .nav-list .open > A {
+	BACKGROUND-COLOR: #393939
+}
+.skin-2 .nav-list .open > A:hover {
+	BACKGROUND-COLOR: #393939
+}
+.skin-2 .nav-list .open > A:focus {
+	BACKGROUND-COLOR: #393939
+}
+.skin-2 .nav-list > LI.active > A {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI > A:hover:before {
+	DISPLAY: none
+}
+.skin-2 .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: #fff
+}
+.skin-2 .nav-list > LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 10px; BORDER-TOP-WIDTH: 16px; BORDER-BOTTOM-WIDTH: 16px; BORDER-LEFT-WIDTH: 10px; TOP: 2px; RIGHT: 0px
+}
+.skin-2 .nav-list > LI.active > .submenu > LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 10px; BORDER-TOP-WIDTH: 16px; BORDER-BOTTOM-WIDTH: 16px; BORDER-LEFT-WIDTH: 10px; TOP: 2px; RIGHT: 0px
+}
+.skin-2 .menu-min .nav-list > LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 6px; BORDER-TOP-WIDTH: 10px; BORDER-BOTTOM-WIDTH: 10px; BORDER-LEFT-WIDTH: 6px; TOP: 8px
+}
+.skin-2 .menu-min .nav-list > LI.active:hover > A:after {
+	BORDER-RIGHT-COLOR: #292929
+}
+.skin-2 .nav-list > LI.active:after {
+	DISPLAY: none
+}
+.skin-2 .nav-list > LI.open.active > .submenu > LI.active > A:after {
+	BORDER-RIGHT-COLOR: #fff; RIGHT: 0px
+}
+.skin-2 .nav-list > LI > .submenu {
+	BACKGROUND-COLOR: #303030; BORDER-TOP-COLOR: #666
+}
+.skin-2 .nav-list > LI.active > .submenu {
+	BACKGROUND-COLOR: #222
+}
+.skin-2 .nav-list > LI > .submenu > LI:first-child > A {
+	BORDER-TOP-WIDTH: 0px
+}
+.skin-2 .nav-list > LI > .submenu > LI > A {
+	BORDER-BOTTOM-COLOR: #555; COLOR: #ccc
+}
+.skin-2 .nav-list > LI > .submenu > LI > A > [class*='icon-']:first-child {
+	DISPLAY: none
+}
+.skin-2 .nav-list > LI > A > .menu-text {
+	COLOR: #ddd
+}
+.skin-2 .nav-list > LI > A:hover > .menu-text {
+	FONT-WEIGHT: bold
+}
+.skin-2 .nav-list > LI.active > A:hover > .menu-text {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI > A > .arrow {
+	COLOR: #aaa
+}
+.skin-2 .nav-list > LI > A:hover > .arrow {
+	COLOR: #fff
+}
+.skin-2 .menu-min .nav-list > LI > A > .menu-text {
+	FILTER: alpha(opacity=100); BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #292929; MARGIN-TOP: 2px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; COLOR: #fff; BORDER-LEFT-WIDTH: 0px; FONT-WEIGHT: bold; text-shadow: 1px 1px 0 rgba(0,0,0,0.5); box-shadow: none; opacity: 1
+}
+.skin-2 .menu-min .nav-list > LI > A.dropdown-toggle > .menu-text {
+	BACKGROUND-COLOR: #292929; MARGIN-TOP: 0px
+}
+.skin-2 .menu-min .nav-list > LI > UL.submenu {
+	BORDER-LEFT: #fff 1px solid; BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #303030; MARGIN-TOP: 1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN-LEFT: 1px; box-shadow: none
+}
+.skin-2 .nav-list > LI > UL.submenu > LI > A:hover {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI > UL.submenu > LI:before {
+	DISPLAY: none
+}
+.skin-2 .nav-list > LI > UL.submenu > LI:after {
+	DISPLAY: none
+}
+.skin-2 .nav-list > LI > UL.submenu > LI > A {
+	PADDING-LEFT: 28px
+}
+.skin-2 .nav-list > LI > A {
+	COLOR: #ccc
+}
+.skin-2 .menu-min .nav-list > LI > A > .menu-text {
+	COLOR: #ccc
+}
+UNKNOWN {
+	COLOR: #00be67
+}
+UNKNOWN {
+	COLOR: #5ed02b
+}
+UNKNOWN {
+	COLOR: #a7d700
+}
+UNKNOWN {
+	COLOR: #cee100
+}
+UNKNOWN {
+	COLOR: #f8c600
+}
+UNKNOWN {
+	COLOR: #ffab00
+}
+UNKNOWN {
+	COLOR: #ff6e00
+}
+UNKNOWN {
+	COLOR: #f21c30
+}
+UNKNOWN {
+	COLOR: #ee218b
+}
+UNKNOWN {
+	COLOR: #c55ee7
+}
+UNKNOWN {
+	COLOR: #218bee
+}
+UNKNOWN {
+	COLOR: #2ecee7
+}
+UNKNOWN {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI.active > A > .menu-text {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI.active > UL.submenu {
+	BACKGROUND-COLOR: #222
+}
+.skin-2 .nav-list > LI > UL.submenu:before {
+	Z-INDEX: auto; POSITION: absolute; BACKGROUND-COLOR: #393939; BOTTOM: 0px; DISPLAY: block; CONTENT: ""; TOP: 0px; RIGHT: 0px; LEFT: 0px; opacity: .12
+}
+UNKNOWN {
+	
+}
+UNKNOWN {
+	
+}
+UNKNOWN {
+	
+}
+.skin-2 .nav-list > LI > A:hover {
+	BACKGROUND-COLOR: #c6487e
+}
+.skin-2 .menu-min .nav-list > LI:hover > A {
+	BACKGROUND-COLOR: #c6487e
+}
+.skin-2 .menu-min .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #c6487e
+}
+.skin-2 .nav-list > LI > UL.submenu:before {
+	BACKGROUND-COLOR: #35262d
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #00be67
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #5ed02b
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #a7d700
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #cee100
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #f8c600
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #ffab00
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #ff6e00
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #f21c30
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #ee218b
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #c55ee7
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #218bee
+}
+UNKNOWN {
+	BACKGROUND-COLOR: #2ecee7
+}
+.skin-2 .nav-list > LI > UL.submenu {
+	BORDER-TOP-STYLE: inset
+}
+.skin-2 .menu-min .nav-list > LI > UL.submenu {
+	BORDER-TOP-COLOR: #666 !important
+}
+.skin-2 .nav-list > LI > UL.submenu {
+	BORDER-TOP-COLOR: #c6487e
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #00be67
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #5ed02b
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #a7d700
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #cee100
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #f8c600
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #ffab00
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #ff6e00
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #f21c30
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #ee218b
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #c55ee7
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #218bee
+}
+UNKNOWN {
+	BORDER-TOP-COLOR: #2ecee7
+}
+.skin-2 .nav-list > LI > UL.submenu LI.active > A {
+	COLOR: #c6487e
+}
+UNKNOWN {
+	COLOR: #00be67
+}
+UNKNOWN {
+	COLOR: #5ed02b
+}
+UNKNOWN {
+	COLOR: #a7d700
+}
+UNKNOWN {
+	COLOR: #cee100
+}
+UNKNOWN {
+	COLOR: #f8c600
+}
+UNKNOWN {
+	COLOR: #ffab00
+}
+UNKNOWN {
+	COLOR: #ff6e00
+}
+UNKNOWN {
+	COLOR: #f21c30
+}
+UNKNOWN {
+	COLOR: #ee218b
+}
+UNKNOWN {
+	COLOR: #c55ee7
+}
+UNKNOWN {
+	COLOR: #218bee
+}
+UNKNOWN {
+	COLOR: #2ecee7
+}
+.skin-2 .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #242424
+}
+.skin-2 .nav-list > LI.active > A:hover {
+	BACKGROUND-COLOR: #242424
+}
+.skin-2 .sidebar-collapse {
+	BORDER-BOTTOM: #777 1px solid; BACKGROUND-COLOR: #2c2c2c; BORDER-TOP: #666 1px solid
+}
+.skin-2 .sidebar-collapse:before {
+	BORDER-BOTTOM-COLOR: #666; BORDER-TOP-COLOR: #666; BORDER-RIGHT-COLOR: #666; BORDER-LEFT-COLOR: #666
+}
+.skin-2 .sidebar-collapse > [class*='icon-'] {
+	BACKGROUND-COLOR: #333
+}
+.skin-2 .sidebar-shortcuts {
+	BORDER-BOTTOM-COLOR: #666; BACKGROUND-COLOR: #393939; BORDER-TOP-COLOR: #666; MIN-HEIGHT: 40px; BORDER-RIGHT-COLOR: #666; BORDER-LEFT-COLOR: #666
+}
+.skin-2 .sidebar > .nav-search {
+	BORDER-BOTTOM-COLOR: #666; BACKGROUND-COLOR: #393939; BORDER-TOP-COLOR: #666; BORDER-RIGHT-COLOR: #666; BORDER-LEFT-COLOR: #666
+}
+.skin-2 .sidebar-shortcuts .btn {
+	BORDER-RIGHT-WIDTH: 2px; BACKGROUND-COLOR: #555 !important; BORDER-TOP-WIDTH: 2px; BORDER-BOTTOM-WIDTH: 2px; BORDER-LEFT-WIDTH: 2px; border-radius: 32px
+}
+.skin-2 .sidebar-shortcuts .btn:hover {
+	BACKGROUND-COLOR: #222 !important
+}
+.skin-2 .menu-min .sidebar-shortcuts-large {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #393939; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; TOP: 0px; box-shadow: none
+}
+.skin-2 .sidebar-shortcuts-mini {
+	BORDER-BOTTOM-COLOR: #3f4e54; BACKGROUND-COLOR: #141a1b; BORDER-TOP-COLOR: #3f4e54; BORDER-RIGHT-COLOR: #3f4e54; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-2 .sidebar-shortcuts-mini .btn {
+	PADDING-BOTTOM: 6px !important; BORDER-RIGHT-WIDTH: 2px !important; PADDING-LEFT: 6px !important; PADDING-RIGHT: 6px !important; BORDER-TOP-WIDTH: 2px !important; BORDER-BOTTOM-WIDTH: 2px !important; BORDER-LEFT-WIDTH: 2px !important; PADDING-TOP: 6px !important; border-radius: 32px; opacity: 1
+}
+BODY.skin-2 .main-content {
+	PADDING-TOP: 8px
+}
+.skin-2 .breadcrumbs {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #e7f2f8; MARGIN: 0px 8px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; border-radius: 4px
+}
+
+@media Unknown    
+{
+.skin-2 .sidebar {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; box-shadow: none
+}
+.skin-2 .nav-list LI.active > A:after {
+	DISPLAY: none
+}
+BODY.skin-2 .main-content {
+	PADDING-TOP: 0px
+}
+.skin-2 .breadcrumbs {
+	MARGIN: 0px; border-radius: 0
+}
+.skin-2 .menu-min .nav-list > LI.active > A:after {
+	DISPLAY: none
+}
+.skin-2 .menu-min .nav-list > LI.active:hover > A:after {
+	DISPLAY: block
+}
+    }
+.skin-2 .nav-list > LI .submenu A {
+	BACKGROUND-COLOR: transparent !important
+}
+.skin-2 .nav-list > LI > .submenu > LI > .submenu A {
+	BORDER-TOP-COLOR: #ccc
+}
+.skin-2 .nav-list > LI.active > .submenu > LI > .submenu A {
+	BORDER-TOP-COLOR: #999
+}
+.skin-2 .nav-list > LI > .submenu LI > .submenu > LI A {
+	COLOR: #d5d5d5
+}
+.skin-2 .nav-list > LI > .submenu LI > .submenu > LI A > [class*='icon-']:first-child {
+	COLOR: #d5d5d5
+}
+.skin-2 .nav-list > LI > .submenu LI > .submenu LI.active > A > [class*='icon-']:first-child {
+	
+}
+.skin-2 .nav-list > LI .submenu A > .arrow {
+	COLOR: #ccc
+}
+.skin-2 .nav-list > LI > .submenu > LI > A:hover > .arrow {
+	COLOR: #eee
+}
+.skin-2 .nav-list > LI > .submenu > LI > .submenu > LI > A:hover > .arrow {
+	COLOR: #eee
+}
+.skin-2 .nav-list > LI > .submenu > LI > .submenu > LI > A {
+	PADDING-LEFT: 38px; MARGIN-LEFT: 0px
+}
+.skin-2 .nav-list > LI > .submenu > LI > .submenu > LI > .submenu > LI > A {
+	PADDING-LEFT: 54px; MARGIN-LEFT: 0px
+}
+.skin-2 .nav-list > LI UL.submenu LI.open > A {
+	COLOR: #c6487e
+}
+UNKNOWN {
+	COLOR: #00be67
+}
+UNKNOWN {
+	COLOR: #5ed02b
+}
+UNKNOWN {
+	COLOR: #a7d700
+}
+UNKNOWN {
+	COLOR: #cee100
+}
+UNKNOWN {
+	COLOR: #f8c600
+}
+UNKNOWN {
+	COLOR: #ffab00
+}
+UNKNOWN {
+	COLOR: #ff6e00
+}
+UNKNOWN {
+	COLOR: #f21c30
+}
+UNKNOWN {
+	COLOR: #ee218b
+}
+UNKNOWN {
+	COLOR: #c55ee7
+}
+UNKNOWN {
+	COLOR: #218bee
+}
+UNKNOWN {
+	COLOR: #2ecee7
+}
+.skin-2 .nav-list > LI UL.submenu LI > A:hover {
+	COLOR: #fff
+}
+.skin-2 .nav-list > LI > .submenu > LI.open > A > [class*='icon-']:first-child {
+	
+}
+.skin-2 .nav-list > LI > .submenu > LI > .submenu > LI.open > A > [class*='icon-']:first-child {
+	
+}
+.skin-2 .nav-list > LI > .submenu > LI.open > A > .arrow {
+	
+}
+.skin-2 .nav-list > LI > .submenu > LI > .submenu > LI.open > A > .arrow {
+	
+}
+.skin-3 {
+	BACKGROUND-COLOR: #bbb
+}
+.skin-3 .main-container:after {
+	BACKGROUND: #fff; background-size: 100% 26px; -moz-background-size: 100% 26px; -webkit-background-size: 100% 26px; -o-background-size: 100% 26px; -ms-background-size: 100% 26px
+}
+.skin-3 .navbar {
+	BACKGROUND: #393939
+}
+.skin-3 .sidebar {
+	BACKGROUND-COLOR: #d6d6d6; BORDER-RIGHT: #a4c6dd 1px solid
+}
+.skin-3 .sidebar:before {
+	BACKGROUND-COLOR: #d6d6d6; BORDER-RIGHT: #a4c6dd 1px solid
+}
+.skin-3 .page-content {
+	BACKGROUND-COLOR: transparent
+}
+UNKNOWN {
+	BORDER-BOTTOM-STYLE: solid; BORDER-RIGHT-STYLE: solid; BACKGROUND-COLOR: transparent; BORDER-TOP-STYLE: solid; BORDER-LEFT-STYLE: solid
+}
+.skin-3 .nav-list > LI {
+	POSITION: relative; BORDER-BOTTOM-COLOR: #f2f2f2; BORDER-TOP-COLOR: #f2f2f2; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-COLOR: #f2f2f2; BORDER-LEFT-COLOR: #f2f2f2
+}
+.skin-3 .nav-list > LI:before {
+	Z-INDEX: 1; POSITION: absolute; BORDER-LEFT: #444 3px solid; BOTTOM: 0px; DISPLAY: inline-block; MAX-WIDTH: 0px; OVERFLOW: hidden; CONTENT: ""; TOP: 0px; LEFT: 0px
+}
+.skin-3 .nav-list > LI.active:before {
+	BORDER-LEFT-COLOR: #4d96cb
+}
+.skin-3 .nav-list > LI:first-child {
+	BORDER-TOP: #f2f2f2 1px solid
+}
+.skin-3 .nav-list > LI:unknown {
+	BORDER-BOTTOM-WIDTH: 1px
+}
+.skin-3 .nav-list > LI:hover {
+	BORDER-TOP-COLOR: #eee; BORDER-LEFT-COLOR: #1963aa
+}
+.skin-3 .nav-list > LI:hover + LI {
+	BORDER-TOP-COLOR: #eee
+}
+.skin-3 .nav-list > LI:hover:unknown {
+	BORDER-BOTTOM-COLOR: #eee
+}
+.skin-3 .nav-list > LI.active {
+	BORDER-TOP-COLOR: #a4c6dd !important; BORDER-LEFT-COLOR: #1a67bd
+}
+.skin-3 .nav-list > LI.active + LI {
+	BORDER-TOP-COLOR: #a4c6dd
+}
+.skin-3 .nav-list > LI.active:unknown {
+	BORDER-BOTTOM-COLOR: #a4c6dd
+}
+.skin-3 .nav-list > LI > A:hover:before {
+	DISPLAY: none
+}
+.skin-3 .nav-list > LI > A {
+	BACKGROUND-COLOR: #e0e0e0; COLOR: #5a5a5a
+}
+.skin-3 .nav-list > LI:hover > A {
+	BACKGROUND-COLOR: #eee; COLOR: #1963aa
+}
+.skin-3 .nav-list > LI > A:focus {
+	COLOR: #1963aa
+}
+.skin-3 .nav-list > LI.open > A {
+	BACKGROUND-COLOR: #f3f3f3; COLOR: #1963aa
+}
+.skin-3 .menu-min .nav-list > LI.open > A {
+	BACKGROUND-COLOR: #e0e0e0; COLOR: #5a5a5a
+}
+.skin-3 .menu-min .nav-list > LI.open > A > .menu-text {
+	COLOR: #1963aa
+}
+.skin-3 .menu-min .nav-list > LI.active > A > .menu-text {
+	BORDER-LEFT-COLOR: #eee
+}
+.skin-3 .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #eef8ff; COLOR: #4d96cb
+}
+.skin-3 .nav-list LI.active > A:after {
+	Z-INDEX: 12; BORDER-RIGHT-WIDTH: 12px; BORDER-TOP-WIDTH: 18px; BORDER-BOTTOM-WIDTH: 18px; BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-WIDTH: 12px; TOP: 0px; RIGHT: -1px
+}
+.skin-3 .nav-list LI.active > A:before {
+	Z-INDEX: 11; BORDER-BOTTOM: transparent 18px solid; POSITION: absolute; BORDER-LEFT: transparent 12px solid; BACKGROUND-COLOR: transparent; WIDTH: auto; BOTTOM: auto; DISPLAY: block; BORDER-TOP: transparent 18px solid; CONTENT: ""; TOP: 0px; RIGHT: 0px; BORDER-RIGHT: #a4c6dd 12px solid; LEFT: auto
+}
+.skin-3 .nav-list > LI.open.active > .submenu LI.active > A:before {
+	BORDER-RIGHT-WIDTH: 10px; BORDER-TOP-WIDTH: 14px; BORDER-BOTTOM-WIDTH: 14px; BORDER-LEFT-WIDTH: 10px; TOP: 2px
+}
+.skin-3 .nav-list > LI.open.active > .submenu LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 10px; BORDER-TOP-WIDTH: 14px; BORDER-BOTTOM-WIDTH: 14px; BORDER-LEFT-WIDTH: 10px; TOP: 2px
+}
+.skin-3 .nav-list > LI.open.active > .submenu .submenu LI.active > A:before {
+	TOP: 0px
+}
+.skin-3 .nav-list > LI.open.active > .submenu .submenu LI.active > A:after {
+	TOP: 0px
+}
+.skin-3 .nav-list LI.open.active > A:after {
+	DISPLAY: none
+}
+.skin-3 .nav-list LI.open.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .nav-list > LI.active:after {
+	DISPLAY: none
+}
+.skin-3 .nav-list LI.open.active > .submenu > LI.open.active > A.dropdown-toggle:before {
+	DISPLAY: none
+}
+.skin-3 .nav-list LI.active > .submenu > LI.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .nav-list LI.open.active > .submenu > LI.active > A:before {
+	DISPLAY: block
+}
+.skin-3 .menu-min .nav-list LI.open.active > .submenu > LI.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .menu-min .nav-list > LI.active > A {
+	BACKGROUND-COLOR: #4d96cb; COLOR: #fff
+}
+.skin-3 .menu-min .nav-list > LI.active > A > .menu-text {
+	COLOR: #4d96cb
+}
+.skin-3 .menu-min .nav-list LI.active > A:after {
+	DISPLAY: none
+}
+.skin-3 .menu-min .nav-list LI.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .menu-min .nav-list > LI.active > A:after {
+	BORDER-RIGHT-WIDTH: 7px; DISPLAY: block; BORDER-TOP-WIDTH: 12px; BORDER-BOTTOM-WIDTH: 12px; BORDER-LEFT-WIDTH: 7px; TOP: 5px
+}
+.skin-3 .menu-min .sidebar-shortcuts {
+	BORDER-LEFT-STYLE: none
+}
+.skin-3 .menu-min.sidebar > .nav-search {
+	BORDER-LEFT-STYLE: none
+}
+.skin-3 .menu-min .nav-list > LI > .submenu {
+	BORDER-LEFT-COLOR: #ccc
+}
+.skin-3 .menu-min .nav-list > LI.active > .submenu {
+	BORDER-LEFT-COLOR: #ccc
+}
+.skin-3 .nav-list > LI > A > .arrow {
+	RIGHT: 10px
+}
+.skin-3 .sidebar-collapse {
+	BORDER-BOTTOM-COLOR: #fff; BACKGROUND-COLOR: #d0d0d0; BORDER-TOP-COLOR: #fff; BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: #fff
+}
+.skin-3 .sidebar-collapse:before {
+	BORDER-BOTTOM-COLOR: #fff; BORDER-TOP-COLOR: #fff; BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: #fff
+}
+.skin-3 .sidebar-collapse > [class*='icon-'] {
+	BORDER-BOTTOM-COLOR: #999; BACKGROUND-COLOR: #fff; BORDER-TOP-COLOR: #999; COLOR: #999; BORDER-RIGHT-COLOR: #999; BORDER-LEFT-COLOR: #999
+}
+.skin-3 .sidebar-shortcuts {
+	BORDER-BOTTOM-COLOR: #fff; BORDER-LEFT: #444 3px solid; BACKGROUND-COLOR: #e0e0e0; BORDER-TOP-COLOR: #fff; MIN-HEIGHT: 40px; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-COLOR: #fff
+}
+.skin-3 .sidebar > .nav-search {
+	BORDER-BOTTOM-COLOR: #fff; BORDER-LEFT: #444 3px solid; BACKGROUND-COLOR: #e0e0e0; BORDER-TOP-COLOR: #fff; BORDER-BOTTOM-WIDTH: 0px; BORDER-RIGHT-COLOR: #fff
+}
+.skin-3 .sidebar-shortcuts-mini {
+	BACKGROUND-COLOR: #e0e0e0
+}
+.skin-3 .sidebar-shortcuts-mini > .btn {
+	opacity: 1
+}
+.skin-3 .menu-min .sidebar-shortcuts-large {
+	BACKGROUND-COLOR: #f5f5f5; TOP: -1px
+}
+BODY.skin-3 .main-content {
+	PADDING-TOP: 8px
+}
+.skin-3 .breadcrumbs {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND-COLOR: #e7f2f8; MARGIN: 0px 8px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; border-radius: 4px
+}
+.skin-3 .nav-search-input {
+	border-radius: 4px
+}
+.skin-3 .page-content > .page-header:first-child {
+	BORDER-BOTTOM-COLOR: #c9c9c9
+}
+.skin-3 .hr {
+	BORDER-BOTTOM-COLOR: #d5d5d5; BORDER-TOP-COLOR: #d5d5d5; BORDER-RIGHT-COLOR: #d5d5d5; BORDER-LEFT-COLOR: #d5d5d5
+}
+
+@media Unknown    
+{
+.skin-3 .sidebar {
+	BORDER-LEFT-STYLE: none
+}
+.skin-3 .nav-list > LI {
+	BORDER-LEFT-STYLE: none
+}
+.skin-3 .sidebar-shortcuts {
+	BORDER-LEFT-STYLE: none
+}
+.skin-3 .sidebar {
+	BORDER-BOTTOM-COLOR: #a4c6dd; BORDER-TOP-COLOR: #a4c6dd; BORDER-RIGHT-COLOR: #a4c6dd; BORDER-LEFT-COLOR: #a4c6dd
+}
+BODY.skin-3 .main-content {
+	PADDING-TOP: 0px
+}
+.skin-3 .breadcrumbs {
+	MARGIN: 0px; border-radius: 0
+}
+.skin-3 .menu-toggler {
+	BACKGROUND-COLOR: #62a8d1; COLOR: #fff
+}
+.skin-3 .menu-toggler:after {
+	BORDER-BOTTOM-COLOR: #fff; BORDER-TOP-COLOR: #fff; BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: #fff
+}
+.skin-3 .menu-toggler:before {
+	BORDER-BOTTOM-COLOR: #fff; BORDER-TOP-COLOR: #fff; BORDER-RIGHT-COLOR: #fff; BORDER-LEFT-COLOR: #fff
+}
+.skin-3 .menu-toggler > .menu-text {
+	BORDER-TOP-COLOR: #62a8d1
+}
+.skin-3 .menu-toggler > .menu-text:after {
+	COLOR: #fff
+}
+.skin-3 .nav-list LI.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .nav-list LI.active > A:after {
+	DISPLAY: none
+}
+.skin-3 .menu-min .nav-list LI.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .menu-min .nav-list LI.active > A:after {
+	DISPLAY: none
+}
+.skin-3 .nav-list LI.open.active > .submenu > LI.active > A:before {
+	DISPLAY: none
+}
+.skin-3 .menu-min .nav-list > LI.open.active:hover > A:after {
+	DISPLAY: block !important
+}
+    }
+.skin-1.rtl .sidebar {
+	BORDER-LEFT-STYLE: none
+}
+.skin-1.rtl .sidebar:before {
+	BORDER-LEFT-STYLE: none
+}
+.skin-1.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #fff
+}
+.skin-1.rtl .menu-min .nav-list > LI.active:hover > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #242a2b
+}
+.skin-1.rtl .menu-min .nav-list > LI > A > .menu-text {
+	BORDER-RIGHT-COLOR: #242a2b; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-1.rtl .menu-min .nav-list > LI > UL.submenu {
+	BORDER-RIGHT-COLOR: #242a2b; BORDER-LEFT-COLOR: #3f4e54
+}
+.skin-2.rtl .sidebar {
+	BORDER-LEFT-STYLE: none
+}
+.skin-2.rtl .sidebar:before {
+	BORDER-LEFT-STYLE: none
+}
+.skin-2.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #fff
+}
+.skin-2.rtl .nav-list > LI.active > A:after {
+	RIGHT: auto; LEFT: 0px
+}
+.skin-2.rtl .nav-list > LI.active > .submenu > LI.active > A:after {
+	RIGHT: auto; LEFT: 0px
+}
+.skin-2.rtl .menu-min .nav-list > LI.active:hover > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #292929
+}
+.skin-2.rtl .nav-list > LI.open.active > .submenu > LI.active > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #fff; RIGHT: auto; LEFT: 0px
+}
+.skin-2.rtl .menu-min .nav-list > LI > A > .menu-text {
+	text-shadow: -1px 1px 0 rgba(0,0,0,0.5)
+}
+.skin-2.rtl .menu-min .nav-list > LI > UL.submenu {
+	MARGIN-LEFT: auto; BORDER-LEFT-STYLE: none; MARGIN-RIGHT: 1px; BORDER-RIGHT: #fff 1px solid
+}
+.skin-2.rtl .nav-list > LI > UL.submenu > LI > A {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 28px
+}
+.skin-2.rtl .nav-list > LI > .submenu > LI > .submenu > LI > A {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 38px; MARGIN-LEFT: auto; MARGIN-RIGHT: 0px
+}
+.skin-2.rtl .nav-list > LI > .submenu > LI > .submenu > LI > .submenu > LI > A {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 54px; MARGIN-LEFT: auto; MARGIN-RIGHT: 0px
+}
+.skin-3.rtl .sidebar {
+	BORDER-LEFT: #a4c6dd 1px solid; BORDER-RIGHT-WIDTH: 0px
+}
+.skin-3.rtl .sidebar:before {
+	BORDER-LEFT: #a4c6dd 1px solid; BORDER-RIGHT-WIDTH: 0px
+}
+.skin-3.rtl .nav-list > LI:before {
+	BORDER-LEFT-STYLE: none; RIGHT: 0px; BORDER-RIGHT: #444 3px solid; LEFT: auto
+}
+.skin-3.rtl .nav-list > LI.active:before {
+	BORDER-RIGHT-COLOR: #4d96cb; BORDER-LEFT-STYLE: none
+}
+.skin-3.rtl .nav-list > LI:hover {
+	BORDER-RIGHT-COLOR: #1963aa; BORDER-LEFT-COLOR: #f2f2f2
+}
+.skin-3.rtl .nav-list > LI.active {
+	BORDER-RIGHT-COLOR: #1a67bd; BORDER-LEFT-COLOR: #f2f2f2
+}
+.skin-3.rtl .menu-min .nav-list > LI.active > A > .menu-text {
+	BORDER-RIGHT-COLOR: #eee; BORDER-LEFT-COLOR: #ccc
+}
+.skin-3.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #fff; RIGHT: auto; LEFT: -1px
+}
+.skin-3.rtl .nav-list LI.active > A:before {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #a4c6dd; RIGHT: auto; LEFT: 0px
+}
+.skin-3.rtl .menu-min .sidebar-shortcuts {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.skin-3.rtl .menu-min.sidebar > .nav-search {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.skin-3.rtl .menu-min .nav-list > LI > .submenu {
+	BORDER-RIGHT-COLOR: #ccc
+}
+.skin-3.rtl .menu-min .nav-list > LI.active > .submenu {
+	BORDER-RIGHT-COLOR: #ccc
+}
+.skin-3.rtl .nav-list > LI > A > .arrow {
+	RIGHT: auto; LEFT: 10px
+}
+.skin-3.rtl .sidebar-shortcuts {
+	BORDER-LEFT-STYLE: none; BORDER-RIGHT: #444 3px solid
+}
+.skin-3.rtl .sidebar > .nav-search {
+	BORDER-LEFT-STYLE: none; BORDER-RIGHT: #444 3px solid
+}
+
+@media Unknown    
+{
+.skin-3.rtl .sidebar {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.skin-3.rtl .nav-list > LI {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.skin-3.rtl .sidebar-shortcuts {
+	BORDER-RIGHT-WIDTH: 0px
+}
+
+}

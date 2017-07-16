@@ -1,0 +1,1917 @@
+.rtl [class*='col-xs-'] {
+	FLOAT: right
+}
+
+@media Unknown    
+{
+.rtl [class*='col-sm-'] {
+	FLOAT: right
+}
+.rtl [class*='col-md-'] {
+	FLOAT: right
+}
+.rtl [class*='col-lg-'] {
+	FLOAT: right
+}
+.rtl [class*='col-sm-push-'] {
+	LEFT: auto
+}
+.rtl [class*='col-sm-pull-'] {
+	RIGHT: auto
+}
+.rtl [class*='col-sm-offset-'] {
+	MARGIN-LEFT: auto
+}
+.rtl .col-sm-push-1 {
+	RIGHT: 8.33%
+}
+.rtl .col-sm-push-2 {
+	RIGHT: 16.66%
+}
+.rtl .col-sm-push-3 {
+	RIGHT: 25%
+}
+.rtl .col-sm-push-4 {
+	RIGHT: 33.33%
+}
+.rtl .col-sm-push-5 {
+	RIGHT: 41.66%
+}
+.rtl .col-sm-push-6 {
+	RIGHT: 50%
+}
+.rtl .col-sm-push-7 {
+	RIGHT: 58.33%
+}
+.rtl .col-sm-push-8 {
+	RIGHT: 66.66%
+}
+.rtl .col-sm-push-9 {
+	RIGHT: 75%
+}
+.rtl .col-sm-push-10 {
+	RIGHT: 83.33%
+}
+.rtl .col-sm-push-11 {
+	RIGHT: 91.66%
+}
+.rtl .col-sm-pull-1 {
+	LEFT: 8.33%
+}
+.rtl .col-sm-pull-2 {
+	LEFT: 16.66%
+}
+.rtl .col-sm-pull-3 {
+	LEFT: 25%
+}
+.rtl .col-sm-pull-4 {
+	LEFT: 33.33%
+}
+.rtl .col-sm-pull-5 {
+	LEFT: 41.66%
+}
+.rtl .col-sm-pull-6 {
+	LEFT: 50%
+}
+.rtl .col-sm-pull-7 {
+	LEFT: 58.33%
+}
+.rtl .col-sm-pull-8 {
+	LEFT: 66.66%
+}
+.rtl .col-sm-pull-9 {
+	LEFT: 75%
+}
+.rtl .col-sm-pull-10 {
+	LEFT: 83.33%
+}
+.rtl .col-sm-pull-11 {
+	LEFT: 91.66%
+}
+.rtl .col-sm-offset-1 {
+	MARGIN-RIGHT: 8.33%
+}
+.rtl .col-sm-offset-2 {
+	MARGIN-RIGHT: 16.66%
+}
+.rtl .col-sm-offset-3 {
+	MARGIN-RIGHT: 25%
+}
+.rtl .col-sm-offset-4 {
+	MARGIN-RIGHT: 33.33%
+}
+.rtl .col-sm-offset-5 {
+	MARGIN-RIGHT: 41.66%
+}
+.rtl .col-sm-offset-6 {
+	MARGIN-RIGHT: 50%
+}
+.rtl .col-sm-offset-7 {
+	MARGIN-RIGHT: 58.33%
+}
+.rtl .col-sm-offset-8 {
+	MARGIN-RIGHT: 66.66%
+}
+.rtl .col-sm-offset-9 {
+	MARGIN-RIGHT: 75%
+}
+.rtl .col-sm-offset-10 {
+	MARGIN-RIGHT: 83.33%
+}
+.rtl .col-sm-offset-11 {
+	MARGIN-RIGHT: 91.66%
+}
+.rtl [class*='col-md-push-'] {
+	LEFT: auto
+}
+.rtl [class*='col-md-pull-'] {
+	RIGHT: auto
+}
+.rtl [class*='col-md-offset-'] {
+	MARGIN-LEFT: auto
+}
+.rtl .col-md-push-1 {
+	RIGHT: 8.33%
+}
+.rtl .col-md-push-2 {
+	RIGHT: 16.66%
+}
+.rtl .col-md-push-3 {
+	RIGHT: 25%
+}
+.rtl .col-md-push-4 {
+	RIGHT: 33.33%
+}
+.rtl .col-md-push-5 {
+	RIGHT: 41.66%
+}
+.rtl .col-md-push-6 {
+	RIGHT: 50%
+}
+.rtl .col-md-push-7 {
+	RIGHT: 58.33%
+}
+.rtl .col-md-push-8 {
+	RIGHT: 66.66%
+}
+.rtl .col-md-push-9 {
+	RIGHT: 75%
+}
+.rtl .col-md-push-10 {
+	RIGHT: 83.33%
+}
+.rtl .col-md-push-11 {
+	RIGHT: 91.66%
+}
+.rtl .col-md-pull-1 {
+	LEFT: 8.33%
+}
+.rtl .col-md-pull-2 {
+	LEFT: 16.66%
+}
+.rtl .col-md-pull-3 {
+	LEFT: 25%
+}
+.rtl .col-md-pull-4 {
+	LEFT: 33.33%
+}
+.rtl .col-md-pull-5 {
+	LEFT: 41.66%
+}
+.rtl .col-md-pull-6 {
+	LEFT: 50%
+}
+.rtl .col-md-pull-7 {
+	LEFT: 58.33%
+}
+.rtl .col-md-pull-8 {
+	LEFT: 66.66%
+}
+.rtl .col-md-pull-9 {
+	LEFT: 75%
+}
+.rtl .col-md-pull-10 {
+	LEFT: 83.33%
+}
+.rtl .col-md-pull-11 {
+	LEFT: 91.66%
+}
+.rtl .col-md-offset-1 {
+	MARGIN-RIGHT: 8.33%
+}
+.rtl .col-md-offset-2 {
+	MARGIN-RIGHT: 16.66%
+}
+.rtl .col-md-offset-3 {
+	MARGIN-RIGHT: 25%
+}
+.rtl .col-md-offset-4 {
+	MARGIN-RIGHT: 33.33%
+}
+.rtl .col-md-offset-5 {
+	MARGIN-RIGHT: 41.66%
+}
+.rtl .col-md-offset-6 {
+	MARGIN-RIGHT: 50%
+}
+.rtl .col-md-offset-7 {
+	MARGIN-RIGHT: 58.33%
+}
+.rtl .col-md-offset-8 {
+	MARGIN-RIGHT: 66.66%
+}
+.rtl .col-md-offset-9 {
+	MARGIN-RIGHT: 75%
+}
+.rtl .col-md-offset-10 {
+	MARGIN-RIGHT: 83.33%
+}
+.rtl .col-md-offset-11 {
+	MARGIN-RIGHT: 91.66%
+}
+.rtl [class*='col-lg-push-'] {
+	LEFT: auto
+}
+.rtl [class*='col-lg-pull-'] {
+	RIGHT: auto
+}
+.rtl [class*='col-lg-offset-'] {
+	MARGIN-LEFT: auto
+}
+.rtl .col-lg-push-1 {
+	RIGHT: 8.33%
+}
+.rtl .col-lg-push-2 {
+	RIGHT: 16.66%
+}
+.rtl .col-lg-push-3 {
+	RIGHT: 25%
+}
+.rtl .col-lg-push-4 {
+	RIGHT: 33.33%
+}
+.rtl .col-lg-push-5 {
+	RIGHT: 41.66%
+}
+.rtl .col-lg-push-6 {
+	RIGHT: 50%
+}
+.rtl .col-lg-push-7 {
+	RIGHT: 58.33%
+}
+.rtl .col-lg-push-8 {
+	RIGHT: 66.66%
+}
+.rtl .col-lg-push-9 {
+	RIGHT: 75%
+}
+.rtl .col-lg-push-10 {
+	RIGHT: 83.33%
+}
+.rtl .col-lg-push-11 {
+	RIGHT: 91.66%
+}
+.rtl .col-lg-pull-1 {
+	LEFT: 8.33%
+}
+.rtl .col-lg-pull-2 {
+	LEFT: 16.66%
+}
+.rtl .col-lg-pull-3 {
+	LEFT: 25%
+}
+.rtl .col-lg-pull-4 {
+	LEFT: 33.33%
+}
+.rtl .col-lg-pull-5 {
+	LEFT: 41.66%
+}
+.rtl .col-lg-pull-6 {
+	LEFT: 50%
+}
+.rtl .col-lg-pull-7 {
+	LEFT: 58.33%
+}
+.rtl .col-lg-pull-8 {
+	LEFT: 66.66%
+}
+.rtl .col-lg-pull-9 {
+	LEFT: 75%
+}
+.rtl .col-lg-pull-10 {
+	LEFT: 83.33%
+}
+.rtl .col-lg-pull-11 {
+	LEFT: 91.66%
+}
+.rtl .col-lg-offset-1 {
+	MARGIN-RIGHT: 8.33%
+}
+.rtl .col-lg-offset-2 {
+	MARGIN-RIGHT: 16.66%
+}
+.rtl .col-lg-offset-3 {
+	MARGIN-RIGHT: 25%
+}
+.rtl .col-lg-offset-4 {
+	MARGIN-RIGHT: 33.33%
+}
+.rtl .col-lg-offset-5 {
+	MARGIN-RIGHT: 41.66%
+}
+.rtl .col-lg-offset-6 {
+	MARGIN-RIGHT: 50%
+}
+.rtl .col-lg-offset-7 {
+	MARGIN-RIGHT: 58.33%
+}
+.rtl .col-lg-offset-8 {
+	MARGIN-RIGHT: 66.66%
+}
+.rtl .col-lg-offset-9 {
+	MARGIN-RIGHT: 75%
+}
+.rtl .col-lg-offset-10 {
+	MARGIN-RIGHT: 83.33%
+}
+.rtl .col-lg-offset-11 {
+	MARGIN-RIGHT: 91.66%
+}
+    }
+.rtl UL {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px
+}
+.rtl OL {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 25px
+}
+.rtl UL.list-unstyled {
+	MARGIN-RIGHT: 0px
+}
+.rtl OL.list-unstyled {
+	MARGIN-RIGHT: 0px
+}
+.rtl UL.list-inline {
+	MARGIN-RIGHT: 0px
+}
+.rtl OL.list-inline {
+	MARGIN-RIGHT: 0px
+}
+.rtl LI > UL {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 18px
+}
+.rtl LI > OL {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 18px
+}
+.rtl DD {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 10px
+}
+.rtl .dl-horizontal DT {
+	TEXT-ALIGN: left; FLOAT: right; CLEAR: right
+}
+.rtl .dl-horizontal DD {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 180px
+}
+.rtl BLOCKQUOTE P {
+	TEXT-ALIGN: left
+}
+.rtl BLOCKQUOTE SMALL {
+	TEXT-ALIGN: left
+}
+.rtl BLOCKQUOTE SMALL:before {
+	CONTENT: ""
+}
+.rtl BLOCKQUOTE SMALL:after {
+	CONTENT: "?¡ª"
+}
+.rtl BLOCKQUOTE.pull-right P {
+	TEXT-ALIGN: right
+}
+.rtl BLOCKQUOTE.pull-right SMALL {
+	TEXT-ALIGN: right
+}
+.rtl BLOCKQUOTE.pull-right SMALL:after {
+	CONTENT: ""
+}
+.rtl BLOCKQUOTE.pull-right SMALL:before {
+	CONTENT: "¡ª?"
+}
+.rtl .radio {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 20px
+}
+.rtl .checkbox {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 20px
+}
+.rtl .radio INPUT[type='radio'] {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: -20px
+}
+.rtl .checkbox INPUT[type='checkbox'] {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: -20px
+}
+.rtl .inline.radio + .inline.radio {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 10px
+}
+.rtl .inline.checkbox + .inline.checkbox {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 10px
+}
+.rtl .help-inline {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 5px
+}
+.rtl .input-group .input-group-addon:first-child {
+	BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT: #ccc 1px solid
+}
+.rtl .input-group .input-group-addon:unknown {
+	BORDER-LEFT: #ccc 1px solid; BORDER-RIGHT-WIDTH: 0px
+}
+.rtl INPUT.search-query {
+	PADDING-LEFT: 4px; PADDING-RIGHT: 4px
+}
+.rtl .form-search .radio {
+	PADDING-RIGHT: 0px
+}
+.rtl .form-search .checkbox {
+	PADDING-RIGHT: 0px
+}
+.rtl .form-inline .radio {
+	PADDING-RIGHT: 0px
+}
+.rtl .form-inline .checkbox {
+	PADDING-RIGHT: 0px
+}
+.rtl .form-search .radio INPUT[type='radio'] {
+	FLOAT: right; MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl .form-search .checkbox INPUT[type='checkbox'] {
+	FLOAT: right; MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl .form-inline .radio INPUT[type='radio'] {
+	FLOAT: right; MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl .form-inline .checkbox INPUT[type='checkbox'] {
+	FLOAT: right; MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl .form-horizontal .control-label {
+	TEXT-ALIGN: left
+}
+.rtl .btn-group + .btn-group {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 5px
+}
+.rtl .btn-group > .btn {
+	FLOAT: right
+}
+.rtl .btn-group-vertical > .btn {
+	FLOAT: right
+}
+.rtl .dropdown-menu {
+	MARGIN: 2px 0px 0px
+}
+.rtl .dropdown .caret {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 2px
+}
+.rtl .close {
+	FLOAT: left
+}
+.rtl .table-header .close {
+	MARGIN-LEFT: 6px; MARGIN-RIGHT: auto
+}
+.rtl .alert .close {
+	FLOAT: left
+}
+.rtl .nav {
+	MARGIN-RIGHT: 0px
+}
+.rtl .nav-tabs > LI {
+	FLOAT: right
+}
+.rtl .nav-pills > LI {
+	FLOAT: right
+}
+.rtl .nav-pills > LI > A {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: 0px
+}
+.rtl .nav-stacked > LI {
+	FLOAT: none
+}
+.rtl .nav-tabs > LI > A {
+	MARGIN-LEFT: -1px; MARGIN-RIGHT: 0px
+}
+.rtl .tabs-left > .nav-tabs > LI {
+	FLOAT: none
+}
+.rtl .tabs-right > .nav-tabs > LI {
+	FLOAT: none
+}
+.rtl .navbar {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .navbar .navbar-brand {
+	FLOAT: right
+}
+.rtl .navbar-search {
+	FLOAT: right
+}
+.rtl .navbar-text {
+	FLOAT: right
+}
+.rtl UL.pagination {
+	MARGIN-RIGHT: 0px
+}
+.rtl .pager {
+	MARGIN-RIGHT: 0px
+}
+.rtl .pager .next > A {
+	FLOAT: left
+}
+.rtl .pager .next > SPAN {
+	FLOAT: left
+}
+.rtl .pager .previous > A {
+	FLOAT: right
+}
+.rtl .pager .previous > SPAN {
+	FLOAT: right
+}
+.rtl .modal {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .modal-footer {
+	TEXT-ALIGN: left
+}
+.rtl .modal-footer .btn + .btn {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 5px
+}
+.rtl .bottom.popover .arrow:after {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: -10px
+}
+.rtl .top.popover .arrow:after {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: -10px
+}
+.rtl .popover-content {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .tooltip-inner {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .thumbnails {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: -24px
+}
+.rtl .row .thumbnails {
+	MARGIN-RIGHT: 0px
+}
+.rtl .thumbnails > LI {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: 24px
+}
+.rtl .media-list {
+	MARGIN-RIGHT: 0px
+}
+.rtl .main-container {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .main-content {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 190px
+}
+.rtl LI > UL.margin {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 18px
+}
+.rtl LI > OL.margin {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 18px
+}
+.rtl .ace-nav > LI {
+	FLOAT: right !important; BORDER-LEFT-STYLE: none; BORDER-RIGHT: #ddd 1px solid
+}
+.rtl .ace-nav > LI:first-child {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .ace-nav > LI > A > .badge {
+	RIGHT: 2px; LEFT: auto
+}
+.rtl .ace-nav > LI.no-border {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.rtl .ace-nav > LI.margin-4 {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 4px
+}
+.rtl .ace-nav > LI.margin-3 {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 3px
+}
+.rtl .ace-nav > LI.margin-2 {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 2px
+}
+.rtl .ace-nav > LI.margin-1 {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 1px
+}
+.rtl .ace-nav .nav-user-photo {
+	MARGIN: -4px 0px 0px 8px
+}
+.rtl .ace-nav .dropdown-closer.dropdown-menu {
+	LEFT: 0px
+}
+.rtl .breadcrumbs {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 12px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.rtl .fixed.breadcrumbs {
+	POSITION: fixed; RIGHT: 190px; LEFT: 0px
+}
+.rtl .breadcrumbs-fixed.breadcrumbs {
+	POSITION: fixed; RIGHT: 190px; LEFT: 0px
+}
+.rtl .breadcrumb {
+	MARGIN: 0px 12px 0px 22px
+}
+.rtl .breadcrumb .icon-home {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: 4px
+}
+.rtl .breadcrumb > LI + LI:before {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 2px; CONTENT: "?"; PADDING-TOP: 0px
+}
+.rtl .breadcrumb > LI + LI:before {
+	DISPLAY: none
+}
+.rtl .breadcrumb > LI + LI:after {
+	POSITION: relative; PADDING-BOTTOM: 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 2px; DISPLAY: inline; FONT-FAMILY: FontAwesome; COLOR: #b2b6bf; MARGIN-LEFT: 2px; FONT-SIZE: 14px; CONTENT: "?"; TOP: 1px; PADDING-TOP: 0px
+}
+.rtl .nav-search {
+	RIGHT: auto; LEFT: 22px
+}
+.rtl .sidebar > .menu-min.nav-search .nav-search .form-search {
+	RIGHT: 5px; LEFT: auto
+}
+.rtl .sidebar {
+	BORDER-RIGHT-WIDTH: 0px; FLOAT: right; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px
+}
+.rtl .sidebar:before {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px
+}
+.rtl .fixed.sidebar {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .sidebar-fixed.sidebar {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .fixed.sidebar:before {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .sidebar-fixed.sidebar:before {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .nav-list > LI > A {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 16px; PADDING-RIGHT: 7px; PADDING-TOP: 0px
+}
+.rtl .nav-list > LI > A:hover:before {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .nav-list > LI A > .arrow {
+	RIGHT: auto; LEFT: 9px
+}
+.rtl .nav-list > LI.active:after {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 2px; RIGHT: auto; LEFT: -2px
+}
+.rtl .nav-list > LI .submenu > LI {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 0px
+}
+.rtl .nav-list > LI .submenu > LI > A {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 0px; PADDING-RIGHT: 37px; PADDING-TOP: 7px
+}
+.rtl .nav-list > LI .submenu > LI A > [class*='icon-']:first-child {
+	RIGHT: 10px; LEFT: auto
+}
+.rtl .nav-list > LI > .submenu > LI:before {
+	RIGHT: 18px; LEFT: auto
+}
+.rtl .nav-list > LI > .submenu:before {
+	BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; RIGHT: 18px; LEFT: auto
+}
+.rtl .nav-list > LI.active > .submenu:before {
+	BORDER-RIGHT-COLOR: #8eb3d0
+}
+.rtl .nav-list LI.active > A:after {
+	BORDER-RIGHT-COLOR: transparent; BORDER-LEFT-COLOR: #2b7dbc; RIGHT: auto; LEFT: 0px
+}
+.rtl .nav-list A .badge {
+	RIGHT: auto; LEFT: 11px
+}
+.rtl .nav-list A .label {
+	RIGHT: auto; LEFT: 11px
+}
+.rtl .nav-list A.dropdown-toggle .badge {
+	RIGHT: auto; LEFT: 28px
+}
+.rtl .nav-list A.dropdown-toggle .label {
+	RIGHT: auto; LEFT: 28px
+}
+.rtl .menu-min .nav-list A .badge {
+	RIGHT: 4px; LEFT: auto
+}
+.rtl .menu-min .nav-list A .label {
+	RIGHT: 4px; LEFT: auto
+}
+.rtl .menu-min.sidebar + .main-content {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 43px
+}
+.rtl .menu-min.sidebar + .main-content .fixed.breadcrumbs {
+	RIGHT: 43px; LEFT: 0px
+}
+.rtl .menu-min.sidebar + .main-content .breadcrumbs-fixed.breadcrumbs {
+	RIGHT: 43px; LEFT: 0px
+}
+.rtl .menu-min .nav-list > LI > A > .menu-text {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px; RIGHT: 42px; LEFT: auto; box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2); -webkit-box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2)
+}
+.rtl .menu-min .nav-list > LI > A.dropdown-toggle > .menu-text {
+	RIGHT: 43px; LEFT: auto; box-shadow: none; -webkit-box-shadow: none
+}
+.rtl .menu-min .nav-list > LI.active > A > .menu-text {
+	BORDER-RIGHT-COLOR: #1963aa; BORDER-LEFT-COLOR: #ccc
+}
+.rtl .menu-min .nav-list > LI > .submenu {
+	RIGHT: 42px; LEFT: auto; box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2); -webkit-box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2)
+}
+.rtl .menu-min .nav-list > LI > .submenu LI > A {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 24px; MARGIN-LEFT: auto; MARGIN-RIGHT: 0px
+}
+.rtl .menu-min .nav-list > LI > .submenu LI > A > [class*='icon-']:first-child {
+	RIGHT: 4px; LEFT: auto
+}
+.rtl .menu-min .nav-list > LI.active > .submenu {
+	BORDER-RIGHT-COLOR: #1963aa; BORDER-LEFT-COLOR: #ccc
+}
+.rtl .menu-min .sidebar-shortcuts-large {
+	RIGHT: 42px; LEFT: auto; box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2); -webkit-box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2)
+}
+.rtl .nav-list > LI > .submenu A > .arrow {
+	RIGHT: auto; LEFT: 11px
+}
+.rtl .nav-list > LI > .submenu LI > .submenu > LI > A > .arrow {
+	RIGHT: auto; LEFT: 12px
+}
+.rtl .nav-list > LI > .submenu LI > .submenu > LI > A {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 22px; MARGIN-LEFT: auto; MARGIN-RIGHT: 20px
+}
+.rtl .nav-list > LI > .submenu LI > .submenu > LI > .submenu > LI > A {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 38px; MARGIN-LEFT: auto; MARGIN-RIGHT: 20px
+}
+.rtl .menu-min .nav-list > LI > .submenu LI > .submenu > LI > A {
+	PADDING-RIGHT: 30px; MARGIN-RIGHT: 0px
+}
+.rtl .menu-min .nav-list > LI > .submenu LI > .submenu > LI > .submenu > LI > A {
+	PADDING-RIGHT: 45px; MARGIN-RIGHT: 0px
+}
+.rtl BUTTON.btn:active {
+	LEFT: -1px
+}
+.rtl .disabled.btn:active {
+	LEFT: 0px
+}
+.rtl [disabled].btn:active {
+	LEFT: 0px
+}
+.rtl .btn > [class*='icon-'] {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: 0px
+}
+.rtl .btn > [class*='icon-'].icon-on-right {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 4px
+}
+.rtl .btn > [class*='icon-'].icon-only {
+	MARGIN: 0px
+}
+.rtl .btn-lg > [class*='icon-'] {
+	MARGIN-LEFT: 6px; MARGIN-RIGHT: 0px
+}
+.rtl .btn-lg > [class*='icon-'].icon-on-right {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 6px
+}
+.rtl .btn-sm > [class*='icon-'] {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl .btn-sm > [class*='icon-'].icon-on-right {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 3px
+}
+.rtl .btn-xs > [class*='icon-'] {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: 0px
+}
+.btn-minier.rtl > [class*='icon-'] {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: 0px
+}
+.rtl .btn-xs > [class*='icon-'].icon-on-right {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 2px
+}
+.btn-minier.rtl > [class*='icon-'].icon-on-right {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 2px
+}
+.rtl .btn-group > .btn > .caret {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 1px
+}
+.rtl .dropdown-only-icon.dropdown-menu > LI {
+	FLOAT: right
+}
+.rtl .dropdown-light .dropdown-submenu:hover > A:after {
+	BORDER-RIGHT-COLOR: #444; BORDER-LEFT-COLOR: transparent
+}
+.rtl .dropdown-lighter .dropdown-submenu:hover > A:after {
+	BORDER-RIGHT-COLOR: #444; BORDER-LEFT-COLOR: transparent
+}
+.rtl .dropdown-navbar > LI > [class*='icon-'] {
+	MARGIN-LEFT: 5px !important; MARGIN-RIGHT: 0px !important
+}
+.rtl .dropdown-navbar > LI > A > [class*='icon-'] {
+	MARGIN-LEFT: 5px !important; MARGIN-RIGHT: 0px !important
+}
+.rtl .dropdown-navbar [class*='btn'][class*='icon-'] {
+	MARGIN: 0px 0px 0px 5px
+}
+.rtl .dropdown-navbar .msg-photo {
+	MARGIN-LEFT: 6px; MARGIN-RIGHT: 0px
+}
+.rtl .dropdown-navbar .user-menu > LI > A > [class*='icon-'] {
+	MARGIN-LEFT: 6px; MARGIN-RIGHT: 0px
+}
+.rtl .help-button {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 4px
+}
+.rtl .form-search .radio [type=radio] + LABEL {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: -20px
+}
+.rtl .form-inline .radio [type=radio] + LABEL {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: -20px
+}
+.rtl .form-search .checkbox [type=checkbox] + LABEL {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: -20px
+}
+.rtl .form-inline .checkbox [type=checkbox] + LABEL {
+	FLOAT: right; MARGIN-LEFT: 0px; MARGIN-RIGHT: -20px
+}
+.form-search .rtl .form-search .radio [type=radio] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-search .rtl .form-inline .radio [type=radio] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-search .rtl .form-search .checkbox [type=checkbox] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-search .rtl .form-inline .checkbox [type=checkbox] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-inline .rtl .form-search .radio [type=radio] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-inline .rtl .form-inline .radio [type=radio] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-inline .rtl .form-search .checkbox [type=checkbox] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.form-inline .rtl .form-inline .checkbox [type=checkbox] + LABEL {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl INPUT[type=checkbox].ace + .lbl:before {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: 0px
+}
+.rtl INPUT[type=radio].ace + .lbl:before {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: 0px
+}
+.rtl INPUT[type=checkbox].ace-switch.ace + .lbl:before {
+	TEXT-ALIGN: left; DIRECTION: ltr
+}
+.rtl INPUT[type=radio].ace-switch.ace + .lbl:before {
+	TEXT-ALIGN: left; DIRECTION: ltr
+}
+.rtl .ace-file-input .file-label:before {
+	RIGHT: auto; LEFT: 0px
+}
+.rtl .ace-file-input .file-label .file-name {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 30px
+}
+.rtl .ace-file-input .selected.file-label {
+	RIGHT: 0px; LEFT: 16px
+}
+.rtl .ace-file-input .file-label [class*='icon-'] {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .ace-file-input .remove {
+	RIGHT: auto; LEFT: -8px
+}
+.rtl .ace-file-multiple .selected.file-label .file-name [class*='icon-'] {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .ace-file-multiple .file-label .file-name {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.rtl .ace-file-multiple .file-label .file-name IMG {
+	MARGIN: 4px 1px 4px 8px
+}
+.rtl .ace-file-multiple .file-label .large.file-name {
+	TEXT-ALIGN: center
+}
+.rtl .ace-file-multiple .file-label .large.file-name IMG {
+	MARGIN: 0px
+}
+.rtl .ace-file-multiple .remove {
+	RIGHT: auto; LEFT: -11px
+}
+.rtl .ace-file-multiple .selected.file-label .file-name [class*='icon-'] {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: 2px
+}
+.rtl .padding-24.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 24px
+}
+.rtl .padding-20.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 20px
+}
+.rtl .padding-16.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 16px
+}
+.rtl .padding-12.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px
+}
+.rtl .padding-8.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 8px
+}
+.rtl .padding-4.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 4px
+}
+.rtl .padding-22.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 22px
+}
+.rtl .padding-18.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 18px
+}
+.rtl .padding-14.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 14px
+}
+.rtl .padding-10.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 10px
+}
+.rtl .padding-6.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 6px
+}
+.rtl .padding-2.nav-tabs {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 2px
+}
+.rtl .tabs-right > [class*='padding-'].nav-tabs {
+	PADDING-RIGHT: 0px
+}
+.rtl .tabs-left > [class*='padding-'].nav-tabs {
+	PADDING-RIGHT: 0px
+}
+.rtl .tabs-left > .nav-tabs {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: -1px
+}
+.rtl .tabs-left > .nav-tabs > LI > A {
+	MARGIN: 0px -1px 0px 0px
+}
+.rtl .tabs-left > .nav-tabs > LI > A:hover {
+	MARGIN: 0px -1px 0px 0px
+}
+.rtl .tabs-left > .nav-tabs > LI > A:focus {
+	MARGIN: 0px -1px 0px 0px
+}
+.rtl .tabs-left > .nav-tabs > LI.active > A {
+	MARGIN: 0px -1px
+}
+.rtl .tabs-left > .nav-tabs > LI.active > A:hover {
+	MARGIN: 0px -1px
+}
+.rtl .tabs-left > .nav-tabs > LI.active > A:focus {
+	MARGIN: 0px -1px
+}
+.rtl .tab-space-1.nav-tabs > LI > A {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: auto
+}
+.rtl .tab-space-2.nav-tabs > LI > A {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: auto
+}
+.rtl .tab-space-3.nav-tabs > LI > A {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: auto
+}
+.rtl .tab-space-4.nav-tabs > LI > A {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: auto
+}
+.rtl [class*='tab-color-'].nav-tabs > LI > A {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: auto
+}
+.rtl [class*='tab-color-'].nav-tabs > LI > A:focus {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: auto
+}
+.rtl [class*='tab-color-'].nav-tabs > LI > A:hover {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: auto
+}
+.rtl .panel-group.accordion-style2 .panel-heading .accordion-toggle {
+	BORDER-RIGHT-WIDTH: 2px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.rtl .panel-group.accordion-style2 .panel-heading .collapsed.accordion-toggle {
+	BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.rtl .table THEAD:first-child TR TH [class*='icon-']:first-child {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: 0px
+}
+.rtl .no-padding.widget-main .table-bordered TH:first-child {
+	BORDER-LEFT-WIDTH: 1px
+}
+.rtl .padding-0.widget-main .table-bordered TH:first-child {
+	BORDER-LEFT-WIDTH: 1px
+}
+.rtl .no-padding.widget-main .table-bordered TD:first-child {
+	BORDER-LEFT-WIDTH: 1px
+}
+.rtl .padding-0.widget-main .table-bordered TD:first-child {
+	BORDER-LEFT-WIDTH: 1px
+}
+.rtl .no-padding.widget-main .table-bordered TH:unknown {
+	BORDER-LEFT-WIDTH: 0px
+}
+.rtl .padding-0.widget-main .table-bordered TH:unknown {
+	BORDER-LEFT-WIDTH: 0px
+}
+.rtl .no-padding.widget-main .table-bordered TD:unknown {
+	BORDER-LEFT-WIDTH: 0px
+}
+.rtl .padding-0.widget-main .table-bordered TD:unknown {
+	BORDER-LEFT-WIDTH: 0px
+}
+.rtl .table-header {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px
+}
+.rtl .dataTables_length {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 8px
+}
+.rtl .dataTables_filter {
+	TEXT-ALIGN: left; MARGIN-LEFT: 8px; MARGIN-RIGHT: 0px
+}
+.rtl .dataTables_info {
+	MARGIN: 0px 12px 0px 0px
+}
+.rtl .dataTables_paginate {
+	TEXT-ALIGN: left
+}
+.rtl .dataTable TH[class*=sort]:after {
+	FLOAT: left; MARGIN-LEFT: 4px; MARGIN-RIGHT: 0px
+}
+.rtl .dataTables_wrapper > .row > [class*='col-'] {
+	BOX-SIZING: border-box; WIDTH: 50%; FLOAT: right; MARGIN-LEFT: 0px; -moz-box-sizing: border-box; -webkit-box-sizing: border-box
+}
+.rtl .widget-box {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .widget-header {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px
+}
+.rtl .widget-header:after {
+	CLEAR: left
+}
+.rtl .widget-header-large {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 18px
+}
+.rtl .widget-header-small {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 10px
+}
+.rtl .widget-header > .widget-caption > [class*='icon-'] {
+	MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px
+}
+.rtl .widget-header > :first-child > [class*='icon-'] {
+	MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px
+}
+.rtl .widget-toolbar {
+	FLOAT: left
+}
+.rtl .widget-toolbar:before {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; RIGHT: -1px; LEFT: auto
+}
+.rtl .widget-toolbar > [data-action] > [class*='icon-'] {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: auto
+}
+.rtl .transparent.widget-box > .widget-header {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 3px
+}
+.rtl .transparent.widget-box > .widget-header-large {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 5px
+}
+.rtl .transparent.widget-box > .widget-header-small {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 1px
+}
+.rtl [class*='header-color-'] > .widget-toolbar > .nav-tabs > LI > A {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: 0px
+}
+.rtl .infobox {
+	TEXT-ALIGN: right; PADDING-BOTTOM: 6px; PADDING-LEFT: 3px; PADDING-RIGHT: 9px; PADDING-TOP: 8px
+}
+.rtl .infobox > .infobox-icon > [class*='icon-'] {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 1px; PADDING-RIGHT: 2px; PADDING-TOP: 1px
+}
+.rtl .infobox > .infobox-data {
+	TEXT-ALIGN: right; PADDING-LEFT: 0px; PADDING-RIGHT: 8px
+}
+.rtl .infobox > .stat {
+	PADDING-LEFT: 18px; PADDING-RIGHT: 0px; RIGHT: auto; LEFT: 20px
+}
+.rtl .infobox > .stat:before {
+	RIGHT: auto; LEFT: 4px
+}
+.rtl .infobox > .stat:after {
+	RIGHT: auto; LEFT: 1px
+}
+.rtl .infobox > .badge {
+	RIGHT: auto; LEFT: 20px
+}
+.rtl .infobox-dark.infobox > .badge {
+	RIGHT: auto; LEFT: 2px
+}
+.rtl .infobox-small {
+	TEXT-ALIGN: right
+}
+.rtl .infobox-small > .infobox-data {
+	TEXT-ALIGN: right
+}
+.rtl .infobox-small > .infobox-chart > .sparkline {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 2px
+}
+.rtl .infobox-small .percentage {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 2px
+}
+.rtl .pricing-box .widget-header {
+	PADDING-RIGHT: 0px
+}
+.rtl .pricing-table-header {
+	TEXT-ALIGN: right
+}
+.rtl .pricing-table-header > LI {
+	PADDING-BOTTOM: 7px; PADDING-LEFT: 0px; PADDING-RIGHT: 11px; PADDING-TOP: 7px
+}
+.rtl .pricing-box-small {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: -2px
+}
+.rtl [class*='col-'].pricing-span {
+	FLOAT: right !important
+}
+.rtl .pricing-span-header {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px; FLOAT: right
+}
+
+@media Unknown    
+{
+UNKNOWN {
+	PADDING-LEFT: 0px !important; PADDING-RIGHT: 12px !important
+}
+UNKNOWN {
+	PADDING-LEFT: 12px !important; PADDING-RIGHT: 0px !important
+}
+    }
+.rtl .pricing-span {
+	FLOAT: right !important
+}
+
+@media Unknown    
+{
+UNKNOWN {
+	PADDING-LEFT: 12px !important; PADDING-RIGHT: 12px !important
+}
+    }
+.login-layout.rtl .main-content {
+	MARGIN-RIGHT: 0px
+}
+.login-layout.rtl .login-box .toolbar > DIV:first-child {
+	TEXT-ALIGN: right; FLOAT: right
+}
+.login-layout.rtl .login-box .toolbar > DIV:first-child > A {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 11px
+}
+.login-layout.rtl .login-box .toolbar > DIV:first-child + DIV {
+	TEXT-ALIGN: left; FLOAT: left
+}
+.login-layout.rtl .login-box .toolbar > DIV:first-child + DIV > A {
+	MARGIN-LEFT: 11px; MARGIN-RIGHT: 0px
+}
+.rtl .ace-thumbnails {
+	MARGIN-RIGHT: 0px
+}
+.rtl .ace-thumbnails > LI {
+	FLOAT: right
+}
+.rtl .ace-thumbnails > LI .tags {
+	DIRECTION: ltr
+}
+.rtl .ace-thumbnails > LI .tags > .label-holder {
+	TEXT-ALIGN: right; MARGIN: 1px 0px 0px 1px; DIRECTION: rtl
+}
+.rtl .itemdiv {
+	PADDING-LEFT: 3px; PADDING-RIGHT: 0px
+}
+.rtl .itemdiv > .user {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .itemdiv > .body {
+	MARGIN-LEFT: 12px; MARGIN-RIGHT: 50px
+}
+.rtl .itemdiv > .body > .time {
+	RIGHT: auto; LEFT: 9px
+}
+.rtl .itemdiv > .body > .text {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 7px
+}
+.rtl .itemdiv > .body > .text:after {
+	RIGHT: 16px; LEFT: -12px
+}
+.rtl .itemdiv > .body > .text > [class*='icon-quote-']:first-child {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: 0px
+}
+.rtl .dialogdiv.itemdiv:before {
+	RIGHT: 19px; LEFT: auto
+}
+.rtl .dialogdiv.itemdiv > .body {
+	BORDER-RIGHT-WIDTH: 2px; MARGIN-LEFT: 1px; BORDER-LEFT-WIDTH: 1px
+}
+.rtl .dialogdiv.itemdiv > .body:before {
+	BORDER-RIGHT-WIDTH: 2px; BORDER-TOP-WIDTH: 2px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; RIGHT: -7px; LEFT: auto; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg)
+}
+.rtl .dialogdiv.itemdiv > .body > .time {
+	FLOAT: left
+}
+.rtl .dialogdiv.itemdiv > .body > .text {
+	PADDING-RIGHT: 0px
+}
+.rtl .memberdiv.itemdiv {
+	FLOAT: right
+}
+.rtl .itemdiv .tools {
+	RIGHT: auto; LEFT: 4px
+}
+.rtl .commentdiv.itemdiv .tools {
+	RIGHT: auto; LEFT: 9px
+}
+.rtl .item-list {
+	MARGIN: 0px
+}
+.rtl .item-list > LI {
+	BORDER-RIGHT-WIDTH: 3px; BORDER-LEFT-COLOR: #ddd; BORDER-LEFT-WIDTH: 1px
+}
+.rtl LI[class*='item-'] {
+	BORDER-RIGHT-WIDTH: 3px; BORDER-LEFT-COLOR: #ddd; BORDER-LEFT-WIDTH: 1px
+}
+.rtl LI.item-orange {
+	BORDER-RIGHT-COLOR: #e8b110
+}
+.rtl LI.item-orange2 {
+	BORDER-RIGHT-COLOR: #f79263
+}
+.rtl LI.item-red {
+	BORDER-RIGHT-COLOR: #d53f40
+}
+.rtl LI.item-red2 {
+	BORDER-RIGHT-COLOR: #d15b47
+}
+.rtl LI.item-green {
+	BORDER-RIGHT-COLOR: #9abc32
+}
+.rtl LI.item-green2 {
+	BORDER-RIGHT-COLOR: #0490a6
+}
+.rtl LI.item-blue {
+	BORDER-RIGHT-COLOR: #4f99c6
+}
+.rtl LI.item-blue2 {
+	BORDER-RIGHT-COLOR: #3983c2
+}
+.rtl LI.item-blue3 {
+	BORDER-RIGHT-COLOR: #1144eb
+}
+.rtl LI.item-pink {
+	BORDER-RIGHT-COLOR: #cb6fd7
+}
+.rtl LI.item-black {
+	BORDER-RIGHT-COLOR: #505050
+}
+.rtl LI.item-grey {
+	BORDER-RIGHT-COLOR: #a0a0a0
+}
+.rtl LI.item-brown {
+	BORDER-RIGHT-COLOR: #a52a2a
+}
+.rtl LI.item-default {
+	BORDER-RIGHT-COLOR: #abbac3
+}
+.rtl LI.item-purple {
+	BORDER-RIGHT-COLOR: #6f3cc4
+}
+.rtl .profile-info-name {
+	TEXT-ALIGN: left; PADDING-LEFT: 10px; PADDING-RIGHT: 0px; RIGHT: 0px; LEFT: auto
+}
+.rtl .profile-info-value {
+	PADDING-LEFT: 4px; PADDING-RIGHT: 6px; MARGIN-LEFT: auto; MARGIN-RIGHT: 120px
+}
+.rtl .profile-info-value > SPAN + SPAN:before {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 1px
+}
+.rtl .profile-user-info-striped .profile-info-value {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px
+}
+.rtl .profile-activity IMG {
+	MARGIN-LEFT: 10px; MARGIN-RIGHT: 0px
+}
+.rtl .profile-activity .thumbicon {
+	MARGIN-LEFT: 10px; MARGIN-RIGHT: 0px
+}
+.rtl .profile-activity .tools {
+	RIGHT: auto; LEFT: 12px
+}
+.rtl .user-profile .user-title-label + .dropdown-menu {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: -12px
+}
+.rtl .user-status {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: auto
+}
+.rtl .profile-edit-tab-content.tab-content {
+	box-shadow: -1px 1px 0 0 rgba(0,0,0,0.2); -webkit-box-shadow: -1px 1px 0 0 rgba(0,0,0,0.2)
+}
+.rtl .nav-tabs.inbox-tabs > LI.active > A.btn-new-mail > .btn:before {
+	RIGHT: 35%; LEFT: auto
+}
+.rtl .tab-size-bigger.nav-tabs.inbox-tabs > LI.active > A.btn-new-mail > .btn:before {
+	RIGHT: 35%; LEFT: auto
+}
+.rtl .nav-tabs.inbox-tabs > LI.pull-left {
+	FLOAT: left
+}
+
+@media Unknown    
+{
+.rtl .inbox-tabs > .li-new-mail {
+	TEXT-ALIGN: left
+}
+    }
+.rtl .message-item .sender {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: 6px
+}
+.rtl .message-item .summary {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 30px
+}
+.rtl .message-item .message-flags {
+	RIGHT: auto; LEFT: 101%
+}
+.rtl .message-item .time {
+	FLOAT: left
+}
+.rtl .message-item .attachment {
+	FLOAT: left
+}
+.rtl .message-star {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: 6px
+}
+.rtl .mail-tag:unknown {
+	MARGIN-LEFT: 1px; MARGIN-RIGHT: 0px
+}
+.rtl UL.attachment-list {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 8px
+}
+.rtl .attached-file > [class*='icon-'] {
+	MARGIN-LEFT: 2px; MARGIN-RIGHT: auto
+}
+.rtl .messagebar-item-left {
+	TEXT-ALIGN: right
+}
+.rtl .messagebar-item-right {
+	TEXT-ALIGN: right
+}
+.rtl .message-navbar .nav-search {
+	RIGHT: 60px; LEFT: auto
+}
+.rtl .inbox-folders .btn > [class*='icon-']:first-child {
+	TEXT-ALIGN: right
+}
+.rtl .inbox-folders .active.btn:before {
+	BORDER-LEFT-STYLE: none; RIGHT: -1px; BORDER-RIGHT: #4f99c6 3px solid; LEFT: auto
+}
+.rtl .inbox-folders .btn .counter {
+	RIGHT: auto; LEFT: 8px
+}
+.rtl .message-form .controls {
+	MARGIN-RIGHT: 125px
+}
+.rtl .timeline-container:before {
+	RIGHT: 28px; LEFT: auto
+}
+.rtl .timeline-item .widget-box.transparent {
+	BORDER-LEFT-STYLE: none; BORDER-RIGHT: #dae1e5 3px solid
+}
+.rtl .timeline-item .transparent .widget-header > :first-child {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 8px
+}
+UNKNOWN {
+	BORDER-RIGHT-COLOR: #dbdbdb !important
+}
+.rtl .timeline-item .widget-box {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 60px
+}
+.rtl .timeline-info {
+	FLOAT: right
+}
+.rtl .timeline-label {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 34px
+}
+.rtl .timeline-style2:before {
+	DISPLAY: none
+}
+.rtl .timeline-style2 .timeline-item:before {
+	RIGHT: 90px; LEFT: auto
+}
+.rtl .timeline-style2 .timeline-item .widget-box.transparent {
+	BORDER-RIGHT-STYLE: none !important
+}
+.rtl .timeline-style2 .timeline-indicator {
+	RIGHT: 86px; LEFT: auto
+}
+.rtl .timeline-style2 .timeline-date {
+	TEXT-ALIGN: left; MARGIN-LEFT: 25px; MARGIN-RIGHT: auto
+}
+.rtl .timeline-style2 .timeline-item .widget-box {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 112px
+}
+.rtl .timeline-style2 .timeline-label {
+	TEXT-ALIGN: left; MARGIN-RIGHT: 0px
+}
+.rtl .ace-settings-container {
+	RIGHT: auto; LEFT: 0px
+}
+.rtl .ace-settings-btn.btn {
+	FLOAT: right; border-radius: 0 6px 6px 0
+}
+.rtl .ace-settings-box {
+	FLOAT: right
+}
+.rtl .grid2 {
+	FLOAT: right; BORDER-LEFT-STYLE: none; BORDER-RIGHT: #e3e3e3 1px solid
+}
+.rtl .grid3 {
+	FLOAT: right; BORDER-LEFT-STYLE: none; BORDER-RIGHT: #e3e3e3 1px solid
+}
+.rtl .grid4 {
+	FLOAT: right; BORDER-LEFT-STYLE: none; BORDER-RIGHT: #e3e3e3 1px solid
+}
+.rtl .grid2:first-child {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .grid3:first-child {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .grid4:first-child {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .easyPieChart canvas {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .external-event > [class*='icon-']:first-child {
+	BORDER-LEFT: #fff 1px solid; BORDER-RIGHT-WIDTH: 0px; MARGIN-LEFT: 5px; MARGIN-RIGHT: 0px
+}
+.rtl #cboxCurrent {
+	RIGHT: 64px; LEFT: auto
+}
+.rtl #cboxNext {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 5px
+}
+.rtl #cboxPrevious {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 5px
+}
+.rtl #cboxPrevious {
+	RIGHT: 27px; LEFT: auto
+}
+.rtl #cboxNext {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .ace-spinner .spinner-buttons > BUTTON.btn:active {
+	TOP: auto; LEFT: auto
+}
+.rtl .wizard-steps {
+	MARGIN-RIGHT: 0px
+}
+.rtl .wizard-actions {
+	TEXT-ALIGN: left
+}
+.rtl .wizard-steps LI:first-child:before {
+	RIGHT: 50%; LEFT: auto
+}
+.rtl .tree {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 9px
+}
+.rtl .tree:before {
+	BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; RIGHT: 0px; LEFT: auto
+}
+.rtl .tree .tree-folder .tree-folder-header .tree-folder-name {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 2px
+}
+.rtl .tree .tree-folder .tree-folder-header > [class*='icon-']:first-child {
+	MARGIN: -2px -2px 0px 0px
+}
+.rtl .tree .tree-folder:after {
+	BORDER-LEFT-STYLE: none; RIGHT: -15px; BORDER-RIGHT: #fff 1px solid; LEFT: auto
+}
+.rtl .tree .tree-folder .tree-folder-content {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 23px
+}
+.rtl .tree .tree-folder .tree-folder-content:before {
+	BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; RIGHT: -14px; LEFT: auto
+}
+.rtl .tree .tree-item .tree-item-name {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 3px
+}
+.rtl .tree .tree-item .tree-item-name > [class*='icon-']:first-child {
+	MARGIN-LEFT: 3px; MARGIN-RIGHT: 0px
+}
+.rtl .tree .tree-folder:before {
+	RIGHT: -13px; LEFT: auto
+}
+.rtl .tree .tree-item:before {
+	RIGHT: -13px; LEFT: auto
+}
+.rtl .tree .tree-loading {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 36px
+}
+.rtl #gritter-notice-wrapper {
+	TEXT-ALIGN: right; DIRECTION: rtl; RIGHT: auto; LEFT: 20px
+}
+.rtl .gritter-close {
+	RIGHT: auto; LEFT: 3px
+}
+.rtl .gritter-image {
+	FLOAT: right
+}
+.rtl .gritter-with-image {
+	FLOAT: left
+}
+.rtl .gritter-without-image {
+	FLOAT: left
+}
+.rtl .wysiwyg-toolbar .dropdown-menu {
+	TEXT-ALIGN: right
+}
+.rtl .wysiwyg-toolbar .wysiwyg-choose-file {
+	MARGIN-LEFT: auto
+}
+.rtl .wysiwyg-toolbar .btn-group > .btn {
+	FLOAT: none
+}
+.rtl .wysiwyg-toolbar .btn-group > .inline > .btn {
+	FLOAT: none
+}
+.rtl .wysiwyg-style1 .btn-group:after {
+	BORDER-LEFT-STYLE: none; RIGHT: -2px; BORDER-RIGHT: #e1e6ea 1px solid; LEFT: auto
+}
+.rtl .wysiwyg-style2 .btn-group:after {
+	BORDER-LEFT-STYLE: none; RIGHT: -2px; BORDER-RIGHT: #e1e6ea 1px solid; LEFT: auto
+}
+.rtl .wysiwyg-toolbar .dropdown-menu INPUT[type=text] {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 8px
+}
+.rtl .wysiwyg-toolbar .dropdown-menu .btn {
+	MARGIN-LEFT: 8px; MARGIN-RIGHT: 1px
+}
+.rtl .widget-body .md-header {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 9px
+}
+.rtl .widget-body .md-header .btn-inverse {
+	PADDING-LEFT: 5px; PADDING-RIGHT: 0px
+}
+.rtl .select2-container .select2-choice {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 8px
+}
+.rtl .select2-allowclear.select2-container .select2-choice .select2-chosen {
+	MARGIN-LEFT: 42px; MARGIN-RIGHT: auto
+}
+.rtl .select2-container .select2-choice > .select2-chosen {
+	MARGIN-LEFT: 26px; MARGIN-RIGHT: auto
+}
+.rtl .select2-container .select2-choice ABBR {
+	RIGHT: auto; LEFT: 20px
+}
+.rtl .select2-container .select2-choice .select2-arrow {
+	RIGHT: auto; LEFT: 0px
+}
+.rtl .select2-container .select2-choice .select2-arrow B:before {
+	RIGHT: 5px; LEFT: auto
+}
+.rtl .select2-container-multi .select2-choices LI {
+	FLOAT: right
+}
+.rtl .select2-container-multi .select2-choices .select2-search-choice {
+	PADDING-BOTTOM: 3px; MARGIN: 3px 5px 3px 0px; PADDING-LEFT: 5px; PADDING-RIGHT: 18px; PADDING-TOP: 3px
+}
+.rtl .select2-results {
+	MARGIN-RIGHT: 0px
+}
+.rtl .select2-drop {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .select2-drop INPUT {
+	PADDING-LEFT: 20px; PADDING-RIGHT: 5px
+}
+.rtl .select2-drop .select2-results {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 4px
+}
+.rtl .select2-search:after {
+	RIGHT: -20px; LEFT: auto
+}
+.rtl .select2-search INPUT.select2-active {
+	BACKGROUND-POSITION: 0px 0px
+}
+.rtl .editable-buttons {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 1px
+}
+.rtl .editable-buttons .btn {
+	MARGIN: 0px 0px 0px 1px
+}
+.rtl .editable-input .ace-spinner {
+	MARGIN-LEFT: 8px; MARGIN-RIGHT: auto
+}
+.rtl .editable-inline .editable-slider {
+	MARGIN-LEFT: 4px; MARGIN-RIGHT: auto
+}
+.rtl .tags .tag {
+	PADDING-LEFT: 22px; PADDING-RIGHT: 9px; text-shadow: -1px 1px 1px rgba(0,0,0,0.15)
+}
+.rtl .tags .tag .close {
+	FLOAT: none; RIGHT: auto; LEFT: 0px
+}
+.rtl .ui-datepicker .ui-datepicker-prev:before {
+	CONTENT: "?"
+}
+.rtl .ui-datepicker .ui-datepicker-next:before {
+	CONTENT: "?"
+}
+.rtl .ui-menu {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .ui-dialog {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .ui-jqdialog {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .ui-menu .ui-menu-item A .ui-menu-icon {
+	FLOAT: left
+}
+.rtl .ui-menu .ui-menu-item A .ui-menu-icon:before {
+	CONTENT: "?"
+}
+.rtl .ui-dialog .ui-dialog-titlebar-close {
+	RIGHT: auto !important; LEFT: 8px !important
+}
+.rtl .ui-jqdialog .ui-jqdialog-titlebar-close {
+	RIGHT: auto !important; LEFT: 8px !important
+}
+.rtl .ui-tabs .ui-tabs-nav LI {
+	FLOAT: right; MARGIN-LEFT: 0.2em; MARGIN-RIGHT: 0px
+}
+.rtl .ui-tabs .ui-tabs-nav LI A {
+	FLOAT: right
+}
+.rtl .ui-tabs .ui-tabs-nav LI.ui-state-default > A {
+	MARGIN-LEFT: -1px; MARGIN-RIGHT: auto
+}
+.rtl .ui-accordion .ui-accordion-header {
+	PADDING-LEFT: 8px; PADDING-RIGHT: 24px
+}
+.rtl .ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+	POSITION: absolute; RIGHT: 10px; LEFT: auto
+}
+.rtl .ui-accordion .ui-accordion-header .ui-accordion-header-icon:before {
+	CONTENT: "?"
+}
+.rtl .ui-accordion .ui-state-active.ui-accordion-header .ui-accordion-header-icon:before {
+	CONTENT: "?"
+}
+.rtl .ui-jqgrid .ui-jqgrid-hdiv {
+	BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.rtl .ui-jqgrid .ui-jqgrid-labels TH {
+	TEXT-ALIGN: right !important; BORDER-LEFT: #e1e1e1 1px solid; BORDER-RIGHT-STYLE: none !important
+}
+.rtl .ui-jqgrid .ui-jqgrid-labels TH:first-child {
+	BORDER-RIGHT: #e1e1e1 1px solid
+}
+.rtl .ui-jqgrid-labels TH[id*='_cb']:first-child {
+	TEXT-ALIGN: center !important
+}
+.rtl .ui-jqgrid-sortable {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 4px
+}
+.rtl .ui-jqdialog-content .searchFilter TABLE {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 4px
+}
+.rtl .ui-jqdialog-content .searchFilter .add-group {
+	MARGIN-LEFT: auto !important; MARGIN-RIGHT: 4px !important
+}
+.rtl .ui-jqdialog-content .searchFilter .add-rule {
+	MARGIN-LEFT: auto !important; MARGIN-RIGHT: 4px !important
+}
+.rtl .ui-jqdialog-content .searchFilter .delete-group {
+	MARGIN-LEFT: auto !important; MARGIN-RIGHT: 4px !important
+}
+.rtl .ui-jqdialog-content .CaptionTD {
+	TEXT-ALIGN: left
+}
+.rtl .ui-jqdialog .ui-widget-header .ui-jqdialog-title {
+	TEXT-ALIGN: right; PADDING-LEFT: 0px; PADDING-RIGHT: 12px; FLOAT: right !important
+}
+.rtl .dd {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl .dd-list {
+	TEXT-ALIGN: right; DIRECTION: rtl; MARGIN-RIGHT: 0px
+}
+.rtl .dd-list .dd-list {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 30px
+}
+.rtl .dd2-handle + .dd2-content {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 44px
+}
+.rtl .dd2-handle + [class*='btn-'].dd2-content {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 44px
+}
+.rtl .dd-item > BUTTON {
+	MARGIN: 5px 5px 5px 1px; FLOAT: right; RIGHT: 1px; LEFT: auto
+}
+.rtl .dd-item.dd2-item > BUTTON {
+	MARGIN-LEFT: 5px; MARGIN-RIGHT: 34px
+}
+.rtl .dd-dragel > LI > .dd-handle {
+	BORDER-LEFT-WIDTH: 0px; BORDER-RIGHT: #777 2px solid
+}
+.rtl .dd-list > LI[class*='item-'] {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.rtl .dd-list > LI[class*='item-'] > .dd-handle {
+	BORDER-LEFT-COLOR: #dae2ea; BORDER-LEFT-WIDTH: 1px; BORDER-RIGHT: 2px solid
+}
+.rtl .dd-list > LI > .dd-handle .sticker {
+	RIGHT: auto; LEFT: 0px
+}
+.rtl .dd2-handle {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; RIGHT: 0px; LEFT: auto
+}
+.rtl .dd-dragel > LI > .dd2-handle {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; RIGHT: 0px; LEFT: auto
+}
+.rtl .limiterBox {
+	TEXT-ALIGN: right; DIRECTION: rtl
+}
+.rtl OL.linenums {
+	MARGIN-RIGHT: 33px
+}
+.rtl OL.linenums LI {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 12px
+}
+.rtl .linenums.prettyprint {
+	box-shadow: -40px 0 0 #fbfbfc inset,-41px 0 0 #ececf0 inset; -webkit-box-shadow: -40px 0 0 #fbfbfc inset,-41px 0 0 #ececf0 inset
+}
+
+@media Unknown    
+{
+UNKNOWN {
+	RIGHT: auto; LEFT: -80px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: 100px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: -40px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: 60px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: -120px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: 140px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: -80px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: 100px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: -50px
+}
+UNKNOWN {
+	RIGHT: auto; LEFT: 70px
+}
+UNKNOWN {
+	RIGHT: -5px; LEFT: auto
+}
+UNKNOWN {
+	RIGHT: 25px; LEFT: auto
+}
+UNKNOWN {
+	RIGHT: -60px; LEFT: auto
+}
+UNKNOWN {
+	RIGHT: 80px; LEFT: auto
+}
+UNKNOWN {
+	RIGHT: -110px; LEFT: auto
+}
+UNKNOWN {
+	RIGHT: 130px; LEFT: auto
+}
+.rtl .ace-nav > LI {
+	TEXT-ALIGN: right; FLOAT: none !important
+}
+.rtl .ace-nav > LI:first-child {
+	BORDER-LEFT-STYLE: none; BORDER-RIGHT: #ddd 1px solid
+}
+.rtl .ace-nav > LI:unknown {
+	BORDER-LEFT: #ddd 1px solid
+}
+.rtl .ace-nav .nav-user-photo {
+	MARGIN-LEFT: 0px
+}
+.rtl .user-info {
+	MARGIN-LEFT: auto; RIGHT: auto; MARGIN-RIGHT: 1px; LEFT: 2px
+}
+.rtl .nav-search {
+	RIGHT: auto; LEFT: 5px
+}
+.rtl .navbar-brand {
+	MARGIN-RIGHT: 0px
+}
+.rtl .sidebar {
+	BORDER-RIGHT-WIDTH: 0px; BORDER-LEFT-WIDTH: 1px; LEFT: auto; box-shadow: -2px 1px 2px 0 rgba(0,0,0,0.2)
+}
+.rtl .display.sidebar {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .display.menu-min.sidebar {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .menu-min.sidebar {
+	RIGHT: -50px; LEFT: auto
+}
+.rtl .main-content {
+	MARGIN-LEFT: auto !important; MARGIN-RIGHT: 0px !important
+}
+.rtl .menu-toggler {
+	PADDING-LEFT: 0px; PADDING-RIGHT: 33px; MARGIN-LEFT: 2px; RIGHT: 0px; MARGIN-RIGHT: auto; LEFT: auto
+}
+.rtl .menu-toggler:before {
+	RIGHT: 4px; LEFT: auto
+}
+.rtl .menu-toggler:after {
+	RIGHT: 4px; LEFT: auto
+}
+.rtl .menu-toggler > .menu-text {
+	RIGHT: 0px; LEFT: auto
+}
+.rtl .menu-toggler > .menu-text:after {
+	RIGHT: -8px; LEFT: auto
+}
+.rtl .breadcrumb {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 90px
+}
+.rtl .navbar .navbar-brand {
+	DISPLAY: block; FLOAT: none
+}
+.rtl .ace-thumbnails > LI {
+	FLOAT: none
+}
+.rtl .breadcrumb {
+	MARGIN-LEFT: 0px; MARGIN-RIGHT: 36px
+}
+.rtl .menu-toggler > .menu-text:after {
+	RIGHT: -13px; LEFT: auto
+}
+.rtl .fc-header TD {
+	TEXT-ALIGN: right
+}
+.rtl .grid2 {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .grid3 {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .grid4 {
+	BORDER-RIGHT-WIDTH: 0px
+}
+.rtl .grid2 > [class*='pull-'] {
+	RIGHT: auto; LEFT: 11px
+}
+.rtl .grid3 > [class*='pull-'] {
+	RIGHT: auto; LEFT: 11px
+}
+.rtl .grid4 > [class*='pull-'] {
+	RIGHT: auto; LEFT: 11px
+}
+.rtl .help-inline {
+	PADDING-RIGHT: 0px
+}
+.rtl .input-icon + .help-inline {
+	PADDING-RIGHT: 0px
+}
+.rtl .profile-info-value {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 90px
+}
+.rtl .profile-user-info-striped .profile-info-name {
+	TEXT-ALIGN: right; PADDING-LEFT: 0px; PADDING-RIGHT: 10px
+}
+.rtl .profile-user-info-striped .profile-info-value {
+	MARGIN-LEFT: auto; MARGIN-RIGHT: 10px
+}
+
+}

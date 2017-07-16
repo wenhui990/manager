@@ -1,0 +1,54 @@
+/*树形导航*/
+
+
+/*-----样式-------*/
+.form-horizontal .control-label{text-align: left;}
+._sch{display: inline-block;width: 140px; line-height: 38px;background:#00a6ff ;cursor: pointer;text-align: center;color: #FFFFFF;border-radius:5px ;margin-left: 10px;font-size: 16px;}
+.add_sch{border: none;background: none;;outline: none;display: none;}
+._required{width: 15px ;height: 15px;display: inline-block;background: url(../../images/products/must_1_06.png) no-repeat left center;margin-right: 10px;}
+ ._requiredDate{background: none;}
+._btm{display: inline-block;width: 118px;line-height: 36px;text-align: center;cursor: pointer;border-radius: 5px;margin-left: 10px;font-size: 16px;background: #FFFFFF;color: #35383c;border: 1px solid #cccccc;}
+._btm:hover{color: #35383c;text-decoration: none;}
+
+/*---提示信息-----*/
+.exam_hint{color: red;display: none;}
+
+
+
+/*---复选框---*/
+.piaochecked,.SubjectChecked {
+position: relative;
+left: 10px;
+top: 10px;
+width: 80px;
+height: 14px;
+float: left;
+cursor: pointer;
+margin-left:5px;
+margin-bottom: 5px;
+text-align: center;
+background-image:url(../../images/user/iname/check-off.png);
+background-repeat: no-repeat;
+background-position: 0px 0px;
+}
+
+.on_check {
+background-position: 0px 0px;
+background-image:url(../../images/user/iname/check-on.png);
+}
+.all_1,.sub_all {
+position: absolute;
+top: -5px;
+left: 0;
+margin: 0;
+padding: 0;
+display: inline;
+width: 14px;
+height: 20px;
+opacity: 0;
+cursor: pointer;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+filter: alpha(opacity=0);
+}
+
+.SetStyle{font-size: 12px;cursor: pointer;width: 80px;}

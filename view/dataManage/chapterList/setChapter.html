@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>设置章节目录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../../css/zTreeStyle/zTreeStyle.css"/>
+		<style type="text/css">
+			.text_l{text-align: left !important;}
+			.col_1{color: #666 !important;}
+			.col_2{color: #03a8ed !important;}
+			#chapterTab tr td{border: 1px solid #cfcfcf;text-align: center !important;}
+			#chapterTab tr td input{width: 80%;margin: 0 10%;}
+		</style>
+	</head>
+	<body style="background: #fff;">
+		<div class="main container-fluid clearFix">
+			<div style="width: 100%;text-align: center;height: 80px;line-height: 80px;font-size:20px;font-weight: bold;">初中数学人教版七年级上章节目录</div>
+			<div class="lefttree fl" style="min-height: 250px;height: auto;">
+				<ul id="treeDemo" class="ztree" style="min-height: 240px;overflow: hidden;"></ul>
+			</div>
+			<div class="rightContent fr">
+				<div class="row head">
+					<div class="btngroup">
+						<input class="commonbtn" type="button" value="保存"/>
+						<input id="del" class="commonbtn" type="button" value="删除"/>
+						<input id="up" class="commonbtn" type="button" value="上移"/>
+						<input id="down" class="commonbtn" type="button" value="下移"/>
+						<input class="commonbtn" type="button" value="返回"/>
+					</div>
+				</div>
+				<div class="list_btm" style="padding-bottom: 0;">
+					<form class="form-horizontal pad_t_20 pad_l_40" role="form">
+						<div class="form-group"><label class="col-sm-1 control-label _list_name text_l">所选章节</label></div>	
+						<div id="rootNode" class="form-group col_1" style="display: none;">
+							<label class="col-sm-1 control-label _list_name text_l">章节编号：</label>
+							<label class="col-sm-2 control-label _list_name text_l">————</label>
+							<label class="col-sm-1 control-label _list_name text_l">章节名称：</label>
+							<label class="col-sm-2 control-label _list_name text_l">根目录</label>
+						</div>
+						<div id="otherNode" class="form-group col_1">
+							<label class="col-sm-1 control-label _list_name text_l">章节编号：</label>
+							<div class="col-sm-2 _list_name text_l">
+								<input id="chapterId" class="form-control" type="text" value="">
+							</div>
+							<label class="col-sm-1 control-label _list_name text_l">章节名称：</label>
+							<div class="col-sm-2 _list_name text_l">
+								<input id="chapterName" class="form-control" type="text" value="">
+							</div>
+						</div>
+						<div class="form-group"><label class="col-sm-1 control-label _list_name text_l">下级章节</label></div>
+						<div class="form-group"><label id="addRow" class="col-sm-1 control-label _list_name text_l col_2" onclick="addRow()">添加行</label></div>
+						<div class="form-group">
+							<div class="table-responsive" style="width:70%;">
+								<table id="chapterTab" class="table table-condensed addlist" style="text-align: center;">
+									<tr id="first">
+										<td><strong>章节编号</strong></td>
+										<td><strong>章节名称</strong></td>
+										<td><strong>操作</strong></td>
+									</tr>
+									<tr>
+										<td>
+											<input class="form-control" type="text" value="1.1">
+										</td>
+										<td>
+											<input class="form-control" type="text" value="">
+										</td>
+										<td>
+											<a onclick="delRow(chapterTab, this)">删除</a>
+											<a class="up" onclick="fnUp(this)">上移</a>
+											<a class="down" onclick="fnNext(this)">下移</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input class="form-control" type="text" value="1.2">
+										</td>
+										<td>
+											<input class="form-control" type="text" value="">
+										</td>
+										<td>
+											<a onclick="delRow(chapterTab, this)">删除</a>
+											<a class="up" onclick="fnUp(this)">上移</a>
+											<a class="down" onclick="fnNext(this)">下移</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</form>
+				</div>	
+			</div>
+	</body>
+	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../../js/dataManage/setChapter.js"></script>
+	<script type="text/javascript" src="../../../plugin/ztree/jquery.ztree.core-3.5.js"></script>
+	<script>
+		$(function(){
+			//根目录与其他目录
+			var $rootNode=$("#treeDemo_1_span");//根目录
+			$rootNode.click(function(){//点击根目录
+				$("#otherNode").hide();
+				$("#rootNode").show();
+			});
+			var $otherNode=$("#treeDemo li a").not("#treeDemo_1_a");//除去根节点的所有节点点击事件 .not(".level1")--第几章
+			$otherNode.click(function(){
+				$("#otherNode").show();
+				$("#rootNode").hide();
+			})
+			//左侧树点击右侧刷新
+			/*var $rootNode=$("#treeDemo_1_span");//根目录
+			$rootNode.click(function(){//点击根目录
+				$("#otherNode").hide();
+				$("#rootNode").show();
+				//$("#chapterTab tr").not("#first").find("td").find("input").val("");点击根目录清空表格内容
+			});
+			var $otherNode=$("#treeDemo li a").not("#treeDemo_1_a");//除去根节点的所有节点点击事件 .not(".level1")--第几章
+			console.log($otherNode)
+			$otherNode.click(function(){
+				$("#otherNode").show();
+				$("#rootNode").hide();
+				$("#chapterTab tr").not("#first").text("");
+				var $zjInfos=$(this).find("span.node_name").html();//选中节点的内容
+				var $zjInfo=$zjInfos.split(" ");//以空格分割章节编号和名称
+				var $zjId=$zjInfo[0];//章节编号
+				var $zjName=$zjInfo[1];//章节名称
+				$("#chapterId").val($zjId);//右侧章节编号赋值
+				$("#chapterName").val($zjName);//右侧章节名称赋值
+				var chapterNodes=[];//新建数组
+				//var $child=$(this).next().children().text();//当前选中节点的子节点
+				var $child=$(this).next("ul").find("span.node_name");//选中节点的所有子节点
+				$child.each(function(){
+					chapterNodes.push($(this).text());//选中节点的子节点的值放入数组
+				});
+				console.log(chapterNodes);
+				var zjTr="";
+				for (var i=0;i<chapterNodes.length;i++){
+					var nodes=chapterNodes[i].split(" ");
+					var zjid=nodes[0];
+					var zjname=nodes[1];
+				  	zjTr +='<tr><td>'+nodes[0]+'</td>'+'<td>'+nodes[1]+'</td><td><a onclick="delRow(chapterTab, this)">删除</a> <a class="up" onclick="fnUp(this)">上移</a> <a class="down" onclick="fnNext(this)">下移</a></td></tr>';
+				}
+				$("#chapterTab").append(zjTr);
+			})*/
+			
+			
+		})
+		
+	</script>
+	
+</html>

@@ -1,0 +1,94 @@
+/* For treemenu.js */
+/*------树形导航--------*/
+div.list-shu{margin: 20px 0 10px 0;}
+.mask-tree{height: 250px;overflow: auto;padding-left: 60px;}
+.mask-ti{width: 300px;line-height: 50px;text-align: center;}
+.mask-ti button{border: none;background: #1DB5E1;color: #FFFFFF;}
+
+
+
+
+.tree {
+	color: #ffffff;
+}
+
+.tree li,
+.tree li> a,
+.tree li> span {
+	padding: 4pt;
+	border-radius: 4px;
+}
+
+.tree li a {
+	color: #333333;
+	text-decoration: none;
+	line-height: 20pt;
+	border-radius: 4px;
+}
+
+.tree li a:hover {
+	background-color: #4bd368;
+	color: #fff;
+}
+
+.active {
+	background-color: #4bd368;
+	color: white;
+}
+
+.active a {
+	color: #fff;
+}
+.tree li a.active{
+	color: #fff;
+}
+.tree li a.active:hover {
+	background-color: #4bd368;
+}
+
+.treemenu li {
+	list-style: none;
+	padding-left: 15px;
+}
+
+.treemenu .toggler {
+	cursor: pointer;
+}
+
+.treemenu .toggler:before {
+	display: inline-block;
+	margin-right: 2pt;
+}
+
+li.tree-empty> .toggler {
+	color: #aaa;
+	
+}
+
+li.tree-empty> .toggler:before {
+	content: "";
+	color: #667788;
+	margin-right: 2pt;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	cursor: auto;
+}
+
+li.tree-closed> .toggler:before {
+	background: url(../../images/_bottom.png) no-repeat center center;
+	content: "";
+	color: #667788;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+}
+
+li.tree-opened> .toggler:before {
+	content: "";
+	color: #667788;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	background: url(../../images/_left.png) no-repeat center center;
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="wangjian" content="web" />
+		<title>新建学校</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+	</head>
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn save" type="button" value="保存"/>
+					<input class="commonbtn back" type="button" value="返回"/>
+				</div>
+			</div>
+			<div class="list_btm">
+				
+				<div class="form-horizontal">
+					<div class="form-group">
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">学校名称</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="school_name" id="school_name" class="form-control" value="" />
+						</div>
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">上级机构管理</span>
+						</label>
+						<div class="col-sm-3">
+							<select  class="selectpicker form-control organization" >
+						      	<option value="">请选择</option>
+								<option value="2">县教育局</option>
+								<option value="3">直属教育局</option>
+								<option value="4">市教育局</option>
+						      </select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">学段学制</span>
+						</label>
+						<div class="col-sm-10">
+							<label>
+						      <input type="checkbox" name="learning_period" id="kindergarten" value="幼儿园" /> 幼儿园
+						    </label>
+						    <div id="">
+						    	<label>
+							      <input type="checkbox" name="learning_period" id="primary_5" value="小学（5年制）" /> 小学（5年制）
+							    </label>
+							    <label>
+							      <input type="checkbox" name="learning_period" id="primary_6" value="小学（6年制）" /> 小学（6年制）
+							    </label>
+						    </div>
+						    <div id="">
+						    	<label>
+							      <input type="checkbox" name="learning_period" id="junior_high_school_3" value="初中（3年制）" /> 初中（3年制）
+							    </label>
+							    <label>
+							      <input type="checkbox" name="learning_period" id="junior_high_school_4" value="初中（4年制）" /> 初中（4年制）
+							    </label>
+						    </div>
+						    <div id="">
+						    	<label>
+							      <input type="checkbox" name="learning_period" id="senior_high_school_3" value="高中（3年制）" /> 高中（3年制）
+							    </label>
+						    </div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">学校地址</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="school_address" id="school_address" class="form-control" value="" />
+						</div>
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">学校邮编</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="school_postcode" id="school_postcode" class="form-control" value="" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">办公电话</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="school_phone" id="school_phone" class="form-control" value="" />
+						</div>
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">学校网址</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="school_url" id="school_url" class="form-control" value="" />
+						</div>
+					</div>
+				</div>
+				
+			
+			</div>
+		</div>	
+					
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/organizationalManage/add_grade.js" ></script>
+</html>

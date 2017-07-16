@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="wangjian" content="web" />
+		<title>新建家长</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css" />
+		<style type="text/css">
+			.delete_line:hover {
+				color: red;
+			}
+			
+			.none {
+				display: none;
+			}
+			
+			.subject_grade_lists {
+				text-align: center;
+			}
+			
+			.subject_grade_lists th {
+				text-align: center;
+			}
+			
+			.subject_grade_lists_td select {
+				border: 0;
+				box-shadow: none;
+				text-align: center;
+			}
+			
+			.subject_grade_lists_td span {
+				padding: 10px 20px;
+			}
+			
+			.subject_grade_lists_td span:hover {
+				cursor: pointer;
+			}
+			
+			.student_relation {
+				line-height: 37px;
+			}
+			
+			.student_relation label {
+				margin-right: 15px;
+			}
+			
+			.relate_child,.relate_child_template {
+				margin: 10px;
+				border: 1px solid #000;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<input class="commonbtn save" type="button" value="保存" />
+					<input class="commonbtn back" type="button" value="返回" />
+				</div>
+			</div>
+			<div class="list_btm">
+				<div class="form-horizontal relate_child_all">
+					<div class="form-group">
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">家长姓名</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="parents_name" id="parents_name" class="form-control" value="" />
+						</div>
+
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">家长手机号</span>
+						</label>
+						<div class="col-sm-3">
+							<input type="text" name="parents_phone" id="parents_phone" class="form-control" value="" />
+						</div>
+					</div>
+
+					<hr style="border-color: #d6d5d5;" />
+
+					<div class="relate_child">
+						<div class="form-group">
+							<label class="col-sm-2 control-label text-left" style="text-align: left;text-indent: 1em;">
+								<span>关联孩子</span>
+							</label>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label text-right">
+								<span class="warn" style="padding-left: 20px;">孩子所在学校</span>
+							</label>
+							<div class="col-sm-3">
+								<select class=" form-control organization schoolLists">
+									<option value="">请选择</option>
+									<option value="2">县教育局</option>
+									<option value="3">直属教育局</option>
+									<option value="4">市教育局</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label text-right">
+								<span class="warn" style="padding-left: 20px;">所在年级</span>
+							</label>
+							<div class="col-sm-3">
+								<select class=" form-control organization gradeLists">
+									<option value="">请选择</option>
+									<option value="2">一年级</option>
+									<option value="3">二年级</option>
+									<option value="4">三年级</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label text-right">
+								<span class="warn" style="padding-left: 20px;">所在班级</span>
+							</label>
+							<div class="col-sm-3">
+								<select class=" form-control organization classGradeLists">
+									<option value="">请选择</option>
+									<option value="2">一年级1班</option>
+									<option value="3">二年级2班</option>
+									<option value="4">三年级3班</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label text-right">
+								<span class="warn" style="padding-left: 20px;">孩子姓名</span>
+							</label>
+							<div class="col-sm-3">
+								<input type="text" name="child_name" id="child_name" class="form-control" value="" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label text-right">
+								<span class="warn" style="padding-left: 20px;">与孩子关系</span>
+							</label>
+							<div class="col-sm-8 to_child_relate">
+								<label for="dad">
+									<input type="radio" name="student_relation" id="dad" class="" value="爸爸" />爸爸
+								</label>
+								<label for="mom">
+									<input type="radio" name="student_relation" id="mom" class="" value="妈妈" />妈妈
+								</label>
+								<label for="grandpa">
+									<input type="radio" name="student_relation" id="grandpa" class="" value="爷爷" />爷爷
+								</label>
+								<label for="grandma">
+									<input type="radio" name="student_relation" id="grandma" class="" value="奶奶" />奶奶
+								</label>
+								<label for="wgrandpa">
+									<input type="radio" name="student_relation" id="wgrandpa" class="" value="外公" />外公
+								</label>
+								<label for="wgrandma">
+									<input type="radio" name="student_relation" id="wgrandma" class="" value="外婆" />外婆
+								</label>
+								<label for="guardian">
+									<input type="radio" name="student1_relation1" id="guardian" class="" value="监护人" />监护人
+								</label>
+							</div>
+							<div class="col-sm-2">
+								<input type="button" name="" class="change_relate" value="删除" />
+							</div>
+						</div>
+						
+					</div>
+
+				</div>
+				<div class="row" style="margin-left: 25px;">
+					<div class="btngroup">
+						<input class="commonbtn continue_relate" type="button" value="继续关联" />
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
+		<!--关联孩子模版html-->
+		<div class="relate_child_template none">
+			<div class="form-group">
+				<label class="col-sm-2 control-label text-left" style="text-align: left;text-indent: 1em;">
+					<span>关联孩子</span>
+				</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label text-right">
+					<span class="warn" style="padding-left: 20px;">孩子所在学校</span>
+				</label>
+				<div class="col-sm-3">
+					<select class=" form-control organization schoolLists">
+						<option value="">请选择</option>
+						<option value="2">县教育局</option>
+						<option value="3">直属教育局</option>
+						<option value="4">市教育局</option>
+					</select>
+				</div>
+				<label class="col-sm-2 control-label text-right">
+					<span class="warn" style="padding-left: 20px;">所在年级</span>
+				</label>
+				<div class="col-sm-3">
+					<select class=" form-control organization gradeLists">
+						<option value="">请选择</option>
+						<option value="2">一年级</option>
+						<option value="3">二年级</option>
+						<option value="4">三年级</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label text-right">
+					<span class="warn" style="padding-left: 20px;">所在班级</span>
+				</label>
+				<div class="col-sm-3">
+					<select class=" form-control organization classGradeLists">
+						<option value="">请选择</option>
+						<option value="2">一年级1班</option>
+						<option value="3">二年级2班</option>
+						<option value="4">三年级3班</option>
+					</select>
+				</div>
+				<label class="col-sm-2 control-label text-right">
+					<span class="warn" style="padding-left: 20px;">孩子姓名</span>
+				</label>
+				<div class="col-sm-3">
+					<input type="text" name="child_name" id="child_name" class="form-control" value="" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label text-right">
+					<span class="warn" style="padding-left: 20px;">与孩子关系</span>
+				</label>
+				<div class="col-sm-8 to_child_relate">
+					<label for="dad">
+						<input type="radio" name="a" id="dad" class="" value="爸爸" />爸爸
+					</label>
+					<label for="mom">
+						<input type="radio" name="a" id="mom" class="" value="妈妈" />妈妈
+					</label>
+					<label for="grandpa">
+						<input type="radio" name="a" id="grandpa" class="爷爷" value="" />爷爷
+					</label>
+					<label for="grandma">
+						<input type="radio" name="a" id="grandma" class="奶奶" value="" />奶奶
+					</label>
+					<label for="wgrandpa">
+						<input type="radio" name="a" id="wgrandpa" class="外公" value="" />外公
+					</label>
+					<label for="wgrandma">
+						<input type="radio" name="a" id="wgrandma" class="外婆" value="" />外婆
+					</label>
+					<label for="guardian">
+						<input type="radio" name="a" id="guardian" class="监护人" value="" />监护人
+					</label>
+				</div>
+				<div class="col-sm-2">
+					<input type="button" name="" class="change_relate" value="删除" />
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../js/userManage/add_parents.js"></script>
+
+</html>
