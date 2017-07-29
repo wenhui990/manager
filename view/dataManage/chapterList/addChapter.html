@@ -10,112 +10,227 @@
 		<link rel="stylesheet" type="text/css" href="../../../plugin/layer/skin/layer.css"/>
 	</head>
 	<body>
-		<div class="main container-fluid">
+		<style type="text/css">
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
+		<div class="main container-fluid" id="chaptermain" v-cloak>
 			<div class="row head">
 				<div class="btngroup">
-					<input class="commonbtn preserve" type="button" value="保存"/>
+					<input class="commonbtn preserve" type="button" value="保存" v-on:click="submit($event)"/>
 					<a href="chapterList.html"><input class="commonbtn" type="button" value="返回"/></a>
 				</div>
 			</div>
 			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;height: auto;">
 				<form class="form-horizontal pad_l_40" role="form">
-					<div class="form-group" style="height: 34px;"> 
-						<label for="" class="col-sm-2 control-label  warn">知识结构标准类型</label>
+					<div class="form-group" style="height: 34px;">
+						<label for="" class="col-sm-2 control-label  warn">知识结构标准</label>
 						<div class="col-sm-3">
 							<label for="mistake_hbe">
-								<input class="" type="radio" name="hbe" id="mistake_hbe" value="" />非课标版	
+								<input class="" type="radio" name="hbe" id="mistake_hbe" value="2" v-model="selectedTextBookType" v-on:click="reset($event)"/>&nbsp;非课标版
 							</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="hbe">
-								<input class="" type="radio" name="hbe" id="hbe" value="" />课标版	
+								<input class="" type="radio" name="hbe" id="hbe" value="1" v-model="selectedTextBookType" v-on:click="reset($event)"/>&nbsp;课标版
 							</label>
 						</div>
 					</div>
-					<div class="form-group" style="height: 34px;"> 
+					<div class="form-group" style="height: 34px;">
 						<label for="" class="col-sm-2 control-label text-center warn">学段</label>
 						<div class="col-sm-3">
-							<select class="form-control _select period">
-								<option value="">请选择</option>
-								<option value="2">小学</option>
-								<option value="3">初中</option>
-								<option value="4">高中</option>
-							</select>		
+							<select class="form-control _select period" v-model="selectedStage">
+								<option v-bind:value="0">请选择</option>
+								<option v-bind:value="2">小学</option>
+								<option v-bind:value="3">初中</option>
+								<option v-bind:value="4">高中</option>
+							</select>
 						</div>
 					</div>
-					<div class="form-group" style="height: 34px;"> 
+					<div class="form-group" style="height: 34px;">
 						<label for="" class="col-sm-2 control-label text-center warn">科目</label>
 						<div class="col-sm-3">
-							<select class="form-control _select column">
-								<option value="">请选择</option>
-								<option value="2">语文</option>
-								<option value="3">数学</option>
-								<option value="4">英语</option>
-								<option value="5">物理</option>
-								<option value="6">化学</option>
-								<option value="7">生物</option>
-								<option value="8">政治</option>
-								<option value="9">地理</option>
-								<option value="10">历史</option>
-							</select>		
+							<select class="form-control _select column" v-model="selectedCourse">
+								<option v-for="course in courses" v-bind:value="course.id">
+									{{ course.title }}
+								</option>
+							</select>
 						</div>
 					</div>
-					<div class="form-group no_hbe" style="height: 34px;"> 
+					<!-- <template v-if="selectedTextBookType=2"> -->
+					<div class="form-group no_hbe" style="height: 34px;" v-if="selectedTextBookType==2">
 						<label for="" class="col-sm-2 control-label text-center warn">版本</label>
 						<div class="col-sm-3">
-							<select class="form-control _select version">
-								<option value="">请选择</option>
-								<option value="2">人教版</option>
-							</select>		
+							<select class="form-control _select version" v-model="selectedEdtion">
+								<option v-for="edition in editions" v-bind:value="edition.id">
+									{{ edition.title }}
+								</option>
+							</select>
 						</div>
 					</div>
-					<div class="form-group no_hbe" style="height: 34px;"> 
+					<div class="form-group no_hbe" style="height: 34px;" v-if="selectedTextBookType==2">
 						<label for="" class="col-sm-2 control-label text-center warn">年级/课本</label>
 						<div class="col-sm-3">
-							<select class="form-control _select classis">
-								<option value="">请选择</option>
-								<option value="2">一年级上</option>
-								<option value="3">一年级下</option>
-								<option value="4">二年级上</option>
-								<option value="5">二年级下</option>
-								<option value="6">三年级上</option>
-								<option value="7">三年级下</option>
-								<option value="8">四年级上</option>
-								<option value="9">四年级下</option>
-								<option value="10">五年级上</option>
-								<option value="11">五年级下</option>
-								<option value="12">六年级上</option>
-								<option value="13">六年级下</option>
-								<option value="14">七年级上</option>
-								<option value="15">七年级下</option>
-								<option value="16">八年级上</option>
-								<option value="17">八年级下</option>
-								<option value="18">九年级上</option>
-								<option value="19">九年级下</option>
-								<option value="20">必修1</option>
-								<option value="21">必修2</option>
-								<option value="22">必修3</option>
-								<option value="23">必修4</option>
-								<option value="24">必修5</option>
-								<option value="25">选修1</option>
-								<option value="26">选修2</option>
-								<option value="27">选修3</option>
-								<option value="28">选修4</option>
-								<option value="29">选修5</option>
-								<option value="30">选修6</option>
-								<option value="31">选修7</option>
-								<option value="32">选修8</option>
-								<option value="33">选修9</option>
-								<option value="34">选修10</option>
-							</select>		
+							<select class="form-control _select classis" v-model="selectedTerm">
+								<option v-for="term in terms" v-bind:value="term.id">
+									{{ term.title }}
+								</option>
+							</select>
 						</div>
 					</div>
+					<!-- </template> -->
 				</form>
-				
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
-	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
-	<script type="text/javascript" src="../../../js/dataManage/addChapter.js"></script>
+	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
+
+	<script type="text/javascript">
+		var vvm = null;
+
+		$(document).ready(function() {
+			vm_init();
+			getEds();
+			getTms();
+			getCrs();
+		});
+
+		function vm_init(){
+			var defaultcourse = {"title":"请选择", "id":"0"};
+			var courses = new Array();
+			courses.push(defaultcourse);
+			var defaultEdition = {"title":"请选择", "id":"0"};
+			var editions = new Array();
+			editions.push(defaultEdition);
+			var defaultTerm = {"title":"请选择", "id":"0"};
+			var terms = new Array();
+			terms.push(defaultTerm);
+
+			vvm = new Vue({
+				el: '#chaptermain',
+				data:{
+					courses : courses,
+					editions : editions,
+					terms : terms,
+					selectedTextBookType : "2",
+					selectedStage : "0",
+					selectedCourse : "0",
+					selectedEdtion : "0",
+					selectedTerm : "0",
+				},
+				methods:{
+					submit: function(event){
+						console.log("selectedTextBookType:" + this.selectedTextBookType + ", selectedStage: " + this.selectedStage + ", selectedCourse: " + this.selectedCourse + ", selectedEdtion: " + this.selectedEdtion + ", selectedTerm: " + this.selectedTerm);
+
+						var textbook = {};
+						// textbook['courseId'] = selectedCourse;
+						if (this.selectedTextBookType == 1){
+							if (this.selectedStage == "0"){
+								alert("学段不能为空");
+								return;
+							}
+							if (this.selectedCourse == "0"){
+								alert("科目不能为空");
+								return;
+							}
+							textbook['textbooktype'] = 1;
+							textbook['stageid'] = this.selectedStage;
+							textbook['courseid'] = this.selectedCourse;
+						}else{
+							if (this.selectedStage == "0"){
+								alert("学段不能为空");
+								return;
+							}
+							if (this.selectedCourse == "0"){
+								alert("科目不能为空");
+								return;
+							}
+							if (this.selectedEdtion == "0"){
+								alert("版本不能为空");
+								return;
+							}
+							if (this.selectedTerm == "0"){
+								alert("年级/课本不能为空");
+								return;
+							}
+							textbook['textbooktype'] = 2;
+							textbook['stageid'] = this.selectedStage;
+							textbook['courseid'] = this.selectedCourse;
+							textbook['editionid'] = this.selectedEdtion;
+							textbook['termid'] = this.selectedTerm;
+						}
+						var url = org_url + dataUrl['textbook']['newTextbook'];
+					    $.ajax({
+					        url: url,
+					        type: 'post',
+					        data: textbook,
+					        success: function (resp) {
+					        	console.log("resp: " + JSON.stringify(resp));
+					        },
+					        error: function(d, data) {
+					            console.log(data);
+					        },
+					        complete: function(data) {
+					        }
+					    });
+					},
+					reset: function(event){
+						this.selectedStage = 0;
+						this.selectedCourse = 0;
+						this.selectedEdtion = 0;
+						this.selectedTerm = 0;
+					}
+				}
+			});
+		}
+
+		function getEds(){
+			//FIXME 为了一次取出所有记录，定义一个大数
+			var pagesize = 1000000;
+			var page = 1;
+
+			getEditions(function (resp){
+	            var elist = [];
+	            for (var i = 0; i < resp['data'].length; i++){
+	                var item = {};
+	                item['id'] = resp['data'][i]['id'];
+	                item['title'] = resp['data'][i]['title'];
+	                elist.push(item);
+	            }
+	            vvm.editions = vvm.editions.concat(elist);
+			}, page, pagesize);
+		}
+
+		function getTms(){
+			getTerms(function (resp){
+            	var list = [];
+				for (var i = 0; i < resp['data'].length; i++){
+					var item = {};
+					item['id'] = resp['data'][i]['id'];
+					item['title'] = resp['data'][i]['title'];
+					list.push(item);
+				}
+				vvm.terms = vvm.terms.concat(list);
+			});
+		}
+
+		function getCrs(){
+			getCourses(function(resp){
+				var list = [];
+				for (var i = 0; i < resp['data'].length; i++){
+					var item = {};
+					item['id'] = resp['data'][i]['id'];
+					item['title'] = resp['data'][i]['title'];
+					list.push(item);
+				}
+				vvm.courses = vvm.courses.concat(list);
+			});
+		}
+
+	</script>
 </html>
 
 

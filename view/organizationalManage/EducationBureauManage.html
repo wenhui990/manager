@@ -21,17 +21,17 @@
 	<body style="background: #fff;">
 		<div class="main container-fluid clearFix" style="overflow: inherit">
 			<!--<h3 class="text-center">初中数学人教版7年级上知识结构</h3>-->
-			<div class="lefttree fl" style="min-height: 250px;height: auto;">
+			<div class="lefttree fl" style="min-height: 250px;height: auto;width: 40%;">
 				<ul id="treeDemo" class="ztree" style="min-height: 240px;overflow: hidden;"></ul>
 			</div>
-			<div class="rightContent fr parentTree">
-				<div class="row head">
+			<div class="fr parentTree" style="width: 50%;">
+				<!--<div class="row head">
 					<div class="btngroup">
 						<span class="combtn ebm_save">保存</span>
 						<span class="combtn ebm_delete">删除当前机构</span>
 						<span class="combtn ebm_add">新建下级机构</span>
 					</div>
-				</div>
+				</div>-->
 				<div class="list_btm">
 					<form class="form-horizontal pad_t_20 pad_l_40" role="form">
 						<input type="hidden" name="ebm_hidden" id="ebm_hidden" value="" />
@@ -56,12 +56,7 @@
 							<div class="col-sm-6 row_2">
 								<label class="col-sm-5 control-label _list_name"><span class="" style="padding-left: 15px;">机构排序</span></label>
 								<div class="col-sm-6">
-									<!--<input type="text" name="" id="" value="12" class="form-control oSort" />-->
-									<select name="" class="form-control oSort">
-										<option value="11">xx教育局</option>
-										<option value="22">县教育局</option>
-										<option value="33">xx县教育局</option>
-									</select>
+									<input type="text" name="" id="" value="12" class="form-control oSort" />
 								</div>
 							</div>
 						</div>
@@ -69,16 +64,14 @@
 				</div>
 			</div>
 
-			<div id="menuContent" class="menuContent" style="display:none; position: absolute;background: #FFFFFF;border: 1px solid #CCCCCC;overflow: auto;">
-				<ul id="treeDemo1" class="ztree" style="margin-top:0; width:300px; height: 300px;"></ul>
-			</div>
 	</body>
 	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js"></script>
 	<script type="text/javascript" src="../../js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
 	<script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.exedit.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
-	<script type="text/javascript" src="../../js/organizationalManage/noBiaoSetKnowledge.js"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../../js/organizationalManage/noBiaoZtree.js"></script>
 
 	<script>
@@ -92,10 +85,6 @@
 			console.log($(".mask-tree"))
 			 $(".tree").treemenu({delay:300}).openActive();
 		},10)*/
-		function aa() {
-			var aa = $("#treeDemo li a.curSelectedNode").children("span.node_name").html();
-			alert(aa);
-		}
 	</script>
 
 </html>

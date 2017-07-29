@@ -8,16 +8,22 @@
 		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="../../../css/common/common.css" />
 		<link rel="stylesheet" type="text/css" href="../../../plugin/layer/skin/layer.css"/>
+		<link rel="stylesheet" href="../../../plugin/vue-pagination/index.css"/>
 	</head>
-	<body>
+	<body ng-app="app" ng-controller="ctrl">
+		<style type="text/css">
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
 		<div class="main container-fluid">
 			<div class="row head">
 				<div class="btngroup">
 					<a href="addVersion.html"><input class="commonbtn" type="button" value="新建"/></a>
 				</div>
 			</div>
-			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;">
-				<div class="table-responsive" style="width: 80%;">
+			<div id="versions" class="numshu_btm state" style="border-top: 1px solid #CCD2D8;" v-cloak>
+				<div class="table-responsive" >
 					<table id="pointTable" class="table addlist text-center" style="border: 1px solid #CFCFCF;border-top: none;">
 						<tr>
 							<td><strong>序号</strong></td>
@@ -27,68 +33,119 @@
 							<td><strong>启用状态</strong></td>
 							<td><strong>操作</strong></td>
 						</tr>
-						<tr>
-							<td>1</td>
-							<td>人教版</td>
-							<td>1</td>
-							<td><span class="overwidth">goodverygoodgoodverygood</span></td>
-							<td>已启用</td>
+						<tr v-for="(item, index) in versions">
+							<td>{{(cur - 1) * pagesize + index + 1}}</td>
+							<td>{{item.title}}</td>
+							<td>{{item.sn}}</td>
+							<td>{{item.note}}</td>
+							<td v-if="item.valid == '1'">启用</td>
+							<td v-else>禁用</td>
 							<td>
-								<a href="editVersion.html">修改</a>
-								<a class="forbidden">禁用</a>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>北师大版</td>
-							<td>2</td>
-							<td><span class="overwidth"></span></td>
-							<td>已禁用</td>
-							<td>
-								<a href="editVersion.html">修改</a>
-								<a class="forbidden">启用</a>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>华师大版</td>
-							<td>3</td>
-							<td><span class="overwidth"></span></td>
-							<td>已禁用</td>
-							<td>
-								<a href="editVersion.html">修改</a>
-								<a class="forbidden">启用</a>
-							</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>苏科版</td>
-							<td>4</td>
-							<td><span class="overwidth"></span></td>
-							<td>已禁用</td>
-							<td>
-								<a href="editVersion.html">修改</a>
-								<a class="forbidden">启用</a>
-							</td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>湘教版</td>
-							<td>5</td>
-							<td><span class="overwidth"></span></td>
-							<td>已启用</td>
-							<td>
-								<a href="editVersion.html">修改</a>
-								<a class="forbidden">禁用</a>
+								<a v-bind:href="'editVersion.html?id=' + item.id">修改</a>
+								<a href="javascript:;" class="_a_space forbidden" v-bind:id="item.id" v-if="item.valid == '1'" v-on:click="enableValid($event)">禁用</a>
+								<a href="javascript:;" class="_a_space forbidden" v-bind:id="item.id" v-else v-on:click="enableValid($event)">启用</a>
 							</td>
 						</tr>
 					</table>
 				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-3" id="itemcount">
+						<p>共&nbsp;&nbsp;<span>{{total}}</span>&nbsp;&nbsp;条记录</p>
+					</div>
+					<div id="app">
+						<vue-nav :cur="cur" :all="all" :callback="callback"></vue-nav>
+					</div>
+				</div>
 			</div>
+
 		</div>
 	</body>
-	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
-	<script type="text/javascript" src="../../../js/dataManage/versionManage_list.js" ></script>
+	<script type="text/javascript" src="../../../js/common/jquery.min2.0.js" ></script>
 	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
-</html>
 
+	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../../plugin/vue-pagination/vue-nav.js"></script>
+	<script type="text/javascript">
+		var vvm = null;
+
+		$(document).ready(function() {
+			vvm_init();
+			getVersions(1);
+		});
+
+		function vvm_init(){
+			vvm = new Vue({
+				el: '#versions',
+				data:{
+					versions:[],
+					total:0,
+					cur: 1,
+					all: 0,
+					pagesize:10
+				},
+				components:{
+					'vue-nav': Vnav
+				},
+				methods:{
+					enableValid: function(event){
+						console.log("eid: " + $(event.target).attr('id'));
+						var vid = $(event.target).attr('id');
+						for(var i = 0; i < this.versions.length; i++){
+							if (this.versions[i]['id'] == vid){
+								enableVersion(this.versions[i]);
+							}
+						}
+					},
+					callback(pa) {
+						getVersions(pa);
+					}
+				}
+			});
+		}
+
+		function getVersions(page){
+			var pagesize = 10;
+			var url = org_url + dataUrl['edition']['editionList'] + "?size=10&page=" + page;
+			$.ajax({
+				url: url,
+				type: 'get',
+				success: function(resp) {
+					console.log("resp: " + JSON.stringify(resp));
+
+					vvm.versions = resp['data'];
+					vvm.total = resp['total'];
+					vvm.cur = page;
+					vvm.all = Math.ceil(resp['total'] / pagesize);
+				},
+				error: function(d, data) {
+					console.log(data);
+				},
+				complete: function(data) {
+				}
+			});
+		}
+
+		function enableVersion(ver){
+			var url = org_url + dataUrl['edition']['updateEdition'] + "/" + ver['id'];
+			var version = {};
+			version['id'] = ver['id'];
+			var tmpvalid = (ver["valid"] == "1"?"0":"1");
+			version['valid'] = tmpvalid;
+			$.ajax({
+				url: url,
+				type: 'put',
+				data: version,
+				success: function(resp) {
+					console.log("resp: " + JSON.stringify(resp));
+					ver['valid'] = tmpvalid;
+				},
+				error: function(d, data) {
+					console.log(data);
+				},
+				complete: function(data) {
+				}
+			});
+		}
+	</script>
+</html>

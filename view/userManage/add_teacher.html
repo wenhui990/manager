@@ -38,15 +38,20 @@
 		</style>
 	</head>
 	<body>
-		<div class="main container-fluid" style="overflow:inherit;">
+		<style type="text/css">
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
+		<div class="main container-fluid" style="overflow:inherit;" id="mainbody" v-cloak>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<input class="commonbtn save" type="button" value="保存"/>
-					<input class="commonbtn back" type="button" value="返回"/>
+					<input class="commonbtn save" type="button" v-on:click="submit($event)" value="保存"/>
+					<input class="commonbtn back" type="button" v-on:click="back($event)" value="返回"/>
 				</div>
 			</div>
 			<div class="list_btm">
-				
+
 				<div class="form-horizontal">
 					<div class="form-group">
 					</div>
@@ -55,13 +60,13 @@
 							<span class="warn" style="padding-left: 20px;">姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="teacher_name" id="teacher_name" class="form-control" value="" />
+							<input type="text" class="form-control" value="" v-model="teacherName"/>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">手机号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="teacher_phone" id="teacher_phone" class="form-control" value="" />
+							<input type="text" class="form-control" value="" v-model="teacherMobile"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -69,36 +74,11 @@
 							<span class="warn" style="padding-left: 20px;">学校</span>
 						</label>
 						<div class="col-sm-3">
-							<select  class="selectpicker form-control organization schoolLists" >
-						      	<option value="">请选择</option>
-								<option value="2">县教育局</option>
-								<option value="3">直属教育局</option>
-								<option value="4">市教育局</option>
+							<select  class="form-control" v-model="selectedSchool">
+								<option v-for="school in schools" v-bind:value="school.id">
+									{{ school.name }}
+								</option>
 						      </select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label text-right">
-							<span class="" style="padding-left: 20px;"></span>
-						</label>
-						<div class="col-sm-1">
-							<button id="add_teacher_line" class="btn">添加行</button>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label text-right">
-							<span class="" style="padding-left: 20px;">任教科目及班级</span>
-						</label>
-						<div class="col-sm-9">
-							<table border="1" class="table subject_grade_lists">
-								<tr>
-									<th>序号</th>
-									<th>任教年级</th>
-									<th>任教班级</th>
-									<th>任教科目</th>
-									<th>是否该班班主任</th>
-								</tr>
-							</table>
 						</div>
 					</div>
 					<div class="form-group">
@@ -106,16 +86,16 @@
 							<span class="" style="padding-left: 20px;">身份证号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="school_phone" id="school_phone" class="form-control" value="" />
+							<input type="text" class="form-control" value="" v-model="idcard"/>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="" style="padding-left: 20px;">性别</span>
 						</label>
 						<div class="col-sm-3">
-							<select name="" class="form-control">
+							<select name="" class="form-control" v-model="sex">
 								<option value="">请选择</option>
-								<option value="">男</option>
-								<option value="">女</option>
+								<option value="M">男</option>
+								<option value="F">女</option>
 							</select>
 						</div>
 					</div>
@@ -124,22 +104,347 @@
 							<span class="" style="padding-left: 20px;">出生年月</span>
 						</label>
 						<div class="col-sm-3 input-append date form_datetime">
-							<input type="text" name="teacher_date" id="teacher_date" class="form-control" value="" />
+							<input type="text" class="form-control" value="" v-on:change="birthday($event)" v-model="birth"/>
     						<span class="add-on"><i class="icon-th"></i></span>
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">任教科目及班级</span>
+						</label>
+						<div class="col-sm-9">
+							<table border="1" class="table">
+								<tr>
+									<th>序号</th>
+									<th>任教年级</th>
+									<th>任教班级</th>
+									<th>任教科目</th>
+									<th>是否该班班主任</th>
+									<th>操作</th>
+								</tr>
+								<tr v-for="item, index in bindclazz">
+									<td>{{index+1}}</td>
+									<td>
+										<select v-model="item.selectedGrade" v-on:change="changegrade($event,index)" v-bind:addid="index">
+											<option v-for="grade in item.grades" v-bind:value="grade.id">
+												{{ grade.title }}
+											</option>
+										</select>
+									</td>
+									<td>
+										<select v-model="item.selectedClazz">
+											<option v-for="clazz in item.clazzs" v-bind:value="clazz.id">
+												{{ clazz.name }}
+											</option>
+										</select>
+									</td>
+									<td>
+										<select v-model="item.selectedCourse">
+											<option v-for="course in courses" v-bind:value="course.id">
+												{{ course.title }}
+											</option>
+										</select>
+									</td>
+									<td>
+										<select v-model="item.selectedAdvise">
+											<option value="2">请选择</option>
+											<option value="1">是</option>
+											<option value="0">否</option>
+										</select>
+									</td>
+									<td>
+										<a href="javascript:;" class="_a_space forbidden" v-on:click="delClazz($event, index)">删除</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;"></span>
+						</label>
+						<div class="col-sm-1">
+							<button class="btn" v-on:click="addBind($event)">添加行</button>
+						</div>
+					</div>
+
 				</div>
-				
-			
 			</div>
-		</div>	
-					
+		</div>
 	</body>
 	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
 	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<!-- <script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script> -->
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
 	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../../js/userManage/add_teacher.js" ></script>
+
+	<script type="text/javascript" src="../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../js/commonutil.js" ></script>
+
+	<script type="text/javascript">
+		// //时间
+			// $(".form_datetime").datetimepicker({
+		 //        format: "yyyy-MM-dd",
+		 //        minView: "month",
+		 //        language: 'zh-CN',
+		 //        todayBtn: true
+		 //    });
+
+		var vvm = null;
+		var commonList = null;
+		var tch = null;
+		var tchdata = getQueryString('data');
+		if (tchdata){
+			tch = JSON.parse(decodeURI(tchdata));
+		}
+
+		$(document).ready(function() {
+			vm_init();
+		    loadSchools();
+		    getCommonList(function(resp){
+				commonList = resp;
+				var obj = {"id":0, "title":"请选择"};
+				vvm.courses.push(obj);
+				for (k in commonList['courses']){
+					var obj = {};
+					obj['id'] = parseInt(k);
+					obj['title'] = commonList['courses'][k]
+					vvm.courses.push(obj);
+				}
+			});
+
+		});
+
+		function vm_init(){
+			var schools = new Array();
+			var defaultschool = {"name":"请选择", "id":0};
+			schools.push(defaultschool);
+
+			vvm = new Vue({
+				el: '#mainbody',
+				data:{
+					teacherName:null,
+					teacherMobile:null,
+					schools:schools,
+					selectedSchool:defaultschool.id,
+					clazzgroup:[],
+					idcard:null,
+					sex:"",
+					birth:null,
+					courses:[],
+					schoolclazz:[],
+					bindclazz:[],  //绑定的班级
+				},
+				methods:{
+					addBind: function(event){
+						if (vvm.selectedSchool == 0){
+							layer.alert('请先选择学校')
+							return;
+						}
+
+						var bc = newBindClazz();
+						bc['selectedGrade'] = "0";
+						bc["selectedClazz"] = "0";
+						bc['selectedCourse'] = "0";
+						bc['selectedAdvise'] = "2";
+						vvm.bindclazz.push(bc);
+					},
+					changegrade: function(event, index){
+						console.log("changegrade: " + index);
+
+						vvm.bindclazz[index]['clazzs'] = [];
+						var sltgd = vvm.bindclazz[index]['selectedGrade'];
+						vvm.bindclazz[index]['clazzs'] = vvm.bindclazz[index]['clazzs'].concat(vvm.clazzgroup[sltgd.toString()]);
+						vvm.bindclazz[index]['selectedClazz'] = "0";
+					},
+					delClazz: function(event, index){
+						this.bindclazz.splice(index, 1)
+					},
+					submit: function(event){
+						var req = {};
+						if (tch){
+							req['id'] = tch['id'];
+						}
+						//检查输入
+						if (!checkTextInput(vvm.teacherName, "姓名不能为空")){
+							return;
+						}
+						req['name'] = vvm.teacherName;
+						if (!checkMobileInput(vvm.teacherMobile, "手机号不能为空")){
+							return;
+						}
+						req['phone'] = vvm.teacherMobile;
+						if (vvm.selectedSchool == 0){
+							alert("学校不能为空");
+							return;
+						}
+						for (var i = 0; i < vvm.bindclazz.length; i++){
+							var item = vvm.bindclazz[i];
+							if (item['selectedClazz'] == 0){
+								alert("班级不能为空");
+								return;
+							}
+							if (item['selectedCourse'] == 0){
+								alert("科目不能为空");
+								return;
+							}
+						}
+
+						req['schoolid'] = vvm.selectedSchool;
+						if (vvm.idcard){
+							req['idcard'] = vvm.idcard;
+						}
+						if (vvm.sex != ""){
+							req['sex'] = vvm.sex;
+						}
+
+						if (vvm.bindclazz.length > 0){
+							req['teacherclasslis'] = [];
+							for (var i = 0; i < vvm.bindclazz.length; i++){
+								var item = vvm.bindclazz[i];
+								var obj = {};
+								obj['courseid'] = item['selectedCourse'];
+								obj['clazzid'] = item['selectedClazz'];
+								//如果是班主任，传值
+								if (item['selectedAdvise'] == 1){
+									obj['adviserid'] = "1";
+								}
+								req['teacherclasslis'].push(obj);
+							}
+						}
+
+						//过滤重复班级
+						req['teacherclasslis'] = filterDupItem(req['teacherclasslis']);
+
+						console.log("req: " + JSON.stringify(req));
+
+						if (tch){
+							updateTeacher(function(resp){
+								if (typeof(resp) == "object" && "code" in resp){
+					                alert("保存错误，" + resp['detail']);
+					            }else{
+					                alert("成功");
+					                window.location.href = "teacher_list.html";
+					            }
+							}, req);
+						}else{
+							addTeacher(function(resp){
+				                alert("成功");
+				                window.location.href = "teacher_list.html";
+							}, req);
+						}
+
+					},
+					back: function(event){
+						window.location.href = "teacher_list.html";
+					}
+				},
+				watch:{
+					selectedSchool: function(){
+						console.log("selectedSchool: " + vvm.selectedSchool);
+						loadSchoolclazz(vvm.selectedSchool);
+					}
+				}
+			});
+		}
+
+		function loadSchools(){
+			getSchoolTree(function(resp){
+				vvm.schools = vvm.schools.concat(resp['data']);
+
+				if (tch){
+					loadTeacher(tch['id']);
+				}
+			});
+		}
+
+		function loadSchoolclazz(schoolid){
+			getClazz(function(resp){
+				vvm.schoolclazz = resp;
+
+				console.log("vvm.schoolclazz:   " + JSON.stringify(vvm.schoolclazz));
+				vvm.clazzgroup = {};
+				vvm.clazzgroup['0'] = [{"id":0, "name":"请选择"}];
+				for (var i = 0; i < vvm.schoolclazz.length; i++){
+					var item = vvm.schoolclazz[i];
+					if (!(item['gradeid'] in vvm.clazzgroup)){
+						vvm.clazzgroup[item['gradeid']] = [{"id":0, "name":"请选择"}];
+					}
+					var clazz = {};
+					clazz['id'] = item['id'];
+					clazz['name'] = item['name'];
+					vvm.clazzgroup[item['gradeid']].push(clazz);
+				}
+				console.log("clazzgroup: " + JSON.stringify(vvm.clazzgroup));
+
+				//是编辑页，把班级列表展示出来
+				if (tch){
+					for (item of tch['clazzlis']){
+						var newbc = newBindClazz();
+						newbc['selectedGrade'] = item['gradeid'];
+						newbc['clazzs'] = vvm.clazzgroup[newbc['selectedGrade'].toString()];
+						newbc['selectedClazz'] = item['clazzid'];
+						newbc['selectedCourse'] = item['courseid'];
+						if ("adviserid" in item){
+							newbc['selectedAdvise'] = '1';
+						}
+						console.log("newbc: " + JSON.stringify(newbc));
+						vvm.bindclazz.push(newbc);
+					}
+				}
+			}, schoolid);
+		}
+
+		function loadTeacher(tid){
+			getTeacher(function(resp){
+				console.log("resp: " + JSON.stringify(resp));
+				vvm.teacherName = resp['name'];
+				vvm.teacherMobile = resp['phone'];
+				vvm.selectedSchool = resp['schoolid'];
+				vvm.idcard = resp['idcard'];
+				vvm.sex = resp['sex'];
+				vvm.birth = resp['birth'];
+			}, tid);
+		}
+
+		function newBindClazz(){
+			var bc = {};
+			bc['grades'] = [];
+			var defaultg = {"id":0, "title":"请选择"};
+			bc['grades'].push(defaultg);
+			for (k in commonList['grades']){
+				if (k in vvm.clazzgroup){
+					var gg = {};
+					gg['id'] = parseInt(k);
+					gg['title'] = commonList['grades'][k];
+					bc['grades'].push(gg);
+				}
+			}
+			bc['clazzs'] = [];
+			var defaultc = {"id":0, "name":"请选择"};
+			bc['clazzs'].push(defaultc);
+
+			bc['selectedGrade'] = "0";
+			bc["selectedClazz"] = "0";
+			bc['selectedCourse'] = "0";
+			bc['selectedAdvise'] = "2";
+
+			return bc;
+		}
+
+		function filterDupItem(list){
+		    filtered = list.filter(function (a) {
+		        var key = Object.keys(a).map(function (k) { return a[k]; }).join('|');
+		        if (!this[key]) {
+		            return this[key] = true;
+	        	}
+    		}, Object.create(null));
+
+    		return filtered;
+		}
+	</script>
+
 </html>

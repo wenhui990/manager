@@ -76,7 +76,7 @@ filter: alpha(opacity=0);
 }
 .commonbtn{
 	height: 32px;
-	padding: 0 20px;
+	padding: 8px 20px;
 	background: #03a8ed;
 	color: #fff;
 	border-radius: 5px;

@@ -28,9 +28,9 @@
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='assets/jquery.mobile.custom.min.js'>" + "<" + "script>");
 		</script>
-		<script src="./index_files/bootstrap.min.js"></script>
 		<script src="./index_files/jquery-1.9.1.min.js"></script>
-		
+		<script src="./index_files/bootstrap.min.js"></script>
+		<script src="js/dataUrl.js" type="text/javascript" charset="utf-8"></script>		
 		<script src="./index_files/typeahead-bs2.min.js"></script>
 		<!--[if lte IE 8]>
 		  <script src="assets/excanvas.min.js"></script>
@@ -54,8 +54,6 @@
 			</div>
 		</div>
 	</body>
-	<script type="text/javascript" src="js/jquery-1.11.2.min.js" ></script>
-	<script type="text/javascript" src="js/enter/enter.js" ></script>
 	<script>
 		
 		$(document).on("keydown",function(event){
@@ -72,8 +70,32 @@
 		}else if($("._password").val()==""){
 			$(".hint").text("请输入密码")
 		}else{
-			$(".hint").text("");
-			window.location.href="index.html"
+			$.ajax({
+				type:"get",
+				url: org_url + dataUrl.login,
+				data:{
+					phone: $("._text").val(),
+					pass: $("._password").val()
+				},
+				async:true,
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    crossDomain: true,
+				success: function(data){
+					console.log(data);
+					if(data.token){
+						$(".hint").text('登录成功！');
+						sessionStorage.id = data.id;
+						sessionStorage.userid = data.userid;
+						sessionStorage.token = data.token;
+						window.location.href="index.html";
+					}else{
+						$(".hint").text(data.msg);
+					}
+				}
+			});
+			
 		}
 	}
 	</script>

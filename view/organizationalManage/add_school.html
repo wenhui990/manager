@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="../../css/common/common.css" />
 	</head>
 	<body>
-		<div class="main container-fluid" style="overflow:inherit;">
+		<div class="main container-fluid" style="overflow:inherit;" id="educationLists">
 			<div class="row head numshu_btm">
 				<div class="btngroup">
 					<input class="commonbtn save" type="button" value="保存"/>
@@ -35,12 +35,10 @@
 							<span class="warn" style="padding-left: 20px;">上级机构管理</span>
 						</label>
 						<div class="col-sm-3">
-							<select  class="selectpicker form-control organization" >
+							<select class="form-control" id="education_lists">
 						      	<option value="">请选择</option>
-								<option value="2">县教育局</option>
-								<option value="3">直属教育局</option>
-								<option value="4">市教育局</option>
-						      </select>
+								<option v-for="option in datas" v-bind:value="option.id">{{option.name}}</option>
+						    </select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -49,27 +47,27 @@
 						</label>
 						<div class="col-sm-10">
 							<label>
-						      <input type="checkbox" name="learning_period" id="kindergarten" value="幼儿园" /> 幼儿园
+						      <input type="checkbox" name="learning_period" id="kindergarten" value="1" /> 幼儿园
 						    </label>
 						    <div id="">
 						    	<label>
-							      <input type="checkbox" name="learning_period" id="primary_5" value="小学（5年制）" /> 小学（5年制）
+							      <input type="radio" name="learning_period" id="primary_5" value="2-5" /> 小学（5年制）
 							    </label>
 							    <label>
-							      <input type="checkbox" name="learning_period" id="primary_6" value="小学（6年制）" /> 小学（6年制）
+							      <input type="radio" name="learning_period" id="primary_6" value="2-6" /> 小学（6年制）
 							    </label>
 						    </div>
 						    <div id="">
 						    	<label>
-							      <input type="checkbox" name="learning_period" id="junior_high_school_3" value="初中（3年制）" /> 初中（3年制）
+							      <input type="radio" name="learning_period1" id="junior_high_school_3" value="3-3" /> 初中（3年制）
 							    </label>
 							    <label>
-							      <input type="checkbox" name="learning_period" id="junior_high_school_4" value="初中（4年制）" /> 初中（4年制）
+							      <input type="radio" name="learning_period1" id="junior_high_school_4" value="3-4" /> 初中（4年制）
 							    </label>
 						    </div>
 						    <div id="">
 						    	<label>
-							      <input type="checkbox" name="learning_period" id="senior_high_school_3" value="高中（3年制）" /> 高中（3年制）
+							      <input type="checkbox" name="learning_period" id="senior_high_school_3" value="4" /> 高中（3年制）
 							    </label>
 						    </div>
 						</div>
@@ -113,5 +111,7 @@
 	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
 	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../../js/organizationalManage/add_grade.js" ></script>
 </html>

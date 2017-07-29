@@ -1,3 +1,4 @@
+var id = getUrlParams().id;
 //ztree树形菜单
 var setting = {
 	check: {
@@ -8,144 +9,127 @@ var setting = {
 			enable: true
 		}
 	},
-	callback: {
-		onCheck: OnCheck
-	}
-
 };
 
-var zNodes = [{
-	"id": "1",
-	"name": "11",
-	"pId": "0"
-}, {
-	"id": "2",
-	"name": "南方区1",
-	"pId": "1"
-}, {
-	"id": "21",
-	"name": "南方区2",
-	"pId": "2"
-}, {
-	"id": "3",
-	"name": "西城区2",
-	"pId": "2"
-}, {
-	"id": "31",
-	"name": "西城区3",
-	"pId": "3"
-}, {
-	"id": "5",
-	"name": "东城区51",
-	"pId": "1"
-}, {
-	"id": "4",
-	"name": "东城区1",
-	"pId": "1"
-}, {
-	"id": "6",
-	"name": "客家话教育局1",
-	"pId": "1"
-}, {
-	"id": "61",
-	"name": "客家话教育局6",
-	"pId": "6"
-}, {
-	"id": "41",
-	"name": "东城区4",
-	"pId": ""
-}, {
-	"id": "51",
-	"name": "东城区5",
-	"pId": ""
-}];
-
-//[{"id":"1","name":"11","pId":"0"},{"id":"2","name":"南方区1","pId":"1"},{"id":"2","name":"南方区2","pId":"2"},{"id":"3","name":"西城区2","pId":"2"},{"id":"3","name":"西城区3","pId":"3"},{"id":"4","name":"东城区1","pId":"1"},{"id":"5","name":"东城区51","pId":"1"},{"id":"6","name":"客家话教育局1","pId":"1"},{"id":"6","name":"客家话教育局6","pId":"6"},{"id":"4","name":"东城区4","pId":"4"},{"id":"5","name":"东城区5","pId":"5"}];
-
-var log, className = "dark";
-
-function getTime() {
-	var now = new Date(),
-		h = now.getHours(),
-		m = now.getMinutes(),
-		s = now.getSeconds(),
-		ms = now.getMilliseconds();
-	return(h + ":" + m + ":" + s + " " + ms);
-}
-
-var tree = [];
-
-//判断是否是根节点
-function OnCheck(event, treeId, treeNode) {
-	console.log(treeNode)
-	console.log(treeId)
-	console.log(treeNode.children)
-	var treechildobj = {};
-	var treeobj = {};
-	var temptree = [];
-	var tree2 = [];
-	if(treeNode.checked) {
-		treenodes(tree, treeNode);
-	} else {
-		treenodes(tree2, treeNode);
-	}
-	console.log(tree);
-	console.log(tree2);
-	for(var i = 0, len = tree.length; i < len; i++) {
-		for(var j = 0, jlen = tree2.length; j < jlen; j++) {
-			if(tree[i] == tree2[j]) {
-				tree.splice(i, 1);
-			}
+function filter(treeId, parentNode, childNodes) {
+	if (!childNodes) return null;
+	for (var i=0, l=childNodes.length; i<l; i++) {
+		if (childNodes[i].name) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+		} else{
+			childNodes[i].name='';
 		}
 	}
-	console.log(unique(tree));
+	return childNodes;
+}
 
+//获取url中字段
+function getUrlParams() {
+	var params = {};
+	var url = window.location.href;
+	var idx = url.indexOf("?");
+	if(idx > 0) {
+		var queryStr = url.substring(idx + 1);
+		var args = queryStr.split("&");
+		for(var i = 0, a, nv; a = args[i]; i++) {
+			nv = args[i] = a.split("=");
+			params[nv[0]] = nv.length > 1 ? nv[1] : true;
+		}
+	}
+	return params;
 };
 
-function unique(arr) {
-	var res = [];
-	var json = {};
-	for(var i = 0; i < arr.length; i++) {
-		if(!json[arr[i]]) {
-			res.push(arr[i]);
-			json[arr[i]] = 1;
-		}
-	}
-	return res;
-}
-
-function treenodes(tree, treeNode) {
-	tree.push(treeNode.id);
-	if(treeNode.children) {
-		$.each(treeNode.children, function(i, e) {
-			tree.push(e.id);
-			if(e.children) {
-				$.each(e.children, function(i, e) {
-					tree.push(e.id);
-				});
+//取到树结构的数据
+function jsonsData(){
+	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+	var nodes = treeObj.getNodes();
+	var jsonObjs = [];//树状图的所有数据
+	(function jsonsObj(nodes){
+		$.each(nodes,function(i,e){
+			var jsonNode = {};
+			jsonNode.checked = e.checked
+			jsonNode.id = e.id;
+			jsonNode.name = e.name;
+			jsonNode.pId = e.pId;
+			jsonNode.index = e.getIndex();
+			jsonObjs.push(jsonNode);
+			if(e.children){
+				jsonsObj(e.children);
 			}
 		});
-	}
+	})(nodes);
+	return jsonObjs;
 }
-
-$(document).ready(function() {
-
-	//	$.ajax({
-	//		url:'http://192.168.1.1:8080/institution/tree/1',
-	//		type:'get',
-	//		success:function(d){
-	//			zNodes = d.result;
-	//			console.log(zNodes);
-	//			
-	//		},
-	//		error: function(d,data){
-	//			console.log(data);
-	//		},
-	//		complete: function(data){
-	//			console.log(data);
-	//		}
-	//	})
-
-	$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-
+$.fn.zTree.init($("#treeDemo"), setting);
+$(function() {
+	var treeNodes = '';
+	$.ajax({
+		type: "get",
+		url: org_url + dataUrl.jurisdiction.jurisdictionlist,
+		async: false,
+		data:{token: sessionStorage.token},
+		success: function(data){
+			treeNodes = data;
+			$.fn.zTree.init($("#treeDemo"), setting, treeNodes);
+		}
+	})		
+	
+	$.ajax({
+		type: "get",
+		url: org_url + dataUrl.jurisdiction.role + id + "/entry",
+		data: {
+			"id": id,
+			token: sessionStorage.token
+		},
+		success: function(data){
+			console.log(data.length);
+			if (data.length) {
+				$.each(data, function(i,e) {
+					$.each(treeNodes, function(ind,ev) {
+						if ((ev.id == e.entryid) && (ev.name == e.name)) {
+							ev["checked"] = true;
+							ev["open"] = true;
+						}
+					});
+				});
+				console.log(treeNodes);
+				$.fn.zTree.init($("#treeDemo"), setting, treeNodes);
+			}
+		}
+	})		
+	
+	
+	
+	//点击保存
+	$('.save').click(function(){
+		var treejson = [];
+		
+		$.each(jsonsData(), function(i,e) {
+			if (e.checked) {
+				treejson.push({entryid:e.id});
+			}
+		});
+		console.log(treejson);
+		$.ajax({
+			type: "put",
+			url: org_url + dataUrl.jurisdiction.role + id + "/entry",
+			data: {
+				"id": id,
+				"json": JSON.stringify(treejson),
+				token: sessionStorage.token
+			},
+			success: function(data){
+				if(data==1){
+					layer.alert('保存成功！');
+				}else{
+					layer.alert('保存失败！');
+				}
+			}
+		})
+	})
+	//点击返回
+	$('.back').click(function (){
+		$('.add_teacher_bar',window.parent.document).remove();
+		window.location.href='role_list.html';
+	});
 });

@@ -51,63 +51,42 @@
 			    border-radius: 6px;
 			    padding-left: 10px;
 			}
+			[v-cloak] {
+			  display: none;
+			}
 		</style>
 	</head>
 	<body style="background: #fff;">
-		<div class="main container-fluid">
+		<div class="main container-fluid" id="roleConfig" v-cloak>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<input class="commonbtn save" type="button" value="保存"/>
+					<input class="commonbtn save" type="button" value="保存" v-on:click="saveConfigUser"/>
 					<input class="commonbtn back" type="button" value="返回"/>
 				</div>
 			</div>
 			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;">
 				<div class="form-group clearFix">
-					<label class="col-sm-1">角色名称</label>
-					<label class="col-sm-2">题库管理员</label>
+					<label class="col-sm-1">角色名称:</label>
+					<label class="col-sm-2 rolename">题库管理员</label>
 				</div>
 				<div class="form-group clearFix">
 					<label class="col-sm-1"></label>
 					<div class="lefttree fl" style="width:30%;padding:10px 0 0 20px;">
 						<label class="control-label">待选用户</label>
 						<ul id="beselect" class="beselect">
-							<li class="clearFix">天门市多宝镇中心学校1</li>
-							<li class="clearFix">天门市多宝镇中心学校2</li>
-							<li class="clearFix">天门市多宝镇中心学校3</li>
-							<li class="clearFix">天门市多宝镇中心学校4</li>
-							<li class="clearFix">天门市多宝镇中心学校5</li>
-							<li class="clearFix">天门市多宝镇中心学校1</li>
-							<li class="clearFix">天门市多宝镇中心学校2</li>
-							<li class="clearFix">天门市多宝镇中心学校3</li>
-							<li class="clearFix">天门市多宝镇中心学校4</li>
-							<li class="clearFix">天门市多宝镇中心学校5</li>
-							<li class="clearFix">天门市多宝镇中心学校1</li>
-							<li class="clearFix">天门市多宝镇中心学校2</li>
-							<li class="clearFix">天门市多宝镇中心学校3</li>
-							<li class="clearFix">天门市多宝镇中心学校4</li>
-							<li class="clearFix">天门市多宝镇中心学校5</li>
-							<li class="clearFix">天门市多宝镇中心学校1</li>
-							<li class="clearFix">天门市多宝镇中心学校2</li>
-							<li class="clearFix">天门市多宝镇中心学校3</li>
-							<li class="clearFix">天门市多宝镇中心学校4</li>
-							<li class="clearFix">天门市多宝镇中心学校5</li>
-							<li class="clearFix">天门市多宝镇中心学校1</li>
-							<li class="clearFix">天门市多宝镇中心学校2</li>
-							<li class="clearFix">天门市多宝镇中心学校3</li>
-							<li class="clearFix">天门市多宝镇中心学校4</li>
-							<li class="clearFix">天门市多宝镇中心学校5</li>
+							<li v-for="item in data" class="leftli" v-bind:data-id = "item.id">{{item.name}}</li>
 						</ul>
 					</div>
 					<div class="come_back fl">
-						<div id="add" class="add btn-primary" style="top: 36%;">&gt;</div>
-						<div id="addAll" class="add btn-primary">&gt;&gt;</div>
-						<div id="remove" class="remove btn-primary">&lt;</div>
-						<div id="removeAll" class="remove btn-primary" style="bottom: 36%;">&lt;&lt;</div>
+						<div id="add" class="add btn-primary" style="top: 36%;" title="添加一个">&gt;</div>
+						<!--<div id="addAll" class="add btn-primary" title="添加全部">&gt;&gt;</div>-->
+						<div id="remove" class="remove btn-primary" title="移除一个">&lt;</div>
+						<!--<div id="removeAll" class="remove btn-primary" style="bottom: 36%;" title="移除全部">&lt;&lt;</div>-->
 					</div>
 					<div class="lefttree fl" style="width:30%;padding:10px 0 0 20px;">
 						<label class="control-label">已选用户</label>
 						<ul id="selected" class="selected">
-							
+							<li v-for="con in getconfig" class="rightli" v-bind:data-id = "con.managerid">{{con.name}}</li>
 						</ul>
 					</div>
 				</div>
@@ -116,6 +95,178 @@
 	</body>
 	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
-	<script type="text/javascript" src="../../js/jurisdictionManage/add_role.js"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var roleConfig = new Vue({
+			el: "#roleConfig",
+			data: {
+				data: '',
+				getconfig: ''
+			},
+			beforeCreate: function(){
+				var _self = this;
+				$.ajax({
+					type:"get",
+					url: org_url + dataUrl.manager,
+					data:{
+						token:sessionStorage.token
+					},
+					xhrFields: {
+				        withCredentials: true
+				    },
+				    crossDomain: true,
+					async:true,
+					success: function(data){
+						_self.data = data;
+					}
+				});
+				$.ajax({
+					type:"get",
+					url:org_url + dataUrl.jurisdiction.role + getUrlParams().id +"/manager",
+					async:true,
+					data:{
+						token:sessionStorage.token
+					},
+					xhrFields: {
+				        withCredentials: true
+				    },
+				    crossDomain: true,
+					success: function(data){
+						roleConfig.getconfig = data;
+					}
+				});
+			},
+			methods: {
+				saveConfigUser: function(){
+					var userjson = [];
+					$.each($('#selected li'),function(i,e){
+						var roleobj = {};
+						roleobj.managerid = $(e).attr('data-id');
+						userjson.push(roleobj);
+					});
+					$.ajax({
+						type:"put",
+						url: org_url + dataUrl.jurisdiction.role + getUrlParams().id +"/manager",
+						async:true,
+						data: {
+							id: getUrlParams().id,
+							json: JSON.stringify(userjson),
+							token: sessionStorage.token
+						},
+						success: function(data){
+							if (data==1) {
+								layer.alert('保存成功！');
+							}else{
+								layer.alert('保存失败！');
+							}
+						}
+					});
+				}
+			}
+		});
+		//点击返回
+		$('.back').click(function (){
+			$('.add_teacher_bar',window.parent.document).remove();
+			window.location.href='role_list.html';
+		});
+		//获取url中字段
+		function getUrlParams() {
+			var params = {};
+			var url = window.location.href;
+			var idx = url.indexOf("?");
+			if(idx > 0) {
+				var queryStr = url.substring(idx + 1);
+				var args = queryStr.split("&");
+				for(var i = 0, a, nv; a = args[i]; i++) {
+					nv = args[i] = a.split("=");
+					params[nv[0]] = nv.length > 1 ? nv[1] : true;
+				}
+			}
+			return params;
+		};
+		$('.rolename').text(decodeURIComponent(getUrlParams().name));
+		$(document).on('click','.beselect li,.selected li',function(){
+			$('.beselect li,.selected li').removeClass('active');
+			$(this).addClass('active');
+		});
+		//添加
+		$(document).on('click','#add',function (){
+			var leftselect = $('.beselect li.active');
+			var rightselect = $('.selected li');
+			if(!$('.beselect li').hasClass('active')){
+				layer.alert('请在左侧待选用户中至少选择一个用户，才能添加！');
+			}else{
+				var isli = false;
+				if(rightselect.length<1){
+					$('.selected').append(leftselect.clone(true));
+				}else{
+					rightselect.each(function (i,ev){
+						if(leftselect.attr('data-id') == $(ev).attr('data-id')){
+							isli = false;
+							layer.alert('已有：'+$(ev).text());
+							return false;
+						}else{
+							isli = true;
+						}
+					});
+					if (isli) {
+						$('.selected').append(leftselect.clone(true));
+						$('.selected li').addClass('rightli');
+					}
+				}
+			}
+		});
+		$(document).on('click','.leftli',function(){
+			$('.leftli').removeClass('active');
+			$(this).addClass('active');
+		});
+		$(document).on('dblclick','.leftli',function(){
+			$(this).addClass('active');
+			$('#add').click();
+		});
+		//添加全部
+//		$(document).on('click','#addAll',function (){
+//			$('.selected').html('');
+//			$('#beselect li').each(function (){
+//				var $ele=$(this);
+//				$('.selected').append($ele.clone(true));
+//				$ele.removeClass('active');
+//			});
+//		});
+		//移除
+		$(document).on('click','#remove',function (){
+			if(!$('.selected li').hasClass('active')){
+				layer.alert('请在右侧待选用户中至少选择一个用户，才能移除！');
+			}
+			$('.selected li').each(function (){
+				var $ele=$(this);
+				if(($ele).hasClass('active'))
+				{
+					$ele.removeClass('active').remove();
+				}
+			});
+		});
+		$(document).on('click','.rightli',function(e){
+			$('.rightli').removeClass('active');
+			$(this).addClass('active').removeClass('leftli');
+		});
+		$(document).on('dblclick','.rightli',function(){
+			$('.rightli').removeClass('active');
+			$(this).addClass('active');
+			$('#remove').click();
+		});
+		//移除全部
+//		$(document).on('click','#removeAll',function (){
+//			$('.selected li').each(function (){
+//				var $ele=$(this);
+//				$ele.removeClass('active').remove();
+//			});
+//		});
+		$(function(){
+			console.log(org_url + dataUrl.manager);
+			
+		})
+	</script>
 </html>
 

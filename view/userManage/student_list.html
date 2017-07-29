@@ -12,290 +12,286 @@
 		<link rel="stylesheet" href="../../css/common/common_list.css" />
 		<link rel="stylesheet" href="../../css/common/common.css" />
 		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css" />
 		<style type="text/css">
-			.addlist th{
+			.addlist th {
 				text-align: center;
 			}
-			.addlist input[type='checkbox']{
+			
+			.addlist input[type='checkbox'] {
 				width: 16px;
 				height: 16px;
 			}
-			.none{display: none;}
-			.checked_student_lists{
+			
+			.none {
+				display: none;
+			}
+			
+			.checked_student_lists {
 				border: 1px solid #999;
 				padding: 10px 15px;
-				max-height: 200px;
+				height: 150px;
 				overflow: auto;
 				margin: 15px auto;
 			}
-			.checked_student_lists td{
+			
+			.checked_student_lists td {
 				padding: 2px 5px;
 			}
-			.student_pag span{
+			
+			.student_pag span {
 				margin: 2px 5px;
 			}
-			.remove_student{
+			
+			.remove_student {
 				color: #EEEEEE;
 			}
-			.remove_student:hover{
+			
+			.remove_student:hover {
 				color: red;
 				cursor: pointer;
+			}
+			
+			.none {
+				display: none;
+			}
+			
+			[v-cloak] {
+				display: none;
 			}
 		</style>
 	</head>
 
 	<body>
-		<div class="main container-fluid">
-			<div class="row head">
-				<h3 class="col-xs-2">查询区</h3>
-				<div class="col-sm-9 col-xs-3"></div>
+		<div id="studentMain" v-cloak>
+			<div class="main container-fluid">
+				<div class="row head">
+					<h3 class="col-xs-2">查询区</h3>
+					<div class="col-sm-9 col-xs-3"></div>
+				</div>
+				<div class="row state">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="secondname" class="col-sm-1 control-label text-center">学校名称</label>
+							<div class="col-sm-2">
+								<select name="" class="form-control" v-model="schoolsVal">
+									<option value="">全部</option>
+									<option v-for="school in schools" v-bind:value="school.id">{{school.name}}</option>
+								</select>
+							</div>
+
+							<label for="secondname" class="col-sm-1 control-label text-center">年级</label>
+							<div class="col-sm-2">
+								<select name="" class="form-control" data-live-search="true" v-model="gradeVal">
+									<option value="">全部</option>
+									<option v-for="grade in grades" v-bind:value="grade.id">{{grade.title}}</option>
+								</select>
+							</div>
+
+							<label for="secondname" class="col-sm-1 control-label text-center">班级</label>
+							<div class="col-sm-2">
+								<select name="" class="form-control" data-live-search="true" v-model="classVal">
+									<option value="">全部</option>
+									<option v-for="cla in classs" v-bind:value="cla.id">{{cla.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="secondname" class="col-sm-1 control-label text-center">学生姓名</label>
+							<div class="col-sm-2">
+								<input type="tel" name="" class="form-control" id="studentname" />
+							</div>
+
+							<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
+							<div class="col-sm-2">
+								<select name="" class="form-control" id="valid">
+									<option value="">全部</option>
+									<option value="0">禁用</option>
+									<option value="1">启用</option>
+								</select>
+							</div>
+							<label for="secondname" class="col-sm-1 control-label text-center"></label>
+							<div class="col-sm-1">
+								<a href="javascript:;" class="form-control btn btn-default" v-on:click="searchstudent">查询</a>
+							</div>
+						</div>
+
+					</form>
+				</div>
+				<div class="row head numshu_btm">
+					<div class="btngroup">
+						<input class="commonbtn addStudent" type="button" value="新建学生" />
+						<input class="commonbtn batchChangeShift" type="button" value="批量调班" />
+						<input class="commonbtn batchForbidden" type="button" value="批量禁用" />
+						<a href="javascript:;" class="commonbtn exportStudent" @click="exportStudent($event)">导出学生</a>
+						<input class="commonbtn importStudent" type="button" value="导入学生" />
+						<a href="javascript:;" class="downloadTemplate">下载导入模版</a>
+					</div>
+				</div>
+				<div class="numshu_btm">
+					<div class="list_btm">
+						<div class="table-responsive">
+							<table border="1" class="table table-hover addlist" style="text-align: center;">
+								<thead>
+									<tr>
+										<th><input type="checkbox" id="checkAll" name="checkAll" @click="checkAll($event)" v-model="checkeds" /></th>
+										<th><strong>序号</strong></th>
+										<th><strong>学校</strong></th>
+										<th><strong>年级</strong></th>
+										<th><strong>班级</strong></th>
+										<th><strong>学生姓名</strong></th>
+										<th><strong>身份证号</strong></th>
+										<th><strong>用户状态</strong></th>
+										<th><strong>操作</strong></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(student,index) in studentLists" :class="{warning:iswarning}" >
+										<td><input type="checkbox" v-bind:value="student.id" class="checkItem" :checked="allchecked" @click="checkOne($event)" /></td>
+										<td>{{index}}</td>
+										<td>{{student.sname}}</td>
+										<td>{{student.gradename}}</td>
+										<td>{{student.cname}}</td>
+										<td>{{student.name}}</td>
+										<td>{{student.idcard}}</td>
+										<td>已启用</td>
+										<td>
+											<a href="javascript:;" @click="seeStudent('see',student.id)">查看</a>
+											<a href="javascript:;" @click="seeStudent('edit',student.id)">编辑</a>
+											<a href="javascript:;" onclick="enabled()" v-bind:value="student.valid" v-if="student.valid==1">启用</a>
+											<a href="javascript:;" onclick="off()" v-else>禁用</a>
+											<a href="javascript:;">删除</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="row pro_list_btm">
+							<div class="col-xs-6 col-sm-3 text-center">
+
+							</div>
+							<div class="col-xs-7 col-sm-9">
+								<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="row state">
+
+			<!--导入学生弹窗内容-->
+			<div class="modal fade" tabindex="-1" role="dialog" id="toStudent">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title">导入选择</h4>
+			      </div>
+			      <div class="modal-body">
+			        <form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-right">
+								<span class="">学校</span>
+							</label>
+							<div class="col-sm-9">
+								<select name="" class="form-control" v-model="schoolsVal1">
+									<option value="">全部</option>
+									<option v-for="school in schools" v-bind:value="school.id">{{school.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-right">
+								<span class="">年级</span>
+							</label>
+							<div class="col-sm-9">
+								<select name="" class="form-control" data-live-search="true" v-model="gradeVal1">
+									<option value="">全部</option>
+									<option v-for="grade in grades1" v-bind:value="grade.id">{{grade.title}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-right">
+								<span class="">所在班级</span>
+							</label>
+							<div class="col-sm-9">
+								<select name="" class="form-control" data-live-search="true" v-model="classVal1">
+									<option value="">全部</option>
+									<option v-for="cla in classs1" v-bind:value="cla.id">{{cla.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label text-right">
+								<span class="">导入文件</span>
+							</label>
+							<div class="col-sm-9">
+								<input type="file" name="student_file" id="student_file" />
+							</div>
+						</div>
+					</form>
+			      </div>
+			      <div class="modal-footer">
+			      	<button type="button" class="btn btn-primary" id="toStudentOk">确定</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			      </div>
+			    </div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div>
+			<div class="none importStudent_modal">
+				
+			</div>
+			<!--调班弹窗内容-->
+			<div class="none batchChangeShift_modal">
+				<label class="col-sm-12 control-label">
+					已选学生
+				</label>
+				<table class="checked_student_lists">
+				</table>
+				<label class="col-sm-12 control-label">
+					调整到
+				</label><br /><br />
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
-						<label for="secondname" class="col-sm-1 control-label text-center">学校名称</label>
-						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true">
-								<option>全部</option>
-								<option>学校1</option>
-							</select>
-						</div>
-
-						<label for="secondname" class="col-sm-1 control-label text-center">年级</label>
-						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true">
-								<option>全部</option>
-								<option>一年级</option>
-							</select>
-						</div>
-
-						<label for="secondname" class="col-sm-1 control-label text-center">班级</label>
-						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true">
-								<option>全部</option>
-								<option>一年级1班</option>
+						<label class="col-sm-2 control-label">
+							<span class="">学校</span>
+						</label>
+						<div class="col-sm-9">
+							<select class="form-control organization schoolLists">
+								<option value="">请选择</option>
+								<option value="3">学校二</option>
+								<option value="4">学校3</option>
 							</select>
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="secondname" class="col-sm-1 control-label text-center">学生姓名</label>
-						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control selectpicker" />
-						</div>
-
-
-						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
-						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker">
-								<option>全部</option>
-								<option>禁用</option>
-								<option>开放</option>
+						<label class="col-sm-2 control-label">
+							<span class="">年级</span>
+						</label>
+						<div class="col-sm-9">
+							<select class="form-control organization gradeLists">
+								<option value="">请选择</option>
+								<option value="2">一年级</option>
+								<option value="3">二年级</option>
+								<option value="4">三年级</option>
 							</select>
 						</div>
-						<label for="secondname" class="col-sm-1 control-label text-center"></label>
-						<div class="col-sm-1">
-							<button class="form-control">查询</button>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">
+							<span class="">班级</span>
+						</label>
+						<div class="col-sm-9">
+							<select class="form-control organization classGradeLists">
+								<option value="">请选择</option>
+								<option value="2">一年级1班</option>
+								<option value="3">二年级2班</option>
+								<option value="4">三年级3班</option>
+							</select>
 						</div>
 					</div>
-					
 				</form>
 			</div>
-			<div class="row head numshu_btm">
-				<div class="btngroup">
-					<input class="commonbtn addStudent" type="button" value="新建学生" />
-					<input class="commonbtn batchChangeShift" type="button" value="批量调班" />
-					<input class="commonbtn batchForbidden" type="button" value="批量禁用" />
-					<input class="commonbtn exportStudent" type="button" value="导出学生" />
-					<input class="commonbtn importStudent" type="button" value="导入学生" />
-					<a href="javascript:;" class="downloadTemplate">下载导入模版</a>
-				</div>
-			</div>
-			<div class="numshu_btm">
-				<div class="list_btm">
-					<div class="table-responsive">
-						<table border="1" class="table table-hover addlist" style="text-align: center;">
-							<thead>
-								<tr>
-									<th><input type="checkbox" id="checkAll" name="checkAll" /></th>
-									<th><strong>序号</strong></th>
-									<th><strong>学校</strong></th>
-									<th><strong>年级</strong></th>
-									<th><strong>班级</strong></th>
-									<th><strong>学生姓名</strong></th>
-									<th><strong>身份证号</strong></th>
-									<th><strong>用户状态</strong></th>
-									<th><strong>操作</strong></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><input type="checkbox" class="checkItem" value="110" /></td>
-									<td>1</td>
-									<td>三环中学</td>
-									<td>一年级</td>
-									<td>2班</td>
-									<td>鲁班七号</td>
-									<td>100xxxxxxxxxxxxxxxx</td>
-									<td>已启用</td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>
-										<a href="javascript:;" onclick="editStudent()">编辑</a>
-										<a href="javascript:;" onclick="off()">禁用</a>
-										<a href="javascript:;">删除</a>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" class="checkItem" value="110" /></td>
-									<td>2</td>
-									<td>三环中学2</td>
-									<td>一年级</td>
-									<td>2班</td>
-									<td>貂蝉</td>
-									<td>100xxxxxxxxxxxxxxxx</td>
-									<td>已启用</td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>
-										<a href="javascript:;" onclick="editStudent()">编辑</a>
-										<a href="javascript:;" onclick="off()">禁用</a>
-										<a href="javascript:;">删除</a>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" class="checkItem" value="110" /></td>
-									<td>3</td>
-									<td>三环中学3</td>
-									<td>一年级</td>
-									<td>2班</td>
-									<td>曹操</td>
-									<td>100xxxxxxxxxxxxxxxx</td>
-									<td>已启用</td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>
-										<a href="javascript:;" onclick="editStudent()">编辑</a>
-										<a href="javascript:;" onclick="off()">禁用</a>
-										<a href="javascript:;">删除</a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="row pro_list_btm">
-						<div class="col-xs-6 col-sm-3 text-center">
-
-						</div>
-						<div class="col-xs-7 col-sm-9">
-							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		<!--导入学生弹窗内容-->
-		<div class="none importStudent_modal">
-			<form class="form-horizontal" role="form">
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="">学校</span>
-					</label>
-					<div class="col-sm-9">
-						<select  class="selectpicker form-control organization schoolLists" >
-					      	<option value="">请选择</option>
-							<option value="2">学校1</option>
-							<option value="3">学校二</option>
-							<option value="4">学校3</option>
-					      </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="">年级</span>
-					</label>
-					<div class="col-sm-9">
-						<select  class="selectpicker form-control organization gradeLists" >
-					      	<option value="">请选择</option>
-							<option value="2">一年级</option>
-							<option value="3">二年级</option>
-							<option value="4">三年级</option>
-					      </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="">所在班级</span>
-					</label>
-					<div class="col-sm-9">
-						<select  class="selectpicker form-control organization classGradeLists" >
-					      	<option value="">请选择</option>
-							<option value="2">一年级1班</option>
-							<option value="3">二年级2班</option>
-							<option value="4">三年级3班</option>
-					      </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="">导入文件</span>
-					</label>
-					<div class="col-sm-9">
-						<input type="file" name="student_ID" id="student_ID" />
-					</div>
-				</div>
-			</form>
-		</div>
-		<!--调班弹窗内容-->
-		<div class="none batchChangeShift_modal">
-			<label class="col-sm-12 control-label">
-				已选学生
-			</label>
-			<table class="checked_student_lists" >
-			</table>
-			<label class="col-sm-12 control-label">
-				调整到
-			</label><br /><br />
-			<form class="form-horizontal" role="form">
-				<div class="form-group">
-					<label class="col-sm-2 control-label">
-						<span class="">学校</span>
-					</label>
-					<div class="col-sm-9">
-						<select  class="form-control organization schoolLists" >
-					      	<option value="">请选择</option>
-							<option value="2">学校1</option>
-							<option value="3">学校二</option>
-							<option value="4">学校3</option>
-					      </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">
-						<span class="">年级</span>
-					</label>
-					<div class="col-sm-9">
-						<select  class="form-control organization gradeLists" >
-					      	<option value="">请选择</option>
-							<option value="2">一年级</option>
-							<option value="3">二年级</option>
-							<option value="4">三年级</option>
-					      </select>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">
-						<span class="">班级</span>
-					</label>
-					<div class="col-sm-9">
-						<select  class="form-control organization classGradeLists" >
-					      	<option value="">请选择</option>
-							<option value="2">一年级1班</option>
-							<option value="3">二年级2班</option>
-							<option value="4">三年级3班</option>
-					      </select>
-					</div>
-				</div>
-			</form>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
@@ -306,82 +302,227 @@
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
 	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		
-//		$.ajax({
-//			url:'http://192.168.1.1:8080/institution/tree/1',
-//			type:'get',
-//			success:function(d){
-//				console.log(d);
-//			}
-//		})
-		//全选全不选
-		var $tbr = $('.checkItem');  
-        $(document).on('click','#checkAll',function(event){  
-            $tbr.prop('checked',$(this).prop('checked'));  
-            if ($(this).prop('checked')) {  
-                $tbr.parent().parent().addClass('warning');  
-            } else{  
-                $tbr.parent().parent().removeClass('warning');  
-            }  
-            event.stopPropagation();  
-        });  
-        //点击复选框对应tr选中状态
-        $(document).on('click','.checkItem',function(event){  
-            if ($(this).prop('checked')) {  
-                $(this).parent().parent().addClass('warning');  
-            } else{  
-                $(this).parent().parent().removeClass('warning');  
-            }  
-        });
-        
+		//json数组去重
+		Array.prototype.removeRepeatAttr = function() {
+			var tmp = {},
+				a = this.slice();
+			for(var i = j = 0; i < a.length; i++) {
+				if(!tmp[a[i].id]) {
+					tmp[a[i].id] = !0;
+					j++;
+				} else {
+					this.splice(j, 1);
+				}
+			};
+		}
+		var page = 1,pagesize=10,pagecount=10;
+		var students = new Vue({
+			el: '#studentMain',
+			data: {
+				studentLists: '', //学生列表
+				schools: '',   //学校列表
+				grades: '',    //年级
+				classs: '',    //班
+				grades1: '',    //年级
+				classs1: '',
+				schoolChange: '',
+				gradeChange: '',
+				schoolsVal: '',  
+				gradeVal: '',
+				classVal: '',
+				schoolsVal1: '',  
+				gradeVal1: '',
+				classVal1: '',
+				checkeds: '',   //全选框状态
+				allchecked: '', //单选框状态
+				iswarning: false,
+				checkItem: true,
+				studentdata: {}
+			},
+			beforeCreate: function() {
+				$.ajax({
+					type: "get",
+					url: org_url + dataUrl.studentmanager.schoollist,
+					success: function(data) {
+						students.schools = data;
+					}
+				});
+			},
+			methods: {
+				checkAll: function(e) { //全选
+					students.checkeds = $(e.target).prop('checked');
+				},
+				checkOne: function(e){  //单选
+					var check = $(e.target).prop('checked');
+					console.log(check)
+					check?$(e.target).parents('tr').addClass('warning'):$(e.target).parents('tr').removeClass('warning')
+				},
+				searchstudent: function(e) {
+					students.studentdata = {
+						page: page,
+						size: pagesize,
+						school: students.schoolsVal,
+						clazz: students.classVal,
+						grade: students.gradeVal,
+						valid: $('#valid').val(),
+						name: $('#studentname').val(),
+						token: sessionStorage.token
+					}
+					pages(students.studentdata);
+				},
+				seeStudent: function(see,id){
+					window.location.href = 'student_add.html?id='+id+'&'+see+'='+see;
+				},
+				exportStudent: function(e){
+					$(e.target).prop('href',org_url + dataUrl.studentmanager.exportstudent+'?page='+page+'&size='+pagesize+'&school='+students.schoolsVal+'&clazz='+students.classVal+'&grade'+students.gradeVal+'&valid='+$("#valid").val()+'&name='+$('#studentname').val()+'&token='+sessionStorage.token);
+				}
+			},
+			watch: {
+				checkeds:function(n,old){
+					console.log(n+'====='+old)
+					students.allchecked = n;
+					students.iswarning = n;
+				},
+				schoolsVal: function(n, o) {
+					console.log(n + '----' + o);
+					$.ajax({
+						type: "get",
+						url: org_url + dataUrl.clazz.clazz,
+						data: {
+							schoolid: n,
+							token: sessionStorage.token
+						},
+						success: function(data) {
+							var gdatas = [];
+							var cdatas = [];
+							for(var i = 0; i < data.length; i++) {
+								var gradedata = {};
+								var classdata = {};
+								gradedata.id = data[i].gradeid;
+								gradedata.title = data[i].gradename;
+								gdatas.push(gradedata);
+								classdata.id = data[i].id;
+								classdata.name = data[i].name;
+								cdatas.push(classdata);
+							}
+							gdatas.removeRepeatAttr();
+							students.grades = gdatas;
+							students.classs = cdatas;
+						}
+					})
+				},
+				schoolsVal1: function(n, o) {
+					console.log(n + '----' + o);
+					$.ajax({
+						type: "get",
+						url: org_url + dataUrl.clazz.clazz,
+						data: {
+							schoolid: n,
+							token: sessionStorage.token
+						},
+						success: function(data) {
+							var gdatas = [];
+							var cdatas = [];
+							for(var i = 0; i < data.length; i++) {
+								var gradedata = {};
+								var classdata = {};
+								gradedata.id = data[i].gradeid;
+								gradedata.title = data[i].gradename;
+								gdatas.push(gradedata);
+								classdata.id = data[i].id;
+								classdata.name = data[i].name;
+								cdatas.push(classdata);
+							}
+							gdatas.removeRepeatAttr();
+							students.grades1 = gdatas;
+							students.classs1 = cdatas;
+						}
+					})
+				},
+				gradeVal: function(n, o) {
+					console.log(n + '----' + o);
+				}
+			}
+		});
+
+		pages();
 		//分页
-//		function page(max,num){
-			$('#pageToolbar').Paging({
-				pagesize: 10,
-				count: 85,
-				toolbar: false,
-				callback: function(page, size, count) {
-					console.log(page+'***'+size+'------'+count)
-					$('.addlist tbody').html('');
-					$('.addlist').append('<tr>'+
-									'<td><input type="checkbox" class="checkItem" /></td>'+
-									'<td>222='+page+'</td>'+
-									'<td>三环中学222</td>'+
-									'<td>李四222</td>'+
-									'<td>18888888888</td>'+
-									'<td>语文222</td>'+
-									'<td>初三1班，初三2班222</td>'+
-									'<td>已启用222</td>'+
-									'<td>'+
-									'	<a href="javascript:;" onclick="seeStudent()">查看</a>'+
-									'	<a href="javascript:;" onclick="editStudent()">编辑</a>'+
-									'	<a href="javascript:;" onclick="off()">禁用</a>'+
-									'	<a href="javascript:;">删除</a>'+
-									'</td></tr>');
+		function pages(datas){
+			$('#pageToolbar').html('');
+			var data = {};
+			if (datas) {
+				datajson = datas;
+			} else{
+				datajson = {
+					page: page,
+					size: pagesize,
+					token: sessionStorage.token
+				}
+			}
+			$.ajax({
+				type: "get",
+				url: org_url + dataUrl.studentmanager.studentlist,
+				data: datajson,
+				success: function(data) {
+					students.studentLists = data.data;
+					pagecount = data.total;
+					$('#pageToolbar').Paging({
+						pagesize: pagesize,
+						count: pagecount,
+						toolbar: true,
+						hash: true,
+						callback: function(page, size, count) {
+							datajson.page = page;
+							datajson.size = size;
+							pagesize = size;
+							$.ajax({
+								type: "get",
+								url: org_url + dataUrl.studentmanager.studentlist,
+								data: datajson,
+								success: function(data){
+									students.studentLists = data.data;
+								}
+							});
+						},
+						changePagesize:function(ps){
+							datajson.size = ps;
+							pagesize = ps;
+							$.ajax({
+								type: "get",
+								url: org_url + dataUrl.studentmanager.studentlist,
+								data: datajson,
+								success: function(data){
+									students.studentLists = data.data;
+								}
+							});
+						}
+					});
 				}
 			});
-//		}
+		}
 		//点击新建教师
 		$('.addStudent').click(function() {
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/student_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建学生</span></li>');
-			window.location.href='student_add.html';
+			//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/student_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建学生</span></li>');
+			window.location.href = 'student_add.html';
 		});
-		
-		//点击查看
-		function seeStudent(){
-//			$('.addStudent').click(function() {
-				$('.breadcrumb',window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_see.html" style="color: rgb(51, 51, 51); cursor: default;">查看学生</span></li>');
-				window.location.href='student_see.html';
-//			});
-		}
-		
-		//点击编辑
-		function editStudent(){
-			$('.breadcrumb',window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑学生</span></li>');
-			window.location.href='student_edit.html';
-		}
-		
+
+//		//点击查看
+//		function seeStudent() {
+//			//			$('.addStudent').click(function() {
+//			$('.breadcrumb', window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_see.html" style="color: rgb(51, 51, 51); cursor: default;">查看学生</span></li>');
+//			window.location.href = 'student_see.html';
+//			//			});
+//		}
+
+//		//点击编辑
+//		function editStudent() {
+//			$('.breadcrumb', window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑学生</span></li>');
+//			window.location.href = 'student_edit.html';
+//		}
+
 		//点击禁用用户
 		function off() {
 			layer.open({
@@ -392,6 +533,7 @@
 				btn: ['确定', "取消"],
 				yes: function(index, layero) {
 					layer.close(index);
+					students.v
 				},
 				btn2: function(index, layero) {
 					//按钮【按钮二】的回调
@@ -402,74 +544,71 @@
 				}
 			});
 		}
-		
+
 		//导入用户
-		$('.importStudent').click(function(){
-			
-			layer.open({
-				title: "导入选择",
-				content: $('.importStudent_modal').html(),
-				skin: 'layui-layer-lana',
-				shadeClose: 'true',
-				btn: ['确定', "取消"],
-				yes: function(index, layero) {
-					layer.close(index);
-					$.ajax({
-						type:"get",
-						url:"",
-						async:true,
-						success:function(data){
-							
-						}
-					});
-				},
-				btn2: function(index, layero) {
-					//按钮【按钮二】的回调
-					layer.close(index);
-				},
-				cancel: function() {
-					//右上角关闭回调
+		$('.importStudent').click(function() {
+			$('#toStudent').modal('show');
+		});
+		$("#toStudentOk").click(function(){
+			var fd = new FormData();
+			fd.append('file', $('#student_file')[0].files[0]);
+			var data = {
+				school: students.schoolsVal1,
+				clazz: students.classVal1,
+				grade: students.gradeVal1,
+				fromdata:fd
+			}
+			$.ajax({
+				type:"post",
+				url: org_url + dataUrl.studentmanager.excelfileup+'?school='+students.schoolsVal1+'&clazz='+students.classVal1+'&grade='+students.gradeVal1,
+				data: fd,
+				processData: false,
+				contentType: false,
+				success: function(data){
+					console.log(data);
 				}
 			});
-		});
-		
+			console.log(data)
+			$('#toStudent').modal('hide');
+		})
+
 		//批量调班
-		$('.batchChangeShift').click(function(){
+		$('.batchChangeShift').click(function() {
 			$('.checked_student_lists').html('');
-			if ($('.checkItem:checked').length<1) {
+			if($('.checkItem:checked').length < 1) {
 				$('.checked_student_lists').html('没有选择学生');
 			};
-			$.each($('.checkItem:checked'), function(i,e) {
+			$.each($('.checkItem:checked'), function(i, e) {
 				var schooleName = $(e).parents('tr').children().eq(2).text();
-				var grade = $(e).parents('tr').children().eq(3).text()+$(e).parents('tr').children().eq(4).text();
+				var grade = $(e).parents('tr').children().eq(3).text() + $(e).parents('tr').children().eq(4).text();
 				var name = $(e).parents('tr').children().eq(5).text();
 				var idCard = $(e).parents('tr').children().eq(6).text();
-				var stu = '<tr class="student_pag">'+
-						'	<td class="csl_school">'+schooleName+'</td>'+
-						'	<td class="csl_school">'+grade+'</td>'+
-						'	<td class="csl_school">'+name+'</td>'+
-						'	<td class="csl_school">'+idCard+'</td>'+
-						'	<td class="glyphicon glyphicon-remove remove_student"></td>'+
-						'</tr>'
+				var stu = '<tr class="student_pag">' +
+					'	<td class="csl_school">' + schooleName + '</td>' +
+					'	<td class="csl_school">' + grade + '</td>' +
+					'	<td class="csl_school">' + name + '</td>' +
+					'	<td class="csl_school">' + idCard + '</td>' +
+					'	<td class="glyphicon glyphicon-remove remove_student"></td>' +
+					'</tr>'
 				$('.checked_student_lists').append(stu);
 			});
-			
-			
+
 			layer.open({
 				title: "调整班级",
 				content: $('.batchChangeShift_modal').html(),
 				skin: 'layui-layer-lana',
-				area: ['450px','auto'],
+				area: ['auto', 'auto'],
 				shadeClose: false,
+				fixed: false,
 				btn: ['确定', "取消"],
 				yes: function(index, layero) {
 					layer.close(index);
 					$.ajax({
-						type:"get",
-						url:"",
-						async:true,
-						success:function(data){
-							
+						type: "get",
+						url: "",
+						async: true,
+						success: function(data) {
+
 						}
 					});
 				},
@@ -482,7 +621,6 @@
 				}
 			});
 		})
-		
 	</script>
 
 </html>

@@ -54,11 +54,12 @@
 	</head>
 
 	<body>
-		<div class="main container-fluid" style="overflow:inherit;">
+		<div class="main container-fluid" id="studentAdd" style="overflow:inherit;">
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<input class="commonbtn save" type="button" value="保存" />
-					<input class="commonbtn back" type="button" value="返回" />
+					<button class="commonbtn save" type="button">保存</button>
+					<button class="commonbtn resetpassword none">重置密码</button>
+					<button class="commonbtn back" type="button">返回</button>
 				</div>
 			</div>
 			<div class="list_btm">
@@ -70,7 +71,7 @@
 							<span class="warn" style="padding-left: 20px;">姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="student_name" id="student_name" class="form-control" value="" />
+							<input type="text" name="student_name" maxlength="20" id="student_name" class="form-control" v-model="student_name" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -78,22 +79,18 @@
 							<span class="warn" style="padding-left: 20px;">学校</span>
 						</label>
 						<div class="col-sm-3">
-							<select class="selectpicker form-control organization schoolLists">
+							<select class=" form-control organization schoolLists" v-model="schoolsVal">
 								<option value="">请选择</option>
-								<option value="2">县教育局</option>
-								<option value="3">直属教育局</option>
-								<option value="4">市教育局</option>
+								<option v-for="sc in schools" v-bind:value="sc.id">{{sc.name}}</option>
 							</select>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">所在年级</span>
 						</label>
 						<div class="col-sm-3">
-							<select class="selectpicker form-control organization gradeLists">
+							<select class=" form-control organization gradeLists" v-model="gradeVal">
 								<option value="">请选择</option>
-								<option value="2">一年级</option>
-								<option value="3">二年级</option>
-								<option value="4">三年级</option>
+								<option v-for="g in grades" v-bind:value="g.id">{{g.name}}</option>
 							</select>
 						</div>
 					</div>
@@ -102,18 +99,16 @@
 							<span class="warn" style="padding-left: 20px;">所在班级</span>
 						</label>
 						<div class="col-sm-3">
-							<select class="selectpicker form-control organization classGradeLists">
+							<select class=" form-control organization classGradeLists" v-model="classVal">
 								<option value="">请选择</option>
-								<option value="2">一年级1班</option>
-								<option value="3">二年级2班</option>
-								<option value="4">三年级3班</option>
+								<option v-for="c in classs" v-bind:value="c.id">{{c.name}}</option>
 							</select>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">身份证号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="student_ID" id="student_ID" class="form-control" value="" />
+							<input type="text" name="student_ID" id="student_ID" class="form-control" v-model="student_ID" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -121,17 +116,17 @@
 							<span class="" style="padding-left: 20px;">性别</span>
 						</label>
 						<div class="col-sm-3">
-							<select class="selectpicker form-control organization studentSex">
+							<select class=" form-control organization studentSex" v-model="studentSex">
 								<option value="">请选择</option>
-								<option value="2">男</option>
-								<option value="3">女</option>
+								<option value="M">男</option>
+								<option value="F">女</option>
 							</select>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="" style="padding-left: 20px;">出生年月</span>
 						</label>
 						<div class="col-sm-3 input-append date form_datetime">
-							<input type="text" name="student_birth" id="student_birth" class="form-control" value="" />
+							<input type="text" name="student_birth" id="student_birth" class="form-control" v-model="student_birth" />
 							<span class="add-on"><i class="icon-th"></i></span>
 						</div>
 					</div>
@@ -140,7 +135,7 @@
 							<span class="" style="padding-left: 20px;">入校时间</span>
 						</label>
 						<div class="col-sm-3 input-append date form_datetime1">
-							<input type="text" name="into_school_date" id="into_school_date" class="form-control" value="" />
+							<input type="text" name="into_school_date" id="into_school_date" class="form-control" v-model="into_school_date" />
 							<span class="add-on"><i class="icon-th"></i></span>
 						</div>
 					</div>
@@ -159,13 +154,13 @@
 							<span class="" style="padding-left: 20px;">家长姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="patriarch1_name" id="patriarch1_name" class="form-control" value="" />
+							<input type="text" name="patriarch1_name" id="patriarch1_name" class="form-control" v-model="pnameone" />
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="" style="padding-left: 20px;">手机号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="patriarch1_phone" id="patriarch1_phone" class="form-control" value="" />
+							<input type="text" name="patriarch1_phone" id="patriarch1_phone" class="form-control" v-model="pphoneone" />
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label text-right col-sm-offset-1">
@@ -173,25 +168,25 @@
 							</label>
 							<div class="col-sm-9 student_relation">
 								<label for="dad">
-									<input type="radio" name="student_relation1" id="dad" class="" value="" />爸爸
+									<input type="radio" name="student_relation1" id="dad" v-model="relationone" value="bb" />爸爸
 								</label>
 								<label for="mom">
-									<input type="radio" name="student_relation1" id="mom" class="" value="" />妈妈
+									<input type="radio" name="student_relation1" id="mom" v-model="relationone" value="mm" />妈妈
 								</label>
 								<label for="grandpa">
-									<input type="radio" name="student_relation1" id="grandpa" class="" value="" />爷爷
+									<input type="radio" name="student_relation1" id="grandpa" v-model="relationone" value="yy" />爷爷
 								</label>
 								<label for="grandma">
-									<input type="radio" name="student_relation1" id="grandma" class="" value="" />奶奶
+									<input type="radio" name="student_relation1" id="grandma" v-model="relationone" value="nn" />奶奶
 								</label>
 								<label for="wgrandpa">
-									<input type="radio" name="student_relation1" id="wgrandpa" class="" value="" />外公
+									<input type="radio" name="student_relation1" id="wgrandpa" v-model="relationone" value="wg" />外公
 								</label>
 								<label for="wgrandma">
-									<input type="radio" name="student_relation1" id="wgrandma" class="" value="" />外婆
+									<input type="radio" name="student_relation1" id="wgrandma" v-model="relationone" value="wp" />外婆
 								</label>
 								<label for="guardian">
-									<input type="radio" name="student1_relation1" id="guardian" class="" value="" />监护人
+									<input type="radio" name="student1_relation1" id="guardian" v-model="relationone" value="jhr" />监护人
 								</label>
 							</div>
 						</div>
@@ -204,13 +199,13 @@
 							<span class="" style="padding-left: 20px;">家长姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="patriarch2_name" id="patriarch2_name" class="form-control" value="" />
+							<input type="text" name="patriarch2_name" id="patriarch2_name" class="form-control" v-model="pnametwo" />
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="" style="padding-left: 20px;">手机号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="patriarch2_phone" id="patriarch2_phone" class="form-control" value="" />
+							<input type="text" name="patriarch2_phone" id="patriarch2_phone" class="form-control" v-model="pphonetwo" />
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label text-right col-sm-offset-1">
@@ -218,25 +213,25 @@
 							</label>
 							<div class="col-sm-9 student_relation">
 								<label for="dad2">
-									<input type="radio" name="student_relation2" id="dad2" class="" value="" />爸爸
+									<input type="radio" name="student_relation2" id="dad2" v-model="relationtwo" value="bb" />爸爸
 								</label>
 								<label for="mom2">
-									<input type="radio" name="student_relation2" id="mom2" class="" value="" />妈妈
+									<input type="radio" name="student_relation2" id="mom2" v-model="relationtwo" value="mm" />妈妈
 								</label>
 								<label for="grandpa2">
-									<input type="radio" name="student_relation2" id="grandpa2" class="" value="" />爷爷
+									<input type="radio" name="student_relation2" id="grandpa2" v-model="relationtwo" value="yy" />爷爷
 								</label>
 								<label for="grandma2">
-									<input type="radio" name="student_relation2" id="grandma2" class="" value="" />奶奶
+									<input type="radio" name="student_relation2" id="grandma2" v-model="relationtwo" value="nn" />奶奶
 								</label>
 								<label for="wgrandpa2">
-									<input type="radio" name="student_relation2" id="wgrandpa2" class="" value="" />外公
+									<input type="radio" name="student_relation2" id="wgrandpa2" v-model="relationtwo" value="wg" />外公
 								</label>
 								<label for="wgrandma2">
-									<input type="radio" name="student_relation2" id="wgrandma2" class="" value="" />外婆
+									<input type="radio" name="student_relation2" id="wgrandma2" v-model="relationtwo" value="wp" />外婆
 								</label>
 								<label for="guardian2">
-									<input type="radio" name="student_relation2" id="guardian2" class="" value="" />监护人
+									<input type="radio" name="student_relation2" id="guardian2" v-model="relationtwo" value="jhr" />监护人
 								</label>
 							</div>
 						</div>
@@ -253,6 +248,8 @@
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
 	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../../js/userManage/add_student.js"></script>
 
 </html>

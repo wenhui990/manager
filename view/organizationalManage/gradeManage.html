@@ -22,6 +22,9 @@
 		<script src="../../assets/ace-extra.min.js"></script>
 		<script src="../../assets/ace-elements.min.js"></script>
 		<script src="../../assets/ace.min.js"></script>
+		<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
@@ -31,10 +34,10 @@
 		<![endif]-->
 
 		<style type="text/css">
-		.layui-layer-content {
+			.layui-layer-content {
 				height: 178px !important;
 			}
-			
+			.none{display: none;}
 			.commonbtn {
 				height: 32px;
 				padding: 0 20px;
@@ -47,130 +50,44 @@
 			.box_border{
 				border: 1px solid #e6e6e6;
 			}
-		
+			.school_all_name{
+				font-weight: bold;
+			}
+			.lef{margin-left: 20px;}
 		</style>
 	</head>
 
-	<body style="background: #fff;">
+	<body style="background: #fff;" >
 		<div class="main container-fluid clearFix" style="overflow: inherit;padding: 20px;">
-			<!--<h3 class="text-center">初中数学人教版7年级上知识结构</h3>-->
 			<div class="lefttree fl col-sm-3" style="min-height: 250px;height: auto;">
-				<ul class="nav nav-list box_border">
+				<ul class="nav nav-list box_border" id="mainbody">
 					<li class="">
-						<a href="" class="dropdown-toggle">
-							<i class="icon-dashboard "></i>
-							<span class="menu-text"> XX学校 </span>
-							<b class="arrow icon-angle-down"></b>
+						<a href="javascript:;" class="dropdown-toggle">
+							<i class="lef"></i>
+							<span class="menu-text school_all_name"></span>
 						</a>
 					</li>
-					<li class="open">
+					<!--<li v-for="(grade,index) in schoolGrade">
 						<a href="#" class="dropdown-toggle">
 							<i class="icon-desktop"></i>
-							<span class="menu-text"> 小学 </span>
+							<span class="menu-text"> {{grade.name}} </span>
 							<b class="arrow icon-angle-down"></b>
 						</a>
-
 						<ul class="submenu" style="display: block;">
-							<li class="">
-								<a href="javascript:;">
-									<i class="icon-double-angle-right"></i> 一年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 二年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 三年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 四年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 五年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;" class="">
-									<i class="icon-double-angle-right"></i> 六年级
-									<b class="arrow icon-angle-down"></b>
+							<li class="nav_lis" v-for="gradecla in grade.datas">
+								<a href="javascript:;" v-bind:data-id="gradecla.id" v-on:click="gradeClick(gradecla.id)">
+									<i class="icon-double-angle-right"></i> {{gradecla.title}}
 								</a>
 							</li>
 						</ul>
-					</li>
-					<li class="">
-						<a href="avascript:;" class="dropdown-toggle">
-							<i class="icon-dashboard "></i>
-							<span class="menu-text"> 初中 </span>
-							<b class="arrow icon-angle-down"></b>
-						</a>
-						<ul class="submenu" style="display: none;">
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 一年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 二年级
-								</a>
-							</li>
-
-							<li>
-								<a href="avascript:;">
-									<i class="icon-double-angle-right"></i> 三年级
-								</a>
-							</li>
-
-						</ul>
-					</li>
-
-					<li>
-						<a href="" class="dropdown-toggle">
-							<i class="icon-text-width"></i>
-							<span class="menu-text"> 高中 </span>
-							<b class="arrow icon-angle-down"></b>
-						</a>
-						<ul class="submenu" style="display: none;">
-							<li>
-								<a href="">
-									<i class="icon-double-angle-right"></i> 一年级
-								</a>
-							</li>
-
-							<li>
-								<a href="buttons.html">
-									<i class="icon-double-angle-right"></i> 二年级
-								</a>
-							</li>
-
-							<li>
-								<a href="treeview.html">
-									<i class="icon-double-angle-right"></i> 三年级
-								</a>
-							</li>
-						</ul>
-					</li>
-
+					</li>-->
 				</ul>
 			</div>
-			<div class="rightContent fr col-sm-9">
+			<div class="rightContent fr col-sm-9" id="gradelists">
 				<div class="box_border" style="margin-bottom: 20px;padding: 10px 20px;">
 					<div class="btngroup">
-						<span class="add_grade btn btn-info">添加班级</span>
-						<span class="back_school btn btn-info">返回</span>
+						<a href="javascript:;" class="add_grade btn btn-info">添加班级</a>
+						<a href="javascript:;" class="back_school btn btn-info">返回</a>
 					</div>
 				</div>
 				<div class="box_border" style="padding: 10px 20px;">
@@ -182,113 +99,259 @@
 							<th>操作</th>
 						</thead>
 						<tbody class="grade_lists">
-							<tr>
-								<td>一年级（1）班</td>
-								<td>李四</td>
-								<td>语文:李四；数学:张三；英语:王五</td>
+							<!--<tr v-for="grade in gradeList">
+								<td>{{grade.name}}</td>
+								<td>{{grade.adviserName}}</td>
+								<td>{{grade.extrInfo}}</td>
 								<td>
-									<a href="javascript:;" class="edit_class">编辑</a>
-									<a href="javascript:;" class="delete_class">删除</a>
+									<a href="javascript:;" v-on:click="editClass(grade.id)" class="edit_class">编辑</a>
+									<a href="javascript:;" v-bind:data-id="grade.id" class="delete_class" v-on:click="delClass">删除</a>
 								</td>
-							</tr>
-							<tr>
-								<td>一年级（1）班</td>
-								<td></td>
-								<td></td>
-								<td>
-									<a href="javascript:;" class="edit_class">编辑</a>
-									<a href="javascript:;" class="delete_class">删除</a>
-								</td>
-							</tr>
-							<tr>
-								<td>一年级（1）班</td>
-								<td></td>
-								<td></td>
-								<td>
-									<a href="javascript:;" class="edit_class">编辑</a>
-									<a href="javascript:;" class="delete_class">删除</a>
-								</td>
-							</tr>
+							</tr>-->
+							
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<!--根节点-->
 
 	</body>
 
 	<script>
-		/*	$('#pageTool').Paging({pagesize:10,count:100,callback:function(page,size,count){
-									console.log(arguments)
-									alert('当前第 ' +page +'页,每页 '+size+'条,总页数：'+count+'页')
-									}});*/
-
-		/*setTimeout(function(){
-			$(".mask-tree").show()
-			console.log($(".mask-tree"))
-			 $(".tree").treemenu({delay:300}).openActive();
-		},10)*/
-		function aa() {
-			var aa = $("#treeDemo li a.curSelectedNode").children("span.node_name").html();
-			alert(aa);
-		}
-		
-		//获取url中字段
-		function getUrlParams() {
-			var params = {};
-			var url = window.location.href;
-			var idx = url.indexOf("?");
-			if(idx > 0) {
-				var queryStr = url.substring(idx + 1);
-				var args = queryStr.split("&");
-				for(var i = 0, a, nv; a = args[i]; i++) {
-					nv = args[i] = a.split("=");
-					params[nv[0]] = nv.length > 1 ? nv[1] : true;
+			var gradelist='';
+			
+			//获取url中字段
+			function getUrlParams() {
+				var params = {};
+				var url = window.location.href;
+				var idx = url.indexOf("?");
+				if(idx > 0) {
+					var queryStr = url.substring(idx + 1);
+					var args = queryStr.split("&");
+					for(var i = 0, a, nv; a = args[i]; i++) {
+						nv = args[i] = a.split("=");
+						params[nv[0]] = nv.length > 1 ? nv[1] : true;
+					}
 				}
+				return params;
+			};	
+			$('.school_all_name').text(decodeURIComponent(getUrlParams().name))
+			var teacerjson,page=1,gradecount=0;
+			//点击保存后班级管理页面显示新添加的班级
+			if(getUrlParams().id){
+				$('.add_grade').click(function(){
+					if ($('.add_grade').attr('href').indexOf()<0) {
+						layer.alert('请选择年级！');
+					}
+				})
+				$.ajax({
+					type: "get",
+					url: org_url + dataUrl.clazz.grades,
+					data: {
+						schoolId: getUrlParams().id,
+						token: sessionStorage.token
+					},
+					async: true,
+					success: function(data) {
+						for(var v in data){
+							var $lihtm = $('<li v-for="(grade,index) in schoolGrade"><a href="#" class="dropdown-toggle"><i class="lef"></i><span class="menu-text"> '+v+' </span></a></li>');
+							var $ulhtm = $('<ul class="submenu" style="display: block;"></ul>');
+							$.each(data[v],function(i,e){
+								var $sublihtm = '<li class="nav_lis" data-id="'+e.id+'"><a href="javascript:;" ><i class="icon-double-angle-right"></i> '+e.title+'</a></li>';
+								$ulhtm.append($sublihtm);
+							});
+							$lihtm.append($ulhtm);
+							$('#mainbody').append($lihtm);
+						}
+						console.log(data)
+					},
+					error: function(data) {
+						console.log(data.responseText)
+					}
+				});
+				/*var mainbody = new Vue({
+					el: "#mainbody",
+					data: {
+						schoolGrade:[],
+						gradeList:''
+					},
+					beforeCreate: function() {
+						var _self = this;
+						$.ajax({
+							type: "get",
+							url: org_url + dataUrl.clazz.grades,
+							data: {
+								schoolId: getUrlParams().id
+							},
+							async: true,
+							success: function(data) {
+	//							gradecount = data.total;
+								var datajson = [];
+								for (var i in data) {
+									var dataobj = {};
+									dataobj.name = i;
+									dataobj.datas = data[i];
+									datajson.push(dataobj)
+									
+								}
+								console.log(datajson);
+								_self.schoolGrade = datajson;
+								console.log(data)
+							},
+							error: function(data) {
+								console.log(data.responseText)
+							}
+						});
+					},
+					methods: {
+						gradeClick: function(id){
+							var _self = this;
+//							var gradehtml = $('.grade_lists').html();
+//							$('.grade_lists').html('');
+//							$('.grade_lists').attr('data-id',id);
+//							initgrade(id);
+							$.ajax({
+								type:"get",
+								url:org_url + dataUrl.clazz.clazz,
+								async:true,
+								data:{
+									gradeid: id,
+									schoolid: getUrlParams().id
+								},
+								success: function(data){
+									console.log(data)
+									$('.add_grade').attr('href','add_grade.html?gradeId='+id+'&schoolId='+getUrlParams().id+'&schoolName='+getUrlParams().name);
+//									$('.grade_lists').append(gradehtml);
+									initgrade(id,data);
+									gradelist.gradeList=data;
+								}
+							});
+						},
+					}
+				});
 			}
-			return params;
-		};	
-		var teacerjson;
-		//点击保存后班级管理页面显示新添加的班级
-		if(getUrlParams().obj){
-			teacerjson = JSON.parse(decodeURIComponent(getUrlParams().obj));
-			console.log(decodeURIComponent(getUrlParams().obj));
-			var subjecname ='';
-			$.each(teacerjson.subjects,function(i,e){
-				subjecname += e.subjecname+':'+e.teachername+';';
+			
+			function initgrade(id,data){
+				gradelist = new Vue({
+					el: "#gradelists",
+					data:{
+						gradeList: data
+					},
+					methods:{
+						//修改班级
+						editClass: function(id){
+							window.location.href = 'add_grade.html?gradeId='+id+'&schoolId='+getUrlParams().id+'&clazzid='+id+'&name='+getUrlParams().name;
+						},
+						//删除班级
+						delClass: function(event){
+							console.log($(event.target).attr('data-id'))
+							layer.open({
+				                title: "提示",
+				                content: '确定删除吗？',
+				                skin: 'layui-layer-lana',
+				                shadeClose: false,
+				                btn: ['确定'],
+				                yes: function(index, layero) {
+				                    layer.close(index);
+				                    console.log($(this))
+				                    $.ajax({
+										type:"delete",
+										url: org_url + dataUrl.clazz.clazz+$(event.target).attr('data-id'),
+										async:true,
+										success: function(data){
+											if (data==1) {
+												layer.alert('删除成功！');
+												$(event.target).parents('tr').remove();
+											}else{
+												layer.alert('删除失败！');
+											}												}
+									});
+				                }
+				        	});
+							
+						}
+					}
+				});*/
+			}
+			//侧导航点击
+			$(document).on('click','.nav_lis',function(e){
+				$('.nav_lis').removeClass('active');
+				$(this).addClass('active');
+				var gradeid = $(this).attr('data-id');
+				$('.grade_lists').attr('data-gradeid',gradeid);
+				$('.grade_lists').html('');
+				$.ajax({
+					type:"get",
+					url:org_url + dataUrl.clazz.clazz,
+					async:true,
+					data:{
+						gradeid: gradeid,
+						schoolid: getUrlParams().id,
+						token: sessionStorage.token
+					},
+					success: function(data){
+						console.log(data)
+						$('.add_grade').attr('href','add_grade.html?gradeId='+gradeid+'&schoolId='+getUrlParams().id+'&schoolName='+getUrlParams().name);
+						$.each(data,function(i,e){
+							var trhtml = '<tr><td>'+e.name+'</td><td>'+e.adviserName+'</td><td>'+(e.extrInfo?e.extrInfo:"")+'</td><td><a href="javascript:;" data-id="'+e.id+'" class="edit_class">编辑</a> <a href="javascript:;" data-id="'+e.id+'" class="delete_class">删除</a></td></tr>';
+							$('.grade_lists').append(trhtml);
+						})
+//						$('.grade_lists').append(gradehtml);
+					}
+				});
 			})
-			$('.grade_lists').append('<tr>'+
-								'<td>'+teacerjson.gradeName+'</td>'+
-								'<td>'+teacerjson.chargeTeacherName+'</td>'+
-								'<td>'+subjecname+'</td>'+
-								'<td><a href="javascript:;" class="edit_class">编辑</a><a href="javascript:;" class="delete_class">删除</a></td></tr>');
-		}
-		
-		
-		//侧导航点击
-		$('.nav-list').find("li").click(function(e){
-			console.log($(this));
-//			$('.nav-list').find('li').removeClass('active');
-			$(this).addClass('active').siblings().removeClass('active');
-		})
-		
-		//点击返回班级管理
-		$('.back_school').click(function (){
-			$('.grade_mange_title',window.parent.document).remove();
-			window.location.href='schoolManage.html';
-		});
-		
-		//添加班级
-		$('.add_grade').click(function (){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html" style="color: rgb(51, 51, 51); cursor: default;">新建班级</span></li>');
-			window.location.href='add_grade.html';
-		});
-		
-		//编辑班级
-		$('.edit_class').click(function (){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html?id=123" style="color: rgb(51, 51, 51); cursor: default;">编辑班级</span></li>');
-			window.location.href='add_grade.html?id=123&obj='+teacerjson;
-		});
+			
+			//点击返回班级管理
+			$('.back_school').click(function (){
+				$('.breadcrumb>li:gt(1)',window.parent.document).remove();
+				window.location.href='schoolManage.html';
+			});
+			
+			//添加班级
+			$('.add_grade').click(function (){
+				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html" style="color: rgb(51, 51, 51); cursor: default;">新建班级</span></li>');
+			});
+			
+			//编辑班级
+			$(document).on('click','.edit_class',function (){
+				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html?id=123" style="color: rgb(51, 51, 51); cursor: default;">编辑班级</span></li>');
+				var clazzid = $(this).attr('data-id');
+				var gradeid = $('.grade_lists').attr('data-gradeid');
+				window.location.href = 'add_grade.html?gradeId='+gradeid+'&schoolId='+getUrlParams().id+'&clazzid='+clazzid+'&schoolName='+getUrlParams().name;
+			});
+			
+			
+			//删除班级
+			$(document).on('click','.delete_class',function(){
+				var delid = $(this).attr('data-id');
+				var _this = $(this);
+				layer.open({
+	                title: "提示",
+	                content: '确定删除吗？',
+	                skin: 'layui-layer-lana',
+	                shadeClose: false,
+	                btn: ['确定'],
+	                yes: function(index, layero) {
+	                    layer.close(index);
+	                    console.log($(this))
+	                    $.ajax({
+							type:"delete",
+							url: org_url + dataUrl.clazz.clazz+delid+"?token"+sessionStorage.token,
+							async:true,
+							success: function(data){
+								if (data==1) {
+									layer.alert('删除成功！');
+									_this.parents('tr').remove();
+								}else{
+									layer.alert('删除失败！');
+								}												
+							}
+						});
+	                }
+	        	});
+			});
+			
+			
+			
 	</script>
 
 </html>

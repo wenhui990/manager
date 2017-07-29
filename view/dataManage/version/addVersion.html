@@ -9,37 +9,90 @@
 		<link rel="stylesheet" href="../../../css/common/common.css" />
 	</head>
 	<body>
-		<div class="main container-fluid">
+		<div class="main container-fluid" id="version">
 			<div class="row head">
 				<div class="btngroup">
-					<input class="commonbtn" type="button" value="保存"/>
+					<input class="commonbtn" type="button" value="保存" v-on:click="add($event)"/>
 					<a href="versionManage_list.html"><input class="commonbtn" type="button" value="返回"/></a>
 				</div>
 			</div>
 			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;height: auto;">
 				<form class="form-horizontal pad_l_40" role="form">
-					<div class="form-group" style="height: 34px;"> 
+					<div class="form-group" style="height: 34px;">
 						<label for="" class="col-sm-1 control-label text-center warn">版本名称</label>
 						<div class="col-sm-2">
-							<input class="form-control" type="text" placeholder="">		
+							<input class="form-control" type="text" placeholder="" v-model="title">
 						</div>
 					</div>
-					<div class="form-group" style="height: 34px;"> 
+					<div class="form-group" style="height: 34px;">
 						<label for="" class="col-sm-1 control-label text-center">排序</label>
 						<div class="col-sm-2">
-							<input class="form-control" type="text" placeholder="">		
+							<input class="form-control" type="text" placeholder="" v-model="sn">
 						</div>
 					</div>
-					<div class="form-group"> 
+					<div class="form-group">
 						<label for="" class="col-sm-1 control-label text-center">版本描述</label>
-						<textarea class="col-sm-4" name="" rows="10" style="margin-left: 12px;resize: none;"></textarea>
+						<textarea class="col-sm-4" name="" rows="10" style="margin-left: 12px;resize: none;" v-model="note"></textarea>
 					</div>
 				</form>
-				
+
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
+
+	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
+	<script type="text/javascript">
+		var vvm = null;
+
+		$(document).ready(function() {
+			vvm_init();
+		});
+
+		function vvm_init(){
+			vvm = new Vue({
+				el: '#version',
+				data:{
+					title:"",
+					sn:"",
+					note:""
+				},
+				methods:{
+					add:function(event){
+						console.log("title: " + this.title + ", sn: " + this.sn + ", note: " + this.note);
+						addVersion(this.title, this.sn, this.note);
+				}}
+			});
+		}
+
+		function addVersion(title, sn, note){
+			var url = org_url + dataUrl['edition']['createEdition'];
+			var version = new Object();
+			version['title'] = title;
+			if (sn == ""){
+				version['sn'] = "99";
+			}else{
+				version['sn'] = sn;
+			}
+			version['note'] = note;
+			version['valid'] = "1";
+			$.ajax({
+				url: url,
+				type: 'post',
+				data: version,
+				success: function(resp) {
+					console.log("resp: " + JSON.stringify(resp));
+					window.location.href = "versionManage_list.html";
+				},
+				error: function(d, data) {
+					console.log(data);
+				},
+				complete: function(data) {
+				}
+			});
+		}
+	</script>
 </html>
 
 

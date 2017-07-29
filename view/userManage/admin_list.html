@@ -25,23 +25,23 @@
 					<div class="form-group">
 						<label for="secondname" class="col-sm-1 control-label text-center">姓名</label>
 						<div class="col-sm-2">
-							<input type="text" name="" class="form-control admin_name" />
+							<input type="text" id="name" name="" class="form-control admin_name" />
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">手机号</label>
 						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control admin_phone" />
+							<input type="tel" id="phone" name="" class="form-control admin_phone" />
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control admin_state" data-live-search="true">
-								<option>全部</option>
-								<option>禁用</option>
-								<option>启用</option>
+							<select name="" id="valid" class="form-control admin_state" data-live-search="true">
+								<option value="">全部</option>
+								<option value='0'>禁用</option>
+								<option value='1'>启用</option>
 							</select>
 						</div>
-						<div class="search_01 col-sm-2 col-sm-offset-1">查询</div>
+						<div id="btnSearch" onclick="search()" class="search_01 col-sm-2 col-sm-offset-1">查询</div>
 					</div>
 
 					
@@ -55,7 +55,8 @@
 			<div class="numshu_btm">
 				<div class="list_btm">
 					<div class="table-responsive">
-						<table class="table table-condensed addlist" style="text-align: center;">
+						<table class="table table-condensed addlist" style="text-align: center;">							
+							<script id="manager_list_tmpl" type="text/x-dot-template">	
 							<tr>
 								<td><strong>序号</strong></td>
 								<td><strong>姓名</strong></td>
@@ -64,32 +65,23 @@
 								<td><strong>用户状态</strong></td>
 								<td><strong>操作</strong></td>
 							</tr>
-							<tr>
-								<td>1</td>
-								<td>李四</td>
-								<td>18888888888</td>
-								<td>市局管理员</td>
-								<td>已启用</td>
+							{{~it:value:index}}									
+							<tr id="manager{{=value.id}}">
+								<td>{{=index+1}}</td>
+								<td>{{=value.name}}</td>
+								<td>{{=value.phone}}</td>
+								<td>{{=value.roles}}</td>
+								<td><input id="valid{{=value.id}}" type="hidden" value='{{=value.valid}}'>
+								<span id="validText{{=value.id}}">{{?value.valid=='0'}}无效{{??}}有效{{?}}</span></td>
 								<td>
-									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>
-									<a href="javascript:;" onclick="editAdmin()">编辑</a>
-									<a href="javascript:;" onclick="off()">禁用</a>
-									<a href="javascript:;" onclick="delteAdmin()">删除</a>
+									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>&nbsp;
+									<a href="javascript:;" onclick="editAdmin({{=value.id}})">编辑</a>&nbsp;
+									<a id="validHref{{=value.id}}" href="javascript:;" onclick="off({{=value.id}},{{=value.valid}})">{{?value.valid=='0'}}启用{{??}}禁用{{?}}</a>&nbsp;
+									<a href="javascript:;" onclick="delteAdmin({{=value.id}})">删除</a>&nbsp;
 								</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>李白</td>
-								<td>18888888888</td>
-								<td>超级管理员</td>
-								<td>已启用</td>
-								<td>
-									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>
-									<a href="javascript:;" onclick="editAdmin()">编辑</a>
-									<a href="javascript:;" onclick="off()">禁用</a>
-									<a href="javascript:;" onclick="delteAdmin()">删除</a>
-								</td>
-							</tr>
+							{{~}}
+							</script>						
 						</table>
 					</div>
 					<div class="row pro_list_btm">
@@ -105,40 +97,76 @@
 		</div>
 
 	</body>
+	<script type="text/javascript" src="../../js/doT.min.js"></script>
 	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
 	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
 	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	
 	<!--<script type="text/javascript" src="../../js/knowledge/knowledge_list.js" ></script>-->
 	<script>
+		var evalText;
+		$(function(){
+			evalText = doT.template($("#manager_list_tmpl").text());
+			search();			
+		})
+	
 		//分页
-//		function page(max,num){
-			$('#pageToolbar').Paging({
-				pagesize: 10,
-				count: 85,
-				toolbar: false,
-				callback: function(page, size, count) {
-					console.log(page+'***'+size+'------'+count)
-					$('.addlist').html('');
-					$('.addlist').append('<tr>'+
-									'<td>222='+page+'</td>'+
-									'<td>三环中学222</td>'+
-									'<td>李四222</td>'+
-									'<td>18888888888</td>'+
-									'<td>语文222</td>'+
-									'<td>初三1班，初三2班222</td>'+
-									'<td>已启用222</td>'+
-									'<td>'+
-									'	<a href="javascript:;" onclick="seeAdmin()">查看</a>'+
-									'	<a href="javascript:;" onclick="editAdmin()">编辑</a>'+
-									'	<a href="javascript:;" onclick="off()">禁用</a>'+
-									'	<a href="javascript:;" onclick="delteAdmin()">删除</a>'+
-									'</td></tr>');
-				}
+		function search(){
+			$('#pageToolbar').html("");
+			$.ajax({
+				type:"get",
+				url: org_url + "/managers",
+				data:{
+					page:1,
+					size:5,
+					phone: $("#phone").val(),
+					name: $("#name").val(),
+					valid:$("#valid").val()
+				},
+				async:true,
+				dataType:"json",
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    crossDomain: true,
+			    success: function(data){
+			    	$(".addlist").html(evalText(data.data));
+			    	$('#pageToolbar').Paging({
+						pagesize: 5,
+						count: data.total,
+						toolbar: false,
+						callback: function(page, size, count) {
+							//console.log(page+'***'+size+'------'+count)
+							$.ajax({
+								type:"get",
+								url: org_url + "/managers",
+								data:{
+									page:page,
+									size:size,
+									phone: $("#phone").val(),
+									name: $("#name").val(),
+									valid:$("#valid").val()
+								},
+								async:true,
+								xhrFields: {
+							        withCredentials: true
+							    },
+							    dataType:"json",
+							    crossDomain: true,
+							    success: function(data){
+									$(".addlist").html(evalText(data.data));	
+							    }
+							});  
+						}
+					});					
+			    }
 			});
-//		}
+		}
+		
 		//点击新建管理员
 		$('.addAdmin').click(function() {
 			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建用户</span></li>');
@@ -174,34 +202,40 @@
 		}
 		
 		//点击编辑
-		function editAdmin(){
+		function editAdmin(id){
 			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑教师</span></li>');
-			window.location.href='admin_edit.html';
+			window.location.href='admin_edit.html?id='+id;
 		}
 		
 		//点击禁用用户
-		function off() {
-			layer.open({
-				title: "",
-				content: '确定禁用该用户吗？',
-				skin: 'layui-layer-lana',
-				shadeClose: 'true',
-				btn: ['确定', "取消"],
-				yes: function(index, layero) {
-					layer.close(index);
-				},
-				btn2: function(index, layero) {
-					//按钮【按钮二】的回调
-					layer.close(index);
-				},
-				cancel: function() {
-					//右上角关闭回调
-				}
+		function off(id) {
+			var v = ($("#valid"+id).val()=='0'?'1':'0');
+			$.ajax({
+				type:"put",
+				url: org_url + "/managers/"+id,
+				async:true,
+				dataType:"json",
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    data:{
+			    	valid:v
+			    },
+			    crossDomain: true,
+			    success: function(data){
+			    	//alert(v);
+			    	$("#valid"+id).val(v);
+			    	$("#validText"+id).html(v=="0"?"无效":"有效");
+			    	$("#validHref"+id).html(v=="0"?"启用":"禁用");
+			    	//window.location.href='admin_list.html';
+		            //$('.add_teacher_bar',window.parent.document).remove();   	
+			    }
 			});
+
 		}
 		
 		//点击删除用户
-		function delteAdmin(){
+		function delteAdmin(id){
 			layer.open({
 				title: "",
 				content: '确定删除该用户吗？',
@@ -209,6 +243,21 @@
 				shadeClose: 'true',
 				btn: ['确定', "取消"],
 				yes: function(index, layero) {
+					$.ajax({
+						type:"delete",
+						url: org_url + "/managers/"+id,
+						async:true,
+						dataType:"json",
+						xhrFields: {
+					        withCredentials: true
+					    },
+					    crossDomain: true,
+					    success: function(data){
+					    	if(data==1){
+						    	$("#manager"+id).remove();
+						    }  	
+					    }
+					});
 					layer.close(index);
 				},
 				btn2: function(index, layero) {
@@ -217,6 +266,8 @@
 				}
 			});
 		}
+		
+		
 	</script>
 
 </html>

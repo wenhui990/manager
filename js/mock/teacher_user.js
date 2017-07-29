@@ -1,0 +1,56 @@
+
+Mock.mock(
+    'http://schools',
+    [
+        {
+            "id":5,
+            "name":"中关村三中"
+        },
+        {
+            "id":6,
+            "name":"北师大附中"
+        },
+        {
+            "id":7,
+            "name":"福州一中"
+        }
+    ]
+);
+
+
+
+Mock.mock(
+    'http://teachers',
+[
+    {
+        "id":1,
+        "name":"张老师",
+        "schoolId":111,
+        "schoolName":"中关村二小",
+        "idcard":"1234567890123456",
+        "sex":"0",
+        "birth":"1988.01.02",
+        "valid":1
+    },
+    {
+        "id":2222,
+        "name":"方老师",
+        "schoolId":111,
+        "schoolName":"八十中",
+        "idcard":"1234567890123456",
+        "sex":"0",
+        "birth":"1988.01.02",
+        "valid":1
+    },
+    {
+        "id":112344,
+        "name":"新老师",
+        "schoolId":362172,
+        "schoolName":"呼市二中",
+        "idcard":"123456123456",
+        "sex":"0",
+        "birth":"1981.11.02",
+        "valid":0
+    }
+]
+);

@@ -13,12 +13,16 @@
 		<link rel="stylesheet" href="../../css/common/common.css" />
 		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
 	</head>
-
+	<style type="text/css">
+		[v-cloak] {
+		  display: none;
+		}
+	</style>
 	<body>
-		<div class="main container-fluid">
+		<div class="main container-fluid" id="roleList" v-cloak>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<input class="commonbtn addRole" type="button" value="新建角色" />
+					<a class="commonbtn" href="javascript:;" value="新建角色" v-on:click="operaterole('新建角色',$event)" >新建角色</a>
 				</div>
 			</div>
 			<div class="numshu_btm">
@@ -34,26 +38,15 @@
 								</tr>
 							</thead>
 							<tbody class="addlist">
-								<tr>
-									<td>1</td>
-									<td>市局管理员</td>
-									<td>这是角色描述的内容</td>
+								<tr v-for="(item,index) in data">
+									<td>{{index}}</td>
+									<td>{{item.name}}</td>
+									<td>{{item.note}}</td>
 									<td>
-										<a href="javascript:;" onclick="configUser()">配置用户</a>
-										<a href="javascript:;" onclick="configGurisdiction()">配置权限</a>
-										<a href="javascript:;" onclick="editUser()">编辑</a>
-										<a href="javascript:;" onclick="delteAdmin()">删除</a>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>市局管理员</td>
-									<td>这是角色描述的内容</td>
-									<td>
-										<a href="javascript:;" onclick="configUser()">配置用户</a>
-										<a href="javascript:;" onclick="configGurisdiction()">配置权限</a>
-										<a href="javascript:;" onclick="editUser()">编辑</a>
-										<a href="javascript:;" onclick="delteAdmin()">删除</a>
+										<a v-bind:href="'config_user.html?id='+item.id+'&name='+item.name">配置用户</a>
+										<a href="javascript:;" v-on:click="configGurisdiction(item.id,$event)">配置权限</a>
+										<a href="javascript:;" v-on:click="editUser(item.id,$event)">编辑</a>
+										<a href="javascript:;" v-on:click="delteAdmin(item.id,$event)">删除</a>
 									</td>
 								</tr>
 							</tbody>	
@@ -78,77 +71,116 @@
 	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
-	<!--<script type="text/javascript" src="../../js/knowledge/knowledge_list.js" ></script>-->
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		//分页
-//		function page(max,num){
-			$('#pageToolbar').Paging({
-				pagesize: 5,
-				count: 25,
-				toolbar: true,
-				changePagesize:function(p){
-					console.log(p);
+		var page = 1;
+		var pagesize =10;
+		var datajson = {};
+		var roleList = new Vue({
+			el: '#roleList',
+			data: {
+				data: "",
+				schoolName:"",
+				schoolcount:'',
+				pagesize:'',
+			},
+			methods: {
+				operaterole: function(text,$event) {
+					$('.breadcrumb', window.parent.document).append('<li class="active add_school"><span class="Current_page iframeurl" name="view/jurisdictionManage/role_add.html" style="color: rgb(51, 51, 51); cursor: default;">' + text + '</span></li>');
+					$event.target.setAttribute('href','role_add.html');
 				},
-				callback: function(page, size, count) {
-					console.log(page+'***'+size+'------'+count);
-					$('.ui-select-pagesize').hide();
-					$('.addlist').html('');
-					$('.addlist').append('<tr>'+
-									'<td>222='+page+'</td>'+
-									'<td>三环中学222</td>'+
-									'<td>18888888888</td>'+
-									'<td>'+
-									'	<a href="javascript:;" onclick="configUser(this)">配置用户</a>'+
-									'	<a href="javascript:;" onclick="configGurisdiction()">配置权限</a>'+
-									'	<a href="javascript:;" onclick="editUser()">编辑</a>'+
-									'	<a href="javascript:;" onclick="delteAdmin()">删除</a>'+
-									'</td></tr>');
+				//配置用户
+				configUser: function(id,name,e){
+					e.target.setAttribute('href',+id);
+				},
+				//配置权限
+				configGurisdiction: function(id,e){
+					e.target.setAttribute('href','config_gurisdiction.html?id='+id);
+				},
+				//编辑
+				editUser: function(id,e){
+					e.target.setAttribute('href','role_add.html?id='+id);
+				},
+				//删除
+				delteAdmin: function(id,e){
+					$.ajax({
+						type: 'delete',
+						data:{token: sessionStorage.token},
+						url: org_url + dataUrl.jurisdiction.role+id,
+						success: function(data){
+							if (data===1) {
+								layer.alert('删除成功！');
+								$(e.target).parents('tr').remove();
+							} else{
+								layer.alert('删除失败！');
+							}
+						}
+					})
 				}
-			});
-//		}
-		
-		$('.ui-select-pagesize').hide();
-		//点击新建角色
-		$('.addRole').click(function() {
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/role_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建角色</span></li>');
-			window.location.href='role_add.html';
+			}
 		});
 		
-		//配置用户
-		function configUser(){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/config_user.html" style="color: rgb(51, 51, 51); cursor: default;">配置用户</span></li>');
-			window.location.href='config_user.html';
-		}
-		
-		//配置权限
-		function configGurisdiction(){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/config_gurisdiction.html" style="color: rgb(51, 51, 51); cursor: default;">配置权限</span></li>');
-			window.location.href='config_gurisdiction.html';
-		}
-		
-		//点击编辑
-		function editUser(){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/jurisdictionManage/role_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑用户</span></li>');
-			window.location.href='role_edit.html';
-		}
-		
-		//点击删除用户
-		function delteAdmin(){
-			layer.open({
-				title: "",
-				content: '确定删除该用户吗？',
-				skin: 'layui-layer-lana',
-				shadeClose: 'true',
-				btn: ['确定', "取消"],
-				yes: function(index, layero) {
-					layer.close(index);
-				},
-				btn2: function(index, layero) {
-					//按钮【按钮二】的回调
-					layer.close(index);
+		pages('',page);
+		function pages(name,page){
+			$('#pageToolbar').html('');
+			
+			if (name) {
+				datajson = {
+					page: page,
+					size: pagesize,
+					name: name,
+					token: sessionStorage.token
+				}
+			} else{
+				datajson = {
+					page: page,
+					size: pagesize,
+					token: sessionStorage.token
+				}
+			}
+			console.log(datajson)
+			$.ajax({
+				type: "get",
+				url: org_url + dataUrl.jurisdiction.role,
+				data: datajson,
+				async: true,
+				success: function(data) {
+					roleList.data = data.data;
+					$('#pageToolbar').Paging({
+						pagesize: datajson.size,
+						count: data.total,
+						toolbar: true,
+						hash: true,
+						callback: function(p, size, count) {
+							console.log(p)
+							datajson.page = p;
+							datajson.size = size;
+							$.ajax({
+								type: "get",
+								url: org_url + dataUrl.jurisdiction.role,
+								data: datajson,
+								success: function(data){
+									roleList.data = data.data;
+								}
+							});
+						},
+						changePagesize:function(ps){
+							datajson.size = ps;
+							$.ajax({
+								type: "get",
+								url: org_url + dataUrl.jurisdiction.role,
+								data: datajson,
+								success: function(data){
+									roleList.data = data.data;
+								}
+							});
+						}
+					});
 				}
 			});
 		}
+		
 	</script>
 
 </html>

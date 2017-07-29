@@ -15,18 +15,129 @@ function getUrlParams() {
 	return params;
 };	
 
+//初始化数据
+function init(){	
+	$.ajax({
+		type:"get",
+		url: org_url + "/role",
+		async:true,
+		dataType:"json",
+		xhrFields: {
+	        withCredentials: true
+	    },
+	    crossDomain: true,
+	    success: function(data){
+	    	$("#admin_roles").empty();
+	    	for(var i=0;i<data.data.length;i++){    		
+	    		var option = "<option value='"+data.data[i].id+"'>"+data.data[i].name+"</option>";
+	    		$("#admin_roles").append(option);
+	    	}
+	    	//$("#roles").selectpicker('val',[1,2,8]);
+	    	$("#admin_roles").selectpicker('refresh');    	
+	    }
+	});
+}
+
+//初始化数据
+function load(id){	
+	$.ajax({
+		type:"get",
+		url: org_url + "/managers/"+id,
+		async:true,
+		dataType:"json",
+		xhrFields: {
+	        withCredentials: true
+	    },
+	    crossDomain: true,
+	    success: function(data){
+	    	$("#admin_id").val(data.id);
+	    	$("#admin_phone").val(data.phone);
+	    	$('#admin_name').val(data.name);
+			$('#admin_note').val(data.note);
+			console.log(data.roles);
+			var array = data.roles.split(",");
+			for(var i=0;i<array.length;i++){
+				var it = array[i].split(":");
+				array[i] = it[0];	
+			}
+			$("#admin_roles").selectpicker('val',array);
+	    	$("#admin_roles").selectpicker('refresh');  
+		}
+	});
+}
+
+
+
+
+function getQueryString(name) { 
+	//alert(window.location.search);
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); 
+	return null; 
+} 
+
+function save(){
+	var id= getQueryString("id");
+	var roles = $('#admin_roles').val();
+	var arrRoles = $('#admin_roles').val();//roles.splits(",");
+    var strRoles = "[";
+    for(var i=0;i<arrRoles.length;i++){
+    	if(i!=0){
+    		strRoles += ",";
+    	}
+    	strRoles += "{\"roleid\":"+arrRoles[i]+"}";
+    }
+    strRoles += "]";
+    var type="post";
+    var data = {
+    	roles:strRoles,
+		phone: $('#admin_phone').val(),
+		name: $('#admin_name').val(),
+		note: $('#admin_note').val()
+	};
+    url = org_url + "/managers";
+    if(id!=null&&id!=""){
+    	type = "put";
+    	data.id = id;
+    	url += "/"+id;
+    }
+    
+	$.ajax({
+		type:type,
+		url: url,
+		async:true,
+		dataType:"json",
+		xhrFields: {
+	        withCredentials: true
+	    },
+	    data:data,
+	    crossDomain: true,
+	    success: function(data){
+	    	window.location.href='admin_list.html';
+            $('.add_teacher_bar',window.parent.document).remove();   	
+	    }
+	});
+}
+
 $(function (){
+
+	init();
+	
+	var id = getQueryString("id");
+	if(id!=null&&id!=""){
+		load(id);
+	}
 	
 	//点击保存
 	$('.save').click(function (){
 		
-		var admin_name=$('#admin_name').val(),
-			admin_phone=$('#admin_phone').val(),
-			schoolLists = $('.schoolLists').val(),
-			admin_note = $('#admin_note').val()||'';
+		var admin_name=$('#admin_name').val();
+		var	admin_phone=$('#admin_phone').val();
+		var	admin_roles = $('#admin_roles').val();
+		var	admin_note = $('#admin_note').val();
 		
-		if(admin_name==""||admin_phone==""||schoolLists=="")
-		{
+		if(admin_name==""||admin_phone==""||admin_roles==""){
 			layer.open({
                 title: "",
                 content: '请把带*的选项输入完整！',
@@ -38,7 +149,7 @@ $(function (){
                 },
                 btn2: function(index, layero) {
                     //按钮【按钮二】的回调
-                    // layer.close(index);
+                     //layer.close(index);
                 },
                 cancel: function() {
                     //右上角关闭回调
@@ -48,17 +159,16 @@ $(function (){
 		}else{
 			layer.open({
                 title: "",
-                content: '确定要新建管理员吗？',
+                content: '确定保存管理员信息吗？',
                 skin: 'layui-layer-lana',
                 shadeClose: 'true',
                 btn: ['确定'],
                 yes: function(index, layero) {
-                    window.location.href='admin_list.html';
-                    $('.add_teacher_bar',window.parent.document).remove();
+                	save();                                   
                 },
                 btn2: function(index, layero) {
-                    //按钮【按钮二】的回调
-                    // layer.close(index);
+                	//按钮【按钮二】的回调
+                    //layer.close(index);
                 },
                 cancel: function() {
                     //右上角关闭回调

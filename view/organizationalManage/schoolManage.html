@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title>学校管理</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
 		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
 		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
 		<link rel="stylesheet" href="../../css/common/common_list.css" />
 		<link rel="stylesheet" href="../../css/common/common.css" />
+		<style type="text/css">
+			.none{display: none;}
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
 	</head>
+	
 	<body>
-		<div class="main container-fluid">
+		<div class="main container-fluid" id="mainContent" v-cloak>
 			<div class="row head">
 				<h3 class="col-xs-2">查询区</h3>
 				<div class="col-sm-9 col-xs-3"></div>
@@ -22,101 +30,151 @@
 					<div class="form-group">
 						<label for="secondname" class="col-sm-2 control-label text-center">学校名称</label>
 						<div class="col-sm-5">
-							<input id="lunch" class="selectpicker form-control secondname" >
+							<input id="lunch" class="form-control secondname" v-model="schoolName">
 						</div>
-						
-						<div class="search_01 col-sm-offset-2">查询</div>
+						<div class="search_01 col-sm-offset-2" id="select_school" v-on:click="selectschool(schoolName)">查询</div>
 					</div>
 				</form>
 			</div>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<input class="commonbtn addSchool" type="button" value="新建学校"/>
+					<a v-bind:href="'add_school.html'" class="commonbtn addSchool" v-on:click="operateSchool('新建学校')" />新建学校</a>
 				</div>
 			</div>
 			<div class="numshu_btm">
-			<div class="list_btm">
-			<div class="table-responsive">
-				<table class="table table-condensed addlist school_lists" style="text-align: center;">
-					<tr>
-						<th>序号</th>
-						<th>学校名称</th>
-						<th>上级管理机构</th>
-						<th>最后编辑时间</th>
-						<th>操作</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>三环中学</td>
-						<td>夺宝中心学校</td>
-						<td>2017年7月8日 18:31:24</td>
-						<td>
-							<a href="javascript:;" class="edit_school">编辑</a>
-							<a href="javascript:;" class="grade_manage">班级管理</a>
-						</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>三环中学</td>
-						<td>夺宝中心学校</td>
-						<td>2017年7月8日 18:31:24</td>
-						<td>
-							<a href="javascript:;">编辑</a>
-							<a href="javascript:;">班级管理</a>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div class="row pro_list_btm">
-				<div class="col-xs-6 col-sm-3 text-center">
-				
-				</div>
-				<div class="col-xs-7 col-sm-9">
-					<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+				<div class="list_btm">
+					<div class="table-responsive">
+						<table class="table table-condensed addlist school_lists" style="text-align: center;">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>学校名称</th>
+									<th>上级管理机构</th>
+									<th>最后编辑时间</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="schools">
+								<tr v-for="(vals,index) in data">
+									<td>{{vals.id}}</td>
+									<td>{{vals.name}}</td>
+									<td>{{vals.institutionname}}</td>
+									<td>{{vals.lastupdate}}</td>
+									<td>
+										<a v-bind:href="'add_school.html?id='+vals.id" v-bind:data-id="vals.id" class="edit_school" v-on:click="operateSchool('编辑')">编辑</a>
+										<a v-bind:href="'gradeManage.html?id='+vals.id+'&name='+vals.name" v-bind:data-id="vals.id" class="grade_manage" v-on:click="operateSchool('班级管理')">班级管理</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="row pro_list_btm">
+						<div class="col-xs-6 col-sm-3 text-center">
+
+						</div>
+						<div class="col-xs-7 col-sm-9">
+							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		</div>
-		</div>
-					
+
 	</body>
-	<script type="text/javascript" src="../../js/common/jquery.min2.0.js" ></script>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
 	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
-	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		$(function(){
-			//每次加载都要更新数据----等待接口
-			var html = '<tr>'+
-				'<td>3</td>'+
-				'<td>三环中学</td>'+
-				'<td>夺宝中心学校</td>'+
-				'<td>2017年7月8日 18:31:24</td>'+
-				'<td><a href="javascript:;" class="edit_school">编辑</a><a href="javascript:;" class="grade_manage">班级管理</a></td>'+
-				'</tr>'
-            $('.school_lists').append(html);
-		});
-		$('#pageToolbar').Paging({pagesize:10,count:100,toolbar:false,callback:function(page,size,count){
-			console.log(page)
-		}});
-		//新建学校
-		$('.addSchool').click(function (){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_school"><span class="Current_page iframeurl" name="view/organizationalManage/add_school.html" style="color: rgb(51, 51, 51); cursor: default;">新建学校</span></li>');
-			window.location.href = 'add_school.html'
-		});
-		//编辑学校
-		$('.edit_school').click(function (){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_school"><span class="Current_page iframeurl" name="view/organizationalManage/add_school.html" style="color: rgb(51, 51, 51); cursor: default;">编辑学校</span></li>');
-			window.location.href = 'add_school.html?id=1';
-		});
-		
-		//班级管理
-		$('.grade_manage').click(function (){
-			$('.breadcrumb',window.parent.document).append('<li class="active grade_mange_title"><span class="Current_page iframeurl" name="view/organizationalManage/gradeManage.html" style="color: rgb(51, 51, 51); cursor: default;">班级管理</span></li>');
-			window.location.href = 'gradeManage.html';
+		$(function() {
+			var page = 1;
+			var pagesize =10;
+			var school = new Vue({
+				el: '#mainContent',
+				data: {
+					data: "",
+					schoolName:"",
+					schoolcount:'',
+					pagesize:''
+				},
+				methods: {
+					operateSchool: function(text) {
+						$('.breadcrumb', window.parent.document).append('<li class="active add_school"><span class="Current_page iframeurl" name="view/organizationalManage/add_school.html" style="color: rgb(51, 51, 51); cursor: default;">' + text + '</span></li>');
+					},
+					//查询学校
+					selectschool: function(schoolname) {
+						if(schoolname==""){
+							window.location.reload();
+						}else{
+							pages(schoolname)
+						}
+						
+						
+					}
+				}
+			});
+			pages();
+			function pages(name){
+				$('#pageToolbar').html('');
+				var data = {};
+				if (name) {
+					datajson = {
+						page: page,
+						size: pagesize,
+						name: name,
+						token: sessionStorage.token
+					}
+				} else{
+					datajson = {
+						page: page,
+						size: pagesize,
+						token: sessionStorage.token
+					}
+				}
+				$.ajax({
+					type: "get",
+					url: org_url + dataUrl.schoolLists,
+					data: datajson,
+					success: function(data) {
+						school.data = data.data;
+						schoolcount = data.total;
+						$('#pageToolbar').Paging({
+							pagesize: 10,
+							count: schoolcount,
+							toolbar: true,
+							hash: true,
+							callback: function(page, size, count) {
+								datajson.page = page;
+								datajson.size = size;
+								$.ajax({
+									type: "get",
+									url: org_url + dataUrl.schoolLists,
+									data: datajson,
+									success: function(data){
+										school.data = data.data;
+									}
+								});
+							},
+							changePagesize:function(ps){
+								datajson.size = ps;
+								$.ajax({
+									type: "get",
+									url: org_url + dataUrl.schoolLists,
+									data: datajson,
+									success: function(data){
+										school.data = data.data;
+									}
+								});
+							}
+						});
+					}
+				});
+			}
 		});
 	</script>
-	
+
 </html>
