@@ -70,11 +70,12 @@
 				<div class="form-horizontal relate_child_all">
 					<div class="form-group">
 					</div>
-					<div class="form-group">
+					<div class="form-group" >
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">家长姓名</span>
 						</label>
 						<div class="col-sm-3">
+							<input type="hidden" id="parents_id" value="" />
 							<input type="text" name="parents_name" id="parents_name" class="form-control" value="" />
 						</div>
 
@@ -134,7 +135,12 @@
 								<span class="warn" style="padding-left: 20px;">孩子姓名</span>
 							</label>
 							<div class="col-sm-3">
-								<input type="text" name="child_name" id="child_name" class="form-control" value="" />
+								<select class=" form-control organization studentLists">
+									<option value="">请选择</option>
+									<option value="2">张三</option>
+									<option value="3">李四</option>
+									<option value="4">王二麻子</option>
+								</select>
 							</div>
 						</div>
 
@@ -144,25 +150,25 @@
 							</label>
 							<div class="col-sm-8 to_child_relate">
 								<label for="dad">
-									<input type="radio" name="student_relation" id="dad" class="" value="爸爸" />爸爸
+									<input type="radio" name="student_relation" class="relation" value="bb" />爸爸
 								</label>
 								<label for="mom">
-									<input type="radio" name="student_relation" id="mom" class="" value="妈妈" />妈妈
+									<input type="radio" name="student_relation" class="relation" value="mm" />妈妈
 								</label>
 								<label for="grandpa">
-									<input type="radio" name="student_relation" id="grandpa" class="" value="爷爷" />爷爷
+									<input type="radio" name="student_relation" class="relation" value="yy" />爷爷
 								</label>
 								<label for="grandma">
-									<input type="radio" name="student_relation" id="grandma" class="" value="奶奶" />奶奶
+									<input type="radio" name="student_relation" class="relation" value="nn" />奶奶
 								</label>
 								<label for="wgrandpa">
-									<input type="radio" name="student_relation" id="wgrandpa" class="" value="外公" />外公
+									<input type="radio" name="student_relation" class="relation" value="wg" />外公
 								</label>
 								<label for="wgrandma">
-									<input type="radio" name="student_relation" id="wgrandma" class="" value="外婆" />外婆
+									<input type="radio" name="student_relation" class="relation" value="wp" />外婆
 								</label>
 								<label for="guardian">
-									<input type="radio" name="student1_relation1" id="guardian" class="" value="监护人" />监护人
+									<input type="radio" name="student_relation" class="relation" value="jhr" />监护人
 								</label>
 							</div>
 							<div class="col-sm-2">
@@ -229,7 +235,12 @@
 					<span class="warn" style="padding-left: 20px;">孩子姓名</span>
 				</label>
 				<div class="col-sm-3">
-					<input type="text" name="child_name" id="child_name" class="form-control" value="" />
+					<select class=" form-control organization studentLists">
+						<option value="">请选择</option>
+						<option value="2">张三</option>
+						<option value="3">李四</option>
+						<option value="4">王二麻子</option>
+					</select>
 				</div>
 			</div>
 
@@ -239,25 +250,25 @@
 				</label>
 				<div class="col-sm-8 to_child_relate">
 					<label for="dad">
-						<input type="radio" name="a" id="dad" class="" value="爸爸" />爸爸
+						<input type="radio" name="student_relation" class="relation" value="bb" />爸爸
 					</label>
 					<label for="mom">
-						<input type="radio" name="a" id="mom" class="" value="妈妈" />妈妈
+						<input type="radio" name="student_relation" class="relation" value="mm" />妈妈
 					</label>
 					<label for="grandpa">
-						<input type="radio" name="a" id="grandpa" class="爷爷" value="" />爷爷
+						<input type="radio" name="student_relation" class="relation" value="yy" />爷爷
 					</label>
 					<label for="grandma">
-						<input type="radio" name="a" id="grandma" class="奶奶" value="" />奶奶
+						<input type="radio" name="student_relation" class="relation" value="nn" />奶奶
 					</label>
 					<label for="wgrandpa">
-						<input type="radio" name="a" id="wgrandpa" class="外公" value="" />外公
+						<input type="radio" name="student_relation" class="relation" value="wg" />外公
 					</label>
 					<label for="wgrandma">
-						<input type="radio" name="a" id="wgrandma" class="外婆" value="" />外婆
+						<input type="radio" name="student_relation" class="relation" value="wp" />外婆
 					</label>
 					<label for="guardian">
-						<input type="radio" name="a" id="guardian" class="监护人" value="" />监护人
+						<input type="radio" name="student_relation" class="relation" value="jhr" />监护人
 					</label>
 				</div>
 				<div class="col-sm-2">
@@ -273,5 +284,6 @@
 	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../../js/userManage/add_parents.js"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 
 </html>

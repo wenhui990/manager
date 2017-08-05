@@ -1,0 +1,22 @@
+{
+  "name": "manager",
+  "version": "1.0.0",
+  "main": "datas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenhui990/manager.git"
+  },
+  "author": "wenhui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wenhui990/manager/issues"
+  },
+  "homepage": "https://github.com/wenhui990/manager#readme",
+  "description": "",
+  "devDependencies": {
+    "webpack": "^3.4.1"
+  }
+}

@@ -57,7 +57,6 @@
 							</select>
 						</div>
 					</div>
-					<!-- <template v-if="selectedTextBookType=2"> -->
 					<div class="form-group no_hbe" style="height: 34px;" v-if="selectedTextBookType==2">
 						<label for="" class="col-sm-2 control-label text-center warn">版本</label>
 						<div class="col-sm-3">
@@ -78,62 +77,49 @@
 							</select>
 						</div>
 					</div>
-					<!-- </template> -->
 				</form>
 			</div>
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
 	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
 	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
 	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
-
+	<script type="text/javascript" src="../../../js/commonutil.js" ></script>
 	<script type="text/javascript">
 		var vvm = null;
 
 		$(document).ready(function() {
 			vm_init();
 			getEds();
-			getTms();
-			getCrs();
 		});
 
 		function vm_init(){
-			var defaultcourse = {"title":"请选择", "id":"0"};
-			var courses = new Array();
-			courses.push(defaultcourse);
-			var defaultEdition = {"title":"请选择", "id":"0"};
-			var editions = new Array();
-			editions.push(defaultEdition);
-			var defaultTerm = {"title":"请选择", "id":"0"};
-			var terms = new Array();
-			terms.push(defaultTerm);
-
 			vvm = new Vue({
 				el: '#chaptermain',
 				data:{
-					courses : courses,
-					editions : editions,
-					terms : terms,
-					selectedTextBookType : "2",
-					selectedStage : "0",
-					selectedCourse : "0",
-					selectedEdtion : "0",
-					selectedTerm : "0",
+					courses: [],
+					editions : [],
+					terms: [],
+					selectedTextBookType: "2",
+					selectedStage: "0",
+					selectedCourse: "0",
+					selectedEdtion: "0",
+					selectedTerm: "0",
 				},
 				methods:{
 					submit: function(event){
 						console.log("selectedTextBookType:" + this.selectedTextBookType + ", selectedStage: " + this.selectedStage + ", selectedCourse: " + this.selectedCourse + ", selectedEdtion: " + this.selectedEdtion + ", selectedTerm: " + this.selectedTerm);
 
 						var textbook = {};
-						// textbook['courseId'] = selectedCourse;
 						if (this.selectedTextBookType == 1){
 							if (this.selectedStage == "0"){
-								alert("学段不能为空");
+								alertMsg("学段不能为空");
 								return;
 							}
 							if (this.selectedCourse == "0"){
-								alert("科目不能为空");
+								alertMsg("科目不能为空");
 								return;
 							}
 							textbook['textbooktype'] = 1;
@@ -141,19 +127,19 @@
 							textbook['courseid'] = this.selectedCourse;
 						}else{
 							if (this.selectedStage == "0"){
-								alert("学段不能为空");
+								alertMsg("学段不能为空");
 								return;
 							}
 							if (this.selectedCourse == "0"){
-								alert("科目不能为空");
+								alertMsg("科目不能为空");
 								return;
 							}
 							if (this.selectedEdtion == "0"){
-								alert("版本不能为空");
+								alertMsg("版本不能为空");
 								return;
 							}
 							if (this.selectedTerm == "0"){
-								alert("年级/课本不能为空");
+								alertMsg("年级/课本不能为空");
 								return;
 							}
 							textbook['textbooktype'] = 2;
@@ -162,20 +148,11 @@
 							textbook['editionid'] = this.selectedEdtion;
 							textbook['termid'] = this.selectedTerm;
 						}
-						var url = org_url + dataUrl['textbook']['newTextbook'];
-					    $.ajax({
-					        url: url,
-					        type: 'post',
-					        data: textbook,
-					        success: function (resp) {
-					        	console.log("resp: " + JSON.stringify(resp));
-					        },
-					        error: function(d, data) {
-					            console.log(data);
-					        },
-					        complete: function(data) {
-					        }
-					    });
+						newTextbook(function(resp){
+							commonMsg("创建成功", function(){
+								window.location.href = 'chapterList.html';
+							});
+						}, textbook);
 					},
 					reset: function(event){
 						this.selectedStage = 0;
@@ -191,43 +168,30 @@
 			//FIXME 为了一次取出所有记录，定义一个大数
 			var pagesize = 1000000;
 			var page = 1;
-
 			getEditions(function (resp){
-	            var elist = [];
-	            for (var i = 0; i < resp['data'].length; i++){
-	                var item = {};
-	                item['id'] = resp['data'][i]['id'];
-	                item['title'] = resp['data'][i]['title'];
-	                elist.push(item);
-	            }
-	            vvm.editions = vvm.editions.concat(elist);
+				vvm.editions.push({"title":"请选择", "id":0});
+				vvm.editions = vvm.editions.concat(resp['data']);
+	            getTms();
 			}, page, pagesize);
 		}
 
 		function getTms(){
+			var pagesize = 1000000;
+			var page = 1;
 			getTerms(function (resp){
-            	var list = [];
-				for (var i = 0; i < resp['data'].length; i++){
-					var item = {};
-					item['id'] = resp['data'][i]['id'];
-					item['title'] = resp['data'][i]['title'];
-					list.push(item);
-				}
-				vvm.terms = vvm.terms.concat(list);
-			});
+				vvm.terms.push({"title":"请选择", "id":0});
+				vvm.terms = vvm.terms.concat(resp['data']);
+				getCrs();
+			}, page, pagesize);
 		}
 
 		function getCrs(){
+			var pagesize = 1000000;
+			var page = 1;
 			getCourses(function(resp){
-				var list = [];
-				for (var i = 0; i < resp['data'].length; i++){
-					var item = {};
-					item['id'] = resp['data'][i]['id'];
-					item['title'] = resp['data'][i]['title'];
-					list.push(item);
-				}
-				vvm.courses = vvm.courses.concat(list);
-			});
+				vvm.courses.push({"title":"请选择", "id":0});
+				vvm.courses = vvm.courses.concat(resp['data']);
+			}, page, pagesize);
 		}
 
 	</script>

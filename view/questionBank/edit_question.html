@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>编辑题目</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css" />
+
+		<style type="text/css">
+			body {
+				padding: 20px;
+			}
+			
+			.none {
+				display: none;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			
+			.list_btm {
+				padding-top: 20px;
+			}
+			
+			.addknowledge {
+				color: #000;
+				text-decoration: underline;
+			}
+			
+			.ztree1 {
+				margin-top: 0;
+				width: 180px;
+				height: 300px;
+				border: 1px solid #617775;
+				background: #f0f6e4;
+				width: 220px;
+				height: 360px;
+				overflow-y: scroll;
+				overflow-x: auto;
+				"
+
+			}
+			blockquote{border: 0;}
+		</style>
+	</head>
+
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;padding: 0;" id="questionMain">
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<a href="javacript:;" class="commonbtn save" type="button" @click="save($event)">保存</a>
+					<a href="javascript:;" class="commonbtn back" @click="back($event)" type="button">返回</a>
+				</div>
+			</div>
+			<div class="list_btm">
+				<div class="form-horizontal knowledgelists" v-cloak>
+					<div class="form-group" v-for="(knowledg,index) in questionoptiondata.knowledges">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">知识点{{index+1}}</span>
+						</label>
+						<div class="col-sm-2">
+							<select class="form-control stagelist">
+								<option value="">请选择</option>
+								<option v-for="(value,key) in stages" :value="key" :selected="knowledg.id==key">{{value}}</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+							<input :id="'prevknowledgeName'+(index+1)" class="form-control knowledgeids" type="text" :value="knowledg.title" @click="showMenu(index+1)" readonly="" :data-knowid="knowledg.id">
+						</div>
+						<label class="col-sm-2 control-label text-right" v-if="index>0">
+							<a class="delknowledge" @click="delknowledge()" style="padding-left: 20px;">删除</a>
+						</label>
+					</div>
+				</div>
+				<div class="form-horizontal">
+					<div class="form-group">
+						<a href="javascript:;" class="col-sm-2 text-right addknowledge" @click="addKnowledge()">+添加知识点</a>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 text-right">
+							<span class="warn" style="padding-left: 20px;">难度系数：</span>
+						</label>
+						<div class="col-sm-1">
+							<input type="text" style="width: 100%;" name="" id="" v-model="difficulty" />
+						</div>
+						<div class="col-sm-3">
+							只能填写0-1之间的数字
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 text-right">
+							<span class="warn" style="padding-left: 20px;">题库对象：</span>
+						</label>
+						<div class="col-sm-8">
+							<label class="col-sm-2" for="one">
+								<input type="radio" id="one" value="T" v-model="picked">教师
+							</label>
+							<label class="col-sm-2" for="two">
+								<input type="radio" id="two" value="S" v-model="picked">学生
+							</label>
+							<label class="col-sm-4" style="background: #eee;">
+								注：默认发布对象为学生
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">题干：</span>
+						</label>
+						<div class="col-sm-9">
+							<blockquote id="questionstems" contenteditable="blockquotetable" @focus="focusOption($event)" @blur="blurOption($event)" v-html="questionoptiondata.title"></blockquote>
+						</div>
+						<!--<div class="col-sm-1 control-label">
+							<button class="btn btn-sm btn-default" @click="editQuestionStems()">编辑</button>
+						</div>-->
+					</div>
+					<div class="form-group questionoptionlists" v-for="(opt,index) in questionoption">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;" v-if="index==0">选项A：</span>
+							<span class="warn" style="padding-left: 20px;" v-if="index==1">选项B：</span>
+							<span class="warn" style="padding-left: 20px;" v-if="index==2">选项C：</span>
+							<span class="warn" style="padding-left: 20px;" v-if="index==3">选项D：</span>
+							<span class="warn" style="padding-left: 20px;" v-if="index==4">选项E：</span>
+						</label>
+						<div class="col-sm-5 questionoptions">
+							<blockquote class="questionoptionlist" contenteditable="blockquotetable" @focus="focusOption($event)" @blur="blurOption($event)" >{{opt}}</blockquote>
+						</div>
+						<div class="col-sm-2 control-label text-right" v-if="optionstype==index">
+							<button class="btn btn-sm btn-default btn-info">【正确答案】</button>
+						</div>
+						<div class="col-sm-2 control-label text-right" v-else>
+							<button class="btn btn-sm btn-default" @click="rightAnswers(index)">设为正确答案</button>
+						</div>
+						<!--<div class="col-sm-1 control-label">
+							<button class="btn btn-sm btn-default" @click="editOption($event)">编辑</button>
+						</div>-->
+						<div class="col-sm-1 control-label">
+							<button class="btn btn-sm btn-default" @click="delOption($event)" v-if="index>1">删除</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right"></label>
+						<a href="javascript:;" class="col-sm-2 addknowledge" @click="addOption()" v-if="questionoptiondata.options!=''">+添加选项</a>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">解析：</span>
+						</label>
+						<div class="col-sm-9 questionoptions">
+							<blockquote id="questionanalysis" style="width: 100%;" contenteditable="blockquotetable" @focus="focusOption($event)" @blur="blurOption($event)" v-html="questionoptiondata.analysis"></blockquote>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+			<ul id="treeDemo1" class="ztree ztree1"></ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.exedit.js"></script>
+	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/questionBank/editquestion.js" type="text/javascript" charset="utf-8"></script>
+
+</html>

@@ -40,9 +40,11 @@
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
-
+	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
 	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
 	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../../js/commonutil.js" ></script>
 	<script type="text/javascript">
 		var vvm = null;
 
@@ -59,36 +61,13 @@
 					note:""
 				},
 				methods:{
-					add:function(event){
-						console.log("title: " + this.title + ", sn: " + this.sn + ", note: " + this.note);
-						addVersion(this.title, this.sn, this.note);
-				}}
-			});
-		}
-
-		function addVersion(title, sn, note){
-			var url = org_url + dataUrl['edition']['createEdition'];
-			var version = new Object();
-			version['title'] = title;
-			if (sn == ""){
-				version['sn'] = "99";
-			}else{
-				version['sn'] = sn;
-			}
-			version['note'] = note;
-			version['valid'] = "1";
-			$.ajax({
-				url: url,
-				type: 'post',
-				data: version,
-				success: function(resp) {
-					console.log("resp: " + JSON.stringify(resp));
-					window.location.href = "versionManage_list.html";
-				},
-				error: function(d, data) {
-					console.log(data);
-				},
-				complete: function(data) {
+					add: function(event){
+						addVersion(function(resp){
+							promptMsg("添加成功", function(){
+								window.location.href = 'versionManage_list.html';
+							});
+						}, this.title, this.sn, this.note);
+					}
 				}
 			});
 		}

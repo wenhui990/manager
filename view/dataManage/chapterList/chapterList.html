@@ -4,11 +4,11 @@
 		<meta charset="UTF-8">
 		<title>教材管理</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<!-- <link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/> -->
+		<link rel="stylesheet" type="text/css" href="../../../css/common/reset.css"/>
 		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
-		<!-- <link rel="stylesheet" href="../../../plugin/paging/paging.css" /> -->
+		<link rel="stylesheet" href="../../../plugin/paging/paging.css" />
 		<link rel="stylesheet" href="../../../css/common/common.css" />
-		<link rel="stylesheet" href="../../../plugin/vue-pagination/index.css"/>
+		<!-- <link rel="stylesheet" href="../../../plugin/vue-pagination/index.css"/> -->
 	</head>
 	<body>
 		<style type="text/css">
@@ -104,7 +104,7 @@
 								<td><strong>操作</strong></td>
 							</tr>
 							<tr v-for="(item, index) in textbooks">
-								<td>{{(cur - 1) * pagesize + index + 1}}</td>
+								<td>{{(page - 1) * pagesize + index + 1}}</td>
 
 								<td v-if="item.editionid!=null">非课标版</td>
 								<td v-else>课标版</td>
@@ -121,21 +121,20 @@
 								<td v-else>禁用</td>
 								<td>
 									<a v-bind:href="'editChapter.html?id=' + item.id">修改</a>
-									<a href="javascript:;" class="forbidden" v-bind:id="item.id" v-if="item.valid == '1'" v-on:click="enableValid($event)">禁用</a>
-									<a href="javascript:;" class="forbidden" v-bind:id="item.id" v-else v-on:click="enableValid($event)">启用</a>
+									<a href="javascript:;" class="forbidden" v-bind:id="item.id" v-if="item.valid == '1'" v-on:click="enableValid($event, index)">禁用</a>
+									<a href="javascript:;" class="forbidden" v-bind:id="item.id" v-else v-on:click="enableValid($event, index)">启用</a>
 									<a v-bind:href="'setChapter.html?id=' + item.id +'&courseid='+item.courseid+'&stageid='+item.stageid+'&previa='+item.previa" v-if="item.editionid!=null">设置章节</a>
 									<a v-bind:href="'setKonwledge.html?id=' + item.id+'&courseid='+item.courseid+'&stageid='+item.stageid+'&previa='+item.previa" v-else>设置知识点</a>
 								</td>
 							</tr>
 						</table>
 					</div>
+					<div class="row pro_list_btm">
+						<div class="col-xs-6 col-sm-3 text-center">
 
-					<div class="row">
-						<div class="col-xs-6 col-sm-3" id="itemcount">
-							<p>共&nbsp;&nbsp;<span>{{total}}</span>&nbsp;&nbsp;条记录</p>
 						</div>
-						<div id="app">
-							<vue-nav :cur="cur" :all="all" :callback="callback"></vue-nav>
+						<div class="col-xs-7 col-sm-9">
+							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
 						</div>
 					</div>
 				</div>
@@ -143,39 +142,28 @@
 		</div>
 	</body>
 	<script type="text/javascript" src="../../../js/common/Jquery.3.1.1.js" ></script>
-
+	<script type="text/javascript" src="../../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
 	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
 	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
-	<script type="text/javascript" src="../../../plugin/vue-pagination/vue-nav.js"></script>
-
 	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../../js/commonutil.js" ></script>
 	<script>
 		var vvm = null;
 		$(document).ready(function() {
 			vm_init();
 			getEds();
-			// getTms();
-			// getCrs();
-			// getTextbooks(1);
 		});
 
 		function vm_init(){
-			var defaultcourse = {"title":"全部", "id":0};
-			var courses = new Array();
-			courses.push(defaultcourse);
-			var defaultEdition = {"title":"全部", "id":0};
-			var editions = new Array();
-			editions.push(defaultEdition);
-			var defaultTerm = {"title":"全部", "id":0};
-			var terms = new Array();
-			terms.push(defaultTerm);
-
 			vvm = new Vue({
 				el: '#chaptermain',
 				data:{
-					courses : courses,
-					editions : editions,
-					terms : terms,
+					courses : [],
+					editions : [],
+					terms : [],
 					textbooks: [],
 					selectedTextBookType : "0",
 					selectedStage : "0",
@@ -183,28 +171,22 @@
 					selectedEdtion : "0",
 					selectedTerm : "0",
 					selectedStatus : "2",
-					total:0,
-					cur: 1,
-					all: 0,
-					pagesize:30
-				},
-				components:{
-					'vue-nav': Vnav
+
+					page:1,
+					pagesize:10,
+					total:0
 				},
 				methods:{
-					enableValid: function(event){
-						console.log("eid: " + $(event.target).attr('id'));
-						var vid = $(event.target).attr('id');
-						for(var i = 0; i < this.textbooks.length; i++){
-							if (this.textbooks[i]['id'] == vid){
-								enableTextbook(this.textbooks[i]);
-							}
-						}
+					enableValid: function(event, index){
+						var id = this.textbooks[index]['id'];
+						var tmpvalid = (this.textbooks[index]['valid'] == "1" ? "0":"1");
+						enableTextbook(function(resp){
+							commonMsg("成功");
+							vvm.textbooks[index]['valid'] = tmpvalid;
+						}, id, tmpvalid);
 					},queryTextbook: function(event){
-						console.log("selectedTextBookType: " + this.selectedTextBookType + ", selectedStage: " + this.selectedStage + ", selectedCourse: " + this.selectedCourse + ", selectedEdtion: " + this.selectedEdtion + ", selectedTerm: " + this.selectedTerm + ", selectedStatus: " + this.selectedStatus);
-						getTextbooks(this.cur);
-					},callback(pa) {
-						getTextbooks(pa);
+						// console.log("selectedTextBookType: " + this.selectedTextBookType + ", selectedStage: " + this.selectedStage + ", selectedCourse: " + this.selectedCourse + ", selectedEdtion: " + this.selectedEdtion + ", selectedTerm: " + this.selectedTerm + ", selectedStatus: " + this.selectedStatus);
+						getTbs();
 					}
 				}
 			});
@@ -216,142 +198,78 @@
 			var page = 1;
 
 			getEditions(function (resp){
-	            var elist = [];
-	            for (var i = 0; i < resp['data'].length; i++){
-	                var item = {};
-	                item['id'] = resp['data'][i]['id'];
-	                item['title'] = resp['data'][i]['title'];
-	                elist.push(item);
-	            }
-	            vvm.editions = vvm.editions.concat(elist);
-
+				vvm.editions.push({"title":"全部", "id":0});
+				vvm.editions = vvm.editions.concat(resp['data']);
 	            getTms();
 			}, page, pagesize);
 		}
 
 		function getTms(){
+			var pagesize = 1000000;
+			var page = 1;
 			getTerms(function (resp){
-            	var list = [];
-				for (var i = 0; i < resp['data'].length; i++){
-					var item = {};
-					item['id'] = resp['data'][i]['id'];
-					item['title'] = resp['data'][i]['title'];
-					list.push(item);
-				}
-				vvm.terms = vvm.terms.concat(list);
-
+				vvm.terms.push({"title":"全部", "id":0});
+				vvm.terms = vvm.terms.concat(resp['data']);
 				getCrs();
-			});
+			}, page, pagesize);
 		}
 
 		function getCrs(){
+			var pagesize = 1000000;
+			var page = 1;
 			getCourses(function(resp){
-				var list = [];
-				for (var i = 0; i < resp['data'].length; i++){
-					var item = {};
-					item['id'] = resp['data'][i]['id'];
-					item['title'] = resp['data'][i]['title'];
-					list.push(item);
-				}
-				vvm.courses = vvm.courses.concat(list);
-
-				getTbs(1);
-			});
+				vvm.courses.push({"title":"全部", "id":0});
+				vvm.courses = vvm.courses.concat(resp['data']);
+				getTbs();
+			}, page, pagesize);
 		}
 
-		function getTbs(page){
-			// console.log("selectedTextBookType: " + vvm.selectedTextBookType + ", selectedStage: " + vvm.selectedStage + ", selectedCourse: " + vvm.selectedCourse + ", selectedEdtion: " + vvm.selectedEdtion + ", selectedTerm: " + vvm.selectedTerm + ", selectedStatus: " + vvm.selectedStatus);
-
-			var querystr = "&";
-			if (vvm.selectedTextBookType != "0"){
-				querystr += "textbooktype=" +  vvm.selectedTextBookType + "&";
-			}
-			if (vvm.selectedStage != "0"){
-				querystr += "stageid=" +  vvm.selectedStage + "&";
-			}
-			if (vvm.selectedCourse != "0"){
-				querystr += "courseid=" +  vvm.selectedCourse + "&";
-			}
-			if (vvm.selectedEdtion != "0"){
-				querystr += "editionid=" +  vvm.selectedEdtion + "&";
-			}
-			if (vvm.selectedTerm != "0"){
-				querystr += "termid=" +  vvm.selectedTerm + "&";
-			}
-			if (vvm.selectedStatus != "2"){
-				querystr += "valid=" +  vvm.selectedStatus + "&";
-			}
-
-			if (querystr.length == 1){
-				querystr = "";
-			}
-
-			var pagesize = vvm.pagesize;
-			var url = org_url + dataUrl['textbook']['getTextbooks'] + "?size=" + pagesize + "&page=" + page + querystr;
-			console.log('url: ' + url);
-			$.ajax({
-				url: url,
-				type: 'get',
-				data:{token: sessionStorage.token},
-				success: function(resp) {
-					// console.log("resp: " + JSON.stringify(resp));
-					var list = [];
-					for (var i = 0; i < resp['data'].length; i++){
-						var item = resp['data'][i];
-						for (var j = 0; j < vvm.courses.length; j++){
-							if (item['courseid'] == vvm.courses[j]['id']){
-								item['course'] = vvm.courses[j]['title'];
-								break;
-							}
-						}
-						for (var k = 0; k < vvm.editions.length; k++){
-							if (item['editionid'] == vvm.editions[k]['id']){
-								item['edition'] = vvm.editions[k]['title'];
-								break;
-							}
-						}
-
-						for (var p = 0; p < vvm.terms.length; p++){
-							if (item['termid'] == vvm.terms[p]['id']){
-								item['term'] = vvm.terms[p]['title'];
-								break;
-							}
+		function getTbs(){
+			getTextbooks(function(resp){
+				for (var i = 0; i < resp['data'].length; i++){
+					var item = resp['data'][i];
+					for (var j = 0; j < vvm.courses.length; j++){
+						if (item['courseid'] == vvm.courses[j]['id']){
+							item['course'] = vvm.courses[j]['title'];
+							break;
 						}
 					}
-					vvm.textbooks = resp['data'];
-					vvm.total = resp['total'];
-					vvm.cur = page;
-					vvm.all = Math.ceil(resp['total'] / vvm.pagesize);
-				},
-				error: function(d, data) {
-					console.log(data);
-				},
-				complete: function(data) {
+					for (var k = 0; k < vvm.editions.length; k++){
+						if (item['editionid'] == vvm.editions[k]['id']){
+							item['edition'] = vvm.editions[k]['title'];
+							break;
+						}
+					}
+					for (var p = 0; p < vvm.terms.length; p++){
+						if (item['termid'] == vvm.terms[p]['id']){
+							item['term'] = vvm.terms[p]['title'];
+							break;
+						}
+					}
 				}
-			});
+				vvm.textbooks = resp['data'];
+				vvm.total = resp['total'];
+
+				if (vvm.page == 1){
+					paging();
+				}
+			}, vvm.page, vvm.pagesize, vvm.selectedTextBookType, vvm.selectedStage, vvm.selectedCourse, vvm.selectedEdtion, vvm.selectedTerm, vvm.selectedStatus);
 		}
 
-		function enableTextbook(textbook){
-			var url = org_url + dataUrl['textbook']['updateTextbook'] + "/" + textbook['id'];
-			console.log("url: " + url);
-			var tb = {};
-			tb['id'] = textbook['id'];
-			var tmpvalid = (textbook["valid"] == "1"?"0":"1");
-			tb['valid'] = tmpvalid;
-			tb['token'] = sessionStorage.token;
-			console.log("req: " + JSON.stringify(tb));
-			$.ajax({
-				url: url,
-				type: 'put',
-				data: tb,
-				success: function(resp) {
-					console.log("resp: " + JSON.stringify(resp));
-					textbook['valid'] = tmpvalid;
+		function paging(){
+			$('#pageToolbar').html('');
+			$('#pageToolbar').Paging({
+				pagesize: vvm.pagesize,
+				count: vvm.total,
+				toolbar: true,
+				hash: true,
+				callback: function(page, size, count) {
+					vvm.page = page;
+					getTbs();
 				},
-				error: function(d, data) {
-					console.log(data);
-				},
-				complete: function(data) {
+				changePagesize:function(ps){
+					vvm.pagesize = ps;
+					getTbs();
 				}
 			});
 		}

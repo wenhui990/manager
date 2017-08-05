@@ -194,15 +194,24 @@ $(function() {
 				url: urlId ? org_url + dataUrl.schoolLists + urlId : org_url + dataUrl.schoolLists,
 				data: data,
 				success: function(data) {
+					var tip='';
+					if(data==1){
+						tip = '修改学校成功!';
+					}else{
+						tip = data.msg;
+					}
 					layer.open({
 						title: "提示！",
-						content: urlId ? '修改学校成功!' : '新建学校成功！',
+						content: tip,
 						skin: 'layui-layer-lana',
 						shadeClose: 'true',
 						btn: ['确定'],
 						yes: function(index, layero) {
-							window.location.href = 'schoolManage.html';
-							$('.breadcrumb>li:gt(1)', window.parent.document).remove();
+							layer.close(index);
+							if (data==1) {
+								window.location.href = 'schoolManage.html';
+								$('.breadcrumb>li:gt(1)', window.parent.document).remove();
+							}
 						}
 					});
 

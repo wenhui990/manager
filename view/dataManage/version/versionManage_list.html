@@ -8,7 +8,8 @@
 		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="../../../css/common/common.css" />
 		<link rel="stylesheet" type="text/css" href="../../../plugin/layer/skin/layer.css"/>
-		<link rel="stylesheet" href="../../../plugin/vue-pagination/index.css"/>
+		<!-- <link rel="stylesheet" href="../../../plugin/vue-pagination/index.css"/> -->
+		<link rel="stylesheet" href="../../../plugin/paging/paging.css" />
 	</head>
 	<body ng-app="app" ng-controller="ctrl">
 		<style type="text/css">
@@ -34,7 +35,7 @@
 							<td><strong>操作</strong></td>
 						</tr>
 						<tr v-for="(item, index) in versions">
-							<td>{{(cur - 1) * pagesize + index + 1}}</td>
+							<td>{{(page - 1) * pagesize + index + 1}}</td>
 							<td>{{item.title}}</td>
 							<td>{{item.sn}}</td>
 							<td>{{item.note}}</td>
@@ -42,19 +43,18 @@
 							<td v-else>禁用</td>
 							<td>
 								<a v-bind:href="'editVersion.html?id=' + item.id">修改</a>
-								<a href="javascript:;" class="_a_space forbidden" v-bind:id="item.id" v-if="item.valid == '1'" v-on:click="enableValid($event)">禁用</a>
-								<a href="javascript:;" class="_a_space forbidden" v-bind:id="item.id" v-else v-on:click="enableValid($event)">启用</a>
+								<a href="javascript:;" class="_a_space forbidden" v-bind:id="item.id" v-if="item.valid == '1'" v-on:click="enableValid($event, index)">禁用</a>
+								<a href="javascript:;" class="_a_space forbidden" v-else v-on:click="enableValid($event, index)">启用</a>
 							</td>
 						</tr>
 					</table>
 				</div>
-				<div class="row">
-					<div class="col-xs-6 col-sm-3" id="itemcount">
-						<p>共&nbsp;&nbsp;<span>{{total}}</span>&nbsp;&nbsp;条记录</p>
-					</div>
-					<div id="app">
-						<vue-nav :cur="cur" :all="all" :callback="callback"></vue-nav>
-					</div>
+				<div class="row pro_list_btm">
+						<div class="col-xs-6 col-sm-3 text-center">
+						</div>
+						<div class="col-xs-7 col-sm-9">
+							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+						</div>
 				</div>
 			</div>
 
@@ -62,16 +62,18 @@
 	</body>
 	<script type="text/javascript" src="../../../js/common/jquery.min2.0.js" ></script>
 	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
-
 	<script type="text/javascript" src="../../../js/dataUrl.js" ></script>
 	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
-	<script type="text/javascript" src="../../../plugin/vue-pagination/vue-nav.js"></script>
+	<script type="text/javascript" src="../../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../../js/commonutil.js" ></script>
 	<script type="text/javascript">
 		var vvm = null;
 
 		$(document).ready(function() {
 			vvm_init();
-			getVersions(1);
+			getVers()
 		});
 
 		function vvm_init(){
@@ -79,71 +81,52 @@
 				el: '#versions',
 				data:{
 					versions:[],
-					total:0,
-					cur: 1,
-					all: 0,
-					pagesize:10
-				},
-				components:{
-					'vue-nav': Vnav
+					page:1,
+					pagesize:10,
+					total:0
 				},
 				methods:{
-					enableValid: function(event){
-						console.log("eid: " + $(event.target).attr('id'));
-						var vid = $(event.target).attr('id');
-						for(var i = 0; i < this.versions.length; i++){
-							if (this.versions[i]['id'] == vid){
-								enableVersion(this.versions[i]);
-							}
-						}
-					},
-					callback(pa) {
-						getVersions(pa);
+					enableValid: function(event, index){
+						var tmpvalid = (this.versions[index]['valid'] == "1" ? "0" : "1");
+						enableVersion(function(){
+							promptMsg("成功");
+							this.vvm.versions[index]['valid'] = tmpvalid;
+						}, this.versions[index]['id'], tmpvalid);
 					}
 				}
 			});
 		}
 
-		function getVersions(page){
-			var pagesize = 10;
-			var url = org_url + dataUrl['edition']['editionList'] + "?size=10&page=" + page;
-			$.ajax({
-				url: url,
-				type: 'get',
-				success: function(resp) {
-					console.log("resp: " + JSON.stringify(resp));
-
-					vvm.versions = resp['data'];
+		//获取版本列表
+		function getVers(){
+			getVersions(function(resp){
+				if (vvm.page == 1){
+					vvm.versions = [];
+					vvm.versions = vvm.versions.concat(resp['data']);
 					vvm.total = resp['total'];
-					vvm.cur = page;
-					vvm.all = Math.ceil(resp['total'] / pagesize);
-				},
-				error: function(d, data) {
-					console.log(data);
-				},
-				complete: function(data) {
+					paging();
+				}else{
+					vvm.versions = [];
+					vvm.versions = vvm.versions.concat(resp['data']);
+					vvm.total = resp['total'];
 				}
-			});
+			}, vvm.page, vvm.pagesize);
 		}
 
-		function enableVersion(ver){
-			var url = org_url + dataUrl['edition']['updateEdition'] + "/" + ver['id'];
-			var version = {};
-			version['id'] = ver['id'];
-			var tmpvalid = (ver["valid"] == "1"?"0":"1");
-			version['valid'] = tmpvalid;
-			$.ajax({
-				url: url,
-				type: 'put',
-				data: version,
-				success: function(resp) {
-					console.log("resp: " + JSON.stringify(resp));
-					ver['valid'] = tmpvalid;
+		function paging(){
+			$('#pageToolbar').html('');
+			$('#pageToolbar').Paging({
+				pagesize: vvm.pagesize,
+				count: vvm.total,
+				toolbar: true,
+				hash: true,
+				callback: function(page, size, count) {
+					vvm.page = page;
+					getVers();
 				},
-				error: function(d, data) {
-					console.log(data);
-				},
-				complete: function(data) {
+				changePagesize:function(ps){
+					vvm.pagesize = ps;
+					getVers();
 				}
 			});
 		}

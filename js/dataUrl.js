@@ -55,12 +55,14 @@ var dataUrl={
 	},
 	"login": "/managers/login/",
 	"studentmanager":{
-		"schoollist": "/student/searchallschool/",
-		"studentlist": "/student/searchstudent/",
+		"schoollist": "/student/searchallschool/", //学校列表
+		"studentlist": "/student/searchstudent/",//学生列表
 		"addstudent": "/student/",//增加学生
-		"selectstudent": "/student/searchstudentbyid/",
-		"exportstudent": "/student/excelfiledown",
-		"excelfileup": "/student/excelfileup"
+		"selectstudent": "/student/searchstudentbyid/", //根据id查学生
+		"exportstudent": "/student/excelfiledown", //导出
+		"excelfileup": "/student/excelfileup",  //导入
+		"batchChange": "/student/updatemorestudent/", //调班，禁用
+		"downstudents": "/student/excelresultdown"  //下载导入后的数据
 	},
 	"teacher":{
 		"getTeachers":"/teacher/findteacher",  //教师列表 模糊查询
@@ -69,6 +71,13 @@ var dataUrl={
 		"updateTeacher":"/teacher/updateteacher",
 		"enableTeacher":"/teacher",  //启用教师
 		"deleteTeacher":"/teacher",
+	},
+	"questionbank": {
+		"questionbanktree": "/section/selectSectionTreeForEdition/", //题库树
+		"questionlist": "/question/",  //题目列表
+		"commonlist": "/common/lists",  //科目学科学段列表
+		"updatequestion": "/question/updatequestion", //更新题目
+		"addquestion": "/question/addquestion"  //新增
 	}
 }
 

@@ -65,51 +65,51 @@
 					<div class="form-group">
 						<label for="secondname" class="col-sm-1 control-label text-center">学校名称</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true">
-								<option>全部</option>
+							<select name="" class="form-control selectpicker" id="search_school"  data-live-search="true">
+								<option value="">全部</option>
 								<option>学校1</option>
 							</select>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">学生姓名</label>
 						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control selectpicker" />
+							<input type="tel" name="" class="form-control selectpicker" id="search_student"/>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">家长手机号</label>
 						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control selectpicker" />
+							<input type="tel" name="" class="form-control selectpicker" id="search_phone"/>
 						</div>
 
 					</div>
 					<div class="form-group">
 						<label for="secondname" class="col-sm-1 control-label text-center">年级</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true">
-								<option>全部</option>
+							<select name="" class="form-control selectpicker" data-live-search="true" id="search_grade">
+								<option value="">全部</option>
 								<option>一年级</option>
 							</select>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">班级</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true">
-								<option>全部</option>
+							<select name="" class="form-control selectpicker" data-live-search="true" id="search_class">
+								<option value="">全部</option>
 								<option>一年级1班</option>
 							</select>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker">
-								<option>全部</option>
-								<option>禁用</option>
-								<option>开放</option>
+							<select name="" class="form-control selectpicker" id="search_valid">
+								<option value="">全部</option>
+								<option value="0">禁用</option>
+								<option value="1">启用</option>
 							</select>
 						</div>
 						<label for="secondname" class="col-sm-1 control-label text-center"></label>
-						<div class="col-sm-1">
-							<button class="form-control">查询</button>
+						<div class="col-sm-1">							
+							<div id="btnSearch" onclick="search()" class="search_01 col-sm-2 col-sm-offset-1">查询</div>
 						</div>
 					</div>
 
@@ -123,7 +123,7 @@
 			<div class="numshu_btm">
 				<div class="list_btm">
 					<div class="table-responsive">
-						<table border="1" class="table table-hover addlist" style="text-align: center;">
+						<table border="1" class="table table-hover " style="text-align: center;">
 							<thead>
 								<tr>
 									<th><strong>序号</strong></th>
@@ -138,59 +138,31 @@
 									<th><strong>操作</strong></th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>三环中学</td>
-									<td>李二蛋</td>
-									<td>一年级</td>
-									<td>2班</td>
-									<td>鲁班七号</td>
-									<td>射手</td>
-									<td>100xxxx1111</td>
-									<td>已启用</td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>
-										<a href="javascript:;" onclick="editStudent()">编辑</a>
-										<a href="javascript:;" onclick="off()">禁用</a>
-										<a href="javascript:;">删除</a>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>三环中学</td>
-									<td>李二蛋</td>
-									<td>一年级</td>
-									<td>2班</td>
-									<td>鲁班七号</td>
-									<td>射手</td>
-									<td>100xxxx1111</td>
-									<td>已启用</td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>
-										<a href="javascript:;" onclick="editStudent()">编辑</a>
-										<a href="javascript:;" onclick="off()">禁用</a>
-										<a href="javascript:;">删除</a>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>三环中学</td>
-									<td>李二蛋</td>
-									<td>一年级</td>
-									<td>2班</td>
-									<td>鲁班七号</td>
-									<td>射手</td>
-									<td>100xxxx1111</td>
-									<td>已启用</td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>
-										<a href="javascript:;" onclick="editStudent()">编辑</a>
-										<a href="javascript:;" onclick="off()">禁用</a>
-										<a href="javascript:;">删除</a>
-									</td>
-								</tr>
+							<tbody class="addlist">
+															
 							</tbody>
+							<script id="parent_list_tmpl" type="text/x-dot-template">						
+								{{~it:value:index}}	
+								<tr id="parent{{=index}}" class="parent{{=value.pid}}">
+									<td>{{=index+1}}</td>
+									<td>{{=value.schoolname}}</td>
+									<td>{{=value.sname}}</td>
+									<td>{{=value.gradename}}</td>
+									<td>{{=value.clazzname}}</td>
+									<td>{{=value.pname}}</td>
+									<td>{{=value.relationname}}</td>
+									<td>{{=value.phone}}</td>
+									<td><input id="valid{{=index}}" type="hidden" value='{{=value.valid}}'>
+									<span id="validText{{=index}}">{{?value.valid=='0'}}无效{{??}}有效{{?}}</span></td>
+									<td>
+										<a href="javascript:;" onclick="seeStudent()">查看</a>&nbsp;
+										<a href="javascript:;" onclick="editStudent('{{=value.pid}}')">编辑</a>&nbsp;
+										<a id="validHref{{=index}}" href="javascript:;" onclick="off('{{=index}}','{{=value.pid}}')">{{?value.valid=='0'}}启用{{??}}禁用{{?}}</a>&nbsp;
+										<a href="javascript:;" onclick="dele('{{=index}}','{{=value.pid}}')">删除</a>
+									</td>
+								</tr>
+								{{~}}
+							</script>
 						</table>
 					</div>
 					<div class="row pro_list_btm">
@@ -316,16 +288,77 @@
 	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/doT.min.js"></script>
 	<script src="../../js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script>
-		//		$.ajax({
-		//			url:'http://192.168.1.1:8080/institution/tree/1',
-		//			type:'get',
-		//			success:function(d){
-		//				console.log(d);
-		//			}
-		//		})
+		var evalText;
+		$(function(){
+			evalText = doT.template($("#parent_list_tmpl").text());
+			initSchool();
+			search();			
+		})
+		
+		//分页
+		function search(){	
+			$('#pageToolbar').html("");
+			$.ajax({
+				type:"get",
+				url: org_url + "/parent/searchparent",
+				data:{				
+					school:$("#search_school").val(),
+					sname:$("#search_student").val(),
+					phone:$("#search_phone").val(),
+					grade:$("#search_grade").val(),
+					clazz:$("#search_class").val(),
+					valid:$("#search_valid").val(),					
+					page:1,
+					size:5	
+				},
+				async:true,
+				dataType:"json",
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    crossDomain: true,
+			    success: function(data){
+			    	//alert("search"+evalText(data));
+			    	//console.log("****************"+data.data[1].pname);
+			    	$(".addlist").html(evalText(data.data));
+			    	$('#pageToolbar').Paging({
+						pagesize: 5,
+						count: data.total,
+						toolbar: false,
+						callback: function(page, size, count) {
+							//alert("search");
+							//console.log(page+'***'+size+'------'+count)
+							$.ajax({
+								type:"get",
+								url: org_url + "/parent/searchparent",
+								data:{
+									page:page,
+									size:size,
+									phone: $("#phone").val(),
+									name: $("#name").val(),
+									valid:$("#valid").val()
+								},
+								async:true,
+								xhrFields: {
+							        withCredentials: true
+							    },
+							    dataType:"json",
+							    crossDomain: true,
+							    success: function(data){
+									$(".addlist").html(evalText(data.data));	
+							    }
+							});  
+						}
+					});					
+			    }
+			});
+		}
+		
 		//全选全不选
 		var $tbr = $('.checkItem');
 		$(document).on('click', '#checkAll', function(event) {
@@ -380,26 +413,60 @@
 		});
 
 		//点击查看
-		function seeStudent() {
+		function seeStudent(id) {
 			$('.breadcrumb', window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_see.html" style="color: rgb(51, 51, 51); cursor: default;">查看学生</span></li>');
-			window.location.href = 'parents_edit.html';
+			window.location.href = 'parents_add.html?id='+id;
 		}
 
 		//点击编辑
-		function editStudent() {
+		function editStudent(id) {
 			$('.breadcrumb', window.parent.document).append('<li class="active add_parents_bar"><span class="Current_page iframeurl" name="view/userManage/student_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑家长</span></li>');
-			window.location.href = 'parents_edit.html';
+			window.location.href = 'parents_add.html?id='+id;
 		}
 
 		//点击禁用用户
-		function off() {
+		function off(index,id) {
+			var v = ($("#valid"+index).val()=='0'?'1':'0');
+			var href = this;
+			$.ajax({
+				type:"put",
+				url: org_url + "/parent/"+id,
+				dataType:"json",
+			    data:{
+			    	valid:v
+			    },
+			    success: function(data){
+			    	$("#valid"+index).val(v);
+			    	$("#validText"+index).html(v=="0"?"无效":"有效");
+			    	$("#validHref"+index).html(v=="0"?"启用":"禁用");	
+			    }
+			});
+		}
+				
+		
+		function dele(item,id) {
 			layer.open({
 				title: "",
-				content: '确定禁用该用户吗？',
+				content: '确定删除该用户吗？',
 				skin: 'layui-layer-lana',
 				shadeClose: 'true',
 				btn: ['确定', "取消"],
 				yes: function(index, layero) {
+					$.ajax({
+						type:"delete",
+						url: org_url + "/parent/"+id,
+						async:true,
+						dataType:"json",
+						xhrFields: {
+					        withCredentials: true
+					    },
+					    crossDomain: true,
+					    success: function(data){
+					    	if(data==1){
+						    	$(".parent"+id).remove();
+						    }  	
+					    }
+					});
 					layer.close(index);
 				},
 				btn2: function(index, layero) {
@@ -411,7 +478,98 @@
 				}
 			});
 		}
+		
+		//初始化数据
+		function initSchool(){	
+			$.ajax({
+				type:"get",
+				url: org_url + "/school",
+				async:true,
+				dataType:"json",
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    crossDomain: true,
+			    success: function(data){
+			    	$("#search_school").empty();
+			    	$("#search_school").append("<option value=''>全部</option>");
+			    	for(var i=0;i<data.data.length;i++){    		
+			    		var option = "<option value='"+data.data[i].id+"'>"+data.data[i].name+"</option>";
+			    		$("#search_school").append(option);
+			    	}
+			    	//$("#roles").selectpicker('val',[1,2,8]);
+			    	$("#search_school").selectpicker('refresh');    	
+			    }
+			});
+			$("#search_school").change(function(){
+				initGrade();
+				initClass();
+			}); 
+			$("#search_grade").change(function(){
+				initClass();
+			}); 
+		}
 
+		function initGrade(){	
+			if($("#search_school").val()==""){
+				return;
+			}
+			$.ajax({
+				type:"get",
+				url: org_url + "/school/grades",
+				async:true,
+				dataType:"json",
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    data:{"schoolId":$("#search_school").val()},
+			    crossDomain: true,
+			    success: function(data){
+			    	$("#search_grade").empty();
+			    	$("#search_grade").append("<option value=''>全部</option>");
+			    	for(var key in data){
+			    		var grades = data[key];			    		
+				    	for(var i=0;i<grades.length;i++){    		
+				    		var option = "<option value='"+grades[i].id+"'>"+grades[i].title+"</option>";
+				    		$("#search_grade").append(option);
+				    	}
+			    	}
+			    	//$("#roles").selectpicker('val',[1,2,8]);
+			    	$("#search_grade").selectpicker('refresh');  
+			    	initClass();
+			    }
+			});
+		}
+		
+		function initClass(){	
+			if($("#search_school").val()==""){
+				return;
+			}
+			$.ajax({
+				type:"get",
+				url: org_url + "/clazz",
+				async:true,
+				dataType:"json",
+				data:{
+					"schoolid":$("#search_school").val(),
+					"gradeid":$("#search_grade").val()
+					},
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    crossDomain: true,
+			    success: function(data){
+			    	$("#search_class").empty();
+			    	$("#search_class").append("<option value=''>全部</option>");
+			    	for(var i=0;i<data.length;i++){    		
+			    		var option = "<option value='"+data[i].id+"'>"+data[i].name+"</option>";
+			    		$("#search_class").append(option);
+			    	}			    	
+			    	//$("#roles").selectpicker('val',[1,2,8]);
+			    	$("#search_class").selectpicker('refresh');    	
+			    }
+			});
+		}
 	</script>
 
 </html>

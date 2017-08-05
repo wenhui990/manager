@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>编辑题目</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+
+		<style type="text/css">
+			body {
+				padding: 20px;
+			}
+			
+			.none {
+				display: none;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			
+			.list_btm {
+				padding-top: 20px;
+			}
+			
+			.addknowledge {
+				color: #000;
+				text-decoration: underline;
+			}
+			
+			.ztree1 {
+				margin-top: 0;
+				width: 180px;
+				height: 300px;
+				border: 1px solid #617775;
+				background: #f0f6e4;
+				width: 220px;
+				height: 360px;
+				overflow-y: scroll;
+				overflow-x: auto;
+				"
+
+			}
+			
+			blockquote {
+				border: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;padding: 0;" id="questionMain">
+			<div class="list_btm">
+				<div class="form-horizontal knowledgelists" v-cloak>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">科目</span>
+						</label>
+						<div class="col-sm-2">
+							<select class="form-control" v-model="courseId">
+								<option value="">请选择</option>
+								<option v-for="(value,key) in courses" :value="key">{{value}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 text-right">
+							<span class="warn" style="padding-left: 20px;">题库对象：</span>
+						</label>
+						<div class="col-sm-8">
+							<label class="col-sm-2" for="one">
+								<input type="radio" id="one" value="T" v-model="picked">教师
+							</label>
+							<label class="col-sm-2" for="two">
+								<input type="radio" id="two" value="S" v-model="picked">学生
+							</label>
+							<label class="col-sm-4" style="background: #eee;">
+								注：默认发布对象为学生
+							</label>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">上传内容：</span>
+						</label>
+
+						<div class="col-sm-9">
+							<section id="importer" class="disabled">
+								<div class="title">
+									<span>导入试题:</span>
+									<b class="delete back hint" data-hint="返回"><i class="icon"></i></b>
+								</div>
+								<div class="content">
+									<dl class="pasteboard">
+										<dt>在 WORD 中拷贝试题并粘贴到下面的区域:</dt>
+										<dd>
+											<blockquote contenteditable style="background: rgba(238, 238, 238, 1);"></blockquote>
+										</dd>
+									</dl>
+									<input id="parseDoc" class="none" type="button" value="解析">
+									</>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+			<ul id="treeDemo1" class="ztree ztree1"></ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var questionvue = new Vue({
+			el: '#questionMain',
+			data: {
+				courses: '', //科目id
+				picked: 'S',
+				courseId: ''
+			},
+			beforeCreate: function() {
+				//获取所有学段，学科目录
+				$.ajax({
+					type: "get",
+					url: org_url + dataUrl.questionbank.commonlist,
+					success: function(data) {
+						questionvue.courses = data.courses;
+					}
+				});
+			}
+		});
+	</script>
+
+	<script src="../../js/questionBank/our.js"></script>
+	<script src="../../js/questionBank/common.js"></script>
+	<script src="../../js/questionBank/uploadingquestion.js" type="text/javascript" charset="utf-8"></script>
+
+</html>
