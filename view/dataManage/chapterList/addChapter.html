@@ -87,6 +87,7 @@
 	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
 	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
 	<script type="text/javascript" src="../../../js/commonutil.js" ></script>
+	<script type="text/javascript" src="../../../js/checkutil.js" ></script>
 	<script type="text/javascript">
 		var vvm = null;
 
@@ -110,7 +111,7 @@
 				},
 				methods:{
 					submit: function(event){
-						console.log("selectedTextBookType:" + this.selectedTextBookType + ", selectedStage: " + this.selectedStage + ", selectedCourse: " + this.selectedCourse + ", selectedEdtion: " + this.selectedEdtion + ", selectedTerm: " + this.selectedTerm);
+						// console.log("selectedTextBookType:" + this.selectedTextBookType + ", selectedStage: " + this.selectedStage + ", selectedCourse: " + this.selectedCourse + ", selectedEdtion: " + this.selectedEdtion + ", selectedTerm: " + this.selectedTerm);
 
 						var textbook = {};
 						if (this.selectedTextBookType == 1){
@@ -170,7 +171,12 @@
 			var page = 1;
 			getEditions(function (resp){
 				vvm.editions.push({"title":"请选择", "id":0});
-				vvm.editions = vvm.editions.concat(resp['data']);
+				for (ed of resp['data']){
+					//过滤禁用的版本
+					if (ed['valid'] == "1"){
+						vvm.editions.push(ed);
+					}
+				}
 	            getTms();
 			}, page, pagesize);
 		}

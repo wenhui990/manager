@@ -16,7 +16,8 @@ function getUrlParams() {
 
 var stuid = getUrlParams().id,
 	stusee = getUrlParams().see,
-	stuedit = getUrlParams().edit;
+	stuedit = getUrlParams().edit,
+	allclazzs;
 
 //json数组去重
 Array.prototype.removeRepeatAttr = function() {
@@ -58,7 +59,7 @@ var students = new Vue({
 	beforeCreate: function() {
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.studentmanager.schoollist,
+			url: org_url + dataUrl.studentmanager.schoollist+'?token='+sessionStorage.token,
 			success: function(data) {
 				students.schools = data;
 			}
@@ -70,10 +71,23 @@ var students = new Vue({
 	watch: {
 		schoolsVal: function(n, o) {
 			console.log(n + '----' + o);
+			if (n=='') {
+				students.gradeVal = '';
+				students.classVal = '';
+			}
 			getGradeClass(n);
 		},
 		gradeVal: function(n, o) {
+			students.classs = allclazzs;
 			console.log(n + '----' + o);
+			var len = students.classs.length,
+				tempclass = [];
+			for(var i = 0; i < len; i++) {
+				if(students.classs[i]['pid'] == n) {
+					tempclass.push(students.classs[i]);
+				}
+			}
+			students.classs = tempclass;
 		}
 	}
 });
@@ -96,11 +110,13 @@ function getGradeClass(n){
 				gradedata.id = data[i].gradeid;
 				gradedata.name = data[i].gradename;
 				gdatas.push(gradedata);
+				classdata.pid = data[i].gradeid;
 				classdata.id = data[i].id;
 				classdata.name = data[i].name;
 				cdatas.push(classdata);
 			}
 			gdatas.removeRepeatAttr();
+			allclazzs = cdatas;
 			students.grades = gdatas;
 			students.classs = cdatas;
 		}
@@ -341,9 +357,8 @@ $(function() {
 			studentJson.pnametwo = pnametwo;
 			studentJson.pphonetwo = pphonetwo;
 			studentJson.relationtwo = relationtwo;
+			studentJson.token = sessionStorage.token;
 		}
-		console.log(studentJson);
-		return
 		if(stuid) studentJson.id = stuid;
 		$.ajax({
 			type: stuid?"put":"post",
@@ -352,11 +367,17 @@ $(function() {
 			data: JSON.stringify(studentJson),
 			success: function(data) {
 				if(data == 1) {
-					layer.alert('修改成功！',function(){
-						window.location.href = 'student_list.html';
-					})
+					if(stuid){
+						layer.alert('修改成功！',function(){
+							window.location.href = 'student_list.html';
+						})
+					}else{
+						layer.alert('新建成功！',function(){
+							window.location.href = 'student_list.html';
+						})
+					}
 				} else {
-					layer.alert('增加失败!');
+					layer.alert(data.msg);
 				}
 
 			}

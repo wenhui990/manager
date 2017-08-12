@@ -137,7 +137,7 @@
 								<div class="col-sm-11" v-else>{{question.options}}</div>
 								<div class="col-sm-1">
 									<br />
-									<a href="javascript:;" @click="editquestion(question.id)" class="btn btn-sm btn-default">编辑</a><br /><br />
+									<a  @click="editquestion(question.id,$event)" class="btn btn-sm btn-default">编辑</a><br /><br />
 									<button class="btn btn-sm btn-default" @click="delquestion(question.id,$event)">删除</button>
 								</div>
 							</div>

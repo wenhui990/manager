@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>编辑题目</title>
+		<title>上传题目</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="../../css/common/common_list.css" />
@@ -107,6 +107,7 @@
 									</>
 								</div>
 							</section>
+							<a href="../../plugin/questions.docx" target="_blank" style="text-decoration: underline;">下载模版</a>
 						</div>
 					</div>
 				</div>
@@ -133,13 +134,38 @@
 				//获取所有学段，学科目录
 				$.ajax({
 					type: "get",
-					url: org_url + dataUrl.questionbank.commonlist,
+					url: org_url + dataUrl.questionbank.commonlist+'?token='+sessionStorage.token,
 					success: function(data) {
+						if (data.code=='10010') {
+							layer.alert('身份验证失败！请重新登录！',{yes:function(){
+								parent.location.href = "../../enter.html";
+							},cancel:function(){
+								parent.location.href = "../../enter.html";
+							}});
+							return false;
+						}
 						questionvue.courses = data.courses;
+						questionvue.courseId = getUrlParams().courseid;
 					}
 				});
 			}
 		});
+		//获取url中字段
+		function getUrlParams() {
+			var params = {};
+			var url = window.location.href;
+			var idx = url.indexOf("?");
+			if(idx > 0) {
+				var queryStr = url.substring(idx + 1);
+				var args = queryStr.split("&");
+				for(var i = 0, a, nv; a = args[i]; i++) {
+					nv = args[i] = a.split("=");
+					params[nv[0]] = nv.length > 1 ? nv[1] : true;
+				}
+			}
+			return params;
+		};
+		
 	</script>
 
 	<script src="../../js/questionBank/our.js"></script>

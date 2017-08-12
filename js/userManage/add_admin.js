@@ -19,8 +19,8 @@ function getUrlParams() {
 function init(){	
 	$.ajax({
 		type:"get",
-		url: org_url + "/role",
-		async:true,
+		url: org_url + "/role?token="+sessionStorage.token,
+		async:false,
 		dataType:"json",
 		xhrFields: {
 	        withCredentials: true
@@ -42,7 +42,7 @@ function init(){
 function load(id){	
 	$.ajax({
 		type:"get",
-		url: org_url + "/managers/"+id,
+		url: org_url + "/managers/"+id+"?token="+sessionStorage.token,
 		async:true,
 		dataType:"json",
 		xhrFields: {
@@ -60,8 +60,11 @@ function load(id){
 				var it = array[i].split(":");
 				array[i] = it[0];	
 			}
+//			$('#admin_roles').val(array)
 			$("#admin_roles").selectpicker('val',array);
-	    	$("#admin_roles").selectpicker('refresh');  
+	    	setTimeout(function(){
+	    		$("#admin_roles").selectpicker('refresh');  
+	    	},1000);
 		}
 	});
 }
@@ -94,7 +97,8 @@ function save(){
     	roles:strRoles,
 		phone: $('#admin_phone').val(),
 		name: $('#admin_name').val(),
-		note: $('#admin_note').val()
+		note: $('#admin_note').val(),
+		token:sessionStorage.token
 	};
     url = org_url + "/managers";
     if(id!=null&&id!=""){
@@ -114,8 +118,27 @@ function save(){
 	    data:data,
 	    crossDomain: true,
 	    success: function(data){
-	    	window.location.href='admin_list.html';
-            $('.add_teacher_bar',window.parent.document).remove();   	
+	    	if (data==1) {
+	    		if(id){
+		    		layer.alert('修改成功！',function(){
+			    		window.location.href='admin_list.html';
+		            	$('.add_teacher_bar',window.parent.document).remove();   
+			    	})
+		    	}else{
+		    		layer.alert('新建成功！',function(){
+			    		window.location.href='admin_list.html';
+		            	$('.add_teacher_bar',window.parent.document).remove();   
+			    	})
+		    	}
+	    	}else if(data.code){
+	    		if(id){
+	    			layer.alert('修改失败：'+data.msg);
+	    		}else{
+	    			layer.alert('新建失败：'+data.msg);
+	    		}
+	    	}
+	    	
+	    	
 	    }
 	});
 }
@@ -124,38 +147,48 @@ $(function (){
 
 	init();
 	
-	var id = getQueryString("id");
-	if(id!=null&&id!=""){
+	var id = getQueryString("id"),isphone=true;
+	if(id){
 		load(id);
 	}
 	
+	//验证手机号
+	$('#admin_phone').blur(function() {
+		var phone = $(this).val();
+		if(phone.length > 0) {
+			if(!(/^1[34578]\d{9}$/.test(phone))) {
+				layer.alert("手机号码有误，请重填");
+				isphone = false;
+			} else {
+				isphone = true;
+			}
+		}
+	});
+	
 	//点击保存
 	$('.save').click(function (){
-		
 		var admin_name=$('#admin_name').val();
 		var	admin_phone=$('#admin_phone').val();
 		var	admin_roles = $('#admin_roles').val();
 		var	admin_note = $('#admin_note').val();
 		
-		if(admin_name==""||admin_phone==""||admin_roles==""){
-			layer.open({
-                title: "",
-                content: '请把带*的选项输入完整！',
-                skin: 'layui-layer-lana',
-                shadeClose: 'true',
-                btn: ['确定'],
-                yes: function(index, layero) {
-                    layer.close(index);
-                },
-                btn2: function(index, layero) {
-                    //按钮【按钮二】的回调
-                     //layer.close(index);
-                },
-                cancel: function() {
-                    //右上角关闭回调
-                }
-            });
-            
+		if(admin_name==""){
+			layer.alert('请输入姓名！',function(i){
+				layer.close(i);
+				$('#admin_name').focus();
+				return false;
+			})
+		}else if(!(/^1[34578]\d{9}$/.test($('#admin_phone').val()))){
+			layer.alert('请输入正确格式的手机号！',function(i){
+				$('#admin_phone').focus();
+				layer.close(i);
+				return false;
+			})
+		}else if(admin_roles==""||admin_roles=='undefined'){
+			layer.alert('请选择所属角色！',function(i){
+				layer.close(i);
+				return false;
+			});
 		}else{
 			layer.open({
                 title: "",
@@ -164,7 +197,8 @@ $(function (){
                 shadeClose: 'true',
                 btn: ['确定'],
                 yes: function(index, layero) {
-                	save();                                   
+                	save();   
+                	layer.close(index);
                 },
                 btn2: function(index, layero) {
                 	//按钮【按钮二】的回调

@@ -39,7 +39,7 @@
 							</select>	
 						</div>
 					</div>
-					<div class="form-group" style="height: 34px;" v-if="textbook!=null && selectedEdtion==0"> 
+					<div class="form-group" style="height: 34px;" v-if="selectedEdtion!=null"> 
 						<label for="" class="col-sm-1 control-label text-center warn">版本</label>
 						<div class="col-sm-2">
 							<select class="form-control _select" v-model="selectedEdtion" >
@@ -49,7 +49,7 @@
 							</select>		
 						</div>
 					</div>
-					<div class="form-group" style="height: 34px;" v-if="textbook!=null && selectedTerm==0"> 
+					<div class="form-group" style="height: 34px;" v-if="selectedTerm!=null"> 
 						<label for="" class="col-sm-1 control-label text-center warn">年级/课本</label>
 						<div class="col-sm-2">
 							<select class="form-control _select" v-model="selectedTerm" >
@@ -137,11 +137,14 @@
 			getCourses(function(resp){
 				vvm.courses = vvm.courses.concat(resp['data']);
 				getTextbook(function(resp){
+					console.log("resp: " + JSON.stringify(resp));
 					vvm.textbook = resp;
 					vvm.selectedStage = resp['stageid'];
 					vvm.selectedCourse = resp['courseid'];
 					vvm.selectedEdtion = resp['editionid'];
 					vvm.selectedTerm = resp['termid'];
+					console.log("selectedStage: " + vvm.selectedStage + ", vvm.selectedCourse: " + vvm.selectedCourse);
+					console.log("selectedEdtion: " + vvm.selectedEdtion + ", vvm.selectedTerm: " + vvm.selectedTerm);
 				}, vvm.vid);
 			}, page, pagesize);
 		}

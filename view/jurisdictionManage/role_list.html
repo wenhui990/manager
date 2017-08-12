@@ -17,6 +17,12 @@
 		[v-cloak] {
 		  display: none;
 		}
+		td.notes{
+			width: 30em;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	</style>
 	<body>
 		<div class="main container-fluid" id="roleList" v-cloak>
@@ -28,7 +34,7 @@
 			<div class="numshu_btm">
 				<div class="list_btm">
 					<div class="table-responsive">
-						<table class="table table-condensed" style="text-align: center;">
+						<table class="table table-condensed" style="text-align: center;table-layout: fixed;">
 							<thead>
 								<tr>
 									<td><strong>序号</strong></td>
@@ -39,12 +45,12 @@
 							</thead>
 							<tbody class="addlist">
 								<tr v-for="(item,index) in data">
-									<td>{{index}}</td>
+									<td>{{index+1}}</td>
 									<td>{{item.name}}</td>
-									<td>{{item.note}}</td>
+									<td class="notes">{{item.note}}</td>
 									<td>
 										<a v-bind:href="'config_user.html?id='+item.id+'&name='+item.name">配置用户</a>
-										<a href="javascript:;" v-on:click="configGurisdiction(item.id,$event)">配置权限</a>
+										<a v-bind:href="'config_gurisdiction.html?id='+item.id+'&name='+item.name">配置权限</a>
 										<a href="javascript:;" v-on:click="editUser(item.id,$event)">编辑</a>
 										<a href="javascript:;" v-on:click="delteAdmin(item.id,$event)">删除</a>
 									</td>
@@ -91,32 +97,48 @@
 					$event.target.setAttribute('href','role_add.html');
 				},
 				//配置用户
-				configUser: function(id,name,e){
+				/*configUser: function(id,name,e){
 					e.target.setAttribute('href',+id);
-				},
+				},*/
 				//配置权限
-				configGurisdiction: function(id,e){
-					e.target.setAttribute('href','config_gurisdiction.html?id='+id);
-				},
+				/*configGurisdiction: function(id,e){
+					e.target.setAttribute('href',+id);
+				},*/
 				//编辑
 				editUser: function(id,e){
 					e.target.setAttribute('href','role_add.html?id='+id);
 				},
 				//删除
 				delteAdmin: function(id,e){
-					$.ajax({
-						type: 'delete',
-						data:{token: sessionStorage.token},
-						url: org_url + dataUrl.jurisdiction.role+id,
-						success: function(data){
-							if (data===1) {
-								layer.alert('删除成功！');
-								$(e.target).parents('tr').remove();
-							} else{
-								layer.alert('删除失败！');
+					layer.open({
+					  title: '提示',
+					  shadeClose: false,
+					  content: '是否确定删除该角色？',
+					  skin: 'layui-layer-lana',
+					  btn: ['确定', '取消'],
+					  yes: function(){
+					  	$.ajax({
+							type: 'delete',
+							url: org_url + dataUrl.jurisdiction.role+id+'?token='+sessionStorage.token,
+							success: function(data){
+								if (data.code=='10010') {
+									layer.alert('身份验证失败！请重新登录！',{yes:function(){
+										parent.location.href = "../../enter.html";
+									},cancel:function(){
+										parent.location.href = "../../enter.html";
+									}});
+									return false;
+								}
+								if (data===1) {
+									layer.alert('删除成功！');
+									$(e.target).parents('tr').remove();
+								} else{
+									layer.alert('删除失败！');
+								}
 							}
-						}
-					})
+						})
+					  }
+					}); 
 				}
 			}
 		});

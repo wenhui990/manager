@@ -53,51 +53,53 @@
 				</div>
 			</div>
 		</div>
-	</body>
-	<script>
+		<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+		<script>
 		
-		$(document).on("keydown",function(event){
-			if(event.keyCode==13){
-			fnEnter()
-			}
-		});
-		$("button").on("click",function(){
-			fnEnter()
-		})
-	function fnEnter(){
-		if($("._text").val()==""){
-			$(".hint").text("请输入账号")
-		}else if($("._password").val()==""){
-			$(".hint").text("请输入密码")
-		}else{
-			$.ajax({
-				type:"get",
-				url: org_url + dataUrl.login,
-				data:{
-					phone: $("._text").val(),
-					pass: $("._password").val()
-				},
-				async:true,
-				xhrFields: {
-			        withCredentials: true
-			    },
-			    crossDomain: true,
-				success: function(data){
-					console.log(data);
-					if(data.token){
-						$(".hint").text('登录成功！');
-						sessionStorage.id = data.id;
-						sessionStorage.userid = data.userid;
-						sessionStorage.token = data.token;
-						window.location.href="index.html";
-					}else{
-						$(".hint").text(data.msg);
-					}
+			$(document).on("keydown",function(event){
+				if(event.keyCode==13){
+				fnEnter()
 				}
 			});
-			
-		}
-	}
-	</script>
+			$("button").on("click",function(){
+				fnEnter()
+			})
+			function fnEnter(){
+				if($("._text").val()==""){
+					$(".hint").text("请输入账号")
+				}else if($("._password").val()==""){
+					$(".hint").text("请输入密码")
+				}else{
+					$.ajax({
+						type:"get",
+						url: org_url + dataUrl.login,
+						data:{
+							phone: $("._text").val(),
+							pass: hex_md5($("._password").val())
+						},
+						async:true,
+						xhrFields: {
+					        withCredentials: true
+					    },
+					    crossDomain: true,
+						success: function(data){
+							console.log(data);
+							if(data.token){
+								$(".hint").text('登录成功！');
+								sessionStorage.id = data.id;
+								sessionStorage.userid = data.userid;
+								sessionStorage.token = data.token;
+								window.location.href="index.html";
+							}else{
+								$(".hint").text('用户名或密码错误！');
+							}
+						}
+					});
+					
+				}
+			}
+		</script>
+	</body>
+	
 	
 </html>

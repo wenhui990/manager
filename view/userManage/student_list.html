@@ -115,7 +115,7 @@
 
 					</form>
 				</div>
-				<div class="row head numshu_btm">
+				<div class="row head numshu_btm"style="margin-bottom: 25px;">
 					<div class="btngroup">
 						<a href="student_add.html" class="commonbtn addStudent">新建学生</a>
 						<a href="javascript:;" class="commonbtn batchChangeShift">批量调班</a>
@@ -125,27 +125,25 @@
 						<a href="../../plugin/学生信息模版.xls" class="downloadTemplate">下载导入模版</a>
 					</div>
 				</div>
-				<div class="numshu_btm">
+				<div class="numshu_btm" style="margin-top: 0;">
 					<div class="list_btm">
 						<div class="table-responsive">
-							<table border="1" class="table table-hover addlist" style="text-align: center;">
-								<thead>
-									<tr>
-										<th><input type="checkbox" id="checkAll" name="checkAll" @click="checkAll($event)" v-model="checkeds" /></th>
-										<th><strong>序号</strong></th>
-										<th><strong>学校</strong></th>
-										<th><strong>年级</strong></th>
-										<th><strong>班级</strong></th>
-										<th><strong>学生姓名</strong></th>
-										<th><strong>身份证号</strong></th>
-										<th><strong>用户状态</strong></th>
-										<th><strong>操作</strong></th>
-									</tr>
-								</thead>
+							<table class="table table-hover addlist" style="text-align: center;">
+								<tr>
+									<th><input type="checkbox" id="checkAll" name="checkAll" @click="checkAll($event)" v-model="checkeds" /></th>
+									<th><strong>序号</strong></th>
+									<th><strong>学校</strong></th>
+									<th><strong>年级</strong></th>
+									<th><strong>班级</strong></th>
+									<th><strong>学生姓名</strong></th>
+									<th><strong>身份证号</strong></th>
+									<th><strong>用户状态</strong></th>
+									<th><strong>操作</strong></th>
+								</tr>
 								<tbody>
 									<tr v-for="(student,index) in studentLists" :class="{warning:iswarning}">
 										<td><input type="checkbox" v-bind:value="student.id" class="checkItem" :checked="allchecked" @click="checkOne($event)" /></td>
-										<td>{{index}}</td>
+										<td>{{index+1}}</td>
 										<td>{{student.sname}}</td>
 										<td>{{student.gradename}}</td>
 										<td>{{student.cname}}</td>
@@ -156,8 +154,8 @@
 										<td>
 											<a href="javascript:;" @click="seeStudent('see',student.id)">查看</a>
 											<a href="javascript:;" @click="seeStudent('edit',student.id)">编辑</a>
-											<a href="javascript:;" onclick="enabled()" v-bind:value="student.valid" v-if="student.valid=='0'">启用</a>
-											<a href="javascript:;" onclick="off()" v-else>禁用</a>
+											<a href="javascript:;" @click="enableValid(index)" v-bind:value="student.valid" v-if="student.valid=='0'">启用</a>
+											<a href="javascript:;" @click="enableValid(index)" v-else>禁用</a>
 											<a href="javascript:;" @click="delStudent(student.id,$event)">删除</a>
 										</td>
 									</tr>
@@ -293,7 +291,7 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="batchChangeOk">确定</button>
+							<button type="button" class="btn btn-primary" id="batchChangeOk" v-bind:disabled="checksubmit" >确定</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 						</div>
 					</div>

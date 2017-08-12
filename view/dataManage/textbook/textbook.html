@@ -7,7 +7,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../../../css/common/reset.css"/>
 		<link rel="stylesheet" href="../../../plugin/bootstrap/bootstrap.min.css" />
-		<!-- <link rel="stylesheet" href="../../../plugin/bootstrap-select/css/bootstrap-select.css" /> -->
 		<link rel="stylesheet" href="../../../assets/font-awesome.min.css" />
 		<link rel="stylesheet" href="../../../assets/ace.min.css" />
 		<link rel="stylesheet" href="../../../assets/ace-rtl.min.css" />
@@ -17,7 +16,12 @@
 		<link rel="stylesheet" href="../../../css/knowledge/textbook.css" />
 	</head>
 	<body>
-		<div id="textbookmain">
+		<style type="text/css">
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
+		<div id="textbookmain" v-cloak>
 		<div class="main container-fluid" style="overflow:inherit;">
 			<div class="head numshu_btm">
 
@@ -76,8 +80,8 @@
 				</div>
 				<div class="mainList">
 					<div class="head">
-						<span class="term changeTrem" data-toggle="modal" data-target="#myModal" v-on:click="addTextbookBtn($event)">添加教材</span>
-						<span class="term changeTrem">返回</span>
+						<span class="term changeTrem" v-on:click="addTextbookBtn($event)">添加教材</span>
+						<!-- <span class="term changeTrem">返回</span> -->
 					</div>
 					<div class="numshu_btm">
 					<div class="list_btm">
@@ -107,8 +111,8 @@
 									</template>
 								</td>
 								<td>
-									<a v-bind:courseid="item.course.id" v-on:click="editGradeTbs($event)" data-toggle="modal" data-target="#myModal">编辑</a>
-									<a v-bind:courseid="item.course.id" v-on:click="delGradeTbs($event)">删除</a>
+									<a href="javascript:;" v-on:click="editGradeTbs(index)">编辑</a>
+									<a href="javascript:;" v-on:click="delGradeTbs(index)">删除</a>
 								</td>
 							</tr>
 						</table>
@@ -117,7 +121,6 @@
 				</div>
 				</div>
 			</div>
-
 		</div>
 
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -147,172 +150,64 @@
 							<div class="form-group">
 								<label class="control-label col-sm-3">上学期教材</label>
 							</div>
+							<template v-for="item, index in lasttbs">
+								<div class="form-group">
+									<label class="control-label col-sm-2">版本</label>
+									<div class="col-sm-3">
+										<select name="" class="form-control" v-model="item.selectedEdition" v-on:change="changeEdition(1,index)">
+											<option v-for="edition in item.editions" v-bind:value="edition.id" >
+												{{ edition.title }}
+											</option>
+										</select>
+									</div>
+									<label class="control-label col-sm-2 ">年级/课本</label>
+									<div class="col-sm-3">
+										<select name="" class="form-control" v-model="item.selectedTerm">
+											<option v-for="term in item.terms" v-bind:value="term.id" >
+												{{ term.title }}
+											</option>
+										</select>
+									</div>
+									<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-if="index > 0" v-on:click="removeTb(1, index)"></span>
+								</div>
+							</template>
 							<!-- 上学期 1-->
-							<div class="form-group">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedEditon">
-										<option v-for="edition in editions" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedTerm">
-										<option v-for="term in terms" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-							</div>
 							<!-- 上学期 2-->
-							<div class="form-group" v-if="txcount > 1">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedEditon2">
-										<option v-for="edition in editions2" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedTerm2">
-										<option v-for="term in terms2" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-								<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-bind:id="'last-2'" v-on:click="removeTb($event)"></span>
-							</div>
 							<!-- 上学期 3-->
-							<div class="form-group" v-if="txcount > 2">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedEditon3">
-										<option v-for="edition in editions3" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedTerm3">
-										<option v-for="term in terms3" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-								<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-bind:id="'last-3'" v-on:click="removeTb($event)"></span>
-							</div>
 							<!-- 上学期 4-->
-							<div class="form-group" v-if="txcount > 3">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedEditon4">
-										<option v-for="edition in editions4" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="selectedTerm4">
-										<option v-for="term in terms4" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-								<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-bind:id="'last-4'" v-on:click="removeTb($event)"></span>
-							</div>
-
 							<div class="form-group addVerJ">
 								<label class="col-sm-3 addVerJc" v-on:click="addTx($event)">+添加教材</label>
 							</div>
+
 							<div class="form-group">
 								<label class="control-label col-sm-3">下学期教材</label>
 							</div>
+							<template v-for="item, index in nexttbs">
+								<div class="form-group" >
+									<label class="control-label col-sm-2">版本</label>
+									<div class="col-sm-3">
+										<select name="" class="form-control" v-model="item.selectedEdition" v-on:change="changeEdition(2,index)">
+											<option v-for="edition in item.editions" v-bind:value="edition.id" >
+												{{ edition.title }}
+											</option>
+										</select>
+									</div>
+									<label class="control-label col-sm-2 ">年级/课本</label>
+									<div class="col-sm-3">
+										<select name="" class="form-control" v-model="item.selectedTerm">
+											<option v-for="term in item.terms" v-bind:value="term.id" >
+												{{ term.title }}
+											</option>
+										</select>
+									</div>
+									<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-if="index > 0" v-on:click="removeTb(2, index)"></span>
+								</div>
+								
+							</template>
 							<!-- 下学期 1 -->
-							<div class="form-group" >
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedEditon">
-										<option v-for="edition in nxeditions" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedTerm">
-										<option v-for="term in nxterms" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-							</div>
 							<!-- 下学期 2 -->
-							<div class="form-group" v-if="nxtxcount > 1">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedEditon2">
-										<option v-for="edition in nxeditions2" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedTerm2">
-										<option v-for="term in nxterms2" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-								<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-bind:id="'next-2'" v-on:click="removeTb($event)"></span>
-							</div>
 							<!-- 下学期 3 -->
-							<div class="form-group" v-if="nxtxcount > 2">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedEditon3">
-										<option v-for="edition in nxeditions3" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedTerm3">
-										<option v-for="term in nxterms3" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-								<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-bind:id="'next-3'" v-on:click="removeTb($event)"></span>
-							</div>
 							<!-- 下学期 4 -->
-							<div class="form-group" v-if="nxtxcount > 3">
-								<label class="control-label col-sm-2">版本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedEditon4">
-										<option v-for="edition in nxeditions4" v-bind:value="edition.id" >
-											{{ edition.title }}
-										</option>
-									</select>
-								</div>
-								<label class="control-label col-sm-2 ">年级/课本</label>
-								<div class="col-sm-3">
-									<select name="" class="form-control" v-model="nxselectedTerm4">
-										<option v-for="term in nxterms4" v-bind:value="term.id" >
-											{{ term.title }}
-										</option>
-									</select>
-								</div>
-								<span class="glyphicon glyphicon-remove"style="font-size: 16px;line-height: 2;margin-left: 20px;" v-bind:id="'next-4'" v-on:click="removeTb($event)"></span>
-							</div>
-
 							<div class="form-group addVerJ">
 								<label class="col-sm-3 addVerJc" v-on:click="addnxTx($event)">+添加教材</label>
 							</div>
@@ -337,14 +232,12 @@
 	<script src="../../../assets/ace-extra.min.js"></script>
 	<script src="../../../assets/ace-elements.min.js"></script>
 	<script src="../../../assets/ace.min.js"></script>
-	<!-- <script type="text/javascript" src="../../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script> -->
 	<script type="text/javascript" src="../../../plugin/ztree/jquery.ztree.core-3.5.js"></script>
 	<script type="text/javascript" src="../../../plugin/layer/layer.js"></script>
-	<!-- <script type="text/javascript" src="../../../js/textbook/textbook.js"></script> -->
-
 	<script type="text/javascript" src="../../../plugin/vue/vue.js"></script>
 	<script type="text/javascript" src="../../../js/dataManage/apicontainer.js" ></script>
 	<script type="text/javascript" src="../../../js/constVar.js" ></script>
+	<script type="text/javascript" src="../../../js/commonutil.js" ></script>
 	<script type="text/javascript">
 		var vvm = null;
 		var treeNodes = [];
@@ -379,75 +272,56 @@
 
 					//添加，编辑
 					action:null,
-					//科目
-					courses:[],
-					selectedCourse:null,
+					
+					courses:[],  //科目列表
+					selectedCourse:0,  //选择的科目
 
-					//FIXME 添加多个教材，暂时没有想到好的实现，先列举了。
-					//上学期
-					txcount:1, //上学期课本数
-					editions:[],
-					selectedEditon:null,
-					terms:[],
-					selectedTerm:null,
-
-					editions2:[],
-					selectedEditon2:null,
-					terms2:[],
-					selectedTerm2:null,
-
-					editions3:[],
-					selectedEditon3:null,
-					terms3:[],
-					selectedTerm3:null,
-
-					editions4:[],
-					selectedEditon4:null,
-					terms4:[],
-					selectedTerm4:null,
-
-					//下学期
-					nxtxcount:1, //下学期课本数
-					nxeditions:[],
-					nxselectedEditon:null,
-					nxterms:[],
-					nxselectedTerm:null,
-
-					nxeditions2:[],
-					nxselectedEditon2:null,
-					nxterms2:[],
-					nxselectedTerm2:null,
-
-					nxeditions3:[],
-					nxselectedEditon3:null,
-					nxterms3:[],
-					nxselectedTerm3:null,
-
-					nxeditions4:[],
-					nxselectedEditon4:null,
-					nxterms4:[],
-					nxselectedTerm4:null,
+					lasttbs:[],  //上学期
+					nexttbs:[],  //下学期
 
 					mapmap:null
 				},
 				methods:{
 					addTextbookBtn: function(event){
-						init_select();
+						console.log("selectedGrade: " + this.selectedGrade);
+						if (this.selectedGrade == null){
+							alertMsg("请选择年级后，绑定教材。");
+							return;
+						}
+						initGradeTbs();
 						vvm.action = 'add';
+						$("#myModal").modal("show");
+					},
+					changeEdition: function(pos, index){
+						//pos = 1 last, = 2 next
+						console.log("pos: " + pos + ", index: " + index);
+						var item = null;
+						if (pos == 1){
+							item = vvm.lasttbs[index];
+						}else{
+							item = vvm.nexttbs[index];
+						}
+						if (item['selectedEdition'] == 0){
+							return;
+						}
+						item['terms'] = mapTerm(item['selectedEdition']);
+						item['selectedTerm'] = 0;
 					},
 					addTx: function($event){
-						if (this.txcount < 4){
-							this.txcount += 1;
-						}else{
-							alert("不能添加教材超过4个");
-						}
+						var tb = {};
+						tb['editions'] = mapEdition(vvm.selectedCourse);
+						tb['selectedEdition'] = 0;
+						tb['terms'] = [];
+						tb['selectedTerm'] = 0;
+						vvm.lasttbs.push(tb);
 					},
 					addnxTx: function($event){
-						if (this.nxtxcount < 4){
-							this.nxtxcount += 1;
-						}else{
-							alert("不能添加教材超过4个");
-						}
+						var tb = {};
+						tb['editions'] = mapEdition(vvm.selectedCourse);
+						tb['selectedEdition'] = 0;
+						tb['terms'] = [];
+						tb['selectedTerm'] = 0;
+						vvm.nexttbs.push(tb);
 					},
 					selectPrimary: function($event){
 						var tt = $(event.target).attr('id').split('-');
@@ -473,519 +347,181 @@
 						resetGrade();
 						$(event.target).parent().addClass('active');
 					},
-					removeTb: function($event){
-						var tt = $(event.target).attr('id').split("-");
-						console.log("ddd: " + JSON.stringify(tt));
-						if (tt[0] == 'last'){
-							if (tt[1] == "4"){
-								resettb(true, 4);
-							}
-							if (tt[1] == "3"){
-								if (vvm.txcount == 4){
-									vvm.editions3 = vvm.editions4;
-									vvm.selectedEditon3 = vvm.selectedEditon4;
-									vvm.terms3 = vvm.terms4;
-									vvm.selectedTerm3 = vvm.selectedTerm4;
-									resettb(true, 4);
-								}
-								if (vvm.txcount == 3){
-									resettb(true, 3);
-								}
-							}
-							if (tt[1] == "2"){
-								if (vvm.txcount == 4){
-									vvm.editions2 = vvm.editions3;
-									vvm.selectedEditon2 = vvm.selectedEditon3;
-									vvm.terms2 = vvm.terms3;
-									vvm.selectedTerm2 = vvm.selectedTerm3;
-
-									vvm.editions3 = vvm.editions4;
-									vvm.selectedEditon3 = vvm.selectedEditon4;
-									vvm.terms3 = vvm.terms4;
-									vvm.selectedTerm3 = vvm.selectedTerm4;
-									resettb(true, 4);
-								}
-								if (vvm.txcount == 3){
-									vvm.editions2 = vvm.editions3;
-									vvm.selectedEditon2 = vvm.selectedEditon3;
-									vvm.terms2 = vvm.terms3;
-									vvm.selectedTerm2 = vvm.selectedTerm3;
-									resettb(true, 3);
-								}
-								if (vvm.txcount == 2){
-									resettb(true, 2);
-								}
-							}
-							vvm.txcount -= 1;
+					removeTb: function(pos, index){
+						var item = null;
+						if (pos == 1){
+							vvm.lasttbs.splice(index, 1);
 						}else{
-							if (tt[1] == "4"){
-								resettb(false, 4);
-							}
-							if (tt[1] == "3"){
-								if (vvm.nxtxcount == 4){
-									vvm.nxeditions3 = vvm.nxeditions4;
-									vvm.nxselectedEditon3 = vvm.nxselectedEditon4;
-									vvm.nxterms3 = vvm.nxterms4;
-									vvm.nxselectedTerm3 = vvm.nxselectedTerm4;
-									resettb(false, 4);
-								}
-								if (vvm.nxtxcount == 3){
-									resettb(false, 3);
-								}
-							}
-							if (tt[1] == "2"){
-								if (vvm.nxtxcount == 4){
-									vvm.nxeditions2 = vvm.nxeditions3;
-									vvm.nxselectedEditon2 = vvm.nxselectedEditon3;
-									vvm.nxterms2 = vvm.nxterms3;
-									vvm.nxselectedTerm2 = vvm.nxselectedTerm3;
-
-									vvm.nxeditions3 = vvm.nxeditions4;
-									vvm.nxselectedEditon3 = vvm.nxselectedEditon4;
-									vvm.nxterms3 = vvm.nxterms4;
-									vvm.nxselectedTerm3 = vvm.nxselectedTerm4;
-									resettb(false, 4);
-								}
-								if (vvm.nxtxcount == 3){
-									vvm.nxeditions2 = vvm.nxeditions3;
-									vvm.nxselectedEditon2 = vvm.nxselectedEditon3;
-									vvm.nxterms2 = vvm.nxterms3;
-									vvm.nxselectedTerm2 = vvm.nxselectedTerm3;
-									resettb(false, 3);
-								}
-								if (vvm.nxtxcount == 2){
-									resettb(false, 2);
-								}
-							}
-							vvm.nxtxcount -= 1;
+							vvm.nexttbs.splice(index, 1);
 						}
 					},
-					submit: function($event){
-						var lasttb = [];
+					submit: function($event){  //给学校的年级添加教材	
 						//上学期
-						if (vvm.txcount >= 1){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.selectedEditon, vvm.selectedTerm);
+						var lasttb = [];
+						for (item of vvm.lasttbs){
+							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, item.selectedEdition, item.selectedTerm);
+							if (tbid == null){
+								return;
+							}
 							lasttb.push(tbid);
 						}
-						if (vvm.txcount >= 2){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.selectedEditon2, vvm.selectedTerm2);
-							if (lasttb.indexOf(tbid) == -1){
-								lasttb.push(tbid);
-							}
-						}
-						if (vvm.txcount >= 3){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.selectedEditon3, vvm.selectedTerm3);
-							if (lasttb.indexOf(tbid) == -1){
-								lasttb.push(tbid);
-							}
-						}
-						if (vvm.txcount >= 4){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.selectedEditon4, vvm.selectedTerm4);
-							if (lasttb.indexOf(tbid) == -1){
-								lasttb.push(tbid);
-							}
-						}
-
 						//下学期
 						var nexttb = [];
-						if (vvm.nxtxcount >= 1){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.nxselectedEditon, vvm.nxselectedTerm);
+						for (item of vvm.nexttbs){
+							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, item.selectedEdition, item.selectedTerm);
+							if (tbid == null){
+								return;
+							}
 							nexttb.push(tbid);
-						}
-						if (vvm.nxtxcount >= 2){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.nxselectedEditon2, vvm.nxselectedTerm2);
-							if (nexttb.indexOf(tbid) == -1){
-								nexttb.push(tbid);
-							}
-						}
-						if (vvm.nxtxcount >= 3){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.nxselectedEditon3, vvm.nxselectedTerm3);
-							if (nexttb.indexOf(tbid) == -1){
-								nexttb.push(tbid);
-							}
-						}
-						if (vvm.nxtxcount >= 4){
-							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, vvm.nxselectedEditon4, vvm.nxselectedTerm4);
-							if (nexttb.indexOf(tbid) == -1){
-								nexttb.push(tbid);
-							}
 						}
 
 						var url = org_url + dataUrl['schoolBook']['newSchoolBooks'];
 						var tbs = {};
-						tbs['schoolid'] = parseInt(vvm.school['id']);
+						// tbs['schoolid'] = parseInt(vvm.school['id']);
+						tbs['schoolid'] = parseInt(vvm.school['oid']);
 						tbs['gradeid'] = vvm.selectedGrade;
 						tbs['courseid'] = parseInt(vvm.selectedCourse);
 						tbs['last'] = lasttb;
 						tbs['next'] = nexttb;
 
-						console.log("req data: " + JSON.stringify(tbs));
-					    $.ajax({
-					        url: url,
-					        type: 'put',
-					        contentType: "application/json",
-					        data: JSON.stringify(tbs),
-					        success: function(resp) {
-					        	console.log("resp: " + JSON.stringify(resp));
-					        	if (typeof(resp) == "object" && "code" in resp){
-					        		alert("保存错误，" + resp['detail']);
-					        	}else{
-					        		alert("成功");
-					        	}
-					        },
-					        error: function(d, data) {
-					            console.log(data);
-					        },
-					        complete: function(data) {
-					        }
-					    });
+						newSchoolTextbook(function(resp){
+							if (vvm.action == "add"){
+								commonMsg("创建成功");
+							}else{
+								commonMsg("编辑成功");
+							}
+							$("#myModal").modal("hide");
+							refreshGradeTB();
+						}, tbs);
 					},
-					editGradeTbs: function(event){
+					editGradeTbs: function(index){
 						vvm.action = 'edit';
 
-						//初始化科目
-						var cid = $(event.target).attr('courseid');
+						var tbs = vvm.gradeTextbooks[index];
+						var cid = vvm.gradeTextbooks[index]['course']['id'];
 						var cname = commonList['courses'][cid.toString()];
 
+						//科目不可修改
 						vvm.courses = [];
 						var cc = {'id':cid, 'title':cname};
 						vvm.courses.push(cc);
 						vvm.selectedCourse = cid;
 
-						//初始化 版本，年级课本
-						console.log("gradeTextbooks: " + JSON.stringify(vvm.gradeTextbooks));
-						for (var i = 0; i < vvm.gradeTextbooks.length; i++){
-							var item = vvm.gradeTextbooks[i];
-							if (item['course']['id'] == vvm.selectedCourse){
-								//FIXME 繁琐代码，稍后优化
-								for (var j = 0; j < item['last'].length; j++){
-									if (j == 0){
-										vvm.editions = [];
-										vvm.editions.push(item['last'][j]['edition']);
-										vvm.selectedEditon = item['last'][j]['edition']['id'];
-										vvm.terms = [];
-										vvm.terms.push(item['last'][j]['term']);
-										vvm.selectedTerm = item['last'][j]['term']['id'];
-										vvm.txcount = 1;
-									}
-									if (j == 1){
-										vvm.editions2 = [];
-										vvm.editions2.push(item['last'][j]['edition']);
-										vvm.selectedEditon2 = item['last'][j]['edition']['id'];
-										vvm.terms2 = [];
-										vvm.terms2.push(item['last'][j]['term']);
-										vvm.selectedTerm2 = item['last'][j]['term']['id'];
-										vvm.txcount = 2;
-									}
-									if (j == 3){
-										vvm.editions3 = [];
-										vvm.editions3.push(item['last'][j]['edition']);
-										vvm.selectedEditon3 = item['last'][j]['edition']['id'];
-										vvm.terms3 = [];
-										vvm.terms3.push(item['last'][j]['term']);
-										vvm.selectedTerm3 = item['last'][j]['term']['id'];
-										vvm.txcount = 3;
-									}
-									if (j == 4){
-										vvm.editions4 = [];
-										vvm.editions4.push(item['last'][j]['edition']);
-										vvm.selectedEditon4 = item['last'][j]['edition']['id'];
-										vvm.terms4 = [];
-										vvm.terms4.push(item['last'][j]['term']);
-										vvm.selectedTerm4 = item['last'][j]['term']['id'];
-										vvm.txcount = 4;
-									}
-								}
-
-								//FIXME 繁琐代码，稍后优化
-								for (var j = 0; j < item['next'].length; j++){
-									if (j == 0){
-										vvm.needitions = [];
-										vvm.nxeditions.push(item['next'][j]['edition']);
-										vvm.nxselectedEditon = item['next'][j]['edition']['id'];
-										vvm.nxterms = [];
-										vvm.nxterms.push(item['next'][j]['term']);
-										vvm.nxselectedTerm = item['next'][j]['term']['id'];
-										vvm.nxtxcount = 1;
-									}
-									if (j == 1){
-										vvm.nxeditions2 = [];
-										vvm.nxeditions2.push(item['next'][j]['edition']);
-										vvm.nxselectedEditon2 = item['next'][j]['edition']['id'];
-										vvm.nxterms2 = [];
-										vvm.nxterms2.push(item['next'][j]['term']);
-										vvm.nxselectedTerm2 = item['next'][j]['term']['id'];
-										vvm.nxtxcount = 2;
-									}
-									if (j == 3){
-										vvm.nxeditions3 = [];
-										vvm.nxeditions3.push(item['next'][j]['edition']);
-										vvm.nxselectedEditon3 = item['next'][j]['edition']['id'];
-										vvm.nxterms3 = [];
-										vvm.nxterms3.push(item['next'][j]['term']);
-										vvm.nxselectedTerm3 = item['next'][j]['term']['id'];
-										vvm.nxtxcount = 3;
-									}
-									if (j == 4){
-										vvm.nxeditions4 = [];
-										vvm.nxeditions4.push(item['next'][j]['edition']);
-										vvm.nxselectedEditon4 = item['next'][j]['edition']['id'];
-										vvm.nxterms4 = [];
-										vvm.nxterms4.push(item['next'][j]['term']);
-										vvm.nxselectedTerm4 = item['next'][j]['term']['id'];
-										vvm.nxtxcount = 4;
-									}
-								}
-							}
+						vvm.lasttbs = [];
+						for (lastitem of tbs.last){
+							var moditem = {};
+							moditem['editions'] = mapEdition(vvm.selectedCourse);
+							moditem['selectedEdition'] = lastitem['edition']['id'];
+							moditem['terms'] = mapTerm(lastitem['edition']['id']);
+							moditem['selectedTerm'] = lastitem['term']['id'];
+							vvm.lasttbs.push(moditem);
 						}
+
+						vvm.nexttbs = [];
+						for (nextitem of tbs['next']){
+							var moditem = {};
+							moditem['editions'] = mapEdition(vvm.selectedCourse);
+							moditem['selectedEdition'] = nextitem['edition']['id'];
+							moditem['terms'] = mapTerm(nextitem['edition']['id']);
+							moditem['selectedTerm'] = nextitem['term']['id'];
+							vvm.nexttbs.push(moditem);
+						}
+						$("#myModal").modal("show");
 					},
-					delGradeTbs: function(event){
-						var cid = $(event.target).attr('courseid');
-						console.log("ddddcid: " + $(event.target).attr('courseid'));
+					delGradeTbs: function(index){
+						var cid = vvm.gradeTextbooks[index]['course']['id'];
 
 						var url = org_url + dataUrl['schoolBook']['newSchoolBooks'];
 						var tbs = {};
-						tbs['schoolid'] = parseInt(vvm.school['id']);
+						// tbs['schoolid'] = parseInt(vvm.school['id']);
+						tbs['schoolid'] = parseInt(vvm.school['oid']);
 						tbs['gradeid'] = vvm.selectedGrade;
 						tbs['courseid'] = parseInt(cid);
 						tbs['last'] = [];
 						tbs['next'] = [];
 
-						console.log("req data: " + JSON.stringify(tbs));
-					    $.ajax({
-					        url: url,
-					        type: 'put',
-					        contentType: "application/json",
-					        data: JSON.stringify(tbs),
-					        success: function(resp) {
-					        	console.log("resp: " + JSON.stringify(resp));
-					        	if (typeof(resp) == "object" && "code" in resp){
-					        		alert("保存错误，" + resp['detail']);
-					        	}else{
-					        		alert("成功");
-					        	}
-					        },
-					        error: function(d, data) {
-					            console.log(data);
-					        },
-					        complete: function(data) {
-					        }
-					    });
-						return;
+						removeSchoolTextbook(function(resp){
+							confirmDialog("是否删除此年级教材", function(resp){
+								commonMsg('删除成功');
+								vvm.gradeTextbooks.splice(index, 1);
+							});
+						}, tbs);
 					}
 				},
 				watch:{
 					selectedCourse: function(){
-						console.log("selectedCourse: " + vvm.selectedCourse);
+						if (vvm.selectedCourse == 0){
+							return;
+						}
 						if (vvm.action != 'add'){
 							return;
 						}
-						//科目改变，版本也联动改变
-						vvm.editions = mapEdition(vvm.selectedCourse);
-						vvm.selectedEditon = vvm.editions[0]['id'];
-						vvm.txcount = 1;
-
-						vvm.nxeditions = mapEdition(vvm.selectedCourse);
-						vvm.nxselectedEditon = vvm.nxeditions[0]['id'];
-						vvm.nxtxcount = 1;
-					},
-					selectedEditon: function(){
-						console.log("selectedEditon: " + vvm.selectedEditon);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.selectedEditon != null){
-							vvm.terms = mapTerm(vvm.selectedEditon);
-							vvm.selectedTerm = vvm.terms[0]['id'];
-						}
-					},
-					selectedEditon2: function(){
-						console.log("selectedEditon2: " + vvm.selectedEditon2);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.selectedEditon2 != null){
-							vvm.terms2 = mapTerm(vvm.selectedEditon2);
-							vvm.selectedTerm2 = vvm.terms2[0]['id'];
-						}
-					},
-					selectedEditon3: function(){
-						console.log("selectedEditon3: " + vvm.selectedEditon3);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.selectedEditon3 != null){
-							vvm.terms3 = mapTerm(vvm.selectedEditon3);
-							vvm.selectedTerm3 = vvm.terms3[0]['id'];
-						}
-					},
-					selectedEditon4: function(){
-						console.log("selectedEditon4: " + vvm.selectedEditon4);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.selectedEditon4 != null){
-							vvm.terms4 = mapTerm(vvm.selectedEditon4);
-							vvm.selectedTerm4 = vvm.terms4[0]['id'];
-						}
-					},
-					txcount: function(){
-						if (vvm.txcount == 2){
-							if (vvm.editions2.length == 0){
-								vvm.editions2 = mapEdition(vvm.selectedCourse);
-								vvm.selectedEditon2 = vvm.editions2[0]['id'];
-							}
-						}
-						if (vvm.txcount == 3){
-							if (vvm.editions3.length == 0){
-								vvm.editions3 = mapEdition(vvm.selectedCourse);
-								vvm.selectedEditon3 = vvm.editions3[0]['id'];
-							}
-						}
-						if (vvm.txcount == 4){
-							if (vvm.editions4.length == 0){
-								vvm.editions4 = mapEdition(vvm.selectedCourse);
-								vvm.selectedEditon4 = vvm.editions4[0]['id'];
-							}
-						}
-					},
-					nxselectedEditon: function(){
-						console.log("nxselectedEditon: " + vvm.nxselectedEditon);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.nxselectedEditon != null){
-							vvm.nxterms = mapTerm(vvm.nxselectedEditon);
-							vvm.nxselectedTerm = vvm.nxterms[0]['id'];
-						}
-				    },
-					nxselectedEditon2: function(){
-						console.log("nxselectedEditon2: " + vvm.nxselectedEditon2);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.nxselectedEditon2 != null){
-							vvm.nxterms2 = mapTerm(vvm.nxselectedEditon2);
-							vvm.nxselectedTerm2 = vvm.nxterms2[0]['id'];
-						}
-					},
-					nxselectedEditon3: function(){
-						console.log("nxselectedEditon3: " + vvm.nxselectedEditon3);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if(vvm.nxselectedEditon3 != null){
-							vvm.nxterms3 = mapTerm(vvm.nxselectedEditon3);
-							vvm.nxselectedTerm3 = vvm.nxterms3[0]['id'];
-						}
-					},
-					nxselectedEditon4: function(){
-						console.log("nxselectedEditon4: " + vvm.nxselectedEditon4);
-						if (vvm.action != 'add'){
-							return;
-						}
-						//版本改变， 教材课本也联动改变
-						if (vvm.nxselectedEditon4 != null){
-							vvm.nxterms4 = mapTerm(vvm.nxselectedEditon4);
-							vvm.nxselectedTerm4 = vvm.nxterms4[0]['id'];
-						}
-					},
-					nxtxcount: function(){
-						if (vvm.nxtxcount == 2){
-							if (vvm.nxeditions2.length == 0){
-								vvm.nxeditions2 = mapEdition(vvm.selectedCourse);
-								vvm.nxselectedEditon2 = vvm.nxeditions2[0]['id'];
-							}
-						}
-						if (vvm.nxtxcount == 3){
-							if (vvm.nxeditions3.length == 0){
-								vvm.nxeditions3 = mapEdition(vvm.selectedCourse);
-								vvm.nxselectedEditon3 = vvm.nxeditions3[0]['id'];
-							}
-						}
-						if (vvm.nxtxcount == 4){
-							if (vvm.nxeditions4.length == 0){
-								vvm.nxeditions4 = mapEdition(vvm.selectedCourse);
-								vvm.nxselectedEditon4 = vvm.nxeditions4[0]['id'];
-							}
-						}
-					},
-					selectedStage: function(){
-						return;
-						//大数，获取全部教材
-						// var pagesize = 100000;
-						// getTextbooks(function(resp){
-						// 	vvm.textbooks = resp['data'];
-						// 	console.log("textbooks: " + JSON.stringify(vvm.textbooks));
-						// 	vvm.mapmap = filterTbs();
-						// 	// console.log("mapmap: " + JSON.stringify(vvm.mapmap));
-
-						// 	init_select();
-						// }, 1,pagesize,TEXTBOOK_SPECIFY_TYPE, vvm.selectedStage, 0, 0, 0, 2);
+						
+						vvm.lasttbs = [];
+						vvm.nexttbs = []
+						var tb = initTb();
+						vvm.lasttbs.push(tb);
+						var tb = initTb();
+						vvm.nexttbs.push(tb);
 					},
 					selectedGrade: function(){
 						//大数，获取全部教材
-						var pagesize = 100000;
-						getTextbooks(function(resp){
-							vvm.textbooks = resp['data'];
-							console.log("textbooks: " + JSON.stringify(vvm.textbooks));
-							vvm.mapmap = filterTbs();
-							// console.log("mapmap: " + JSON.stringify(vvm.mapmap));
-							// init_select();
-
-							//TODO 接下来需要优化
-							getSchoolGradeTextbooks(function(resp){
-								console.log("schoolgrade textbooks: " + JSON.stringify(resp));
-								// console.log("textbooks: " + vvm.textbooks);
-								vvm.gradeTextbooks = [];
-								for (var i = 0; i < resp.length; i++){
-									var item = resp[i];
-									var tbs = {};
-									tbs['course'] = {};
-									tbs['course']['id'] = item['courseid'];
-									tbs['course']['title'] = commonList['courses'][item['courseid']];
-									tbs['last'] = [];
-									var ll = item['last'].split(',');
-									for (var k = 0; k < ll.length; k++){
-										var ol = {};
-										var detail = getTbDetail(ll[k]);
-										// console.log("detail: " + JSON.stringify(detail));
-										ol['edition'] = detail['edition'];
-										ol['term'] = detail['term'];
-										tbs['last'].push(ol);
-									}
-
-									tbs['next'] = [];
-									var nn = item['next'].split(',');
-									for (var p = 0; p < nn.length; p++){
-										var on = {};
-										var detail = getTbDetail(nn[p]);
-										on['edition'] = detail['edition'];
-										on['term'] = detail['term'];
-										tbs['next'].push(on);
-									}
-
-									vvm.gradeTextbooks.push(tbs);
-								}
-							}, vvm.school.id, vvm.selectedGrade);
-						}, 1,pagesize,TEXTBOOK_SPECIFY_TYPE, vvm.selectedStage, 0, 0, 0, 2);
+						refreshGradeTB();
 					}
 				}
 			});
+		}
+
+		//获取全部教材，然后获取学校年级的教材。
+		function refreshGradeTB(){
+			var pagesize = 100000;
+			getTextbooks(function(resp){
+				vvm.textbooks = resp['data'];
+				console.log("textbooks: " + JSON.stringify(vvm.textbooks));
+				vvm.mapmap = filterTbs();
+
+				//TODO 接下来需要优化
+				getSchoolGradeTextbooks(function(resp){
+					console.log("schoolgrade textbooks: " + JSON.stringify(resp));
+					// console.log("textbooks: " + vvm.textbooks);
+					vvm.gradeTextbooks = [];
+					for (var i = 0; i < resp.length; i++){
+						var item = resp[i];
+						var tbs = {};
+						tbs['course'] = {};
+						tbs['course']['id'] = item['courseid'];
+						tbs['course']['title'] = commonList['courses'][item['courseid']];
+						tbs['last'] = [];
+						var ll = item['last'].split(',');
+						for (var k = 0; k < ll.length; k++){
+							var ol = {};
+							var detail = getTbDetail(ll[k]);
+							console.log("detail: " + JSON.stringify(detail));
+							ol['edition'] = detail['edition'];
+							ol['term'] = detail['term'];
+							tbs['last'].push(ol);
+						}
+
+						tbs['next'] = [];
+						var nn = item['next'].split(',');
+						for (var p = 0; p < nn.length; p++){
+							var on = {};
+							var detail = getTbDetail(nn[p]);
+							on['edition'] = detail['edition'];
+							on['term'] = detail['term'];
+							tbs['next'].push(on);
+						}
+
+						vvm.gradeTextbooks.push(tbs);
+					}
+				}, vvm.school.oid, vvm.selectedGrade);
+			}, 1,pagesize,TEXTBOOK_SPECIFY_TYPE, vvm.selectedStage, 0, 0, 0, 2);
 		}
 
 		//ztree树形菜单
 		var setting = {
 			async: {
 				enable: false,
-				// url: org_url + dataUrl.organization.educationAll,
 				autoParam:["id", "name=n", "level=lv"],
 				otherParam:{"otherParam":"zTreeAsyncTest"},
 				dataFilter: filter,
@@ -993,28 +529,17 @@
 			},
 			view: {
 				expandSpeed:"",
-				// addHoverDom: addHoverDom,
-				// removeHoverDom: removeHoverDom,
 				selectedMulti: false,
 				fontCss:{
 					"fontSize": "14px"
 				}
 			},
-			// edit: {
-			// 	enable: false
-			// 	// showRemoveBtn: true
-			// },
 			data: {
 				simpleData: {
 					enable: true
 				}
 			},
 			callback: {
-			// 	beforeRemove: beforeRemove,
-			// 	beforeRename: beforeRename,
-			// 	onRename: onRename,
-			// 	onRemove: onRemove,
-			// 	onDrop: onDrap,
 				onClick:OnClick
 			}
 		};
@@ -1031,10 +556,9 @@
 			return childNodes;
 		}
 
+		//获取机构树
 		function getInsTree(){
 			getInstitutionTree(function(resp){
-				// console.log("org tree: " + JSON.stringify(resp));
-
 				//重新生成节点id
 				for(var i = 0; i < resp.length; i++){
 					var item = resp[i];
@@ -1055,6 +579,7 @@
 			});
 		}
 
+		//获取学校树，同时挂到机构节点上
 		function getSchTree() {
 			getSchoolTree(function(resp){
 				//重新生成节点id
@@ -1068,27 +593,11 @@
 				}
 
 				treeNodes = treeNodes.concat(resp['data']);
-
-				// console.log("treenodes: " + JSON.stringify(treeNodes));
 				$.fn.zTree.init($("#treeDemo"), setting, treeNodes);
 			});
 		}
 
-		//获取教材列表
-		function getTbs(stage){
-			//大数，获取全部教材
-			var pagesize = 100000;
-			getTextbooks(function(resp){
-				vvm.textbooks = resp['data'];
-				console.log("textbooks: " + JSON.stringify(vvm.textbooks));
-				vvm.mapmap = filterTbs();
-				// console.log("mapmap: " + JSON.stringify(vvm.mapmap));
-
-				init_select();
-			}, 1,pagesize,TEXTBOOK_SPECIFY_TYPE, stage, 0, 0, 0, 2);
-		}
-
-		function init_select(){
+		function initGradeTbs(){
 			//科目
 			vvm.courses = [];
 			for (var i = 0; i < vvm.mapmap['crs'].length; i++){
@@ -1098,18 +607,42 @@
 				obj.title = commonList['courses'][cid.toString()];
 				vvm.courses.push(obj);
 			}
-			vvm.selectedCourse = vvm.courses[0]['id'];
+			console.log("course: " + JSON.stringify(vvm.courses));
+
+			if (vvm.courses.length > 0){
+				vvm.selectedCourse = vvm.courses[0]['id'];
+			}else{
+				vvm.selectedCourse = 0;
+			}
+
+			console.log("selectedCourse: " + vvm.selectedCourse);
+
+			//初始化，版本和年级课本
+			vvm.lasttbs = [];
+			vvm.nexttbs = []
+			var tb = initTb();
+			vvm.lasttbs.push(tb);
+			var tb = initTb();
+			vvm.nexttbs.push(tb);
 		}
 
-		function getSchTbs(schoolid){
-			getSchoolTextbooks(function(resp){
-				console.log("get schbks: " + JSON.stringify(resp));
-			}, schoolid);
+		function initTb(){
+			var tb = {};
+			if (vvm.selectedCourse == 0){
+				tb['editions'] = [];
+			}else{
+				tb['editions'] = mapEdition(vvm.selectedCourse);
+			}
+			tb['selectedEdition'] = 0;
+			tb['terms'] = [];
+			tb['selectedTerm'] = 0;
+			return tb;
 		}
 
 		function resetvvm(){
-			vvm.school=null;
-			vvm.schoolName="";
+			vvm.school = null;
+			vvm.schoolName = "";
+			vvm.selectedGrade = null;
 			// vvm.schoolId="";
 			vvm.primary=[];
 			vvm.junior=[];
@@ -1117,60 +650,6 @@
 			vvm.hasprimary=0;
 			vvm.hasjunior=0;
 			vvm.hassenior=0;
-		}
-
-		function resettb(islast, index){
-			if (islast){
-				if (index == 1){
-					vvm.editions == [];
-					vvm.selectedEditon = null;
-					vvm.terms = [];
-					vvm.selectedTerm = null;
-				}
-				if (index == 2){
-					vvm.editions2 == [];
-					vvm.selectedEditon2 = null;
-					vvm.terms2 = [];
-					vvm.selectedTerm2 = null;
-				}
-				if (index == 3){
-					vvm.editions3 == [];
-					vvm.selectedEditon3 = null;
-					vvm.terms3 = [];
-					vvm.selectedTerm3 = null;
-				}
-				if (index == 4){
-					vvm.editions4 == [];
-					vvm.selectedEditon4 = null;
-					vvm.terms4 = [];
-					vvm.selectedTerm4 = null;
-				}
-			}else{
-				if (index == 1){
-					vvm.nxeditions = [];
-					vvm.nxselectedEditon = null;
-					vvm.nxterms = [];
-					vvm.nxselectedTerm = null;
-				}
-				if (index == 2){
-					vvm.nxeditions2 = [];
-					vvm.nxselectedEditon2 = null;
-					vvm.nxterms2 = [];
-					vvm.nxselectedTerm2 = null;
-				}
-				if (index == 3){
-					vvm.nxeditions3 = [];
-					vvm.nxselectedEditon3 = null;
-					vvm.nxterms3 = [];
-					vvm.nxselectedTerm3 = null;
-				}
-				if (index == 4){
-					vvm.nxeditions4 = [];
-					vvm.nxselectedEditon4 = null;
-					vvm.nxterms4 = [];
-					vvm.nxselectedTerm4 = null;
-				}
-			}
 		}
 
 		function filterTbs(){
@@ -1246,8 +725,10 @@
 		//节点点击
 		function OnClick(event, treeId, treeNode) {
 			resetvvm();
-			console.log('aaaa: ' + JSON.stringify(treeNode));
-			console.log('bbbb: ' + treeNode.getIndex())
+
+			// console.log("event: " + JSON.stringify(event));
+			console.log("treeId: " + JSON.stringify(treeId));
+			console.log("treeNode: " + JSON.stringify(treeNode));
 
 			vvm.school = treeNode;
 			vvm.schoolName = treeNode['name'];
@@ -1259,30 +740,31 @@
 				a = stages[i];
 				console.log("stage : " + JSON.stringify(a));
 				if (a['stageId'] == "2"){
-					if (a['years'] == "5"){
+					if (a['year'] == "5"){
 						vvm.primary = ["一", "二", "三", "四", "五"];
 					}
-					if (a['years'] == "6"){
+					if (a['year'] == "6"){
 						vvm.primary = ["一", "二", "三", "四", "五", "六"];
 					}
 					vvm.hasprimary = 1;
 				}
 				if (a['stageId'] == "3"){
-					if (a['years'] == "3"){
+					if (a['year'] == "3"){
 						vvm.junior = ["一", "二", "三"];
 					}
-					if (a['years'] == "4"){
+					if (a['year'] == "4"){
 						vvm.junior = ["一", "二", "三", "四"];
 					}
 					vvm.hasjunior = 1;
 				}
 				if (a['stageId'] == "4"){
-					if (a['years'] == "3"){
-						vvm.senior = ["一", "二", "三"];
-					}
+					// if (a['years'] == "3"){
+					vvm.senior = ["一", "二", "三"];
+					// }
 					vvm.hassenior = 1;
 				}
 			}
+
 			if (vvm.hassenior){
 				vvm.selectedStage = "4";
 				vvm.selectedGrade = mapGrade(vvm.selectedStage, 0);
@@ -1312,6 +794,8 @@
 		function mapGrade(stageid, index){
 			var stages = JSON.parse(vvm.school.stages);
 
+			console.log("stages: " + vvm.school.stages);
+
 			//FIXME 先把map表写死
 			var pri5 = [4, 5, 6, 7, 8];
 			var pri6 = [4, 5, 6, 7, 8, 9];
@@ -1326,13 +810,13 @@
 			for(var i = 0; i < stages.length; i++){
 				a = stages[i];
 				if (a['stageId'] == "2"){
-					pri = a['years'];
+					pri = a['year'];
 				}
 				if (a['stageId'] == "3"){
-					jun = a['years'];
+					jun = a['year'];
 				}
 				if (a['stageId'] == "4"){
-					sen = a['years'];
+					sen = "3";
 				}
 			}
 
@@ -1355,9 +839,7 @@
 			}
 
 			if (stageid == "4"){
-				if (sen == "3"){
-					return sen3[index];
-				}
+				return sen3[index];
 			}
 		}
 
@@ -1371,7 +853,7 @@
 					tb['course']['title'] = commonList['courses'][parseInt(t['courseid'])];
 					// commonList['courses'][parseInt(t['courseid'])];
 					tb['stage'] = {};
-					tb['stage']['id'] = parseInt(t['stageid']);
+					tb['stage']['id'] = parseInt(t['stageid']);	
 					tb['stage']['title'] = commonList['stages'][parseInt(t['stageid'])];
 					// tb['stage'] = commonList['stages'][parseInt(t['stageid'])];
 					tb['edition'] = {};
@@ -1388,6 +870,22 @@
 		}
 
 		function findTb(courseid, stageid, editionid, termid){
+			if (courseid == 0){
+				alertMsg("请选择科目");
+				return null;
+			}
+			if (stageid == 0){
+				alertMsg("请选择学段");
+				return null;
+			}
+			if (editionid == 0){
+				alertMsg("请选择版本");
+				return null;
+			}
+			if (termid == 0){
+				alertMsg("请选择年级课本");
+				return null;
+			}
 			for (var i = 0; i < vvm.textbooks.length; i++){
 				var item = vvm.textbooks[i];
 				if (item['courseid'].toString() == courseid.toString() &&

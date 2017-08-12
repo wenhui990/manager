@@ -60,7 +60,7 @@ function onRemove(event,treeId, treeNode) {
 	console.log(treeNode);
 	var delurl = '';
 	if(treeNode.type==1){
-		delurl = org_url + dataUrl.knowledge.sectionKnowledge +'?id='+treeNode.id.substring(1)+'&upper='+treeNode.pId.substring(1)+'&textbookid='+chapterid+'&token='+sessionStorage.token;
+		delurl = org_url + dataUrl.chapter.section +'?id='+treeNode.id.substring(1)+'&upper='+treeNode.pId.substring(1)+'&textbookid='+chapterid+'&token='+sessionStorage.token;
 	}else if(treeNode.type==2){
 		delurl = org_url + dataUrl.knowledge.sectionKnowledge +'?id='+treeNode.id.substring(1)+'&sectionid='+treeNode.pId.substring(1)+'&knowid='+treeNode.knowid+'&token='+sessionStorage.token;
 	}
@@ -71,7 +71,7 @@ function onRemove(event,treeId, treeNode) {
 			if(data==1){
 				layer.alert('删除成功！');
 			}else{
-				layer.alert('删除失败！');
+				layer.alert('删除失败！'+data.msg);
 			}
 		}
 	});
@@ -118,7 +118,7 @@ function onDrap(event,treeId,treeNodes,targetNode){
 			title: treeNodes[0].name,
 			sn: treeNodes[0].getIndex(),
 			code: treeNodes[0].code,
-			knowid: treeNodes[0].knowid,
+			knowid: treeNodes[0].knowid || 0,
 			sectionid: targetNode.pId.substring(1) || 0,
 			previa: $('#prevknowledgeName').attr('data-knowid') || 0,
 			token: sessionStorage.token
@@ -134,7 +134,7 @@ function onDrap(event,treeId,treeNodes,targetNode){
 			if(data==1){
 				layer.alert('移动成功！');
 			}else{
-				layer.alert('移动失败！');
+				layer.alert('移动失败！'+data.msg);
 			}
 		}
 	});
@@ -194,9 +194,9 @@ function OnClick(event, treeId, treeNode) {
 	treeNodeObjs.title = treeNode.name;
 	treeNodeObjs.code = treeNode.code;
 	treeNodeObjs.level = treeNode.level;
-	treeNodeObjs.knowid = treeNode.knowid;
+	treeNodeObjs.knowid = treeNode.knowid || 0;
 	$('input[name="chapterknowledge"]').each(function(){
-		if (treeNode.type==1) {
+		if (treeNode.type==1||treeNode.level<3) {
 			$('#chapterName2').removeAttr('checked').attr({'disabled':'true'});
 			$('#chapterName1').attr('checked','true');
 			$('#otherNode').show();
@@ -210,7 +210,7 @@ function OnClick(event, treeId, treeNode) {
 		}
 	})
 	
-	if(treeNode.type === 2){
+	if(treeNode.level === 3){
 		$('#konwledgeCode').val(treeNode.code);
 		$('#konwledgeName').val(treeNode.name);
 		$.ajax({
@@ -225,9 +225,7 @@ function OnClick(event, treeId, treeNode) {
 				$('#prevknowledgeName').val(data.title);
 			}
 		});
-		
-		
-	}else if(treeNode.type === 1){
+	}else{
 		$('#chapterName').val(treeNode.name);
 		$('#chapterCode').val(treeNode.code);
 	}
@@ -263,7 +261,7 @@ function onClick1(e, treeId, treeNode) {
 	};
 	$("#prevknowledgeName").val(treeNode.name);
 	$("#prevknowledgeName").attr({"data-id":treeNode.id,"data-knowid":treeNode.knowid});
-	treeNodeObjs.knowid = treeNode.knowid;
+	treeNodeObjs.knowid = treeNode.knowid || 0;
 	hideMenu();
 }
 
@@ -305,17 +303,19 @@ $(document).ready(function(){
 $('.save_knonwledge').click(function(){
 	console.log(treeNodeObjs)
 	var url = '',types='',data={};
-	if ($('#konwledgeCode').val()=='') {
-		layer.alert('知识点编号不能为空！');
-		$('#konwledgeCode').focus();
-		return false;
+	if (treeNodeObjs.level===3) {
+		if ($('#konwledgeCode').val()=='') {
+			layer.alert('知识点编号不能为空！');
+			$('#konwledgeCode').focus();
+			return false;
+		}
+		if ($('#konwledgeName').val()=='') {
+			layer.alert('知识点名称不能为空！');
+			$('#konwledgeName').focus();
+			return false;
+		}
 	}
-	if ($('#konwledgeName').val()=='') {
-		layer.alert('知识点名称不能为空！');
-		$('#konwledgeName').focus();
-		return false;
-	}
-	if(!treeNodeObjs.length){
+	if(!treeNodeObjs){
 		layer.alert('请选择章节和知识点后在保存！');
 		return false;
 	}
@@ -333,7 +333,7 @@ $('.save_knonwledge').click(function(){
 		}
 		if(treeNodeObjs.knowid>0||treeNodeObjs.level==3){
 			url = org_url + dataUrl.knowledge.sectionKnowledge
-			data.knowid = treeNodeObjs.knowid;
+			data.knowid = treeNodeObjs.knowid || 0;
 			data.sectionid = treeNodeObjs.upper.substring(1) || 0,
 			data.title = $('#konwledgeName').val(),
 			data.code = $('#konwledgeCode').val()
@@ -354,7 +354,7 @@ $('.save_knonwledge').click(function(){
 		}
 		if(treeNodeObjs.knowid>0||treeNodeObjs.level==3){
 			url = org_url + dataUrl.knowledge.sectionKnowledge
-			data.knowid = treeNodeObjs.knowid;
+			data.knowid = treeNodeObjs.knowid || 0;
 			data.sectionid = treeNodeObjs.upper.substring(1) || 0,
 			data.title = $('#konwledgeName').val(),
 			data.code = $('#konwledgeCode').val()
@@ -382,8 +382,11 @@ $('.save_knonwledge').click(function(){
 	                yes: function(index, layero) {
 	                    layer.close(index);
 	                    $.fn.zTree.init($("#treeDemo"), setting);
+	                    $.fn.zTree.init($("#treeDemo1"), setting2);
 	                }
 	        	});
+			}else{
+				layer.alert('修改失败！'+data.msg);
 			}
 		}
 	});
@@ -407,5 +410,6 @@ function getUrlParams() {
 			params[nv[0]] = nv.length > 1 ? nv[1] : true;
 		}
 	}
+	
 	return params;
 };

@@ -6,7 +6,9 @@ function ajaxget(url, reqs, cbfunc){
         querystr += "&" + k + "=" + reqs[k];
     }
     if (querystr.length > 0){
-        url = url + '?' + querystr.slice(1);
+        url = url + '?' + querystr.slice(1)+"&token="+sessionStorage.token;
+    }else{
+    	url = url+"?token="+sessionStorage.token;
     }
 
     $.ajax({
@@ -29,12 +31,15 @@ function ajaxget(url, reqs, cbfunc){
 
 //ajax post
 function ajaxpost(url, reqs, data, cbfunc){
+	data.token = sessionStorage.token;
     var querystr = "";
     for (k in reqs){
         querystr += "&" + k + "=" + reqs[k];
     }
     if (querystr.length > 0){
-        url = url + '?' + querystr.slice(1);
+        url = url + '?' + querystr.slice(1)+'&token='+sessionStorage.token;
+    }else{
+    	url += '?token='+sessionStorage.token;
     }
 
     $.ajax({
@@ -64,7 +69,9 @@ function ajaxput(url, reqs, data, cbfunc){
         querystr += "&" + k + "=" + reqs[k];
     }
     if (querystr.length > 0){
-        url = url + '?' + querystr.slice(1);
+        url = url + '?' + querystr.slice(1)+'&token='+sessionStorage.token;
+    }else{
+    	url += '&token='+sessionStorage.token;
     }
 
     $.ajax({
@@ -93,7 +100,9 @@ function ajaxdelete(url, reqs, cbfunc){
         querystr += "&" + k + "=" + reqs[k];
     }
     if (querystr.length > 0){
-        url = url + '?' + querystr.slice(1);
+        url = url + '?' + querystr.slice(1)+'&token='+sessionStorage.token;
+    }else{
+    	url += '?token='+sessionStorage.token;
     }
 
     $.ajax({
@@ -117,11 +126,14 @@ function ajaxdelete(url, reqs, cbfunc){
 //ajax post(put) form
 function ajaxform(url, reqs, data, method, cbfunc){
     var querystr = "";
+    data.token = sessionStorage.token;
     for (k in reqs){
         querystr += "&" + k + "=" + reqs[k];
     }
     if (querystr.length > 0){
-        url = url + '?' + querystr.slice(1);
+        url = url + '?' + querystr.slice(1)+'&token='+sessionStorage.token;
+    }else{
+    	url += '?token='+sessionStorage.token;
     }
 
     $.ajax({
@@ -148,7 +160,7 @@ function ajaxform(url, reqs, data, method, cbfunc){
 //获取版本列表
 function getEditions(cbfunc, page, size){
     var url = org_url + dataUrl['edition']['editionList'];
-    var reqs = {"size":size, "page":page};
+    var reqs = {"size":size, "page":page,"complete":0};
     ajaxget(url, reqs, cbfunc);
 }
 
@@ -221,18 +233,7 @@ function newTextbook(cbfunc, data){
 //获取 机构树
 function getInstitutionTree(cbfunc){
     var url = org_url + dataUrl['organization']['educationAll'];
-    $.ajax({
-        url: url,
-        type: 'get',
-        success: function(resp) {
-            cbfunc(resp);
-        },
-        error: function(d, data) {
-            console.log(data);
-        },
-        complete: function(data) {
-        }
-    });
+    ajaxget(url, null, cbfunc);
 }
 
 //获取 学校列表
@@ -244,53 +245,32 @@ function getSchoolTree(cbfunc){
 //获取 学校关联课本
 function getSchoolTextbooks(cbfunc, schoolid){
     var url = org_url + dataUrl['schoolBook']['getSchoolBooks'] + '/' + schoolid;
-    $.ajax({
-        url: url,
-        type: 'get',
-        success: function(resp) {
-            cbfunc(resp);
-        },
-        error: function(d, data) {
-            console.log(data);
-        },
-        complete: function(data) {
-        }
-    });
+    ajaxget(url, null, cbfunc);
+}
+
+//新增 学校关联课本
+function newSchoolTextbook(cbfunc, data){
+    var url = org_url + dataUrl['schoolBook']['newSchoolBooks'];
+    ajaxput(url, null, data, cbfunc);
+}
+
+//删除 学校关联课本
+function removeSchoolTextbook(cbfunc, data){
+    var url = org_url + dataUrl['schoolBook']['newSchoolBooks'];
+    ajaxput(url, null, data, cbfunc);
 }
 
 //获取 学校年级的关联课本
 function getSchoolGradeTextbooks(cbfunc, schoolid, gradeid){
     var url = org_url + dataUrl['schoolBook']['getSchoolBooks'];
-    url += "?schoolid=" + schoolid + "&gradeid=" + gradeid;
-    $.ajax({
-        url: url,
-        type: 'get',
-        success: function(resp) {
-            cbfunc(resp);
-        },
-        error: function(d, data) {
-            console.log(data);
-        },
-        complete: function(data) {
-        }
-    });
+    var reqs = {"schoolid":schoolid, "gradeid":gradeid};
+    ajaxget(url, reqs, cbfunc);
 }
 
 //通用信息列表，包括：版本列表，年级列表，年级课本列表，科目列表 等
 function getCommonList(cbfunc){
     var url = org_url + dataUrl['common']['getCommonList'];
-    $.ajax({
-        url: url,
-        type: 'get',
-        success: function(resp) {
-            cbfunc(resp);
-        },
-        error: function(d, data) {
-            console.log(data);
-        },
-        complete: function(data) {
-        }
-    });
+    ajaxget(url, null, cbfunc);
 }
 
 //获取 教师列表 (模糊查询)
@@ -303,10 +283,10 @@ function getTeachers(cbfunc, page, size, school, name, mobile, valid){
         reqs['schoolid'] = school;
     }
     if (name){
-        reqs['name'] = name;
+        reqs['name'] = name.trim();
     }
     if (mobile){
-        reqs['phone'] = mobile;
+        reqs['phone'] = mobile.trim();
     }
     if (valid != "2"){
         reqs['valid'] = valid;
@@ -317,21 +297,8 @@ function getTeachers(cbfunc, page, size, school, name, mobile, valid){
 //获取 班级列表
 function getClazz(cbfunc, schoolid){
     var url = org_url + dataUrl['clazz']['clazz'];
-    var querystr = "?a=1";
-    querystr += "&schoolid=" + schoolid;
-
-    $.ajax({
-        url: url + querystr,
-        type: 'get',
-        success: function(resp) {
-            cbfunc(resp);
-        },
-        error: function(d, data) {
-            console.log(data);
-        },
-        complete: function(data) {
-        }
-    });
+    var reqs = {"schoolid":schoolid};
+    ajaxget(url, reqs, cbfunc);
 }
 
 function addTeacher(cbfunc, data){
@@ -349,7 +316,6 @@ function deleteTeacher(cbfunc, itemid){
     ajaxdelete(url, null, cbfunc);
 }
 
-//通用信息列表，包括：版本列表，年级列表，年级课本列表，科目列表 等
 function getTeacher(cbfunc, id){
     var url = org_url + dataUrl['teacher']['getTeacher'] + '/' + id;
     ajaxget(url, null, cbfunc);
@@ -358,6 +324,46 @@ function getTeacher(cbfunc, id){
 function enableTeacher(cbfunc, id, valid){
     var url = org_url + dataUrl['teacher']['enableTeacher'] + "/" + id + "?valid=" + valid;
     ajaxput(url, null, null, cbfunc);
+}
+
+function exportTeacher(cbfunc, schoolid, name, phone, valid){
+    var url = org_url + dataUrl['teacher']['exportTeacher'];
+    var reqs = {};
+    if (schoolid){
+        reqs['schoolid'] = schoolid;
+    }
+    if (name){
+        reqs['name'] = name;
+    }
+    if (phone){
+        reqs['phone'] = phone;
+    }
+    if (valid){
+        reqs['valid'] = valid;
+    }
+    ajaxget(url, reqs, cbfunc);
+}
+
+function importTeacher(cbfunc, school, file){
+    var url = org_url + dataUrl['teacher']['importTeacher'] + "?schoolid=" + school + "&token=" + sessionStorage.token;
+    console.log("url : " + url);
+    $.ajax({
+        url: url,
+        type: "post",
+        data: file,
+        processData: false,
+        contentType: false,
+        success: function (resp) {
+            console.log("resp: " + JSON.stringify(resp));
+            cbfunc(resp);
+        },
+        error: function(d, data) {
+            layer.alert("错误: " + JSON.stringify(d));
+        },
+        complete: function(data) {
+        }
+    });
+    // ajaxform(url, null, file, 'post', cbfunc);
 }
 
 function enableStudent(cbfunc, ids, valid){
@@ -375,12 +381,26 @@ function deleteStudent(cbfunc, id){
 function addVersion(cbfunc, title, sn, note){
     var url = org_url + dataUrl['edition']['createEdition'];
     var version = new Object();
-    version['title'] = title;
-    if (sn == ""){
-        version['sn'] = "99";
-    }else{
-        version['sn'] = sn;
+    version['title'] = title.trim();
+    if (version['title']=='') {
+    	layer.alert('版本名称不能为空！');
+    	return false;
     }
+    
+	if(isNull(sn)){
+		version['sn'] = '99';
+	}else if(isNumber(sn)){
+		if (sn<1||sn>99) {
+			layer.alert('排序必须输入1-99之间的数字');
+			return false;
+		}else{
+			version['sn'] = sn;
+		}
+	}else{
+		layer.alert('排序必须输入1-99之间的数字');
+		return false;
+	}
+		
     version['note'] = note;
     version['valid'] = "1";
     ajaxform(url, null, version, 'post', cbfunc);
@@ -409,7 +429,7 @@ function getVersion(cbfunc, id){
 }
 
 function editVersion(cbfunc, vid, title, sn, note){
-    var url = org_url + dataUrl['edition']['updateEdition'] + "/" + vid;
+    var url = org_url + dataUrl['edition']['updateEdition'] + "/";
     var version = {};
     version['id'] = vid;
     version['title'] = vvm.title;

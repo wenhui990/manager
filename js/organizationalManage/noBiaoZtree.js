@@ -35,10 +35,6 @@ var setting = {
 		onClick:OnClick
 	}
 };
-//var Nodes = [{ ID: 0, ParentID: -1, name: "表单列表", isParent: false, myAttr:"hello" },{ ID: 1, ParentID: 0, name: "自定义表单", isParent: false, myAttr:"hello" },{ ID: 2, ParentID: 0, name: "系统表单", isParent: false, myAttr:"hello" },{ ID: 3, ParentID: 0, name: "模板表单", isParent: false, myAttr:"hello" }, ];
-//$.fn.zTree.init($("#treeDemo"), setting, Nodes);
-//$.fn.zTree.getZTreeObj("treeDemo").getSelectedNodes()[0].myAttr
-
 
 function filter(treeId, parentNode, childNodes) {
 	if (!childNodes) return null;
@@ -55,29 +51,31 @@ function beforeRemove(treeId, treeNode) {
 	return confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
 }
 function onRemove(event,treeId, treeNode) {
-	
-	console.log(treeNode);
-	$.ajax({
-		type:"delete",
-		url: org_url + dataUrl.organization.educationDel + treeNode.id+"?token="+sessionStorage.token ,
-		success: function(data){
-			if(data.code != 1000){
-				layer.open({
-	                title: "提示",
-	                content: '删除成功！',
-	                skin: 'layui-layer-lana',
-	                shadeClose: false,
-	                btn: ['确定'],
-	                yes: function(index, layero) {
-	                    layer.close(index);
-	                }
-            	});
-            	
+	if(treeNode.id){
+		$.ajax({
+			type:"delete",
+			url: org_url + dataUrl.organization.educationDel + treeNode.id+"?token="+sessionStorage.token ,
+			success: function(data){
+				if (data.code=='10010') {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						parent.location.href = "../../enter.html";
+					},cancel:function(){
+						parent.location.href = "../../enter.html";
+					}});
+					return false;
+				}
+				if(data==1){
+					layer.alert('删除成功！');
+				}else{
+					layer.alert('删除失败！'+data.msg);
+				}
 			}
-		}
-	});
+		});
+	}
+		
 }
 
+//重命名，修改
 function beforeRename(treeId, treeNode, newName) {
 	if (newName.length == 0) {
 		setTimeout(function() {
@@ -119,6 +117,14 @@ function onRename(event,treeId, treeNode) {
 		async:true,
 		data: data,
 		success: function(data){
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(data==1){
 				layer.open({
 	                title: "提示",
@@ -135,7 +141,7 @@ function onRename(event,treeId, treeNode) {
 	});
 }
 
-//
+//移动
 function onDrap(event,treeId,treeNodes,targetNode){
 	$.ajax({
 		type:"put",
@@ -149,6 +155,14 @@ function onDrap(event,treeId,treeNodes,targetNode){
 			token: sessionStorage.token
 		},
 		success: function(data){
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(data==1){
 				layer.open({
 	                title: "提示",

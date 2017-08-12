@@ -11,6 +11,13 @@ var setting = {
 	},
 };
 
+try{
+	var trname = decodeURIComponent(getUrlParams().name);
+}catch(e){
+	trname = getUrlParams().name;
+}
+$('.gurisdictionname').text(trname);
+
 function filter(treeId, parentNode, childNodes) {
 	if (!childNodes) return null;
 	for (var i=0, l=childNodes.length; i<l; i++) {
@@ -120,9 +127,11 @@ $(function() {
 			},
 			success: function(data){
 				if(data==1){
-					layer.alert('保存成功！');
+					layer.alert('保存成功！',function(){
+						window.location.href = 'role_list.html?_dt='+new Date().getTime();
+					});
 				}else{
-					layer.alert('保存失败！');
+					layer.alert('保存失败！'+data.msg);
 				}
 			}
 		})

@@ -51,6 +51,10 @@
 				color: red;
 				cursor: pointer;
 			}
+			td {
+			      text-align:center; /*设置水平居中*/
+			      vertical-align:middle;/*设置垂直居中*/
+			}
 		</style>
 	</head>
 
@@ -65,7 +69,7 @@
 					<div class="form-group">
 						<label for="secondname" class="col-sm-1 control-label text-center">学校名称</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" id="search_school"  data-live-search="true">
+							<select name="" class="form-control " id="search_school"  data-live-search="true">
 								<option value="">全部</option>
 								<option>学校1</option>
 							</select>
@@ -73,19 +77,19 @@
 
 						<label for="secondname" class="col-sm-1 control-label text-center">学生姓名</label>
 						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control selectpicker" id="search_student"/>
+							<input type="tel" name="" class="form-control " id="search_student"/>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">家长手机号</label>
 						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control selectpicker" id="search_phone"/>
+							<input type="tel" name="" class="form-control " id="search_phone"/>
 						</div>
 
 					</div>
 					<div class="form-group">
 						<label for="secondname" class="col-sm-1 control-label text-center">年级</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true" id="search_grade">
+							<select name="" class="form-control " data-live-search="true" id="search_grade">
 								<option value="">全部</option>
 								<option>一年级</option>
 							</select>
@@ -93,7 +97,7 @@
 
 						<label for="secondname" class="col-sm-1 control-label text-center">班级</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" data-live-search="true" id="search_class">
+							<select name="" class="form-control " data-live-search="true" id="search_class">
 								<option value="">全部</option>
 								<option>一年级1班</option>
 							</select>
@@ -101,7 +105,7 @@
 
 						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
 						<div class="col-sm-2">
-							<select name="" class="form-control selectpicker" id="search_valid">
+							<select name="" class="form-control " id="search_valid">
 								<option value="">全部</option>
 								<option value="0">禁用</option>
 								<option value="1">启用</option>
@@ -123,21 +127,19 @@
 			<div class="numshu_btm">
 				<div class="list_btm">
 					<div class="table-responsive">
-						<table border="1" class="table table-hover " style="text-align: center;">
-							<thead>
-								<tr>
-									<th><strong>序号</strong></th>
-									<th><strong>学校</strong></th>
-									<th><strong>学生姓名</strong></th>
-									<th><strong>年级</strong></th>
-									<th><strong>班级</strong></th>
-									<th><strong>家长姓名</strong></th>
-									<th><strong>与孩子关系</strong></th>
-									<th><strong>家长手机号</strong></th>
-									<th><strong>用户状态</strong></th>
-									<th><strong>操作</strong></th>
-								</tr>
-							</thead>
+						<table class="table table-hover " style="text-align: center;">
+							<tr>
+								<td><strong>序号</strong></td>
+								<td><strong>学校</strong></td>
+								<td><strong>学生姓名</strong></td>
+								<td><strong>年级</strong></td>
+								<td><strong>班级</strong></td>
+								<td><strong>与孩子关系</strong></td>
+								<td><strong>家长姓名</strong></td>									
+								<td><strong>家长手机号</strong></td>
+								<td><strong>用户状态</strong></td>
+								<td><strong>操作</strong></td>
+							</tr>
 							<tbody class="addlist">
 															
 							</tbody>
@@ -149,17 +151,19 @@
 									<td>{{=value.sname}}</td>
 									<td>{{=value.gradename}}</td>
 									<td>{{=value.clazzname}}</td>
-									<td>{{=value.pname}}</td>
 									<td>{{=value.relationname}}</td>
-									<td>{{=value.phone}}</td>
-									<td><input id="valid{{=index}}" type="hidden" value='{{=value.valid}}'>
+									{{?value.relations!=null}}
+									<td rowspan='{{=value.relations.length}}' style="vertical-align:middle">{{=value.pname}}</td>									
+									<td rowspan='{{=value.relations.length}}' style="vertical-align:middle">{{=value.phone}}</td>
+									<td rowspan='{{=value.relations.length}}' style="vertical-align:middle"><input id="valid{{=index}}" type="hidden" value='{{=value.valid}}'>
 									<span id="validText{{=index}}">{{?value.valid=='0'}}无效{{??}}有效{{?}}</span></td>
-									<td>
-										<a href="javascript:;" onclick="seeStudent()">查看</a>&nbsp;
+									<td rowspan='{{=value.relations.length}}' style="vertical-align:middle">
+										<a href="javascript:;" onclick="seeStudent('{{=value.pid}}')">查看</a>&nbsp;
 										<a href="javascript:;" onclick="editStudent('{{=value.pid}}')">编辑</a>&nbsp;
 										<a id="validHref{{=index}}" href="javascript:;" onclick="off('{{=index}}','{{=value.pid}}')">{{?value.valid=='0'}}启用{{??}}禁用{{?}}</a>&nbsp;
 										<a href="javascript:;" onclick="dele('{{=index}}','{{=value.pid}}')">删除</a>
 									</td>
+									{{?}}
 								</tr>
 								{{~}}
 							</script>
@@ -185,7 +189,7 @@
 						<span class="">学校</span>
 					</label>
 					<div class="col-sm-9">
-						<select class="selectpicker form-control organization schoolLists">
+						<select class=" form-control organization schoolLists">
 							<option value="">请选择</option>
 							<option value="2">学校1</option>
 							<option value="3">学校二</option>
@@ -198,7 +202,7 @@
 						<span class="">年级</span>
 					</label>
 					<div class="col-sm-9">
-						<select class="selectpicker form-control organization gradeLists">
+						<select class=" form-control organization gradeLists">
 							<option value="">请选择</option>
 							<option value="2">一年级</option>
 							<option value="3">二年级</option>
@@ -211,7 +215,7 @@
 						<span class="">所在班级</span>
 					</label>
 					<div class="col-sm-9">
-						<select class="selectpicker form-control organization classGradeLists">
+						<select class=" form-control organization classGradeLists">
 							<option value="">请选择</option>
 							<option value="2">一年级1班</option>
 							<option value="3">二年级2班</option>
@@ -305,7 +309,7 @@
 			$('#pageToolbar').html("");
 			$.ajax({
 				type:"get",
-				url: org_url + "/parent/searchparent",
+				url: org_url + "/parent/searchparent"+"?token="+sessionStorage.token,
 				data:{				
 					school:$("#search_school").val(),
 					sname:$("#search_student").val(),
@@ -314,7 +318,7 @@
 					clazz:$("#search_class").val(),
 					valid:$("#search_valid").val(),					
 					page:1,
-					size:5	
+					size:10	
 				},
 				async:true,
 				dataType:"json",
@@ -323,11 +327,42 @@
 			    },
 			    crossDomain: true,
 			    success: function(data){
+			    	if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 			    	//alert("search"+evalText(data));
 			    	//console.log("****************"+data.data[1].pname);
-			    	$(".addlist").html(evalText(data.data));
+			    	var parents = data.data;
+			    	var lastParentId = 0;
+			    	var lastParentIndex = -1;
+			    	for(var i=0;i<parents.length;i++){
+			    		var parent = parents[i];
+			    		if(parent.pid!=lastParentId){
+			    			lastParentId = parent.pid;
+			    			lastParentIndex = i;
+			    			parent.relations = [];
+			    		}
+		    			var relation = {
+		    				"schoolname":parent.schoolname,
+		    				"sname":parent.sname,
+		    				"gradename":parent.gradename,
+		    				"clazzname":parent.clazzname,
+		    				"relationname":parent.relationname
+		    			};
+						//alert(lastParentIndex);
+		    			var lastRelations = parents[lastParentIndex].relations;
+		    			lastRelations[lastRelations.length]=relation;
+			    	};
+			    	//console.log("fhf"+JSON.stringify(parents));  
+					$(".addlist").html(evalText(parents));	
+			    	
 			    	$('#pageToolbar').Paging({
-						pagesize: 5,
+						pagesize: 10,
 						count: data.total,
 						toolbar: false,
 						callback: function(page, size, count) {
@@ -335,13 +370,13 @@
 							//console.log(page+'***'+size+'------'+count)
 							$.ajax({
 								type:"get",
-								url: org_url + "/parent/searchparent",
+								url: org_url + "/parent/searchparent"+"?token="+sessionStorage.token,
 								data:{
 									page:page,
 									size:size,
 									phone: $("#phone").val(),
 									name: $("#name").val(),
-									valid:$("#valid").val()
+									valid:$("#valid").val(),
 								},
 								async:true,
 								xhrFields: {
@@ -350,7 +385,37 @@
 							    dataType:"json",
 							    crossDomain: true,
 							    success: function(data){
-									$(".addlist").html(evalText(data.data));	
+							    	if (data.code=='10010') {
+										layer.alert('身份验证失败！请重新登录！',{yes:function(){
+											parent.location.href = "../../enter.html";
+										},cancel:function(){
+											parent.location.href = "../../enter.html";
+										}});
+										return false;
+									}
+							    	var parents = data.data;
+							    	var lastParentId = 0;
+							    	var lastParentIndex = -1;
+							    	for(var i=0;i<parents.length;i++){
+							    		var parent = parents[i];
+							    		if(parent.pid!=lastParentId){
+							    			lastParentId = parent.pid;
+							    			lastParentIndex = i;
+							    			parent.relations = [];
+							    		}
+						    			var relation = {
+						    				"schoolname":parent.schoolname,
+						    				"sname":parent.sname,
+						    				"gradename":parent.gradename,
+						    				"clazzname":parent.clazzname,
+						    				"relationname":parent.relationname
+						    			};
+										//alert(lastParentIndex);
+						    			var lastRelations = parents[lastParentIndex].relations;
+						    			lastRelations[lastRelations.length]=relation;
+							    	};
+							    	console.log("fhf"+JSON.stringify(parents));  
+									$(".addlist").html(evalText(parents));	
 							    }
 							});  
 						}
@@ -414,13 +479,13 @@
 
 		//点击查看
 		function seeStudent(id) {
-			$('.breadcrumb', window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_see.html" style="color: rgb(51, 51, 51); cursor: default;">查看学生</span></li>');
+//			$('.breadcrumb', window.parent.document).append('<li class="active see_student_bar"><span class="Current_page iframeurl" name="view/userManage/student_see.html" style="color: rgb(51, 51, 51); cursor: default;">查看学生</span></li>');
 			window.location.href = 'parents_add.html?id='+id;
 		}
 
 		//点击编辑
 		function editStudent(id) {
-			$('.breadcrumb', window.parent.document).append('<li class="active add_parents_bar"><span class="Current_page iframeurl" name="view/userManage/student_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑家长</span></li>');
+//			$('.breadcrumb', window.parent.document).append('<li class="active add_parents_bar"><span class="Current_page iframeurl" name="view/userManage/student_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑家长</span></li>');
 			window.location.href = 'parents_add.html?id='+id;
 		}
 
@@ -430,12 +495,20 @@
 			var href = this;
 			$.ajax({
 				type:"put",
-				url: org_url + "/parent/"+id,
+				url: org_url + "/parent/"+id+"?token="+sessionStorage.token,
 				dataType:"json",
 			    data:{
-			    	valid:v
+			    	valid:v,
 			    },
 			    success: function(data){
+			    	if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 			    	$("#valid"+index).val(v);
 			    	$("#validText"+index).html(v=="0"?"无效":"有效");
 			    	$("#validHref"+index).html(v=="0"?"启用":"禁用");	
@@ -454,7 +527,7 @@
 				yes: function(index, layero) {
 					$.ajax({
 						type:"delete",
-						url: org_url + "/parent/"+id,
+						url: org_url + "/parent/"+id+"?token="+sessionStorage.token,
 						async:true,
 						dataType:"json",
 						xhrFields: {
@@ -462,6 +535,14 @@
 					    },
 					    crossDomain: true,
 					    success: function(data){
+					    	if (data.code=='10010') {
+								layer.alert('身份验证失败！请重新登录！',{yes:function(){
+									parent.location.href = "../../enter.html";
+								},cancel:function(){
+									parent.location.href = "../../enter.html";
+								}});
+								return false;
+							}
 					    	if(data==1){
 						    	$(".parent"+id).remove();
 						    }  	
@@ -483,7 +564,7 @@
 		function initSchool(){	
 			$.ajax({
 				type:"get",
-				url: org_url + "/school",
+				url: org_url + "/school?token="+sessionStorage.token,
 				async:true,
 				dataType:"json",
 				xhrFields: {
@@ -491,6 +572,14 @@
 			    },
 			    crossDomain: true,
 			    success: function(data){
+			    	if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 			    	$("#search_school").empty();
 			    	$("#search_school").append("<option value=''>全部</option>");
 			    	for(var i=0;i<data.data.length;i++){    		
@@ -516,7 +605,7 @@
 			}
 			$.ajax({
 				type:"get",
-				url: org_url + "/school/grades",
+				url: org_url + "/school/grades"+"?token="+sessionStorage.token,
 				async:true,
 				dataType:"json",
 				xhrFields: {
@@ -525,6 +614,14 @@
 			    data:{"schoolId":$("#search_school").val()},
 			    crossDomain: true,
 			    success: function(data){
+			    	if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 			    	$("#search_grade").empty();
 			    	$("#search_grade").append("<option value=''>全部</option>");
 			    	for(var key in data){
@@ -547,18 +644,26 @@
 			}
 			$.ajax({
 				type:"get",
-				url: org_url + "/clazz",
+				url: org_url + "/clazz?token="+sessionStorage.token,
 				async:true,
 				dataType:"json",
 				data:{
 					"schoolid":$("#search_school").val(),
-					"gradeid":$("#search_grade").val()
+					"gradeid":$("#search_grade").val(),
 					},
 				xhrFields: {
 			        withCredentials: true
 			    },
 			    crossDomain: true,
 			    success: function(data){
+			    	if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 			    	$("#search_class").empty();
 			    	$("#search_class").append("<option value=''>全部</option>");
 			    	for(var i=0;i<data.length;i++){    		

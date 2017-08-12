@@ -55,7 +55,7 @@
 			<div class="numshu_btm">
 				<div class="list_btm">
 					<div class="table-responsive">
-						<table class="table table-condensed addlist" style="text-align: center;">							
+						<table class="table table-condensed addlist" style="text-align: center;table-layout: fixed;">							
 													
 						</table>
 						<script id="manager_list_tmpl" type="text/x-dot-template">	
@@ -74,7 +74,7 @@
 								<td>{{=value.phone}}</td>
 								<td>{{=value.roles}}</td>
 								<td><input id="valid{{=value.id}}" type="hidden" value='{{=value.valid}}'>
-								<span id="validText{{=value.id}}">{{?value.valid=='0'}}无效{{??}}有效{{?}}</span></td>
+								<span id="validText{{=value.id}}">{{?value.valid=='0'}}已启用{{??}}已启用{{?}}</span></td>
 								<td>
 									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>&nbsp;
 									<a href="javascript:;" onclick="editAdmin({{=value.id}})">编辑</a>&nbsp;
@@ -115,7 +115,7 @@
 			search();			
 		})
 	
-		//分页
+		//搜索分页
 		function search(){
 			$('#pageToolbar').html("");
 			$.ajax({
@@ -124,9 +124,10 @@
 				data:{
 					page:1,
 					size:5,
-					phone: $("#phone").val(),
-					name: $("#name").val(),
-					valid:$("#valid").val()
+					phone: $("#phone").val().trim(),
+					name: $("#name").val().trim(),
+					valid:$("#valid").val(),
+					token:sessionStorage.token
 				},
 				async:true,
 				dataType:"json",
@@ -150,7 +151,8 @@
 									size:size,
 									phone: $("#phone").val(),
 									name: $("#name").val(),
-									valid:$("#valid").val()
+									valid:$("#valid").val(),
+									token:sessionStorage.token
 								},
 								async:true,
 								xhrFields: {
@@ -170,7 +172,7 @@
 		
 		//点击新建管理员
 		$('.addAdmin').click(function() {
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建用户</span></li>');
+//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建用户</span></li>');
 			window.location.href='admin_add.html';
 		});
 		
@@ -204,7 +206,7 @@
 		
 		//点击编辑
 		function editAdmin(id){
-			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑教师</span></li>');
+//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑教师</span></li>');
 			window.location.href='admin_edit.html?id='+id;
 		}
 		
@@ -220,13 +222,14 @@
 			        withCredentials: true
 			    },
 			    data:{
-			    	valid:v
+			    	valid:v,
+			    	token:sessionStorage.token
 			    },
 			    crossDomain: true,
 			    success: function(data){
 			    	//alert(v);
 			    	$("#valid"+id).val(v);
-			    	$("#validText"+id).html(v=="0"?"无效":"有效");
+			    	$("#validText"+id).html(v=="0"?"已禁用":"已启用");
 			    	$("#validHref"+id).html(v=="0"?"启用":"禁用");
 			    	//window.location.href='admin_list.html';
 		            //$('.add_teacher_bar',window.parent.document).remove();   	
@@ -246,7 +249,7 @@
 				yes: function(index, layero) {
 					$.ajax({
 						type:"delete",
-						url: org_url + "/managers/"+id,
+						url: org_url + "/managers/"+id+'?token='+sessionStorage.token,
 						async:true,
 						dataType:"json",
 						xhrFields: {

@@ -34,9 +34,6 @@
 		<![endif]-->
 
 		<style type="text/css">
-			.layui-layer-content {
-				height: 178px !important;
-			}
 			.none{display: none;}
 			.commonbtn {
 				height: 32px;
@@ -152,6 +149,14 @@
 					},
 					async: true,
 					success: function(data) {
+						if (data.code=='10010') {
+							layer.alert('身份验证失败！请重新登录！',{yes:function(){
+								parent.location.href = "../../enter.html";
+							},cancel:function(){
+								parent.location.href = "../../enter.html";
+							}});
+							return false;
+						}
 						for(var v in data){
 							var $lihtm = $('<li v-for="(grade,index) in schoolGrade"><a href="#" class="dropdown-toggle"><i class="lef"></i><span class="menu-text"> '+v+' </span></a></li>');
 							var $ulhtm = $('<ul class="submenu" style="display: block;"></ul>');
@@ -162,7 +167,6 @@
 							$lihtm.append($ulhtm);
 							$('#mainbody').append($lihtm);
 						}
-						console.log(data)
 					},
 					error: function(data) {
 						console.log(data.responseText)
@@ -274,11 +278,23 @@
 			}
 			//侧导航点击
 			$(document).on('click','.nav_lis',function(e){
+				console.log($(this).index())
 				$('.nav_lis').removeClass('active');
 				$(this).addClass('active');
 				var gradeid = $(this).attr('data-id');
 				$('.grade_lists').attr('data-gradeid',gradeid);
 				$('.grade_lists').html('');
+				navClic(gradeid,getUrlParams().id);
+				sessionStorage.gradeid = gradeid;
+				sessionStorage.id = $(this).attr('data-id');
+			})
+			
+			if (getUrlParams().add=='ok') {
+				navClic(sessionStorage.gradeid,getUrlParams().id);
+	console.log($('.nav_lis'))
+				
+			}
+			function navClic(gradeid,schoolid){
 				$.ajax({
 					type:"get",
 					url:org_url + dataUrl.clazz.clazz,
@@ -289,16 +305,29 @@
 						token: sessionStorage.token
 					},
 					success: function(data){
-						console.log(data)
+						if (data.code=='10010') {
+							layer.alert('身份验证失败！请重新登录！',{yes:function(){
+								parent.location.href = "../../enter.html";
+							},cancel:function(){
+								parent.location.href = "../../enter.html";
+							}});
+							return false;
+						}
+//						console.log(data)
 						$('.add_grade').attr('href','add_grade.html?gradeId='+gradeid+'&schoolId='+getUrlParams().id+'&schoolName='+getUrlParams().name);
 						$.each(data,function(i,e){
-							var trhtml = '<tr><td>'+e.name+'</td><td>'+e.adviserName+'</td><td>'+(e.extrInfo?e.extrInfo:"")+'</td><td><a href="javascript:;" data-id="'+e.id+'" class="edit_class">编辑</a> <a href="javascript:;" data-id="'+e.id+'" class="delete_class">删除</a></td></tr>';
+							var trhtml = '<tr><td>'+e.name+'</td><td>'+(e.adviserName?e.adviserName:"")+'</td><td>'+(e.extrInfo?e.extrInfo:"")+'</td><td><a href="javascript:;" data-id="'+e.id+'" class="edit_class">编辑</a> <a href="javascript:;" data-id="'+e.id+'" class="delete_class">删除</a></td></tr>';
 							$('.grade_lists').append(trhtml);
 						})
+						$.each($('.nav_lis'), function(i,e) {
+							if ($(e).attr('data-id')==sessionStorage.id) {
+								$(e).addClass('active')
+							}
+						});
 //						$('.grade_lists').append(gradehtml);
 					}
 				});
-			})
+			}
 			
 			//点击返回班级管理
 			$('.back_school').click(function (){
@@ -316,6 +345,7 @@
 				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html?id=123" style="color: rgb(51, 51, 51); cursor: default;">编辑班级</span></li>');
 				var clazzid = $(this).attr('data-id');
 				var gradeid = $('.grade_lists').attr('data-gradeid');
+				console.log(gradeid)
 				window.location.href = 'add_grade.html?gradeId='+gradeid+'&schoolId='+getUrlParams().id+'&clazzid='+clazzid+'&schoolName='+getUrlParams().name;
 			});
 			
@@ -325,29 +355,34 @@
 				var delid = $(this).attr('data-id');
 				var _this = $(this);
 				layer.open({
-	                title: "提示",
-	                content: '确定删除吗？',
-	                skin: 'layui-layer-lana',
-	                shadeClose: false,
-	                btn: ['确定'],
-	                yes: function(index, layero) {
-	                    layer.close(index);
-	                    console.log($(this))
-	                    $.ajax({
+					title: '提示',
+					content:'确定删除吗？',
+					btn:['确定','取消'],
+					yes:function(){
+						$.ajax({
 							type:"delete",
 							url: org_url + dataUrl.clazz.clazz+delid+"?token"+sessionStorage.token,
 							async:true,
 							success: function(data){
+								if (data.code=='10010') {
+									layer.alert('身份验证失败！请重新登录！',{yes:function(){
+										parent.location.href = "../../enter.html";
+									},cancel:function(){
+										parent.location.href = "../../enter.html";
+									}});
+									return false;
+								}
 								if (data==1) {
 									layer.alert('删除成功！');
 									_this.parents('tr').remove();
+									layer.close();
 								}else{
 									layer.alert('删除失败！');
 								}												
 							}
 						});
-	                }
-	        	});
+					}
+				});
 			});
 			
 			

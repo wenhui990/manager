@@ -27,10 +27,23 @@ function getUrlParams() {
 $(function (){
 	initSchool();
 	
-	var id = getQueryString("id");
+	var id = getQueryString("id"),isphone = false;
 	if(id!=null&&id!=""){
 		load(id);
 	}
+	
+	$('#parents_phone').blur(function(){
+		var phone = $(this).val();
+		if(phone.length > 0) {
+			if(!(/^1[34578]\d{9}$/.test(phone))) {
+				layer.alert("手机号码有误，请重填");
+				isphone = false;
+			} else{
+				isphone = true;
+			}
+		}
+	})
+	
 	
 	//新建保存     // 编辑保存家长
 	$('.save').click(function (){
@@ -66,20 +79,23 @@ $(function (){
 		});
 		console.log(relate_childs);
 				
-		if(parents_name==""||parents_phone==""||invalid)
+		if(parents_name=="")
 		{
-			layer.open({
-                title: "",
-                content: '请把带*的选项输入完整！',
-                skin: 'layui-layer-lana',
-                shadeClose: 'true',
-                btn: ['确定'],
-                yes: function(index, layero) {
-                    layer.close(index);
-                }
-            });
-            
-		}else{
+			layer.alert('请输入家长姓名！',function(index){
+				layer.close(index);
+				return false;
+			});
+		}else if(!isphone){
+			layer.alert('请输入正确的手机号！',function(index){
+				layer.close(index);
+				return false;
+			});
+		}else if(invalid){
+			layer.alert('请关联孩子！',function(index){
+				layer.close(index);
+				return false;
+			});
+		} else{
 			var id = $("#parents_id").val();
 			//alert(JSON.stringify(relate_childs));
 			layer.open({
@@ -93,7 +109,8 @@ $(function (){
                 	var data = {
         				"name":parents_name,
         				"phone":parents_phone,
-        				"studentlis":relate_childs
+        				"studentlis":relate_childs,
+        				"token":sessionStorage.token
         				}
                     var type = (id==""||id==null)?"POST":"PUT";
                     var url = (id==null||id=="")?"/parent/addparent":"/parent/updateparent";
@@ -102,12 +119,12 @@ $(function (){
                     }
                     $.ajax({
             			type:type,
-            			url: url,
+            			url: url+"?token="+sessionStorage.token,
             			contentType: "application/json",
             			data:JSON.stringify(data),
             		    success: function(data){
             		    	window.location.href='parents_list.html';
-                            $('.add_teacher_bar',window.parent.document).remove();	    	   	
+                            $('.add_teacher_bar',window.parent.document).remove();	    	   							layer.close(index);
             		    }
             		});
                     
@@ -131,9 +148,11 @@ $(function (){
 	});
 	
 	//继续关联
-	var relatenum =0;
+	var relatenum = $(".relate_child").length+1;
+	
 	$('.continue_relate').click(function(){
 		++relatenum;
+		//alert(relatenum);
 		var $rc = $('.relate_child_template').eq(0).clone().appendTo($('.relate_child_all'));
 		//$rc.prop("id","r"+relatenum);
 		$rc.show().removeClass('relate_child_template').addClass('relate_child');
@@ -172,7 +191,7 @@ $(function (){
 	function initSchool(panel,school,grade,clazz,student){	
 		$.ajax({
 			type:"get",
-			url: org_url + "/school",
+			url: org_url + "/school?token="+sessionStorage.token,
 			async:true,
 			dataType:"json",
 			xhrFields: {
@@ -230,7 +249,7 @@ $(function (){
 			xhrFields: {
 		        withCredentials: true
 		    },
-		    data:{"schoolId":$(panel).find(".schoolLists").val()},
+		    data:{"schoolId":$(panel).find(".schoolLists").val(),token:sessionStorage.token},
 		    crossDomain: true,
 		    success: function(data){
 		    	//alert($(panel).find(".gradeLists").length);
@@ -262,7 +281,8 @@ $(function (){
 			dataType:"json",
 			data:{
 				"schoolid":$(panel).find(".schoolLists").val(),
-				"gradeid":$(panel).find(".gradeLists").val()
+				"gradeid":$(panel).find(".gradeLists").val(),
+				"token":sessionStorage.token
 				},
 			xhrFields: {
 		        withCredentials: true
@@ -296,7 +316,8 @@ $(function (){
 			async:true,
 			dataType:"json",
 			data:{
-				"clazzid":$(panel).find(".classGradeLists").val()
+				"clazzid":$(panel).find(".classGradeLists").val(),
+				"token": sessionStorage.token
 				},
 			xhrFields: {
 		        withCredentials: true
@@ -322,7 +343,7 @@ $(function (){
 	function load(id){	
 		$.ajax({
 			type:"get",
-			url: org_url + "/parent/searchparentbyid?id="+id,
+			url: org_url + "/parent/searchparentbyid?pid="+id+"&token="+sessionStorage.token,
 			async:true,
 			dataType:"json",
 			xhrFields: {

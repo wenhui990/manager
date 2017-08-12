@@ -47,6 +47,7 @@ var $importer = function() {
 							typical: 0,
 							category: '',
 							difficulty: 0,
+							expense:''
 						};
 						questions.push(question);
 						break;
@@ -195,11 +196,11 @@ var $importer = function() {
 			questions[i].courseid = questionvue.courseId;
 			questions[i].tag = questionvue.picked;
 			questions[i].scope = 1;
-			if(questions[i].options){
-				if(questions[i].options.length > 0) {
-					questions[i].options = JSON.stringify(questions[i].options);
-				}
-			}
+//			if(questions[i].options){
+//				if(questions[i].options.length > 0) {
+//					questions[i].options = JSON.stringify(questions[i].options);
+//				}
+//			}
 		}
 		
 		console.log(questions);
@@ -212,23 +213,32 @@ var $importer = function() {
 			oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 		};
 		//post方式打开文件 
-		oAjax.open('post', org_url + dataUrl.questionbank.addquestion + '?=' + Math.random(), true);
+		oAjax.open('post', org_url + dataUrl.questionbank.addquestion + '?token='+sessionStorage.token+'&_ht=' + Math.random(), true);
 		// post相比get方式提交多了个这个
 		oAjax.setRequestHeader("Content-type", "application/json");
 		// post发送数据
 		oAjax.send(JSON.stringify(questions));
 		oAjax.onreadystatechange = function() {
-			console.log(oAjax)　　 //当状态为4的时候，执行以下操作
-			　　
+			//当状态为4的时候，执行以下操作
+			var responsedata = JSON.parse(oAjax.response);
+			console.log(oAjax);
+			if (responsedata.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(oAjax.readyState == 4) {　　　　
 				try {
-					if(oAjax.responseText == 1) {
+					if(responsedata.result == 1) {
 						layer.alert('上传成功!');
 					} else {
-						layer.alert(oAjax.responseText.msg);
+						layer.alert('上传失败!'+responsedata.msg?responsedata.msg:' ');
 					}　　　　
 				} catch(e) {　　　　　　
-					alert('你访问的页面出错了');　　　　
+					layer.alert('你访问的页面出错了');　　　　
 				};　　
 			};
 		};

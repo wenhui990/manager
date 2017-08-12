@@ -72,7 +72,7 @@ function onRemove(event,treeId, treeNode) {
 			if(data==1){
 				layer.alert('删除成功！');
 			}else{
-				layer.alert('删除失败！');
+				layer.alert('删除失败！'+dada.msg);
 			}
 		}
 	});
@@ -135,7 +135,7 @@ function onDrap(event,treeId,treeNodes,targetNode){
 			if(data==1){
 				layer.alert('移动成功！');
 			}else{
-				layer.alert('移动失败！');
+				layer.alert('移动失败！'+data.msg);
 			}
 		}
 	});
@@ -196,7 +196,8 @@ function OnClick(event, treeId, treeNode) {
 	treeNodeObjs.code = treeNode.code;
 	treeNodeObjs.level = treeNode.level;
 	$('input[name="chapterknowledge"]').each(function(){
-		if (treeNode.type==1) {
+		
+		if (treeNode.type==1||treeNode.level<3) {
 			$('#chapterName2').removeAttr('checked').attr({'disabled':'true'});
 			$('#chapterName1').attr({'checked':'true'});
 			$('#otherNode').show();
@@ -287,17 +288,14 @@ $(document).ready(function(){
 $('.save_chapter').click(function(){
 	console.log(treeNodeObjs)
 	var url = '',types='',data={};
-	if ($('#chapterCode').val()=='') {
-		layer.alert('知识点编号不能为空！');
-		$('#chapterCode').focus();
-		return false;
+	if(treeNodeObjs.level==3){
+		if ($('#chapterName').val()=='') {
+			layer.alert('知识点名称不能为空！');
+			$('#chapterName').focus();
+			return false;
+		}
 	}
-	if ($('#chapterName').val()=='') {
-		layer.alert('知识点名称不能为空！');
-		$('#chapterName').focus();
-		return false;
-	}
-	if(!treeNodeObjs.length){
+	if(!treeNodeObjs){
 		layer.alert('请选择章节和知识点后在保存！');
 		return false;
 	}
@@ -364,6 +362,8 @@ $('.save_chapter').click(function(){
 	                    $.fn.zTree.init($("#treeDemo"), setting);
 	                }
 	        	});
+			}else{
+				layer.alert('修改失败！'+data.msg)
 			}
 		}
 	});

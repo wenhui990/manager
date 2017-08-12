@@ -21,15 +21,23 @@ var question = new Vue({
 		teacherstudent: '',
 		backstageteacher: '',
 		questiontype: '',
-		editquestionhref: '',
+		editquestionhref: 'edit_question.html?',
 		uploadingquestion: ''
 	},
 	beforeCreate:function(){
 		//获取所有学段，学科目录
 		$.ajax({
 			type:"get",
-			url: org_url+dataUrl.questionbank.commonlist,
+			url: org_url+dataUrl.questionbank.commonlist+'?token='+sessionStorage.token,
 			success: function(data){
+				if (data.code=='10010') {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						parent.location.href = "../../enter.html";
+					},cancel:function(){
+						parent.location.href = "../../enter.html";
+					}});
+					return false;
+				}
 				question.courses = data.courses;
 				question.stages = data.stages;
 			}
@@ -38,23 +46,30 @@ var question = new Vue({
 			//获取全部题目
 			$.ajax({
 				type:"get",
-				url: org_url+dataUrl.questionbank.questionlist,
+				url: org_url+dataUrl.questionbank.questionlist+"?token="+sessionStorage.token,
 				data:{
 					courseid:getUrlParams().courseid,
 					stageid:getUrlParams().stageid,
 				},
 				success: function(data){
-					var newdata = data.data;
-					if(newdata){
-						$.each(newdata, function(i,e) {
-							console.log(e.options)
-							if (e.options.indexOf(',')>-1) {
-								var newoption = JSON.parse(e.options);
-								e.options = newoption;
-							}
-						});
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
 					}
-					question.questiondata=newdata;
+//					var newdata = data.data;
+//					if(newdata){
+//						$.each(newdata, function(i,e) {
+//							console.log(e.options)
+//							if (e.options.indexOf(',')>-1) {
+//								var newoption = JSON.parse(e.options);
+//								e.options = newoption;
+//							}
+//						});
+//					}
+					question.questiondata=data.data;
 					pages(data.total);
 				}
 			})
@@ -65,25 +80,34 @@ var question = new Vue({
 		selectquestion: function(){
 			$.ajax({
 				type:"get",
-				url: org_url+dataUrl.questionbank.questionlist,
+				url: org_url+dataUrl.questionbank.questionlist+'?token='+sessionStorage.token,
 				data:{
 					courseid:question.courseid,
 					stageid:question.stageid,
 					id: question.question_code
 				},
 				success: function(data){
-					var newdata = data.data;
-					if(newdata){
-						$.each(newdata, function(i,e) {
-							if (e.options) {
-								if (e.options.indexOf(',')>-1) {
-									var newoption = JSON.parse(e.options);
-									e.options = newoption;
-								}
-							}
-						});
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
 					}
-					question.questiondata=newdata;
+//					console.log(data.data);
+//					var newdata = data.data;
+//					if(newdata){
+//						$.each(newdata, function(i,e) {
+//							if (e.options) {
+//								if (e.options.indexOf(',')>-1) {
+//									var newoption = JSON.parse(e.options);
+//									e.options = newoption;
+//								}
+//							}
+//						});
+//					}
+					question.questiondata=data.data;
 					pages(data.total);
 				}
 			})
@@ -92,17 +116,17 @@ var question = new Vue({
 		teacherStudent: function(id){
 			console.log(id)
 			dataobj.tag = id;
-			questionList(catalog,dataobj);
+			questionList('',dataobj);
 		},
 		backstageTeacher: function(id){
 			console.log(id)
 			dataobj.uploadtype = id;
-			questionList(catalog,dataobj);
+			questionList('',dataobj);
 		},
 		questionType: function(id){
 			console.log(id)
 			dataobj.type = id;
-			questionList(catalog,dataobj);
+			questionList('',dataobj);
 		},
 		//查看解析
 		seeAnalysis: function(imgsrc){
@@ -129,19 +153,34 @@ var question = new Vue({
 			}
 		},
 		//编辑
-		editquestion: function(id){
-			if (userAgent().ie>=11.0) {
-				question.editquestionhref += ('&id='+id);
-			}else{
-				layer.alert('当前浏览器不支持编辑功能，请使用 IE11.0以上浏览器打开！');
-			}
+		editquestion: function(id,event){
+//			if (userAgent().ie>=11.0) {
+//				question.editquestionhref += ();
+				if(getUrlParams().courseid){
+					question.courseid = getUrlParams().courseid;
+					question.stageid = getUrlParams().stageid;
+				}
+				question.editquestionhref += "courseid="+question.courseid+"&stageid="+question.stageid+'&id='+id;
+				$(event.target).attr('href',question.editquestionhref);
+				console.log(question.editquestionhref)
+//			}else{
+//				layer.alert('当前浏览器不支持编辑功能，请使用 IE11.0以上浏览器打开！');
+//			}
 		},
 		//删除
 		delquestion: function(id,event){
 			$.ajax({
 				type:"delete",
-				url:org_url + dataUrl.questionbank.questionlist+id,
+				url:org_url + dataUrl.questionbank.questionlist+id+'?token='+sessionStorage.token,
 				success: function(data){
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 					if (data==1) {
 						layer.alert('删除成功！',function(i){
 							$(event.target).parents('.questionlist').remove();
@@ -185,22 +224,30 @@ function pages(tatal) {
 			pagesize = size;
 			$.ajax({
 				type: "get",
-				url: org_url+dataUrl.questionbank.questionlist,
+				url: org_url+dataUrl.questionbank.questionlist+'?token='+sessionStorage.token,
 				data: dataobj,
 				success: function(data){
-					var newdata = data.data;
-					if(newdata){
-						$.each(newdata, function(i,e) {
-							console.log(e.options)
-							if(e.options){
-								if (e.options.indexOf(',')>-1) {
-									var newoption = JSON.parse(e.options);
-									e.options = newoption;
-								}
-							}
-						});
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
 					}
-					question.questiondata=newdata;
+//					var newdata = data.data;
+//					if(newdata){
+//						$.each(newdata, function(i,e) {
+//							console.log(e.options)
+//							if(e.options){
+//								if (e.options.indexOf(',')>-1) {
+//									var newoption = JSON.parse(e.options);
+//									e.options = newoption;
+//								}
+//							}
+//						});
+//					}
+					question.questiondata=data.data;
 //					pages(data.total);
 				}
 			})
@@ -262,6 +309,14 @@ function onRemove(event,treeId, treeNode) {
 		type:"delete",
 		url: org_url + dataUrl.organization.educationDel + treeNode.id+"?token="+sessionStorage.token ,
 		success: function(data){
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(data.code != 1000){
 				layer.open({
 	                title: "提示",
@@ -295,7 +350,7 @@ function onRename(event,treeId, treeNode) {
 	console.log(treeNode)
 	var url = '',types='',data={};
 	if (treeNode.id) {
-		url = org_url + dataUrl.organization.educationEdit + treeNode.id;
+		url = org_url + dataUrl.organization.educationEdit + treeNode.id+'?token='+sessionStorage.token;
 		types = 'put';
 		data = {
 			id: treeNode.id,
@@ -305,7 +360,7 @@ function onRename(event,treeId, treeNode) {
 			token: sessionStorage.token
 		}
 	}else{
-		url = org_url + dataUrl.organization.educationAdd;
+		url = org_url + dataUrl.organization.educationAdd+'?token='+sessionStorage.token;
 		types = 'post';
 		data = {
 			name: treeNode.name,
@@ -320,6 +375,14 @@ function onRename(event,treeId, treeNode) {
 		async:true,
 		data: data,
 		success: function(data){
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(data==1){
 				layer.open({
 	                title: "提示",
@@ -340,7 +403,7 @@ function onRename(event,treeId, treeNode) {
 function onDrap(event,treeId,treeNodes,targetNode){
 	$.ajax({
 		type:"put",
-		url: org_url + dataUrl.organization.educationEdit + targetNode.id ,
+		url: org_url + dataUrl.organization.educationEdit + targetNode.id+'?token='+sessionStorage.token,
 		async:true,
 		data:{
 			id:treeNodes[0].id,
@@ -350,6 +413,14 @@ function onDrap(event,treeId,treeNodes,targetNode){
 			token: sessionStorage.token
 		},
 		success: function(data){
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(data==1){
 				layer.open({
 	                title: "提示",
@@ -439,8 +510,7 @@ function OnClick(event, treeId, treeNode) {
 	}
 	
 	dataobj = {
-		knowledgeids: id.toString(),
-		token: sessionStorage.token
+		knowledgeids: id
 	}
 	if (treeNode.level==1) {
 		catalog.push(treeNode.name);
@@ -461,24 +531,35 @@ function OnClick(event, treeId, treeNode) {
 };
 //题目列表数据
 function questionList(catalog,data){
-	question.catalogs = catalog.reverse();
+	if (catalog!='') {
+		question.catalogs = catalog.reverse();
+	}
+	
 	$.ajax({
 		type: "get",
-		url: org_url+dataUrl.questionbank.questionlist,
+		url: org_url+dataUrl.questionbank.questionlist+'?token='+sessionStorage.token,
 		data: data,
 		success: function(data){
-			var newdata = data.data;
-			if(newdata){
-				$.each(newdata, function(i,e) {
-					if (e.options) {
-						if (e.options.indexOf(',')>-1) {
-							var newoption = JSON.parse(e.options);
-							e.options = newoption;
-						}
-					}
-				});
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
 			}
-			question.questiondata=newdata;
+//			var newdata = data.data;
+//			if(newdata){
+//				$.each(newdata, function(i,e) {
+//					if (e.options) {
+//						if (e.options.indexOf(',')>-1) {
+//							var newoption = JSON.parse(e.options);
+//							e.options = newoption;
+//						}
+//					}
+//				});
+//			}
+			question.questiondata=data.data;
 			pages(data.total);
 		}
 	})

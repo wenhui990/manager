@@ -40,8 +40,10 @@ $(function() {
 
 		});
 	};
-	educationLists();
-
+	if (window.location.href.indexOf('add_school')>-1) {
+		educationLists();
+	}
+	
 	//查询学校
 	//	var selectSchool = Vue({
 	////		el
@@ -50,7 +52,7 @@ $(function() {
 	//点击编辑后
 	var this_url = window.location.href;
 	var urlId = getUrlParams().id;
-	var gradeId = getUrlParams().gradeId;;
+	var gradeId = getUrlParams().gradeId;
 	var schoolId = getUrlParams().schoolId;
 	var schoolNmae = getUrlParams().schoolName;
 	var teacherindex = 1;
@@ -121,6 +123,7 @@ $(function() {
 			async: true,
 			data:{token: sessionStorage.token},
 			success: function(data) {
+				gradeId = data.gradeid;
 				$('#grade_name').val(data.name);
 				$('.charge_teacher_name').text(data.advisername);
 
@@ -193,12 +196,15 @@ $(function() {
 				type: urlId ? 'put' : 'post',
 				url: urlId ? org_url + dataUrl.schoolLists + urlId : org_url + dataUrl.schoolLists,
 				data: data,
-				success: function(data) {
+				success: function(res) {
 					var tip='';
-					if(data==1){
-						tip = '修改学校成功!';
+					if(res==1){
+						urlId?tip = '修改学校成功!':tip = '新建学校成功!';
 					}else{
-						tip = data.msg;
+						tip = res.msg;
+						if (tip=='字段不能重复') {
+							tip = '学校名称不能重复！'
+						}
 					}
 					layer.open({
 						title: "提示！",
@@ -208,7 +214,7 @@ $(function() {
 						btn: ['确定'],
 						yes: function(index, layero) {
 							layer.close(index);
-							if (data==1) {
+							if (res==1) {
 								window.location.href = 'schoolManage.html';
 								$('.breadcrumb>li:gt(1)', window.parent.document).remove();
 							}
@@ -233,7 +239,7 @@ $(function() {
 
 	//选择班主任弹出层
 	$('.select_charge_teacher').click(function() {
-		teacherlist('selected_charge_teacher');
+		teacherlist('selected_charge_teacher','',schoolId);
 		$('#teacher_name_lists').modal('show');
 	});
 	//确定班主任
@@ -289,7 +295,7 @@ $(function() {
 		});
 	})
 
-	function teacherlist(cls, t) {
+	function teacherlist(cls, t,scholid) {
 		$('#pageToolbar').html('');
 		var tablehtml = '';
 		var edit_class = cls == "selected_teacher" ? $(t).parent().prev().attr('class') : "charge_teacher_name";
@@ -301,7 +307,7 @@ $(function() {
 			$.ajax({
 				type: "get",
 				data:{token: sessionStorage.token},
-				url: org_url + dataUrl.clazz.teacher,
+				url: scholid?org_url + dataUrl.clazz.teacher+'?schoolid='+scholid:org_url + dataUrl.clazz.teacher,
 				async: true,
 				success: function(data) {
 					count = data.length;
@@ -366,6 +372,8 @@ $(function() {
 		var gradeName = $('#grade_name').val();
 		var chargeTeacherId = $('.charge_teacher_name').attr('data-id');
 		var teacher = [];
+		var subjectlist = [];
+		var coursecount = 0;
 		$('.teacher_subject tr').each(function(i, e) {
 			var subjecid = $(e).find('.subject_list').val();
 			var teacherId = $(e).find('td').eq(1).attr('data-id');
@@ -373,40 +381,40 @@ $(function() {
 			teacherObj['courseid'] = subjecid;
 			teacherObj['teacherid'] = teacherId;
 			teacher.push(teacherObj);
+			if(subjectlist.indexOf(subjecid)>-1){
+				coursecount = 1;
+			}else{
+				subjectlist.push(subjecid);
+			};
 		});
 		if(gradeName == '' || gradeName.length < 1) {
-			layer.msg('班级名称不能为空')
+			layer.alert('班级名称不能为空')
 			$('#grade_name').focus();
-			
-
 			return false;
 		}
-		var coursecount = 0;
+		if(coursecount==1){
+			layer.alert('科目不能重复！');
+			return false;
+		}
 		var isteacher = false,iscourseid = false;
 		$.each(teacher, function(i,e) {
-			if (e.courseid) {
-				coursecount++;
-			}
-			if (e.teacherid==''||e.teacherid=='undefined') {
+			console.log(e.teacherid)
+			if (e.teacherid==''||e.teacherid=='undefined'||e.teacherid==undefined) {
 				isteacher = true;
 			}
-			if (e.courseid==''||e.courseid=='undefined') {
+			if (e.courseid==''||e.courseid=='undefined'||e.courseid==undefined||e.courseid=='请选择') {
 				iscourseid = true;
 			}
 		});
 		if (isteacher) {
-			layer.msg('任课教师必选，不能为空！');
+			layer.alert('任课教师必选，不能为空！');
 			return false;
 		}
 		if (iscourseid) {
-			layer.msg('科目不能为空，请选择！');
+			layer.alert('科目不能为空，请选择！');
 			return false;
 		}
-		if(coursecount>1){
-			layer.msg('科目不能重复！');
-			return false;
-		}
-		console.log(teacher);
+//		console.log(teacher);
 //		return;
 		var grade = {
 			name: gradeName,
@@ -433,8 +441,12 @@ $(function() {
 			success: function(data) {
 				console.log(data);
 				if(data == 1) {
-					$('.breadcrumb>li:gt(2)', window.parent.document).remove();
-					window.location.href = 'gradeManage.html?id=' + schoolId + '&name=' + schoolNmae;
+					layer.alert('保存成功！',function(){
+						$('.breadcrumb>li:gt(2)', window.parent.document).remove();
+						window.location.href = 'gradeManage.html?id=' + schoolId + '&name=' + schoolNmae+'&add=ok';
+					});
+				}else{
+					layer.alert('保存失败！');
 				}
 			}
 		});

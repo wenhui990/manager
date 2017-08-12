@@ -64,14 +64,14 @@
 			</div>
 			<div class="list_btm">
 				<div class="form-horizontal knowledgelists" v-cloak>
-					<div class="form-group" v-for="(knowledg,index) in questionoptiondata.knowledges">
+					<div class="form-group" v-for="(knowledg,index) in knowledges">
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">知识点{{index+1}}</span>
 						</label>
 						<div class="col-sm-2">
 							<select class="form-control stagelist">
 								<option value="">请选择</option>
-								<option v-for="(value,key) in stages" :value="key" :selected="knowledg.id==key">{{value}}</option>
+								<option v-for="(value,key) in stages" :value="key" :selected="knowledg.stageid==key">{{value}}</option>
 							</select>
 						</div>
 						<div class="col-sm-3">
@@ -91,7 +91,7 @@
 							<span class="warn" style="padding-left: 20px;">难度系数：</span>
 						</label>
 						<div class="col-sm-1">
-							<input type="text" style="width: 100%;" name="" id="" v-model="difficulty" />
+							<input type="text" style="width: 100%;" v-model="difficulty" />
 						</div>
 						<div class="col-sm-3">
 							只能填写0-1之间的数字

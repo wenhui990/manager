@@ -402,6 +402,14 @@
 			async:true,
 			data: {token:sessionStorage.token},
 			success: function(data){
+				if (data.code==10010) {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						window.location.href = "enter.html";
+					},cancel:function(){
+						window.location.href = "enter.html";
+					}});
+					return false;
+				}
 				if (data.length) {
 					$('.showli').hide();
 					var datas = data.sort(function(a,b){return a>b});
@@ -416,7 +424,9 @@
 						});
 					});
 				}else{
-//					window.location.href = "enter.html";
+					layer.alert('该帐号没有权限，请联系管理员！',function(){
+						window.location.href = "enter.html";
+					})
 				}
 			}
 		});

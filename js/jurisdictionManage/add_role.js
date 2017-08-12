@@ -29,6 +29,7 @@ $(function (){
 			}
 		});
 	}
+	
 	//点击保存
 	$('.save').click(function (){
 		
@@ -36,12 +37,21 @@ $(function (){
 			admin_phone=$('#admin_phone').val(),
 			schoolLists = $('.schoolLists').val(),
 			admin_note = $('#admin_note').val()||'';
+			
+		if ($('#admin_name').val().length>20) {
+			layer.alert('角色名称不能超过20字符！');
+			return false;
+		}
+		if ($('#admin_name').val().length>100) {
+			layer.alert('角色描述不能超过100字符！');
+			return false;
+		}
 		
-		if(admin_name==""||admin_phone==""||schoolLists=="")
+		if(admin_name=="")
 		{
 			layer.open({
                 title: "",
-                content: '请把带*的选项输入完整！',
+                content: '请输入角色名称！',
                 skin: 'layui-layer-lana',
                 shadeClose: 'true',
                 btn: ['确定'],
@@ -66,14 +76,21 @@ $(function (){
             	success: function(data){
             		if (data==1) {
             			if (id) {
-            				layer.alert('修改成功！');
+            				layer.alert('修改成功！',function(index){
+            					$('.breadcrumb>li:gt(1)', window.parent.document).remove();
+            					window.location.href='role_list.html';
+            					$('.add_teacher_bar',window.parent.document).remove();
+            				});
             			} else{
-            				layer.alert('新建成功！');
+            				layer.alert('新建成功！',function(index){
+            					$('.breadcrumb>li:gt(1)', window.parent.document).remove();
+            					window.location.href='role_list.html';
+            					$('.add_teacher_bar',window.parent.document).remove();
+            				});
             			}
-//          			window.location.href='role_list.html';
-//          			$('.add_teacher_bar',window.parent.document).remove();
+            			
             		}else{
-            			layer.alert('新建失败！');
+            			layer.alert('新建失败！'+data.msg);
             		}
             	}
             });
@@ -81,7 +98,7 @@ $(function (){
 	});
 	//点击返回
 	$('.back').click(function (){
-		$('.add_teacher_bar',window.parent.document).remove();
+		$('.breadcrumb>li:gt(1)', window.parent.document).remove();
 		window.location.href='role_list.html';
 	});
 	

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="wangjian" content="web" />
-		<title>新建教师</title>
+		<title>查看教师</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
 		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
@@ -45,7 +45,7 @@
 		<div class="main container-fluid" style="overflow:inherit;" id="mainbody" v-cloak>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<input class="commonbtn save" type="button" v-on:click="submit($event)" value="保存"/>
+					<!--<input class="commonbtn save" type="button" v-on:click="submit($event)" value="保存"/>-->
 					<input class="commonbtn back" type="button" v-on:click="back($event)" value="返回"/>
 				</div>
 			</div>
@@ -59,13 +59,13 @@
 							<span class="warn" style="padding-left: 20px;">姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" value="" maxlength="20" v-model="teacherName"/>
+							<input type="text" class="form-control" value="" readonly v-model="teacherName"/>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">手机号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" value="" maxlength="11" v-model="teacherMobile"/>
+							<input type="text" class="form-control" readonly value="" v-model="teacherMobile"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -73,7 +73,7 @@
 							<span class="warn" style="padding-left: 20px;">学校</span>
 						</label>
 						<div class="col-sm-3">
-							<select  class="form-control" v-model="selectedSchool">
+							<select  class="form-control" v-model="selectedSchool" disabled>
 								<option v-for="school in schools" v-bind:value="school.id">
 									{{ school.name }}
 								</option>
@@ -85,13 +85,13 @@
 							<span class="" style="padding-left: 20px;">身份证号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" value="" maxlength="18" v-model="idcard"/>
+							<input type="text" class="form-control" readonly value="" v-model="idcard"/>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="" style="padding-left: 20px;">性别</span>
 						</label>
 						<div class="col-sm-3">
-							<select name="" class="form-control" v-model="sex">
+							<select name="" class="form-control" v-model="sex" disabled>
 								<option value="">请选择</option>
 								<option value="M">男</option>
 								<option value="F">女</option>
@@ -103,7 +103,7 @@
 							<span class="" style="padding-left: 20px;">出生年月</span>
 						</label>
 						<div class="col-sm-3 input-append date form_datetime" id="app">
-				            <datepicker language="ch" v-model="birth"></datepicker>
+				            <input type="text" class="form-control" readonly v-model="birth" >
 				        </div>
 					</div>
 					<div class="form-group">
@@ -120,49 +120,41 @@
 									<th>是否该班班主任</th>
 									<th>操作</th>
 								</tr>
-								<tr v-for="item, index in bindclazz">
+								<tr v-for="(item, index) in bindclazz">
 									<td>{{index+1}}</td>
 									<td>
-										<select v-model="item.selectedGrade" v-on:change="changegrade($event,index)" v-bind:addid="index">
+										<select v-model="item.selectedGrade" v-on:change="changegrade($event,index)" v-bind:addid="index" disabled>
 											<option v-for="grade in item.grades" v-bind:value="grade.id">
 												{{ grade.title }}
 											</option>
 										</select>
 									</td>
 									<td>
-										<select v-model="item.selectedClazz">
+										<select v-model="item.selectedClazz" disabled>
 											<option v-for="clazz in item.clazzs" v-bind:value="clazz.id">
 												{{ clazz.name }}
 											</option>
 										</select>
 									</td>
 									<td>
-										<select v-model="item.selectedCourse">
+										<select v-model="item.selectedCourse" disabled>
 											<option v-for="course in courses" v-bind:value="course.id">
 												{{ course.title }}
 											</option>
 										</select>
 									</td>
 									<td>
-										<select v-model="item.selectedAdvise">
+										<select v-model="item.selectedAdvise" disabled>
 											<option value="2">请选择</option>
 											<option value="1">是</option>
 											<option value="0">否</option>
 										</select>
 									</td>
 									<td>
-										<a href="javascript:;" class="_a_space forbidden" v-on:click="delClazz($event, index)">删除</a>
+										<a href="javascript:;" class="_a_space forbidden" v-if="index>0">删除</a>
 									</td>
 								</tr>
 							</table>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label text-right">
-							<span class="" style="padding-left: 20px;"></span>
-						</label>
-						<div class="col-sm-1">
-							<button class="btn" v-on:click="addBind($event)">添加行</button>
 						</div>
 					</div>
 
@@ -201,23 +193,14 @@
 					obj['title'] = commonList['courses'][k]
 					vvm.courses.push(obj);
 				}
-
-				//添加第一行的默认班级
-				var defaultbc = newBindClazz();
-				defaultbc['selectedGrade'] = "0";
-				defaultbc["selectedClazz"] = "0";
-				defaultbc['selectedCourse'] = "0";
-				defaultbc['selectedAdvise'] = "2";
-				vvm.bindclazz.push(defaultbc);
 			});
+
 		});
 
 		function vm_init(){
 			var schools = new Array();
 			var defaultschool = {"name":"请选择", "id":0};
 			schools.push(defaultschool);
-
-			
 
 			vvm = new Vue({
 				el: '#mainbody',
@@ -269,28 +252,26 @@
 						}
 						//检查输入
 						if(!vvm.teacherName){
-							alertMsg("姓名不能为空");
+							layer.alert("姓名不能为空");
 							return;
 						}
 						req['name'] = vvm.teacherName;
-						if (!checkMobile(vvm.teacherMobile)){
-							alertMsg("手机号格式不正确");
-							return;
+						if(!vvm.teacherMobile||vvm.teacherMobile.trim().length<1) {
+							layer.alert("手机号码不能为空");
+							return false;
+						}
+						if(!(/^1[34578]\d{9}$/.test(vvm.teacherMobile.trim()))) {
+							layer.alert("手机号码有误，请重填");
+							return false;
 						}
 						req['phone'] = vvm.teacherMobile;
 						if (vvm.selectedSchool == 0){
-							alertMsg("学校不能为空");
+							layer.alert("学校不能为空");
 							return;
 						}
 						req['schoolid'] = vvm.selectedSchool;
-
 						if (vvm.idcard){
-							if (IdentityCodeValid(vvm.idcard) == false){
-								alertMsg("身份证格式不正确");
-								return;
-							}else{
-								req['idcard'] = vvm.idcard;
-							}
+							req['idcard'] = vvm.idcard;
 						}
 						if (vvm.sex != ""){
 							req['sex'] = vvm.sex;
@@ -298,20 +279,25 @@
 						if (vvm.birth){
 							req['birth'] = vvm.birth;
 						}
-
+						
+						if (vvm.bindclazz.length < 1) {
+							layer.alert('至少为老师添加一条任教科目及班级信息！');
+							return false;
+						}
+	
 						if (vvm.bindclazz.length > 0){
 							req['teacherclasslis'] = [];
 							for (var i = 0; i < vvm.bindclazz.length; i++){
 								var item = vvm.bindclazz[i];
 								var obj = {};
 								if (item['selectedClazz'] == 0){
-									alertMsg("班级不能为空");
+									layer.alert("班级不能为空");
 									return;
 								}else{
 									obj['clazzid'] = item['selectedClazz'];
 								}
 								if (item['selectedCourse'] == 0){
-									alertMsg("科目不能为空");
+									layer.alert("科目不能为空");
 									return;
 								}else{
 									obj['courseid'] = item['selectedCourse'];
@@ -332,13 +318,13 @@
 
 						if (tch){
 							updateTeacher(function(resp){
-				                layer.alert("更新成功", function(){
+				                commonMsg("更新成功", function(){
 				                	window.location.href = "teacher_list.html";
 				                });
 				            }, req);
 						}else{
 							addTeacher(function(resp){
-								layer.alert("创建成功", function(){
+								commonMsg("创建成功", function(){
 				                	window.location.href = "teacher_list.html";
 				                });
 				                // alert("成功");

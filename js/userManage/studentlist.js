@@ -36,13 +36,22 @@ var students = new Vue({
 		allchecked: '', //单选框状态
 		iswarning: false,
 		checkItem: true,
-		studentdata: {}
+		studentdata: {},
+		checksubmit: true
 	},
 	beforeCreate: function() {
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.studentmanager.schoollist,
+			url: org_url + dataUrl.studentmanager.schoollist+'?token='+sessionStorage.token,
 			success: function(data) {
+				if (data.code=='10010') {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						parent.location.href = "../../enter.html";
+					},cancel:function(){
+						parent.location.href = "../../enter.html";
+					}});
+					return false;
+				}
 				students.schools = data;
 			}
 		});
@@ -73,14 +82,22 @@ var students = new Vue({
 			window.location.href = 'student_add.html?id=' + id + '&' + see + '=' + see;
 		},
 		exportStudent: function(e) { //导出学生
-			$(e.target).prop('href', org_url + dataUrl.studentmanager.exportstudent + '?page=' + page + '&size=' + pagesize + '&school=' + students.schoolsVal + '&clazz=' + students.classVal + '&grade' + students.gradeVal + '&valid=' + $("#valid").val() + '&name=' + $('#studentname').val() + '&token=' + sessionStorage.token);
+			$(e.target).prop('href', org_url + dataUrl.studentmanager.exportstudent + '?school=' + students.schoolsVal + '&clazz=' + students.classVal + '&grade' + students.gradeVal + '&valid=' + $("#valid").val() + '&name=' + $('#studentname').val() + '&token=' + sessionStorage.token);
 		},
 		delStudent: function(id, e) { //删除学生
 			layer.confirm('是否删除该帐号？', function() {
 				$.ajax({
 					type: 'delete',
-					url: dataUrl.studentmanager.addstudent + id,
+					url: org_url + dataUrl.studentmanager.addstudent + id+'?token='+sessionStorage.token,
 					success: function(data) {
+						if (data.code=='10010') {
+							layer.alert('身份验证失败！请重新登录！',{yes:function(){
+								parent.location.href = "../../enter.html";
+							},cancel:function(){
+								parent.location.href = "../../enter.html";
+							}});
+							return false;
+						}
 						if(data == 1) {
 							layer.alert('删除成功！');
 							$(e.target).parents('tr').remove();
@@ -90,6 +107,35 @@ var students = new Vue({
 					}
 				})
 			})
+		},
+		enableValid: function(index){   //禁用学生
+			var s = this.studentLists[index];
+			var reversevalid = (s['valid'] == "1" ? "0":"1");
+			var ids = [s['id']];
+			var data = {"id":ids.join(","), "valid":reversevalid};
+			var url = org_url + dataUrl["studentmanager"]["batchChange"]+"?token="+sessionStorage.token;
+			$.ajax({
+				type: 'post',
+				url: url,
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				success: function(data) {
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
+					if(data == 1) {
+						layer.alert('成功');
+						s['valid'] = reversevalid;
+					} else {
+						layer.alert('失败！');
+					}
+				}
+			})
 		}
 	},
 	watch: {
@@ -98,9 +144,20 @@ var students = new Vue({
 			students.iswarning = n;
 		},
 		schoolsVal: function(n, o) {
+			console.log(n)
+			if (n=='') {
+				students.gradeVal = '';
+				students.classVal = '';
+			}
 			gradelist(n, 'grades', 'classs');
 		},
 		schoolsVal1: function(n, o) {
+			if (students.schoolsVal1 != ''&&students.gradeVal1 != ''&&students.classVal1 != '') {
+				students.checksubmit = false;
+				console.log(students.checksubmit)
+			}else{
+				students.checksubmit = true;
+			}
 			gradelist(n, 'grades1', 'classs1');
 		},
 		gradeVal: function(n, o) {
@@ -115,6 +172,11 @@ var students = new Vue({
 			students.classs = tempclass;
 		},
 		gradeVal1: function(n, o) {
+			if (students.schoolsVal1 !== ''&&students.gradeVal1 !== ''&&students.classVal1 !== '') {
+				students.checksubmit = false;
+			}else{
+				students.checksubmit = true;
+			}
 			students.classs1 = allclazz;
 			var len = students.classs1.length,
 				tempclass = [];
@@ -125,10 +187,17 @@ var students = new Vue({
 			}
 			students.classs1 = tempclass;
 			console.log(students.classs1)
+		},
+		classVal1: function(){
+			if (students.schoolsVal1 !== ''&&students.gradeVal1 !== ''&&students.classVal1 !== '') {
+				students.checksubmit = false;
+			}else{
+				students.checksubmit = true;
+			}
 		}
 	}
 });
-
+console.log(students.checksubmit)
 function gradelist(n, g, c) {
 	$.ajax({
 		type: "get",
@@ -138,6 +207,14 @@ function gradelist(n, g, c) {
 			token: sessionStorage.token
 		},
 		success: function(data) {
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			var gdatas = [];
 			var cdatas = [];
 			for(var i = 0; i < data.length; i++) {
@@ -179,6 +256,14 @@ function pages(datas) {
 		url: org_url + dataUrl.studentmanager.studentlist,
 		data: datajson,
 		success: function(data) {
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			students.studentLists = data.data;
 			pagecount = data.total;
 			$('#pageToolbar').Paging({
@@ -264,6 +349,18 @@ $('.importStudent').click(function() {
 });
 //导入确定
 $("#toStudentOk").click(function() {
+	if (students.schoolsVal1=='') {
+		layer.alert('请选择学校！');
+		return false;
+	}
+	if (students.gradeVal1=='') {
+		layer.alert('请选择年级！');
+		return false;
+	}
+	if (students.classVal1=='') {
+		layer.alert('请选择班级！');
+		return false;
+	}
 	var fd = new FormData();
 	fd.append('file', $('#student_file')[0].files[0]);
 	var data = {
@@ -272,13 +369,25 @@ $("#toStudentOk").click(function() {
 		grade: students.gradeVal1,
 		fromdata: fd
 	}
+	if ($('#student_file').val()=='') {
+		layer.alert('请选择上传文件！');
+		return false;
+	}
 	$.ajax({
 		type: "post",
-		url: org_url + dataUrl.studentmanager.excelfileup + '?school=' + students.schoolsVal1 + '&clazz=' + students.classVal1 + '&grade=' + students.gradeVal1,
+		url: org_url + dataUrl.studentmanager.excelfileup + '?school=' + students.schoolsVal1 + '&clazz=' + students.classVal1 + '&grade=' + students.gradeVal1+'&token='+sessionStorage.token,
 		data: fd,
 		processData: false,
 		contentType: false,
-		success: function(data) {
+		success: function(data){
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			console.log(data)
 			if(data == 1) {
 				layer.open({
@@ -293,7 +402,7 @@ $("#toStudentOk").click(function() {
 			} else {
 				layer.open({
 					title: "导入失败！",
-					content: '<div>'+data.result+'</div><br /><a href="'+org_url+dataUrl.studentmanager.downstudents+'?filename='+data.filename+'" class="btn btn-info btn-block">查看导入结果</a>',
+					content: '<div>'+data.result+'</div><br /><a href="'+org_url+dataUrl.studentmanager.downstudents+'?filename='+data.filename+'&token='+sessionStorage.token+'" class="btn btn-info btn-block">查看导入结果</a>',
 					skin: 'layui-layer-lana',
 					area: ['auto', 'auto'],
 					shadeClose: false,
@@ -359,6 +468,7 @@ $(document).on('click', '#batchChangeOk', function() {
 		batchChange.push($(e).attr('data-id'));
 	});
 	batchdata.id = batchChange.toString();
+	batchdata.token = sessionStorage.token;
 	console.log(batchChange.toString() + '==' + students.classVal1)
 	$.ajax({
 		type: "post",
@@ -366,6 +476,14 @@ $(document).on('click', '#batchChangeOk', function() {
 		contentType: "application/json",
 		data: JSON.stringify(batchdata),
 		success: function(data) {
+			if (data.code=='10010') {
+				layer.alert('身份验证失败！请重新登录！',{yes:function(){
+					parent.location.href = "../../enter.html";
+				},cancel:function(){
+					parent.location.href = "../../enter.html";
+				}});
+				return false;
+			}
 			if(data == 1) {
 				layer.alert(batchsuccees, function(index) {
 					layer.close(index);

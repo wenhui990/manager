@@ -8,9 +8,11 @@
 		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
 		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
 		<link rel="stylesheet" href="../../css/common/common_list.css" />
 		<link rel="stylesheet" href="../../css/common/common.css" />
 		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css" />
 	</head>
 
 	<body>
@@ -62,9 +64,9 @@
 			<div class="row head numshu_btm">
 				<div class="btngroup">
 					<a href="add_teacher.html"><input class="commonbtn" type="button" value="新建教师"/></a>
-					<input class="commonbtn exportTeacher" type="button" value="导出教师" />
-					<input class="commonbtn importTeacher" type="button" value="导入教师" />
-					<a href="javascript:;" class="downloadTemplate">下载导入模版</a>
+					<a href="javascript:;" class="commonbtn" v-on:click="exportTeacherFile($event)">导出教师</a>
+					<a href="javascript:;" class="commonbtn" v-on:click="importTeacherFile()">导入教师</a>
+					<a href="../../plugin/教师信息模版.xls" class="downloadTemplate">下载导入模版</a>
 				</div>
 			</div>
 			<div class="numshu_btm">
@@ -76,7 +78,7 @@
 								<td><strong>学校</strong></td>
 								<td><strong>教师姓名</strong></td>
 								<td><strong>手机号</strong></td>
-								<!-- <td><strong>任教科目</strong></td> -->
+								 <td><strong>任教科目</strong></td> 
 								<td><strong>任教班级</strong></td>
 								<td><strong>用户状态</strong></td>
 								<td><strong>操作</strong></td>
@@ -86,16 +88,21 @@
 								<td>{{item.sname}}</td>
 								<td>{{item.name}}</td>
 								<td>{{item.phone}}</td>
-								<!-- <td>{{item.coursename}}</td> -->
+								<td>
+									<template v-if="item['clazzlis'].length>0">
+										{{item['clazzlis'][0].coursename}}
+									</template>
+								</td> 
 								<!-- <td>{{item.clazzname}}</td> -->
 								<td>
 									<template v-for="(subitem, subindex) in item['clazzlis']">
-										{{subitem.coursename}}&nbsp;&nbsp;&nbsp;&nbsp;{{subitem.clazzname}}<br>
+										{{subitem.clazzname}}&nbsp;&nbsp;
 									</template>
 								</td>
 								<td v-if="item.valid==1">启用</td>
 								<td v-else>禁用</td>
 								<td>
+									<a class="forbidden" href="javascript:;" v-on:click="editTeacher($event,index,'see')">查看</a>
 									<a class="forbidden" href="javascript:;" v-on:click="editTeacher($event,index)">编辑</a>
 									<a href="javascript:;" class="_a_space forbidden" v-if="item.valid==1" v-on:click="enableValid($event,item.id,index)">禁用</a>
 									<a href="javascript:;" class="_a_space forbidden" v-else v-on:click="enableValid($event,item.id,index)">启用</a>
@@ -114,6 +121,44 @@
 					</div>
 				</div>
 			</div>
+			<!--导入教师弹窗内容-->
+			<div class="modal fade" tabindex="-1" role="dialog" id="toTeacher">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">导入选择</h4>
+						</div>
+						<div class="modal-body">
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<label class="col-sm-3 control-label text-right">
+										<span class="">学校</span>
+									</label>
+									<div class="col-sm-9">
+										<select name="" class="form-control" v-model="importSchool">
+											<option v-for="school, index in schools" v-if="index>0" v-bind:value="school.id">{{school.name}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label text-right">
+										<span class="">导入文件</span>
+									</label>
+									<div class="col-sm-9">
+										<input type="file" name="teacher_file" id="teacher_file" />
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="toTeacher" v-on:click="loadTeacher($event)">确定</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
 
 	</body>
@@ -148,6 +193,7 @@
 					teachMobile:"",
 					teacherStatus:"2",
 					teachers:[],
+					importSchool:0,
 					page:1,
 					pagesize:10,
 					total:0
@@ -156,7 +202,7 @@
 					enableValid: function(event, itemid, index){
 						var tmpvalid = (vvm.teachers[index]['valid'] == "1" ? "0":"1");
 						enableTeacher(function(){
-							commonMsg("成功");
+							layer.alert((tmpvalid==1)?"启用成功":"禁用成功");
 							vvm.teachers[index]['valid'] = tmpvalid;
 						}, itemid, tmpvalid);
 					},
@@ -165,11 +211,11 @@
 						getTcs();
 					},
 					delTeacher: function(event, itemid, index){
-						confirmDialog("是否删除教师: " + vvm.teachers[index]['name'], function(itemid, index){
+						layer.alert("是否删除教师: " + vvm.teachers[index]['name'], function(){
 							rmTeacher(itemid, index)
 						});
 					},
-					editTeacher: function(event, index){
+					editTeacher: function(event, index,see){
 						var tc = this.teachers[index];
 						var teacher = {};
 						teacher['id'] = tc['id'];
@@ -185,9 +231,52 @@
 							}
 							teacher['clazzlis'].push(o);
 						}
-						console.log("ddd: " + JSON.stringify(teacher));
 						var uri = "add_teacher.html?data=" + encodeURI(JSON.stringify(teacher));
+						if (see) {
+							uri = "see_teacher.html?data=" + encodeURI(JSON.stringify(teacher));
+						}
 						$(event.target).attr('href', uri);
+					},
+					importTeacherFile: function(){
+						if (vvm.schools.length > 0){
+							vvm.importSchool = vvm.schools[1]['id'];
+						}
+			 			$('#toTeacher').modal('show');
+						$('.modal-title').text('导入选择！');
+					},
+					exportTeacherFile: function(event){
+						url = org_url + dataUrl.teacher.exportTeacher;
+						req = "?token=" + sessionStorage.token;
+
+						if (this.selectedSchool != 0){
+							req += "&schoolid=" + this.selectedSchool;
+						}
+						if (this.teachName != ''){
+							req += "&name=" + this.teachName;
+						}
+						if (this.teachMobile != ''){
+							req += "&phone=" + this.teachMobile;
+						}
+						if (this.teacherStatus != '2'){
+							req += "&valid=" + this.teacherStatus
+						}
+
+						$(event.target).prop('href', url + req);
+					},
+					loadTeacher: function(event){
+						if (this.importSchool == 0) {
+							alertMsg("请选择学校");
+							return;
+						}
+						if ($('#teacher_file').val()=='') {
+							layer.alert('请选择上传文件！');
+							return;
+						}
+						var fd = new FormData();
+						fd.append('file', $('#teacher_file')[0].files[0]);
+						importTeacher(function(resp){
+							console.log("resp: " + JSON.stringify(resp));
+						}, this.importSchool, fd);
 					}
 				}
 			});
@@ -195,7 +284,7 @@
 
 		function rmTeacher(itemid, index){
 			deleteTeacher(function(resp){
-				commonMsg("删除成功");
+				layer.alert("删除成功");
 				vvm.teachers.splice(index, 1);
 			}, itemid);	
 		}

@@ -20,7 +20,7 @@ var dataUrl={
 		"clazz": "/clazz/",
 		"grades": "/school/grades/",
 		"course": "/course/",
-		"teacher": "/teacher/"
+		"teacher": "/apiteacher/"
 	},
 	"textbook":{
 		"getTerms":"/textbook/searchTerm", //年级课本列表 get, ?page + size
@@ -36,7 +36,7 @@ var dataUrl={
 	"knowledge":{ //知识点
 		"sectiontree":"/section/selectKnowledgeTree/",
 		"sectionKnowledge":"/sectionKnowledge/",
-		"sectiontreeAll":"/section/selectSectionTreeForEdition/"
+		"sectiontreeAll":"/section/sectioneditiontree/"
 	},
 	"jurisdiction":{
 		"jurisdictionlist": "/entry/tree/", //权限列表
@@ -65,15 +65,17 @@ var dataUrl={
 		"downstudents": "/student/excelresultdown"  //下载导入后的数据
 	},
 	"teacher":{
-		"getTeachers":"/teacher/findteacher",  //教师列表 模糊查询
-		"getTeacher":"/teacher",  //教师信息
-		"addTeacher":"/teacher/addteacher",  //添加教师
-		"updateTeacher":"/teacher/updateteacher",
-		"enableTeacher":"/teacher",  //启用教师
-		"deleteTeacher":"/teacher",
+		"getTeachers":"/apiteacher/findteacher",  //教师列表 模糊查询
+		"getTeacher":"/apiteacher",  //教师信息
+		"addTeacher":"/apiteacher/addteacher",  //添加教师
+		"updateTeacher":"/apiteacher/updateteacher",
+		"enableTeacher":"/apiteacher",  //启用教师
+		"deleteTeacher":"/apiteacher",
+		"exportTeacher":"/apiteacher/excelfiledown", //导出教师
+		"importTeacher":"/apiteacher/excelfileup", //导入教师
 	},
 	"questionbank": {
-		"questionbanktree": "/section/selectSectionTreeForEdition/", //题库树
+		"questionbanktree": "/section/sectioneditiontree/", //题库树
 		"questionlist": "/question/",  //题目列表
 		"commonlist": "/common/lists",  //科目学科学段列表
 		"updatequestion": "/question/updatequestion", //更新题目

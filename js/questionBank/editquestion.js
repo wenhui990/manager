@@ -63,7 +63,7 @@ question = new Vue({
 		question_code: '',  //题目编号
 		questiondata: [], //题目数据
 		questiontype: '', //题目类型
-		knowledges: '', //知识点列表,
+		knowledges: [], //知识点列表,
 		knowledgtreeid: '', //知识点树id
 		difficulty: '',   //难度
 		picked: 'S',       //题库对象，是老师还是学生
@@ -76,7 +76,7 @@ question = new Vue({
 		//获取所有学段，学科目录
 		$.ajax({
 			type:"get",
-			url: org_url+dataUrl.questionbank.commonlist,
+			url: org_url+dataUrl.questionbank.commonlist+'?token='+sessionStorage.token,
 			success: function(data){
 				question.courses = data.courses;
 				question.stages = data.stages;
@@ -85,7 +85,7 @@ question = new Vue({
 		//根据题目id查询详细信息
 		$.ajax({
 			type:"get",
-			url: org_url+dataUrl.questionbank.questionlist+id,
+			url: org_url+dataUrl.questionbank.questionlist+id+'?token='+sessionStorage.token,
 			data:{
 				courseid:courseid,
 				stageid:stageid,
@@ -97,9 +97,8 @@ question = new Vue({
 					question.questionoption = newoption;
 				}
 				question.questionoptiondata = datas;
-				var knowledg = datas.knowledgeids;
+				question.knowledges = datas.knowledges;
 				question.stageid = stageid;
-				knownum = question.knowledges.length;
 				question.rightanswers = datas.answer;
 				question.difficulty = datas.difficulty;
 				if(datas.answer=='A'){
@@ -125,10 +124,10 @@ question = new Vue({
 		},
 		//添加知识点
 		addKnowledge: function(){
-			question.questionoptiondata.knowledges.push('');
+			question.knowledges.push({id:''});
 		},
 		delknowledge: function(){
-			question.questionoptiondata.knowledges.pop('');
+			question.knowledges.pop('');
 		},
 		//添加选项
 		addOption:function(){
@@ -176,10 +175,10 @@ question = new Vue({
 				stageids.push(e.value);
 			});
 			$.each($('.knowledgeids'), function(i,e) {
-				knowledgeids.push($(e).attr('data-knowid'));
+				knowledgeids.push($(e).attr('data-knowid')*1);
 			});
 			stageids = ','+stageids.toString()+',';
-			knowledgeids = ','+knowledgeids.toString()+',';
+//			knowledgeids = ','+knowledgeids.toString()+',';
 			$.each($('.questionoptionlist'), function(i,e) {
 				options.push($(e).html());
 			});
@@ -194,7 +193,7 @@ question = new Vue({
 				analysis:$('#questionanalysis').html(), //解析
 				title:$('#questionstems').html(), //题干
 				tag:question.picked, //题库对象
-				options:JSON.stringify(options),//选项
+				options:options,//选项
 				id: id,//id
 				type: question.questionoptiondata.type,//题型，单选多项
 				scope:1
@@ -204,15 +203,13 @@ question = new Vue({
 //			return
 			$.ajax({
 				type:"put",
-				url:org_url+dataUrl.questionbank.updatequestion,
+				url:org_url+dataUrl.questionbank.updatequestion+'?token='+sessionStorage.token,
 				contentType: "application/json; charset=utf-8",
 		        data: JSON.stringify(data),
 		        dataType: "json",
 				success: function(data){
-					if (data==1) {
-						layer.alert('修改成功！',function(){
-							$(e.target).attr('href','questionbank.html?courseid='+courseid+'&stageid='+stageid);
-						})
+					if (data.result==1) {
+						layer.alert('修改成功！')
 					}else{
 						layer.alert('修改失败！'+data.msg)
 					}
