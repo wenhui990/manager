@@ -58,7 +58,7 @@
 			<div class="row head numshu_btm">
 				<div class="btngroup">
 					<button class="commonbtn save" type="button">保存</button>
-					<button class="commonbtn resetpassword none">重置密码</button>
+					<button class="commonbtn resetpassword none" onclick="resetpassword()">重置密码</button>
 					<button class="commonbtn back" type="button">返回</button>
 				</div>
 			</div>
@@ -79,7 +79,7 @@
 							<span class="warn" style="padding-left: 20px;">学校</span>
 						</label>
 						<div class="col-sm-3">
-							<select class=" form-control organization schoolLists" v-model="schoolsVal">
+							<select class=" form-control organization schoolLists" v-model="schoolsVal" v-on:change="changeschool($event)">
 								<option value="">请选择</option>
 								<option v-for="sc in schools" v-bind:value="sc.id">{{sc.name}}</option>
 							</select>
@@ -108,7 +108,7 @@
 							<span class="warn" style="padding-left: 20px;">身份证号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="student_ID" id="student_ID" class="form-control" v-model="student_ID" />
+							<input type="text" name="student_ID" maxlength="18" id="student_ID" class="form-control" v-model="student_ID" />
 						</div>
 					</div>
 					<div class="form-group">

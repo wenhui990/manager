@@ -12,7 +12,11 @@
 			.none {
 				display: none;
 			}
-			
+			.passinfo{
+				text-align: center;
+				color: orangered;
+				margin-top: 5px;
+			}
 		</style>
 	</head>
 
@@ -32,7 +36,7 @@
 							<span class="" style="padding-left: 20px;">姓名</span>
 						</label>
 						<div class="col-sm-7">
-							<input type="text" name="student_name" id="student_name" class="form-control" readonly="readonly" value="温慧" />
+							<span  class="form-control" id="now_name"></span>
 						</div>
 					</div>
 					<div class="form-group">
@@ -40,16 +44,15 @@
 							<span class="" style="padding-left: 20px;">角色权限</span>
 						</label>
 						<div class="col-sm-7">
-							<span class="form-control">题库管理员</span>
+							<span class="form-control" id="now_config"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label text-right">
-							<span class="" style="padding-left: 20px;">手机号</span>
+							<span class="" id="nowphone" style="padding-left: 20px;">手机号</span>
 						</label>
 						<div class="col-sm-7">
-							<input type="text" name="student_name" id="student_name" class="form-control" readonly="readonly" value="18811881199" />
-							
+							<span  class="form-control" id="now_phone"></span>
 						</div>
 						<label class="col-sm-2  text-right">
 							<button class="btn edit_phone" style="">修改手机号</button>
@@ -60,7 +63,6 @@
 							<span class="" style="padding-left: 20px;">密码</span>
 						</label>
 						<div class="col-sm-7">
-							<input type="password" name="student_name" id="student_name" class="form-control" readonly="readonly" value="18811881199" />
 							
 						</div>
 						<label class="col-sm-2  text-right">
@@ -71,101 +73,268 @@
 
 			</div>
 		</div>
-		<div class="edit_phone_html none">
-			<div class="form-horizontal">
-				<div class="form-group">
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="" style="padding-left: 20px;">新手机号</span>
-					</label>
-					<div class="col-sm-6">
-						<input type="text" name="student_name" id="student_name" class="form-control" value="" />
+		<div class="modal fade" tabindex="-1" role="dialog" id="edit_phone_html">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">修改手机号</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="form-horizontal">
+					<div class="form-group">
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">新手机号</span>
+						</label>
+						<div class="col-sm-6">
+							<input type="text" id="newphone" maxlength="11" class="form-control" value="" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">验证码</span>
+						</label>
+						<div class="col-sm-6">
+							<input type="text" id="phonecode" maxlength="6" class="form-control" value="" />
+						</div>
+						<label class="col-sm-2  text-right">
+							<button class="btn get_code">获取验证码</button>
+							<button class="btn count_down none"></button>
+						</label>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="" style="padding-left: 20px;">验证码</span>
-					</label>
-					<div class="col-sm-6">
-						<input type="text" name="student_name" id="student_name" class="form-control" value="" />
-					</div>
-					<label class="col-sm-2  text-right">
-						<button class="btn get_code">获取验证码</button>
-						<button class="btn edit_password count_down none">60S后重新获取</button>
-					</label>
-				</div>
-			</div>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-primary phoneok">确定</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		
-		<div class="edit_password_html none">
-			<div class="form-horizontal">
-				<div class="form-group">
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="" style="padding-left: 20px;">旧密码</span>
-					</label>
-					<div class="col-sm-8">
-						<input type="text" name="student_name" id="student_name" class="form-control" value="" />
+		
+		<div class="modal fade" tabindex="-1" role="dialog" id="edit_password_html">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title">修改密码</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="form-horizontal">
+					<div class="form-group">
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">旧密码</span>
+						</label>
+						<div class="col-sm-8">
+							<input type="password" id="oldpassword" maxlength="16" class="form-control" value="" />
+							<div class="passinfo none">旧密码不正确</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">新密码</span>
+						</label>
+						<div class="col-sm-8">
+							<input type="password" id="newpassword1" maxlength="16" class="form-control" value="" />
+							<div class="passinfo none">旧密码不正确</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label text-right">
+							<span class="" style="padding-left: 20px;">再次输入新密码</span>
+						</label>
+						<div class="col-sm-8">
+							<input type="password" id="newpassword2" maxlength="16" class="form-control" value="" />
+							<div class="passinfo none">旧密码不正确</div>
+						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="" style="padding-left: 20px;">新密码</span>
-					</label>
-					<div class="col-sm-8">
-						<input type="text" name="student_name" id="student_name" class="form-control" value="" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label text-right">
-						<span class="" style="padding-left: 20px;">再次输入新密码</span>
-					</label>
-					<div class="col-sm-8">
-						<input type="text" name="student_name" id="student_name" class="form-control" value="" />
-					</div>
-				</div>
-			</div>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-primary passwordok">重置</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 			
 	</body>
 	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/md5.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		//获取当前用户
+		$.ajax({
+			type:"get",
+			url: org_url + dataUrl.manager+sessionStorage.userid,
+			async:true,
+			data: {token:sessionStorage.token},
+			success: function(data){
+				$('#now_name').text(data.name);
+				$('#now_config').text(data.roles);
+				$('#now_phone').text(data.phone);
+			}
+		});
+		//验证码
 		$('.edit_phone').click(function(){
-			layer.open({
-				title: "修改手机号",
-				content: $('.edit_phone_html').html(),
-				skin: 'layui-layer-lana',
-				shadeClose: false,
-				btn: ['确定', "取消"],
-				area:['50%','auto'],
-				yes: function(index, layero) {
-					layer.close(index);
+			$('#edit_phone_html').modal('show');
+		});
+		$(document).on('click','.get_code',function(){
+			if ($('#newphone').val()=='') {
+				layer.alert('请输入手机号！');
+				return false;
+			}
+			if (!(/^1[34578]\d{9}$/.test($('#newphone').val()))) {
+				layer.alert('请输正确的手机号！');
+				return false;
+			}
+			var count=60,timer;
+			$('.count_down').text(count+'S后重新获取');
+			$.ajax({
+				type:"put",
+				url: org_url+dataUrl.getcode+sessionStorage.userid+'/phone?token='+sessionStorage.token+'&phone='+$('#newphone').val(),
+				success: function(data){
+					if (data == 1) {
+						$('.get_code').hide();
+						$('.count_down').show();
+						timer = setInterval(function(){
+							count--;
+							$('.count_down').text(count+'S后重新获取');
+							if (count<=1) {
+								clearInterval(timer);
+								$('.count_down').hide();
+								$('.get_code').show();
+							}
+						},1000);
+						layer.alert('发送成功！');
+					}else{
+						layer.alert('发送失败！'+data.msg);
+					}
 				},
-				btn2: function(index, layero) {
-					//按钮【按钮二】的回调
-					layer.close(index);
+				error: function(){
+					layer.alert('网络错误！请联系管理员');
 				}
 			});
-		});
+			
+		})
+		//修改手机号
+		$(document).on('click','.phoneok',function(){
+			if ($('#newphone').val()=='') {
+				layer.alert('请输入手机号！');
+				return false;
+			}
+			if (!(/^1[34578]\d{9}$/.test($('#newphone').val()))) {
+				layer.alert('请输正确的手机号！');
+				return false;
+			}
+			if ($('#phonecode').val()==''||$('#phonecode').val().length<1||$('#phonecode').val().length>6) {
+				layer.alert('请输入正确的验证码！');
+				return false;
+			}
+			$.ajax({
+				type:"put",
+				url: org_url+dataUrl.getcode+sessionStorage.userid+'/phone?token='+sessionStorage.token,
+				data:{
+					phone:$('#newphone').val(),
+					authCode:$('#phonecode').val(),
+					id:sessionStorage.userid
+				},
+				success: function(data){
+					if (data == 1) {
+						$('#edit_phone_html').modal('hide');
+						layer.alert('修改成功！请重新登录',{yes:function(){
+							parent.location.href='../../enter.html';
+						},cancel:function(){
+							parent.location.href='../../enter.html';
+						}});
+					}else{
+						layer.alert('修改失败！'+data.msg);
+					}
+				},
+				error: function(){
+					layer.alert('网络错误！请联系管理员');
+				}
+			});
+		})
+		
+		//{id}/password
 		$('.edit_password').click(function(){
-			layer.open({
-				title: "修改密码",
-				content: $('.edit_password_html').html(),
-				skin: 'layui-layer-lana',
-				shadeClose: false,
-				btn: ['确定', "取消"],
-				area:['50%','auto'],
-				yes: function(index, layero) {
-					layer.close(index);
-				},
-				btn2: function(index, layero) {
-					//按钮【按钮二】的回调
-					layer.close(index);
-				}
-			});
+			$('#edit_password_html').modal('show');
 		});
+		//修改密码
+		$('#oldpassword,#newpassword1,#newpassword2').blur(function(){
+			if (!(/^[a-zA-Z0-9]{6,16}$/.test($(this).val()))) {
+				$(this).next().show().html('请输入正确的密码');
+			}else{
+				$(this).next().hide();
+			}
+			if ($(this).attr('id')=='newpassword2') {
+				if($('#newpassword1').val()!=$('#newpassword2').val()){
+					$(this).next().show().html('俩次输入的密码不一样');
+					return false;
+				}
+			}
+		})
+		$(document).on('click','.passwordok',function(){
+			if ($('#oldpassword').val()=='') {
+				layer.alert('请输入旧密码');
+				return false;
+			}
+			if ($('#newpassword1').val()=='') {
+				layer.alert('新秘密不能为空');
+				return false;
+			}
+			if ($('#newpassword2').val()=='') {
+				layer.alert('重复密码不能为空');
+				return false;
+			}
+			if (!(/^[a-zA-Z0-9]{6,16}$/.test($('#oldpassword').val()))) {
+				$('#oldpassword').next().show().html('请输入正确的密码');
+				return false;
+			}
+			if (!(/^[a-zA-Z0-9]{6,16}$/.test($('#newpassword1').val()))) {
+				$('#newpassword1').next().show().html('请输入正确的密码');
+				return false;
+			}
+			if (!(/^[a-zA-Z0-9]{6,16}$/.test($('#newpassword2').val()))) {
+				$('#newpassword2').next().show().html('请输入正确的密码');
+				return false;
+			}
+			if($('#newpassword1').val()!=$('#newpassword2').val()){
+				$('#newpassword2').next().show().html('俩次输入的密码不一样');
+				return false;
+			}
+			$.ajax({
+				type:"put",
+				url: org_url+dataUrl.restpassword+sessionStorage.userid+'/password?token='+sessionStorage.token,
+				data:{
+					newpwd:hex_md5($('#newpassword1').val()),
+					oldpwd:hex_md5($('#oldpassword').val()),
+					id:sessionStorage.userid
+				},
+				success: function(data){
+					if (data.result == 1) {
+						$('#edit_password_html').modal('hide');
+							layer.alert('修改成功,请重新登录！',{yes:function(){
+							parent.location.href='../../enter.html';
+						},cancel:function(){
+							parent.location.href='../../enter.html';
+						}});
+					}else{
+						layer.alert('修改失败！'+data.msg);
+					}
+				},
+				error: function(){
+					layer.alert('网络错误！请联系管理员');
+				}
+			})
+		})
 	</script>
 </html>

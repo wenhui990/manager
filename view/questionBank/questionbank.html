@@ -61,6 +61,22 @@
 			.questiontool>span{
 				margin-left: 20px;
 			}
+			.questionnums{
+				float: right;
+				display: inline-block;
+			}
+			.questionnums::after{
+				display: block;
+				content: "";
+				clear: both;
+			}
+			#questionnum{
+				width: 50px;
+				border: 0;
+				background: rgba(255,255,255,0);
+				text-align: center;
+				color: #0886f3;
+			}
 		</style>
 	</head>
 
@@ -97,14 +113,18 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-3 treeleft">
-					<ul id="treeDemo" class="ztree" style="height: 540px;overflow: auto;"></ul>
+					<ul id="treeDemo" class="ztree" style="height: 100%;overflow: auto;"></ul>
 				</div>
 				<div class="rightcontent col-sm-9">
 					<div class="row">
 						<ul class="breadcrumb">
 							<li v-for="key in catalogs">
-								<a href="javascript:;">{{key}}</a> <span class="divider">></span>                                                                     
+								<a href="javascript:;">{{key}}</a> <span class="divider"></span>                                                                     
 							</li>
+							<li id="templi">
+								<a href="javascript:;"> </a> <span class="divider"></span>                                                                     
+							</li>
+							<span class="questionnums">共<input type="text" id="questionnum" readonly v-model="questionNum">道题</span>
 						</ul>
 					</div>
 					<div class="row">
@@ -129,10 +149,10 @@
 							<div v-html="question.id+'.'+question.title"></div>
 							<div>
 								<div class="col-sm-11" v-if="question.type==1">
-									<p>A.{{question.options[0]}}</p>
-									<p>B.{{question.options[1]}}</p>
-									<p>C.{{question.options[2]}}</p>
-									<p>D.{{question.options[3]}}</p>
+									<p>A. <span v-html="question.options[0]"></span></p>
+									<p>B. <span v-html="question.options[1]"></span></p>
+									<p>C. <span v-html="question.options[2]"></span></p>
+									<p>D. <span v-html="question.options[3]"></span></p>
 								</div>
 								<div class="col-sm-11" v-else>{{question.options}}</div>
 								<div class="col-sm-1">

@@ -72,7 +72,7 @@ $(function() {
 	var treeNodes = '';
 	$.ajax({
 		type: "get",
-		url: org_url + dataUrl.jurisdiction.jurisdictionlist,
+		url: org_url + dataUrl.jurisdictionlist,
 		async: false,
 		data:{token: sessionStorage.token},
 		success: function(data){
@@ -83,7 +83,7 @@ $(function() {
 	
 	$.ajax({
 		type: "get",
-		url: org_url + dataUrl.jurisdiction.role + id + "/entry",
+		url: org_url + dataUrl.role + id + "/entry",
 		data: {
 			"id": id,
 			token: sessionStorage.token
@@ -119,7 +119,7 @@ $(function() {
 		console.log(treejson);
 		$.ajax({
 			type: "put",
-			url: org_url + dataUrl.jurisdiction.role + id + "/entry",
+			url: org_url + dataUrl.role + id + "/entry",
 			data: {
 				"id": id,
 				"json": JSON.stringify(treejson),

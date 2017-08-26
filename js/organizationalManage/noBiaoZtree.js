@@ -1,20 +1,21 @@
+
 //ztree树形菜单
 var setting = {
-	async: {
-		enable: true,
-		url: org_url + dataUrl.organization.educationAll+"?token="+sessionStorage.token,
-		autoParam:["id", "name=n", "level=lv"],
-		otherParam:{"otherParam":"zTreeAsyncTest"},
-		dataFilter: filter,
-		type: 'get'
-	},
+//	async: {
+//		enable: true,
+//		url: org_url + dataUrl.institutions+"?token="+sessionStorage.token,
+//		autoParam:["id", "name=n", "level=lv"],
+//		otherParam:{"otherParam":"zTreeAsyncTest"},
+//		dataFilter: filter,
+//		type: 'get'
+//	},
 	view: {
 		expandSpeed:"",
 		addHoverDom: addHoverDom,
 		removeHoverDom: removeHoverDom,
 		selectedMulti: false,
 		fontCss:{
-			"fontSize": "14px"
+			"font-size": "16px"
 		}
 	},
 	edit: {
@@ -54,7 +55,7 @@ function onRemove(event,treeId, treeNode) {
 	if(treeNode.id){
 		$.ajax({
 			type:"delete",
-			url: org_url + dataUrl.organization.educationDel + treeNode.id+"?token="+sessionStorage.token ,
+			url: org_url + dataUrl.institution + treeNode.id+"?token="+sessionStorage.token ,
 			success: function(data){
 				if (data.code=='10010') {
 					layer.alert('身份验证失败！请重新登录！',{yes:function(){
@@ -65,9 +66,13 @@ function onRemove(event,treeId, treeNode) {
 					return false;
 				}
 				if(data==1){
-					layer.alert('删除成功！');
+					layer.alert('删除成功！',function(index){
+						updateNodes(index);
+					});
 				}else{
-					layer.alert('删除失败！'+data.msg);
+					layer.alert('删除失败！'+data.msg,function(index){
+						updateNodes(index);
+					});
 				}
 			}
 		});
@@ -84,6 +89,9 @@ function beforeRename(treeId, treeNode, newName) {
 			alert("节点名称不能为空.");
 		}, 0);
 		return false;
+	}else if(newName.length >20){
+		layer.alert('节点名称太长！不能超过20个字符');
+		return false;
 	}
 	return true;
 }
@@ -92,7 +100,7 @@ function onRename(event,treeId, treeNode) {
 	console.log(treeNode)
 	var url = '',types='',data={};
 	if (treeNode.id) {
-		url = org_url + dataUrl.organization.educationEdit + treeNode.id;
+		url = org_url + dataUrl.institution + treeNode.id;
 		types = 'put';
 		data = {
 			id: treeNode.id,
@@ -102,7 +110,7 @@ function onRename(event,treeId, treeNode) {
 			token: sessionStorage.token
 		}
 	}else{
-		url = org_url + dataUrl.organization.educationAdd;
+		url = org_url + dataUrl.institution;
 		types = 'post';
 		data = {
 			name: treeNode.name,
@@ -126,16 +134,14 @@ function onRename(event,treeId, treeNode) {
 				return false;
 			}
 			if(data==1){
-				layer.open({
-	                title: "提示",
-	                content: '修改成功！',
-	                skin: 'layui-layer-lana',
-	                shadeClose: false,
-	                btn: ['确定'],
-	                yes: function(index, layero) {
-	                    layer.close(index);
-	                }
-	        	});
+				layer.alert('修改成功！',function(index){
+					updateNodes(index);
+				});
+			}else{
+				layer.alert('修改失败！'+data.msg,function(index){
+					updateNodes(index);
+				});
+				
 			}
 		}
 	});
@@ -145,7 +151,7 @@ function onRename(event,treeId, treeNode) {
 function onDrap(event,treeId,treeNodes,targetNode){
 	$.ajax({
 		type:"put",
-		url: org_url + dataUrl.organization.educationEdit + targetNode.id ,
+		url: org_url + dataUrl.institution + targetNode.id ,
 		async:true,
 		data:{
 			id:treeNodes[0].id,
@@ -164,29 +170,34 @@ function onDrap(event,treeId,treeNodes,targetNode){
 				return false;
 			}
 			if(data==1){
-				layer.open({
-	                title: "提示",
-	                content: '移动成功！',
-	                skin: 'layui-layer-lana'
-            	});
+				layer.alert('移动成功！'+data.msg,function(index){
+					updateNodes(index);
+				});
+			}else{
+				layer.alert('移动失败！'+data.msg,function(index){
+					updateNodes(index);
+				});
 			}
 		}
 	});
 }
 //取到树结构的数据
-function jsonsData(){
+function jsonsData() {
 	var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
 	var nodes = treeObj.getNodes();
-	var jsonObjs = [];//树状图的所有数据
-	(function jsonsObj(nodes){
-		$.each(nodes,function(i,e){
+	var jsonObjs = []; //树状图的所有数据
+	(function jsonsObj(nodes) {
+		$.each(nodes, function(i, e) {
 			var jsonNode = {};
 			jsonNode.id = e.id;
 			jsonNode.name = e.name;
 			jsonNode.pId = e.pId;
 			jsonNode.index = e.getIndex();
+			jsonNode.open = e.open;
+			jsonNode.previa = e.previa;
+			jsonNode.code = e.code;
 			jsonObjs.push(jsonNode);
-			if(e.children){
+			if(e.children) {
 				jsonsObj(e.children);
 			}
 		});
@@ -201,6 +212,9 @@ function removeHoverDom(treeId, treeNode) {
 };
 
 function addHoverDom(treeId, treeNode) {
+	if (treeNode.level==0) {
+		$("#"+treeNode.tId+"_remove").unbind().remove();
+	}
 	var sObj = $("#" + treeNode.tId + "_span");
 	if(treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
 	var addStr = "<span class='button add' id='addBtn_" + treeNode.tId +
@@ -225,6 +239,34 @@ function OnClick(event, treeId, treeNode) {
 };
 
 $(document).ready(function(){
-	$.fn.zTree.init($("#treeDemo"), setting);
+	$.fn.zTree.init($("#treeDemo"), setting,treeDatas());
 });
 
+function updateNodes(index){
+	layer.close(index);
+	var oldtreedatas = jsonsData();
+	console.log(oldtreedatas);
+	var treedatas = treeDatas();
+	for (var i=0,len=oldtreedatas.length;i<len;i++) {
+		for (var j=0,jlen=treedatas.length;j<jlen;j++) {
+			if(oldtreedatas[i].open&&oldtreedatas[i].id==treedatas[j].id){
+				treedatas[j].open=true;
+			}
+		}
+	}
+	console.log(treedatas);
+	$.fn.zTree.init($("#treeDemo"), setting,treedatas);
+}
+//获取树结构数据
+function treeDatas(){
+	var treedata;
+	$.ajax({
+		type:"get",
+		url:org_url + dataUrl.institutions+"?token="+sessionStorage.token,
+		async:false,
+		success: function(data){
+			treedata =  data;
+		}
+	});
+	return treedata;
+}

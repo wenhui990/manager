@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>微课管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
+		<style type="text/css">
+			body {
+				padding: 20px;
+			}
+			
+			.none {
+				display: none;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			input::-webkit-input-placeholder { /* WebKit browsers */ 
+				font-size:12px;
+			} 
+			input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+				font-size:12px;
+			} 
+			input::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+				font-size:12px;
+			} 
+			input:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+				font-size:12px;
+			}
+			.treeleft{
+				border: 1px solid #E2E2E2;
+				min-height: 500px;
+			}
+			#questionMain .row{margin: 0;}
+			.rightcontent {
+				margin-bottom: 15px;
+				padding: 0 15px 15px;
+			}
+			.questionbutton{
+				margin: 10px 0;
+			}
+			.questionbutton button{
+				margin-right: 15px;
+			}
+			.videolists{
+				border-bottom: 1px solid #eee;
+				margin: 15px 0;
+				padding-bottom: 10px;
+				text-align: center;
+			}
+			.videolist{
+				margin-bottom: 10px;
+			}
+			.video_rolelist{
+				white-space: nowrap;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			}
+			.vlist_content_right{
+				padding-right: 0;
+			}
+			.videolists a{
+				color: #000;
+				text-decoration: none;
+			}
+			.vlist_content{
+				text-align: left;
+			}
+			.video_costlist{
+				text-align: center;
+			}
+			.videobtn{
+				/*border-radius: 5px;*/
+				padding: 1px 3px;
+				margin: 5px 0;
+				/*border: 0;*/
+				/*color: #fff;*/
+			}
+			.videonums{
+				float: right;
+				display: inline-block;
+			}
+			.videonums::after{
+				display: block;
+				content: "";
+				clear: both;
+			}
+			#videonum{
+				width: 50px;
+				border: 0;
+				background: rgba(255,255,255,0);
+				text-align: center;
+				color: #0886f3;
+			}
+			.vlist_title{
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+			.vlist_img{
+				position: relative;
+				left: 0;
+				top: 0;
+			}
+			.vlist_img:hover{
+				
+			}
+			.vlist_img .divshade{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.2);
+			}
+			.newrow{
+				margin-left: 0;
+				margin-right: 0;
+			}
+			.imgwh{
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="videoMain" v-cloak>
+			<div class="row newrow">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-1 control-label">学段：</label>
+						<div class="col-sm-2">
+							<select class="form-control" v-model="stageid">
+								<option value="">请选择</option>
+								<option v-for="(value,key) in stages" :value="key">{{value}}</option>
+							</select>
+						</div>
+						<label for="inputPassword3" class="col-sm-1 control-label">科目:</label>
+						<div class="col-sm-2">
+							<select class="form-control" v-model="courseid">
+								<option value="">请选择</option>
+								<option v-for="(value,key) in courses" :value="key">{{value}}</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="question_code" maxlength="50" placeholder="请输入要查询的微课名称" v-model="videoname">
+						</div>
+						<div class="col-sm-1">
+							<button type="button" class="btn btn-default selectquestion" @click="selectquestion()">查询</button>
+						</div>
+						<div class="col-sm-1 col-sm-offset-1">
+							<a href="javascript:;" @click="upload($event)" class="btn btn-info">上传</a>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 treeleft">
+					<ul id="treeDemo" class="ztree" style="height: 540px;overflow: auto;"></ul>
+				</div>
+				<div class="rightcontent col-sm-9">
+					<div class="row newrow">
+						<ul class="breadcrumb">
+							<li v-for="key in catalogs">
+								<a href="javascript:;">{{key}}</a> <span class="divider"></span>                                                                     
+							</li>
+							<li id="templi">
+								<a href="javascript:;"> </a> <span class="divider">></span>                                                                     
+							</li>
+							<span class="videonums">共<input type="text" id="videonum" readonly v-model="videoNum">个微课</span>
+						</ul>
+						
+					</div>
+					<div class="row newrow">
+						<div class="questionbutton">
+							<button type="submit" class="btn btn-default" @click="backstageTeacher('')">全部</button>
+							<button type="submit" class="btn btn-default" @click="backstageTeacher(1)">后台上传</button>
+							<button type="submit" class="btn btn-default" @click="backstageTeacher(2)">教师上传</button>
+						</div>
+					</div>
+					<div class="row videolists newrow">
+						<div class="videolist col-sm-4" v-for="(video,index) in videodata">
+								<div class="vlist_img">
+									<a :href="video.path" target="_blank">
+										<div class="divshade">
+											<span class="glyphicon glyphicon-play" style="font-size: 50px;color: #666;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);"></span>
+										</div>
+										<img :src="video.cover||'http://linkpad.oss-cn-beijing.aliyuncs.com/27/6c4de02ff36f5fae640161e332321011/newvideoimg.png'" class="imgwh" :height="imgwh" />
+									</a>
+								</div>
+								<div class="vlist_title">
+									<a href="javascript:;" :title="video.title">{{video.title}}</a>
+								</div>
+								<div class="vlist_content">
+									<div class="vlist_content_left col-sm-7">
+										<div class="video_score">
+											<!--{{video.stars}}-->
+											{{("★★★★★☆☆☆☆☆".slice(5 - video.stars, 10 - video.stars))||"★★★★★"}}
+											<!--<span class="glyphicon glyphicon-star"></span>
+											<span class="glyphicon glyphicon-star"></span>
+											<span class="glyphicon glyphicon-star"></span>
+											<span class="glyphicon glyphicon-star"></span>
+											<span class="glyphicon glyphicon-star-empty"></span>-->
+										</div>
+										<div class="video_rolelist">
+											讲师：<span class="video_role" :title="video.author">{{video.author}}</span>
+										</div>
+										<div class="video_timelist">
+											时长：<span class="video_time">{{parseInt(video.duration/60)||0}}</span>分钟
+										</div>
+									</div>
+									<div class="vlist_content_right col-sm-5">
+										<div class="edit_content">
+											<button class="btn btn-info videobtn" @click="eidtVideo(video.id,$event)">编辑</button>
+											<button class="btn btn-info videobtn" @click="delVideo(video.title,video.id,$event)">删除</button>
+										</div>
+										<div class="video_costlist">
+											<span v-if="video.coins==0">免费</span>
+											<span class="video_cost" v-if="video.coins>0">
+												<span class="glyphicon glyphicon-usd"></span>
+												<span class="video_cost_num">{{video.coins}}</span>
+											</span>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.exedit.js"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/onlinevideo/videolist.js" type="text/javascript" charset="utf-8"></script>
+
+</html>

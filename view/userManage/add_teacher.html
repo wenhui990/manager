@@ -59,13 +59,13 @@
 							<span class="warn" style="padding-left: 20px;">姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" value="" maxlength="20" v-model="teacherName"/>
+							<input type="text" class="form-control" value="" maxlength="20" v-model="teacherName" v-bind:readonly="readonly"/>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">手机号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" value="" maxlength="11" v-model="teacherMobile"/>
+							<input type="text" class="form-control" value="" maxlength="11" v-model="teacherMobile" v-bind:readonly="readonly"/>
 						</div>
 					</div>
 					<div class="form-group">
@@ -73,7 +73,7 @@
 							<span class="warn" style="padding-left: 20px;">学校</span>
 						</label>
 						<div class="col-sm-3">
-							<select  class="form-control" v-model="selectedSchool">
+							<select  class="form-control" v-model="selectedSchool" v-on:change="changeschool()" >
 								<option v-for="school in schools" v-bind:value="school.id">
 									{{ school.name }}
 								</option>
@@ -85,7 +85,7 @@
 							<span class="" style="padding-left: 20px;">身份证号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" value="" maxlength="18" v-model="idcard"/>
+							<input type="text" class="form-control" value="" maxlength="18" v-model="idcard" v-bind:readonly="readonly"/>
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="" style="padding-left: 20px;">性别</span>
@@ -132,7 +132,7 @@
 									<td>
 										<select v-model="item.selectedClazz">
 											<option v-for="clazz in item.clazzs" v-bind:value="clazz.id">
-												{{ clazz.name }}
+												{{ clazz.title }}
 											</option>
 										</select>
 									</td>
@@ -151,7 +151,7 @@
 										</select>
 									</td>
 									<td>
-										<a href="javascript:;" class="_a_space forbidden" v-on:click="delClazz($event, index)">删除</a>
+										<a href="javascript:;" class="_a_space forbidden" v-on:click="delBind(index)" v-show="index>0">删除</a>
 									</td>
 								</tr>
 							</table>
@@ -182,90 +182,105 @@
 	<script type="text/javascript">
 		var vvm = null;
 		var commonList = null;
-		var tch = null;
+		var modteacher = null
 		var tchdata = getQueryString('data');
 		if (tchdata){
-			tch = JSON.parse(decodeURI(tchdata));
+			modteacher = JSON.parse(decodeURI(tchdata));
+		}
+		var readonly;
+		var action = getQueryString('action');
+		// 如果是查看，select 不可选
+		if(action == 'view'){
+			readonly = true;
+			$("select").attr("disabled", "disabled"); 
+		}else{
+			readonly = false;
 		}
 
 		$(document).ready(function() {
-			vm_init();
-		    loadSchools();
 		    getCommonList(function(resp){
 				commonList = resp;
-				var obj = {"id":0, "title":"请选择"};
-				vvm.courses.push(obj);
+				vm_init();
+				//课程列表
+				var defaultcourse = {"title":"请选择","id":0};
+				vvm.courses.push(defaultcourse);
 				for (k in commonList['courses']){
 					var obj = {};
 					obj['id'] = parseInt(k);
 					obj['title'] = commonList['courses'][k]
 					vvm.courses.push(obj);
 				}
-
-				//添加第一行的默认班级
-				var defaultbc = newBindClazz();
-				defaultbc['selectedGrade'] = "0";
-				defaultbc["selectedClazz"] = "0";
-				defaultbc['selectedCourse'] = "0";
-				defaultbc['selectedAdvise'] = "2";
-				vvm.bindclazz.push(defaultbc);
+				initTeacher();
 			});
 		});
 
 		function vm_init(){
-			var schools = new Array();
-			var defaultschool = {"name":"请选择", "id":0};
-			schools.push(defaultschool);
-
-			
-
 			vvm = new Vue({
 				el: '#mainbody',
 				data:{
 					teacherName:null,
 					teacherMobile:null,
-					schools:schools,
-					selectedSchool:defaultschool.id,
+					schools:[],
+					selectedSchool:0,
+					schoolclazz:[],
+
 					clazzgroup:[],
 					idcard:null,
 					sex:"",
 					birth:null,
 					courses:[],
-					schoolclazz:[],
+					
 					bindclazz:[],  //绑定的班级
+					readonly:readonly,
 				},
 				components: { 
 					datepicker
 				},
 				methods:{
 					addBind: function(event){
-						if (vvm.selectedSchool == 0){
-							layer.alert('请先选择学校')
+						if (this.readonly){
+							alertMsg('不可编辑');
 							return;
 						}
-
-						var bc = newBindClazz();
-						bc['selectedGrade'] = "0";
-						bc["selectedClazz"] = "0";
-						bc['selectedCourse'] = "0";
-						bc['selectedAdvise'] = "2";
-						vvm.bindclazz.push(bc);
+						if (vvm.selectedSchool == 0){
+							alertMsg('请先选择学校')
+							return;
+						}
+						var nbc = newBindClazz();
+						nbc['grades'] = nbc['grades'].concat(gradesOfSchoolClazz());
+						vvm.bindclazz.push(nbc);
+					},
+					delBind: function(event, index){
+						if (this.readonly){
+							alertMsg("不可编辑");
+							return;
+						}
+						this.bindclazz = this.bindclazz.splice(index, 1)
+					},
+					changeschool: function(){
+						console.log("changeschool: " + this.selectedSchool);
+						getSchoolClazz(function(){
+							var bc = newBindClazz();
+							bc['grades'] = bc['grades'].concat(gradesOfSchoolClazz());
+							vvm.bindclazz = [];
+							vvm.bindclazz.push(bc);
+						}, vvm.selectedSchool);
 					},
 					changegrade: function(event, index){
 						console.log("changegrade: " + index);
-
-						vvm.bindclazz[index]['clazzs'] = [];
-						var sltgd = vvm.bindclazz[index]['selectedGrade'];
-						vvm.bindclazz[index]['clazzs'] = vvm.bindclazz[index]['clazzs'].concat(vvm.clazzgroup[sltgd.toString()]);
-						vvm.bindclazz[index]['selectedClazz'] = "0";
-					},
-					delClazz: function(event, index){
-						this.bindclazz.splice(index, 1)
+						var binditem = vvm.bindclazz[index];
+						var gradeclazz = gradeclazzOfSchoolClazz(binditem['selectedGrade'])
+						binditem['clazzs'] = binditem['clazzs'].concat(gradeclazz);
+						binditem['selectedClazz'] = "0";
 					},
 					submit: function(event){
+						if (this.readonly){
+							alertMsg("不可编辑");
+							return;
+						}
 						var req = {};
-						if (tch){
-							req['id'] = tch['id'];
+						if (modteacher){
+							req['id'] = modteacher['id'];
 						}
 						//检查输入
 						if(!vvm.teacherName){
@@ -323,16 +338,18 @@
 								}
 								req['teacherclasslis'].push(obj);
 							}
+
+							if (hasdupitem(req['teacherclasslis'])){
+								alertMsg("选择了重复的班级和科目，请重新选择");
+								return;
+							}
 							//过滤重复班级
-							req['teacherclasslis'] = filterDupItem(req['teacherclasslis']);
+							// req['teacherclasslis'] = filterDupItem(req['teacherclasslis']);
 						}
 
-						// console.log("req: " + JSON.stringify(req));
-						// return;
-
-						if (tch){
+						if (action == 'edit'){
 							updateTeacher(function(resp){
-				                layer.alert("更新成功", function(){
+				                layer.alert("保存成功", function(){
 				                	window.location.href = "teacher_list.html";
 				                });
 				            }, req);
@@ -341,75 +358,68 @@
 								layer.alert("创建成功", function(){
 				                	window.location.href = "teacher_list.html";
 				                });
-				                // alert("成功");
-				                // window.location.href = "teacher_list.html";
 							}, req);
 						}
-
 					},
 					back: function(event){
 						window.location.href = "teacher_list.html";
 					}
-				},
-				watch:{
-					selectedSchool: function(){
-						console.log("selectedSchool: " + vvm.selectedSchool);
-						loadSchoolclazz(vvm.selectedSchool);
-					}
 				}
 			});
 		}
 
-		function loadSchools(){
+		function initTeacher(){
+			getSchools(function(){
+				if(action == 'edit' || action == 'view'){
+					//编辑，查看
+					vvm.selectedSchool = modteacher['schoolid'];
+					getSchoolClazz(function(){
+						//获取教师信息
+						getTeacherDetail(modteacher['id']);
+
+						// //load 教师的班级信息
+						vvm.bindclazz = [];
+						for (clazz of modteacher['clazzlis']){
+							var c = {};
+							c['selectedGrade'] = clazz['gradeid'];
+							c['selectedClazz'] = clazz['clazzid'];
+							c['selectedCourse'] = clazz['courseid'];
+							//如果有这个值，表明是班主任。
+							if ("adviserid" in clazz){
+								c['selectedAdvise'] = 1;
+							}
+							c['clazzs'] = gradeclazzOfSchoolClazz(c['selectedGrade']);
+							c['grades'] = gradesOfSchoolClazz();
+							vvm.bindclazz.push(c);
+						}
+						console.log("bindclazz: " + JSON.stringify(vvm.bindclazz));
+					}, vvm.selectedSchool);
+				}else{
+					//新建
+					vvm.bindclazz.push(newBindClazz());
+				}
+			});
+		}
+
+		function getSchools(cbfunc){
 			getSchoolTree(function(resp){
+				var defaultschool = {"name":"请选择", "id":0};
+				vvm.schools.push(defaultschool);
 				vvm.schools = vvm.schools.concat(resp['data']);
-
-				if (tch){
-					loadTeacher(tch['id']);
-				}
+				cbfunc(resp);
 			});
 		}
 
-		function loadSchoolclazz(schoolid){
+		function getSchoolClazz(cbfunc, schoolid){
 			getClazz(function(resp){
 				vvm.schoolclazz = resp;
-
-				console.log("vvm.schoolclazz:   " + JSON.stringify(vvm.schoolclazz));
-				vvm.clazzgroup = {};
-				vvm.clazzgroup['0'] = [{"id":0, "name":"请选择"}];
-				for (var i = 0; i < vvm.schoolclazz.length; i++){
-					var item = vvm.schoolclazz[i];
-					if (!(item['gradeid'] in vvm.clazzgroup)){
-						vvm.clazzgroup[item['gradeid']] = [{"id":0, "name":"请选择"}];
-					}
-					var clazz = {};
-					clazz['id'] = item['id'];
-					clazz['name'] = item['name'];
-					vvm.clazzgroup[item['gradeid']].push(clazz);
-				}
-				console.log("clazzgroup: " + JSON.stringify(vvm.clazzgroup));
-
-				//是编辑页，把班级列表展示出来
-				if (tch){
-					for (item of tch['clazzlis']){
-						var newbc = newBindClazz();
-						newbc['selectedGrade'] = item['gradeid'];
-						newbc['clazzs'] = vvm.clazzgroup[newbc['selectedGrade'].toString()];
-						newbc['selectedClazz'] = item['clazzid'];
-						newbc['selectedCourse'] = item['courseid'];
-						if ("adviserid" in item){
-							newbc['selectedAdvise'] = '1';
-						}
-						console.log("newbc: " + JSON.stringify(newbc));
-						vvm.bindclazz.push(newbc);
-					}
-				}
+				// console.log('schoolclazz: ' + JSON.stringify(vvm.schoolclazz));
+				cbfunc(resp);
 			}, schoolid);
 		}
 
-		function loadTeacher(tid){
+		function getTeacherDetail(tid){
 			getTeacher(function(resp){
-				console.log("resp: " + JSON.stringify(resp));
 				vvm.teacherName = resp['name'];
 				vvm.teacherMobile = resp['phone'];
 				vvm.selectedSchool = resp['schoolid'];
@@ -418,9 +428,28 @@
 				if (resp['birth']){
 					var date = new Date(resp['birth']);
 					vvm.birth = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-					console.log("birth: " + vvm.birth);
 				}
 			}, tid);
+		}
+
+		function gradesOfSchoolClazz(){
+			var grades = [];
+			for (clazz of vvm.schoolclazz){
+				var g = {"id": clazz['gradeid'],"title":clazz['gradename']};
+				pushUniqe(g, grades);
+			}
+			return grades;
+		}
+
+		function gradeclazzOfSchoolClazz(gradeid){
+			var clazzes = [];
+			for (clazz of vvm.schoolclazz){
+				if (clazz['gradeid'] == gradeid){
+					var c = {"id":clazz['id'],"title":clazz['name']};
+					clazzes.push(c);
+				}
+			}
+			return clazzes;
 		}
 
 		function newBindClazz(){
@@ -428,23 +457,12 @@
 			bc['grades'] = [];
 			var defaultg = {"id":0, "title":"请选择"};
 			bc['grades'].push(defaultg);
-			for (k in commonList['grades']){
-				if (k in vvm.clazzgroup){
-					var gg = {};
-					gg['id'] = parseInt(k);
-					gg['title'] = commonList['grades'][k];
-					bc['grades'].push(gg);
-				}
-			}
 			bc['clazzs'] = [];
-			var defaultc = {"id":0, "name":"请选择"};
-			bc['clazzs'].push(defaultc);
-
+			bc['clazzs'].push({"id":0, "title":"请选择"});
 			bc['selectedGrade'] = "0";
 			bc["selectedClazz"] = "0";
 			bc['selectedCourse'] = "0";
 			bc['selectedAdvise'] = "2";
-
 			return bc;
 		}
 
@@ -457,6 +475,30 @@
     		}, Object.create(null));
 
     		return filtered;
+		}
+
+		function hasdupitem(items){
+			for(var i = 0; i < items.length; i++){
+				var a = items[i];
+				for(var j = 0; j < items.length; j++){
+					var b = items[j];
+					if (a['clazzid'] == b['clazzid'] && a['courseid'] == b['courseid'] && i!=j){
+						console.log("dup item: " + JSON.stringify(a) + ", " + JSON.stringify(b));
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		//push obj, 但是去重
+		function pushUniqe(obj, list){
+			for (l of list){
+				if (l['id'] == obj['id'] && l['title'] == obj['title']){
+					return;
+				}
+			}
+			list.push(obj);
 		}
 	</script>
 

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>编辑微课</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../plugin/bootstrap-select/css/bootstrap-select.css" />
+		<link rel="stylesheet" href="../../css/common/common_list.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
+
+		<style type="text/css">
+			body {
+				padding: 20px;
+			}
+			
+			.none {
+				display: none;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			
+			.list_btm {
+				padding-top: 20px;
+			}
+			
+			.addknowledge {
+				color: #000;
+				text-decoration: underline;
+			}
+			
+			.ztree1 {
+				margin-top: 0;
+				width: 180px;
+				height: 300px;
+				border: 1px solid #617775;
+				background: #f0f6e4;
+				width: 220px;
+				height: 360px;
+				overflow-y: scroll;
+				overflow-x: auto;
+				"
+
+			}
+			blockquote{border: 0;}
+			.list_btm{border: 0;}
+			.btngroup{
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="main container-fluid" style="overflow:inherit;padding: 0;border: 0;" id="videoMain">
+			
+			<div class="list_btm">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">微课名称：</span>
+						</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="" name="" id="" v-model="videoname" maxlength="50" placeholder="微课名称" />
+						</div>
+					</div>
+				</div>
+				<div class="form-horizontal knowledgelists" v-cloak>
+					<div class="form-group" v-for="(s,index) in knowledges">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">知识点{{index+1}}：</span>
+						</label>
+						<div class="col-sm-2">
+							<select class="form-control stagelist" v-model="stageid" disabled>
+								<option value="">请选择</option>
+								<option v-for="(value,key) in stages" :value="key">{{value}}</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+							<input :id="'prevknowledgeName'+(index+1)" class="form-control knowledgeids" :data-knowid="s.id" @click="showMenu(index+1)" type="text" :value="s.title" readonly>
+						</div>
+						<label class="col-sm-2 control-label text-right" v-if="index>0">
+							<a class="delknowledge" @click="delknowledge()" style="padding-left: 20px;">删除</a>
+						</label>
+					</div>
+				</div>
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+						</label>
+						<div class="col-sm-3">
+							<a href="javascript:;" class="" @click="addKnowledge()" style="padding-left: 20px;text-decoration: underline;">+添加知识点</a>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">微课：</span>
+						</label>
+						<div class="col-sm-8">
+							<input type="file" name="" id="videofile" value="" @change="videoFile($event)" style="display: none;" />
+							<button class="btn btn-sm btn-default videofile">浏览</button>
+							<!--<span>{{videosrcname}}</span>-->
+							<div class="progress progress-video none" style="margin-top: 5px;">
+								<div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">0%
+								</div>
+							</div>
+							<div style="margin-top: 10px;width: 268px;height: 188px;border: 1px solid #eee;">
+								<video width="268" height="188" :src="videosrc" oncanplaythrough="myFunction()" id="video">
+									当前浏览器不支持 video直接播放
+								</video>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">微课图片：</span>
+						</label>
+						<div class="col-sm-8">
+							<input type="file" name="" id="videoimg" value="" @change="videoImgFile($event)" style="display: none;" />
+							<button class="btn btn-sm btn-default videoimg">浏览</button> 建议上传268*188像素的图片
+							<div style="margin-top: 10px;width: 268px;height: 188px;border: 1px solid #eee;position: relative;">
+								<img :src="videoimgsrc" width="268" height="188" alt="图片预览区域" />
+								<div class="progress progress-img none" style="margin-top: 5px;position: absolute;left: 0;bottom: 0;width: 100%;">
+									<div id="progress-bar-img" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">0%
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">适用人群：</span>
+						</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" name="" id="" v-model="videocrowd" maxlength="50" placeholder="请输入适用的人群" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">学习目标：</span>
+						</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" name="" id="" v-model="objectives" maxlength="50" placeholder="请输入学习目标" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">课程介绍：</span>
+						</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" name="" id="" v-model="coursedesc" maxlength="2000" placeholder="请输入课程介绍" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">讲师：</span>
+						</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" name="" id="" v-model="teachername" maxlength="50" placeholder="讲师姓名" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="" style="padding-left: 20px;">讲师介绍：</span>
+						</label>
+						<div class="col-sm-8">
+							<textarea class="form-control" name="" rows="5" style="width: 100%;" v-model="teacherdesc" maxlength="2000" ></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">价格：</span>
+						</label>
+						<div class="col-sm-3">
+							<input class="form-control" type="text" name="" id="" v-model="videoprice" value="0" placeholder="" style="width: 50%;display: inline-block;margin-right: 10px;" />学习币
+						</div>
+					</div>
+				</div>
+				<div class="btngroup">
+					<a href="javacript:;" class="commonbtn save" type="button" @click="save($event)">保存</a>
+					<a href="javascript:;" class="commonbtn back" @click="back($event)" type="button">返回</a>
+				</div>
+			</div>
+		</div>
+		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+			<ul id="treeDemo1" class="ztree ztree1"></ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.exedit.js"></script>
+	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
+	<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+	<script src="../../js/md5.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/onlinevideo/editvideo.js" type="text/javascript" charset="utf-8"></script>
+
+</html>

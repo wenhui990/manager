@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新建章节</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../plugin/layer/skin/layer.css"/>
+	</head>
+	<body>
+		<style type="text/css">
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
+		<div class="main container-fluid" id="chaptermain" v-cloak>
+			<div class="row head">
+				<div class="btngroup">
+					<input class="commonbtn preserve" type="button" value="保存" v-on:click="submit($event)"/>
+					<a href="chapterList.html"><input class="commonbtn" type="button" value="返回"/></a>
+				</div>
+			</div>
+			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;height: auto;">
+				<form class="form-horizontal pad_l_40" role="form">
+					<div class="form-group" style="height: 34px;">
+						<label for="" class="col-sm-2 control-label  warn">知识结构标准</label>
+						<div class="col-sm-3">
+							<label for="mistake_hbe">
+								<input class="" type="radio" name="hbe" id="mistake_hbe" value="2" v-model="selectedTextBookType" v-on:click="reset($event)"/>&nbsp;非课标版
+							</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="hbe">
+								<input class="" type="radio" name="hbe" id="hbe" value="1" v-model="selectedTextBookType" v-on:click="reset($event)"/>&nbsp;课标版
+							</label>
+						</div>
+					</div>
+					<div class="form-group" style="height: 34px;">
+						<label for="" class="col-sm-2 control-label text-center warn">学段</label>
+						<div class="col-sm-3">
+							<select class="form-control _select period" v-model="selectedStage" v-on:change="changestage()">
+								<option v-bind:value="0">请选择</option>
+								<option v-bind:value="2">小学</option>
+								<option v-bind:value="3">初中</option>
+								<option v-bind:value="4">高中</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group" style="height: 34px;">
+						<label for="" class="col-sm-2 control-label text-center warn">科目</label>
+						<div class="col-sm-3">
+							<select class="form-control _select column" v-model="selectedCourse">
+								<option v-for="course in courses" v-bind:value="course.id">
+									{{ course.title }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group no_hbe" style="height: 34px;" v-if="selectedTextBookType==2">
+						<label for="" class="col-sm-2 control-label text-center warn">版本</label>
+						<div class="col-sm-3">
+							<select class="form-control _select version" v-model="selectedEdtion">
+								<option v-for="edition in editions" v-bind:value="edition.id">
+									{{ edition.title }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group no_hbe" style="height: 34px;" v-if="selectedTextBookType==2">
+						<label for="" class="col-sm-2 control-label text-center warn">年级/课本</label>
+						<div class="col-sm-3">
+							<select class="form-control _select classis" v-model="selectedTerm">
+								<option v-for="term in stageterms" v-bind:value="term.id">
+									{{ term.title }}
+								</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../js/commonutil.js" ></script>
+	<script type="text/javascript" src="../../js/checkutil.js" ></script>
+	<script type="text/javascript">
+		var vvm = null;
+
+		$(document).ready(function() {
+			vm_init();
+			getEds();
+		});
+
+		function vm_init(){
+			vvm = new Vue({
+				el: '#chaptermain',
+				data:{
+					courses: [],
+					editions : [],
+					terms: [],
+					stageterms:[],
+					selectedTextBookType: "2",
+					selectedStage: "0",
+					selectedCourse: "0",
+					selectedEdtion: "0",
+					selectedTerm: "0",
+				},
+				methods:{
+					changestage: function(){
+						console.log("stage: " + this.selectedStage);
+						this.stageterms = [];
+						this.stageterms.push({"title":"请选择", "id":0});
+						this.stageterms = vvm.stageterms.concat(mapTerms(this.selectedStage));
+						this.selectedTerm = 0;
+					},
+					submit: function(event){
+						var textbook = {};
+						if (this.selectedTextBookType == 1){
+							if (this.selectedStage == "0"){
+								alertMsg("学段不能为空");
+								return;
+							}
+							if (this.selectedCourse == "0"){
+								alertMsg("科目不能为空");
+								return;
+							}
+							textbook['textbooktype'] = 1;
+							textbook['stageid'] = this.selectedStage;
+							textbook['courseid'] = this.selectedCourse;
+						}else{
+							if (this.selectedStage == "0"){
+								alertMsg("学段不能为空");
+								return;
+							}
+							if (this.selectedCourse == "0"){
+								alertMsg("科目不能为空");
+								return;
+							}
+							if (this.selectedEdtion == "0"){
+								alertMsg("版本不能为空");
+								return;
+							}
+							if (this.selectedTerm == "0"){
+								alertMsg("年级/课本不能为空");
+								return;
+							}
+							textbook['textbooktype'] = 2;
+							textbook['stageid'] = this.selectedStage;
+							textbook['courseid'] = this.selectedCourse;
+							textbook['editionid'] = this.selectedEdtion;
+							textbook['termid'] = this.selectedTerm;
+						}
+						addTextbook(function(resp){
+							commonMsg("创建成功", function(){
+								window.location.href = 'chapterList.html';
+							});
+						}, textbook);
+					},
+					reset: function(event){
+						this.selectedStage = 0;
+						this.selectedCourse = 0;
+						this.selectedEdtion = 0;
+						this.selectedTerm = 0;
+					}
+				}
+			});
+		}
+
+		function getEds(){
+			//FIXME 为了一次取出所有记录，定义一个大数
+			var pagesize = 1000000;
+			var page = 1;
+			getEditions(function (resp){
+				vvm.editions.push({"title":"请选择", "id":0});
+				for (ed of resp['data']){
+					//过滤禁用的版本
+					if (ed['valid'] == "1"){
+						vvm.editions.push(ed);
+					}
+				}
+	            getTms();
+			}, page, pagesize);
+		}
+
+		function getTms(){
+			var pagesize = 1000000;
+			var page = 1;
+			getTerms(function (resp){
+				vvm.terms = vvm.terms.concat(resp['data']);
+				vvm.stageterms.push({"title":"请选择", "id":0});
+				getCrs();
+			}, page, pagesize);
+		}
+
+		function getCrs(){
+			var pagesize = 1000000;
+			var page = 1;
+			getCourses(function(resp){
+				vvm.courses.push({"title":"请选择", "id":0});
+				vvm.courses = vvm.courses.concat(resp['data']);
+			}, page, pagesize);
+		}
+
+		function mapTerms(stage){
+			var tt = [];
+			for (t of vvm.terms){
+				if (t['stageId'] == stage){
+					tt.push(t);
+				}
+			}
+			return tt;
+		}
+
+	</script>
+</html>
+
+
+

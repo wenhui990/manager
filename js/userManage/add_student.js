@@ -56,27 +56,23 @@ var students = new Vue({
 		pnametwo: "", //家长二姓名
 		pphonetwo: "" //家长二电话
 	},
-	beforeCreate: function() {
-		$.ajax({
-			type: "get",
-			url: org_url + dataUrl.studentmanager.schoollist+'?token='+sessionStorage.token,
-			success: function(data) {
-				students.schools = data;
-			}
-		});
-	},
+	//	beforeCreate: function() {
+	//		var _self = this;
+	//		
+	//	},
 	methods: {
-
+		changeschool: function(e) {
+			//			console.log(n + '----' + o);
+			//			if ($(e.target).val()=='') {
+			students.gradeVal = '';
+			students.classVal = '';
+			//			}
+			//			if (n!==undefined) {
+			getGradeClass($(e.target).val());
+			//			}
+		}
 	},
 	watch: {
-		schoolsVal: function(n, o) {
-			console.log(n + '----' + o);
-			if (n=='') {
-				students.gradeVal = '';
-				students.classVal = '';
-			}
-			getGradeClass(n);
-		},
 		gradeVal: function(n, o) {
 			students.classs = allclazzs;
 			console.log(n + '----' + o);
@@ -92,15 +88,16 @@ var students = new Vue({
 	}
 });
 
-function getGradeClass(n){
+function getGradeClass(n) {
+
 	$.ajax({
 		type: "get",
-		url: org_url + dataUrl.clazz.clazz,
+		url: org_url + dataUrl.clazzs,
 		data: {
 			schoolid: n,
 			token: sessionStorage.token
 		},
-		async:false,
+		async: false,
 		success: function(data) {
 			var gdatas = [];
 			var cdatas = [];
@@ -119,6 +116,9 @@ function getGradeClass(n){
 			allclazzs = cdatas;
 			students.grades = gdatas;
 			students.classs = cdatas;
+			//			students.schoolsVal = n;
+			//			students.gradeVal = '';
+			//			students.classVal = '';
 		}
 	})
 }
@@ -126,13 +126,13 @@ function getGradeClass(n){
 function getTime(d) {
 	var now = new Date(d),
 		yy = now.getFullYear(),
-		mm = now.getMonth()+1,
+		mm = now.getMonth() + 1,
 		dd = now.getDate(),
 		h = now.getHours(),
 		m = now.getMinutes(),
 		s = now.getSeconds(),
 		ms = now.getMilliseconds();
-	return (yy + "-" + mm + "-" + dd);
+	return(yy + "-" + mm + "-" + dd);
 }
 if(stuid && stusee) { //查看学生
 	console.log(stuid + '===' + stusee)
@@ -140,32 +140,60 @@ if(stuid && stusee) { //查看学生
 	//	$('input').prop('readonly',true);
 	$('select,input').prop('disabled', true);
 }
+
+//重置密码
+function resetpassword() {
+	$.ajax({
+		url: org_url + dataUrl.resetpass + stuid + '/password' + '?token=' + sessionStorage.token,
+		type: 'put',
+		success: function(data) {
+			if(data.result == 1) {
+				layer.alert('重置成功！');
+			} else {
+				layer.alert('重置失败！');
+			}
+		},
+		error: function(data) {
+			layer.alert('网络错误！重置失败！')
+		}
+	})
+}
+//加载学校列表
+$.ajax({
+	type: "get",
+	url: org_url + dataUrl.schools + '?token=' + sessionStorage.token,
+	async: false,
+	success: function(data) {
+		students.schools = data.data;
+	}
+});
 if(stuid) {
+
 	$.ajax({
 		type: "get",
-		url: org_url + dataUrl.studentmanager.selectstudent,
-		data: {
-			id: stuid,
-			token: sessionStorage.token
-		},
+		url: org_url + dataUrl.student + stuid + "?token=" + sessionStorage.token,
+		async: false,
 		success: function(data) {
-//			getGradeClass(data[0].school,false);
+			getGradeClass(data[0].school);
+			//			getGradeClass(data[0].school,false);
 			students.student_name = data[0].name; //学生姓名
 			students.student_ID = data[0].idcard; //身份证号
 			students.studentSex = data[0].sex; //性别
-			students.student_birth = data[0].birth?getTime(data[0].birth):''; //出生日期
-			students.into_school_date = data[0].regTime?getTime(data[0].regTime):''; //入校时间
+			students.student_birth = data[0].birth ? getTime(data[0].birth) : ''; //出生日期
+			students.into_school_date = data[0].regTime ? getTime(data[0].regTime) : ''; //入校时间
 			students.schoolsVal = data[0].school;
-			if(data[0].parentstr.length){
+			students.gradeVal = data[0].grade;
+			students.classVal = data[0].clazz;
+			if(data[0].parentstr[0]) {
 				students.pnameone = data[0].parentstr[0].name; //家长一姓名
 				students.pphoneone = data[0].parentstr[0].phone; //家长一电话
-				students.relationone = data[0].parentstr[0].relation;
+				students.relationone = data[0].parentstr[0].relation ? data[0].parentstr[0].relation : '';
+			}
+			if(data[0].parentstr[1]) {
 				students.relationtwo = data[0].parentstr[1].relation;
 				students.pnametwo = data[0].parentstr[1].name; //家长二姓名
 				students.pphonetwo = data[0].parentstr[1].phone; //家长二电话
 			}
-			students.gradeVal = data[0].grade;
-			students.classVal = data[0].clazz;
 		}
 	})
 }
@@ -217,32 +245,30 @@ function IdentityCodeValid(code) {
 	} else if(!city[code.substr(0, 2)]) {
 		tip = "地址编码错误";
 		pass = false;
+	} else {
+		//18位身份证需要验证最后一位校验位
+		if(code.length == 18) {
+			code = code.split('');
+			//∑(ai×Wi)(mod 11)
+			//加权因子
+			var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+			//校验位
+			var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+			var sum = 0;
+			var ai = 0;
+			var wi = 0;
+			for(var i = 0; i < 17; i++) {
+				ai = code[i];
+				wi = factor[i];
+				sum += ai * wi;
+			}
+			var last = parity[sum % 11];
+			if(parity[sum % 11] != code[17]) {
+				tip = "校验位错误";
+				pass = false;
+			}
+		}
 	}
-	//  else{
-	//      //18位身份证需要验证最后一位校验位
-	//      if(code.length == 18){
-	//          code = code.split('');
-	//          //∑(ai×Wi)(mod 11)
-	//          //加权因子
-	//          var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
-	//          //校验位
-	//          var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
-	//          var sum = 0;
-	//          var ai = 0;
-	//          var wi = 0;
-	//          for (var i = 0; i < 17; i++)
-	//          {
-	//              ai = code[i];
-	//              wi = factor[i];
-	//              sum += ai * wi;
-	//          }
-	//          var last = parity[sum % 11];
-	//          if(parity[sum % 11] != code[17]){
-	//              tip = "校验位错误";
-	//              pass =false;
-	//          }
-	//      }
-	//  }
 	if(!pass) layer.alert(tip);
 	return pass;
 }
@@ -286,7 +312,7 @@ $(function() {
 
 	//验证身份证号码
 	$('#student_ID').blur(function() {
-		IdentityCodeValid($(this).val());
+		IdentityCodeValid($(this).val().replace(/x/,'X'));
 	});
 
 	//点击新建保存     // 编辑保存学生
@@ -339,7 +365,7 @@ $(function() {
 			});
 			return false;
 		}
-		IdentityCodeValid(student_ID);
+		IdentityCodeValid(student_ID.replace(/x/,'X'));
 		if(isphone) {
 			if($('#patriarch1_name').val() == '' && $(this).attr('id') == 'patriarch1_phone') {
 				layer.msg('请输入家长一姓名');
@@ -357,22 +383,22 @@ $(function() {
 			studentJson.pnametwo = pnametwo;
 			studentJson.pphonetwo = pphonetwo;
 			studentJson.relationtwo = relationtwo;
-			studentJson.token = sessionStorage.token;
+			//			studentJson.token = sessionStorage.token;
 		}
 		if(stuid) studentJson.id = stuid;
 		$.ajax({
-			type: stuid?"put":"post",
-			url: org_url + dataUrl.studentmanager.addstudent,
+			type: stuid ? "put" : "post",
+			url: stuid ? org_url + dataUrl.student + '?token=' + sessionStorage.token : org_url + dataUrl.student + '?token=' + sessionStorage.token,
 			contentType: "application/json",
 			data: JSON.stringify(studentJson),
 			success: function(data) {
 				if(data == 1) {
-					if(stuid){
-						layer.alert('修改成功！',function(){
+					if(stuid) {
+						layer.alert('修改成功！', function() {
 							window.location.href = 'student_list.html';
 						})
-					}else{
-						layer.alert('新建成功！',function(){
+					} else {
+						layer.alert('新建成功！', function() {
 							window.location.href = 'student_list.html';
 						})
 					}

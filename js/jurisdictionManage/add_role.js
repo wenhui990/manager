@@ -21,7 +21,7 @@ $(function (){
 	if (id) {
 		$.ajax({
 			type:"get",
-			url:org_url + dataUrl.jurisdiction.role+id,
+			url:org_url + dataUrl.role+id,
 			data:{token: sessionStorage.token},
 			success: function(data){
 				$('#admin_name').val(data.name);
@@ -64,13 +64,13 @@ $(function (){
 			var data ={
         		name: $('#admin_name').val(),
         		note: $('#admin_note').val(),
-        		token: sessionStorage.token
+//      		token: sessionStorage.token
        		};
-       		var roleurl = org_url + dataUrl.jurisdiction.role;
+       		var roleurl = org_url + dataUrl.role;
 			if(id) data.id = id;
 			$.ajax({
             	type: id?"put":"post",
-            	url: id?roleurl+id:roleurl,
+            	url: id?roleurl+id+"?token="+sessionStorage.token:roleurl+"?token="+sessionStorage.token,
             	data: data,
             	async:true,
             	success: function(data){

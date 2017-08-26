@@ -11,13 +11,13 @@ Array.prototype.removeRepeatAttr = function() {
 		}
 	};
 }
-var page = 1,
-	pagesize = 10,
-	pagecount = 10,
+var pagecount = 10,
 	allgrage, allclazz;
 var students = new Vue({
 	el: '#studentMain',
 	data: {
+		page:1,
+		pagesize:10,
 		studentLists: '', //学生列表
 		schools: '', //学校列表
 		grades: '', //年级
@@ -37,12 +37,13 @@ var students = new Vue({
 		iswarning: false,
 		checkItem: true,
 		studentdata: {},
-		checksubmit: true
+		checksubmit: true,
+		checksubmit1: true
 	},
 	beforeCreate: function() {
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.studentmanager.schoollist+'?token='+sessionStorage.token,
+			url: org_url + dataUrl.schools+'?token='+sessionStorage.token,
 			success: function(data) {
 				if (data.code=='10010') {
 					layer.alert('身份验证失败！请重新登录！',{yes:function(){
@@ -52,7 +53,7 @@ var students = new Vue({
 					}});
 					return false;
 				}
-				students.schools = data;
+				students.schools = data.data;
 			}
 		});
 	},
@@ -67,13 +68,13 @@ var students = new Vue({
 		},
 		searchstudent: function(e) { //搜索学生
 			students.studentdata = {
-				page: page,
-				size: pagesize,
+				page: students.page,
+				size: students.pagesize,
 				school: students.schoolsVal,
 				clazz: students.classVal,
 				grade: students.gradeVal,
 				valid: $('#valid').val(),
-				name: $('#studentname').val(),
+				name: $('#studentname').val().trim(),
 				token: sessionStorage.token
 			}
 			pages(students.studentdata);
@@ -82,13 +83,13 @@ var students = new Vue({
 			window.location.href = 'student_add.html?id=' + id + '&' + see + '=' + see;
 		},
 		exportStudent: function(e) { //导出学生
-			$(e.target).prop('href', org_url + dataUrl.studentmanager.exportstudent + '?school=' + students.schoolsVal + '&clazz=' + students.classVal + '&grade' + students.gradeVal + '&valid=' + $("#valid").val() + '&name=' + $('#studentname').val() + '&token=' + sessionStorage.token);
+			$(e.target).prop('href', org_url + dataUrl.exportstudent + '?school=' + students.schoolsVal + '&clazz=' + students.classVal + '&grade' + students.gradeVal + '&valid=' + $("#valid").val() + '&name=' + $('#studentname').val().trim() + '&token=' + sessionStorage.token);
 		},
-		delStudent: function(id, e) { //删除学生
+		delStudent: function(id, e,ind) { //删除学生
 			layer.confirm('是否删除该帐号？', function() {
 				$.ajax({
 					type: 'delete',
-					url: org_url + dataUrl.studentmanager.addstudent + id+'?token='+sessionStorage.token,
+					url: org_url + dataUrl.student + id+'?token='+sessionStorage.token,
 					success: function(data) {
 						if (data.code=='10010') {
 							layer.alert('身份验证失败！请重新登录！',{yes:function(){
@@ -99,8 +100,14 @@ var students = new Vue({
 							return false;
 						}
 						if(data == 1) {
-							layer.alert('删除成功！');
-							$(e.target).parents('tr').remove();
+							layer.alert('删除成功！',function(index){
+								layer.close(index);
+								$(e.target).parents('tr').remove();
+								if (ind==0) {
+									pages();
+								}
+							});
+							
 						} else {
 							layer.alert('删除失败！');
 						}
@@ -113,7 +120,7 @@ var students = new Vue({
 			var reversevalid = (s['valid'] == "1" ? "0":"1");
 			var ids = [s['id']];
 			var data = {"id":ids.join(","), "valid":reversevalid};
-			var url = org_url + dataUrl["studentmanager"]["batchChange"]+"?token="+sessionStorage.token;
+			var url = org_url + dataUrl.studentstatus+"?token="+sessionStorage.token;
 			$.ajax({
 				type: 'post',
 				url: url,
@@ -129,10 +136,10 @@ var students = new Vue({
 						return false;
 					}
 					if(data == 1) {
-						layer.alert('成功');
+						layer.alert(reversevalid==0?'禁用成功':'启用成功');
 						s['valid'] = reversevalid;
 					} else {
-						layer.alert('失败！');
+						layer.alert(reversevalid==0?'禁用失败':'启用失败');
 					}
 				}
 			})
@@ -152,6 +159,10 @@ var students = new Vue({
 			gradelist(n, 'grades', 'classs');
 		},
 		schoolsVal1: function(n, o) {
+			if (n=='') {
+				students.gradeVal1 = '';
+				students.classVal1 = '';
+			}
 			if (students.schoolsVal1 != ''&&students.gradeVal1 != ''&&students.classVal1 != '') {
 				students.checksubmit = false;
 				console.log(students.checksubmit)
@@ -161,6 +172,9 @@ var students = new Vue({
 			gradelist(n, 'grades1', 'classs1');
 		},
 		gradeVal: function(n, o) {
+			if (n=='') {
+				students.classVal = '';
+			}
 			students.classs = allclazz;
 			var len = students.classs.length,
 				tempclass = [];
@@ -172,6 +186,9 @@ var students = new Vue({
 			students.classs = tempclass;
 		},
 		gradeVal1: function(n, o) {
+			if (n=='') {
+				students.classVal1 = '';
+			}
 			if (students.schoolsVal1 !== ''&&students.gradeVal1 !== ''&&students.classVal1 !== '') {
 				students.checksubmit = false;
 			}else{
@@ -188,7 +205,8 @@ var students = new Vue({
 			students.classs1 = tempclass;
 			console.log(students.classs1)
 		},
-		classVal1: function(){
+		classVal1: function(n,o){
+			console.log(n)
 			if (students.schoolsVal1 !== ''&&students.gradeVal1 !== ''&&students.classVal1 !== '') {
 				students.checksubmit = false;
 			}else{
@@ -201,7 +219,7 @@ console.log(students.checksubmit)
 function gradelist(n, g, c) {
 	$.ajax({
 		type: "get",
-		url: org_url + dataUrl.clazz.clazz,
+		url: org_url + dataUrl.clazzs,
 		data: {
 			schoolid: n,
 			token: sessionStorage.token
@@ -232,7 +250,7 @@ function gradelist(n, g, c) {
 			allgrage = gdatas;
 			allclazz = cdatas;
 			students[g] = gdatas;
-			students[c] = cdatas;
+//			students[c] = cdatas;
 		}
 	})
 }
@@ -246,14 +264,14 @@ function pages(datas) {
 		datajson = datas;
 	} else {
 		datajson = {
-			page: page,
-			size: pagesize,
+			page: students.page,
+			size: students.pagesize,
 			token: sessionStorage.token
 		}
 	}
 	$.ajax({
 		type: "get",
-		url: org_url + dataUrl.studentmanager.studentlist,
+		url: org_url + dataUrl.students,
 		data: datajson,
 		success: function(data) {
 			if (data.code=='10010') {
@@ -267,17 +285,20 @@ function pages(datas) {
 			students.studentLists = data.data;
 			pagecount = data.total;
 			$('#pageToolbar').Paging({
-				pagesize: pagesize,
+				page:students.page,
+				pagesize: students.pagesize,
 				count: pagecount,
 				toolbar: true,
 				hash: true,
 				callback: function(page, size, count) {
+//					students.pagesize=size;
+//					students.page=page;
 					datajson.page = page;
 					datajson.size = size;
 					pagesize = size;
 					$.ajax({
 						type: "get",
-						url: org_url + dataUrl.studentmanager.studentlist,
+						url: org_url + dataUrl.students,
 						data: datajson,
 						success: function(data) {
 							students.studentLists = data.data;
@@ -285,11 +306,13 @@ function pages(datas) {
 					});
 				},
 				changePagesize: function(ps) {
+					console.log(datajson)
+					datajson.page = 1;
 					datajson.size = ps;
 					pagesize = ps;
 					$.ajax({
 						type: "get",
-						url: org_url + dataUrl.studentmanager.studentlist,
+						url: org_url + dataUrl.students,
 						data: datajson,
 						success: function(data) {
 							students.studentLists = data.data;
@@ -321,32 +344,50 @@ function pages(datas) {
 //		}
 
 //点击禁用用户
-function off() {
-	layer.open({
-		title: "",
-		content: '确定禁用该用户吗？',
-		skin: 'layui-layer-lana',
-		shadeClose: 'true',
-		btn: ['确定', "取消"],
-		yes: function(index, layero) {
-			layer.close(index);
-			students.v
-		},
-		btn2: function(index, layero) {
-			//按钮【按钮二】的回调
-			layer.close(index);
-		},
-		cancel: function() {
-			//右上角关闭回调
-		}
-	});
-}
+//function off() {
+//	layer.open({
+//		title: "",
+//		content: '确定禁用该用户吗？',
+//		skin: 'layui-layer-lana',
+//		shadeClose: 'true',
+//		btn: ['确定', "取消"],
+//		yes: function(index, layero) {
+//			layer.close(index);
+//			students.v
+//		},
+//		btn2: function(index, layero) {
+//			//按钮【按钮二】的回调
+//			layer.close(index);
+//		},
+//		cancel: function() {
+//			//右上角关闭回调
+//		}
+//	});
+//}
 
 //导入用户
 $('.importStudent').click(function() {
 	$('#toStudent').modal('show');
 	$('.modal-title').text('导入选择！');
+	students.schoolsVal1='';
+	students.gradeVal1='';
+	students.classVal1='';
+	$('#student_file').val('');
 });
+
+ $('#student_file').change(function(){
+ 	var fd = new FormData();
+	fd.append('file', $('#student_file')[0].files[0]);
+	var filename = $('#student_file')[0].files[0].name;
+	console.log(filename.indexOf('xls'))
+	if (filename.indexOf('xls')>-1||filename.indexOf('xlsx')>-1) {
+		return true;
+	}else{
+		layer.alert('只能上传excel文件！');
+		return false;
+	}
+ })
+
 //导入确定
 $("#toStudentOk").click(function() {
 	if (students.schoolsVal1=='') {
@@ -363,6 +404,12 @@ $("#toStudentOk").click(function() {
 	}
 	var fd = new FormData();
 	fd.append('file', $('#student_file')[0].files[0]);
+//	var filename = $('#student_file')[0].files[0].name;
+//	if (filename.split('.')[1].indexOf('xls')<0) {
+//		layer.alert('只能上传excel文件！');
+//		return false;
+//	}
+//	console.log($('#student_file')[0].files[0])
 	var data = {
 		school: students.schoolsVal1,
 		clazz: students.classVal1,
@@ -373,9 +420,10 @@ $("#toStudentOk").click(function() {
 		layer.alert('请选择上传文件！');
 		return false;
 	}
+//	return;
 	$.ajax({
 		type: "post",
-		url: org_url + dataUrl.studentmanager.excelfileup + '?school=' + students.schoolsVal1 + '&clazz=' + students.classVal1 + '&grade=' + students.gradeVal1+'&token='+sessionStorage.token,
+		url: org_url + dataUrl.tostudent + '?school=' + students.schoolsVal1 + '&clazz=' + students.classVal1 + '&grade=' + students.gradeVal1+'&token='+sessionStorage.token,
 		data: fd,
 		processData: false,
 		contentType: false,
@@ -391,23 +439,29 @@ $("#toStudentOk").click(function() {
 			console.log(data)
 			if(data == 1) {
 				layer.open({
-					title: "导入成功！",
-					content: '<div>'+data.result+'</div><br /><a href='+org_url+dataUrl.studentmanager.downstudents+'?filename="'+data.filename+' class="btn btn-info btn-block">查看导入结果</a>',
+					title: "导入结果！",
+					content: '<div>'+(data.result?data.result:"")+'</div><br /><a href="'+org_url+dataUrl.resultstudent+'?filename='+data.filename+'&token='+sessionStorage.token+'" class="btn btn-info btn-block">查看导入结果</a>',
 					skin: 'layui-layer-lana',
 					area: ['auto', 'auto'],
 					shadeClose: false,
 					fixed: false,
 					btn: [],
+					cancel:function(){
+						pages();
+					},
 				});
 			} else {
 				layer.open({
-					title: "导入失败！",
-					content: '<div>'+data.result+'</div><br /><a href="'+org_url+dataUrl.studentmanager.downstudents+'?filename='+data.filename+'&token='+sessionStorage.token+'" class="btn btn-info btn-block">查看导入结果</a>',
+					title: "导入结果！",
+					content: '<div>'+(data.result?data.result:"")+'</div><br /><a href="'+org_url+dataUrl.resultstudent+'?filename='+data.filename+'&token='+sessionStorage.token+'" class="btn btn-info btn-block">查看导入结果</a>',
 					skin: 'layui-layer-lana',
 					area: ['auto', 'auto'],
 					shadeClose: false,
 					fixed: false,
 					btn: [],
+					cancel:function(){
+						pages();
+					},
 				});
 			}
 
@@ -418,8 +472,11 @@ $("#toStudentOk").click(function() {
 })
 
 //批量调班,禁用
-var batchdata, batchsuccees, batchloser;
+var batchdata={}, batchsuccees, batchloser;
 $('.batchChangeShift,.batchForbidden').click(function() {
+	students.schoolsVal1='';
+	students.gradeVal1='';
+	students.classVal1='';
 	$('.checked_student_lists').html('');
 	if($('.checkItem:checked').length < 1) {
 		$('.checked_student_lists').html('没有选择学生');
@@ -442,19 +499,17 @@ $('.batchChangeShift,.batchForbidden').click(function() {
 	console.log($(this).attr('class'))
 	if($(this).attr('class').indexOf('batchForbidden') > -1) { //禁用
 		$('.jinyong').hide();
+		$('#batchChangeOk').attr('disabled',false);
 		$('#table_p').css('height', '200px');
-		batchdata = {
-			valid: 0,
-		};
+		batchdata.valid=0;
 		$('.modal-title').text('禁用用户');
 		batchsuccees = '禁用成功！';
 		batchloser = '禁用失败！';
+		
 	} else { //调班
 		$('.jinyong').show();
 		$('#table_p').css('height', '150px');
-		batchdata = {
-			clazzid: students.classVal1,
-		};
+		batchdata.clazzid=students.classVal1;
 		$('.modal-title').text('调班');
 		batchsuccees = '调班成功！';
 		batchloser = '调班失败！';
@@ -468,11 +523,12 @@ $(document).on('click', '#batchChangeOk', function() {
 		batchChange.push($(e).attr('data-id'));
 	});
 	batchdata.id = batchChange.toString();
-	batchdata.token = sessionStorage.token;
+	batchdata.clazzid=students.classVal1;
+//	batchdata.token = sessionStorage.token;
 	console.log(batchChange.toString() + '==' + students.classVal1)
 	$.ajax({
 		type: "post",
-		url: org_url + dataUrl.studentmanager.batchChange,
+		url: org_url + dataUrl.studentstatus+'?token='+sessionStorage.token,
 		contentType: "application/json",
 		data: JSON.stringify(batchdata),
 		success: function(data) {

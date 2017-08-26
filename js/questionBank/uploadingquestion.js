@@ -1,9 +1,11 @@
+questionvue.courseId = getUrlParams().courseid;	
+var knowledgeids = [];
 var $importer = function() {
 	var $importer = $('#importer');
 	var $back = $importer.find('.title b.back');
 	var $content = $importer.find('.content');
 	var $blockquote = $content.find('.pasteboard blockquote');
-	var $parseDoc = $importer.find("#parseDoc");
+//	var $parseDoc = $importer.find("#savequestion");
 
 	//--------------------------------------------------[提取试题]
 	var parseQuestions = function(data) {
@@ -47,7 +49,7 @@ var $importer = function() {
 							typical: 0,
 							category: '',
 							difficulty: 0,
-							expense:''
+//							expense:''
 						};
 						questions.push(question);
 						break;
@@ -60,15 +62,15 @@ var $importer = function() {
 					case '解析':
 						currentFieldName = 'analysis';
 						break;
-					case '考点':
-						currentFieldName = 'knowledges';
-						break;
+//					case '考点':
+//						currentFieldName = 'knowledges';
+//						break;
 					case '难度':
 						currentFieldName = 'difficulty';
 						break;
-					case '限时':
-						currentFieldName = 'expense';
-						break;
+//					case '限时':
+//						currentFieldName = 'expense';
+//						break;
 					case '来源':
 						currentFieldName = 'from';
 						break;
@@ -89,20 +91,20 @@ var $importer = function() {
 					case 'options':
 						question.options = [];
 						break;
-					case 'knowledges':
-						question.knowledges = [];
-						fieldValue.split(/\s*[,，]\s*/).forEach(function(name) {
-							if(name = name.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')) {
-								question.knowledges.push(name);
-							}
-						});
-						break;
+//					case 'knowledges':
+//						question.knowledges = [];
+//						fieldValue.split(/\s*[,，]\s*/).forEach(function(name) {
+//							if(name = name.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')) {
+//								question.knowledges.push(name);
+//							}
+//						});
+//						break;
 					case 'difficulty':
 						question.difficulty = +fieldValue;
 						break;
-					case 'expense':
-						question.expense = fieldValue;
-						break;
+//					case 'expense':
+//						question.expense = fieldValue;
+//						break;
 					case 'from':
 						question.from = fieldValue;
 						break;
@@ -130,11 +132,11 @@ var $importer = function() {
 
 		// 修正与检查。
 		var errorMessages = [];
-		var parseTimeLimit = function(expense) {
-			var match = expense.match(/(?:(\d+)分)?(?:(\d+)秒)?/);
-			console.log(match);
-			return match ? ((+match[1] || 0) * 60 + (+match[2] || 0)) * 1000 : 0;
-		};
+//		var parseTimeLimit = function(expense) {
+//			var match = expense.match(/(?:(\d+)分)?(?:(\d+)秒)?/);
+//			console.log(match);
+//			return match ? ((+match[1] || 0) * 60 + (+match[2] || 0)) * 1000 : 0;
+//		};
 		questions.forEach(function(question) {
 			var questionPreview = question.title.replace(/<img[^>]+>/g, '[...]');
 			if(question.redundant) {
@@ -174,18 +176,18 @@ var $importer = function() {
 			if(question.difficulty < 0 || question.difficulty > 1) {
 				errorMessages.push('本题难度超出范围（0-1）！\n题干：' + questionPreview + '\n难度：' + question.difficulty);
 			}
-			if(question.expense) {
-				question.expense = parseTimeLimit(question.expense);
-				console.warn(question.expense);
-				if(question.expense === 0) {
-					errorMessages.push('本题限时设定错误！\n题干：' + questionPreview + '\n限时：' + question.expense);
-				}
-			} else {
-				errorMessages.push('本题未指定限时！\n题干：' + questionPreview);
-			}
-			if(question.from && !/\d+\.\S+/.test(question.from)) {
-				errorMessages.push('本题来源格式错误！\n题干：' + questionPreview + '\n来源：' + question.from);
-			}
+//			if(question.expense) {
+//				question.expense = parseTimeLimit(question.expense);
+//				console.warn(question.expense);
+//				if(question.expense === 0) {
+//					errorMessages.push('本题限时设定错误！\n题干：' + questionPreview + '\n限时：' + question.expense);
+//				}
+//			} else {
+//				errorMessages.push('本题未指定限时！\n题干：' + questionPreview);
+//			}
+//			if(question.from && !/\d+\.\S+/.test(question.from)) {
+//				errorMessages.push('本题来源格式错误！\n题干：' + questionPreview + '\n来源：' + question.from);
+//			}
 		});
 
 		if(errorMessages.length) {
@@ -196,6 +198,7 @@ var $importer = function() {
 			questions[i].courseid = questionvue.courseId;
 			questions[i].tag = questionvue.picked;
 			questions[i].scope = 1;
+			questions[i].knowledges=knowledgeids;
 //			if(questions[i].options){
 //				if(questions[i].options.length > 0) {
 //					questions[i].options = JSON.stringify(questions[i].options);
@@ -213,7 +216,7 @@ var $importer = function() {
 			oAjax = new ActiveXObject("Microsoft.XMLHTTP");
 		};
 		//post方式打开文件 
-		oAjax.open('post', org_url + dataUrl.questionbank.addquestion + '?token='+sessionStorage.token+'&_ht=' + Math.random(), true);
+		oAjax.open('post', org_url + dataUrl.question + '?token='+sessionStorage.token+'&_ht=' + Math.random(), true);
 		// post相比get方式提交多了个这个
 		oAjax.setRequestHeader("Content-type", "application/json");
 		// post发送数据
@@ -247,61 +250,75 @@ var $importer = function() {
 
 	};
 
-//	$parseDoc.on("click", function(e) {
-//		var questions = null;
-//		try {
-//			questions = parseQuestions($blockquote.getMinimalisticFormatedContent());
-//		} catch(e) {
-//			alert(e.message);
-//		} finally {
-//			$content.removeClass('processing');
-//			$blockquote.innerHTML = '';
-//			console.log('questions:'+questions.length)
-//			if(questions && questions.length) {
-//				$blockquote.blur();
-//				$importer.fire('found', {
-//					result: questions
-//				});
-//			} else {
-//				alert('提取试题失败！\n请确认粘贴的内容符合约定的格式。\n具体情况请参考“试题模版”。');
-//				$blockquote.focus();
-//			}
-//		}
-//	});
-
-	$blockquote.on('keydown', function(e) {
-			var which = e.which;
-			if(!(e.ctrlKey && which === 86 || which >= 112 && which <= 123)) {
-				e.preventDefault();
-			}
-		})
-		.on('drop', function(e) {
-			e.preventDefault();
-		})
-		.on('paste', function() {
-			$content.addClass('processing');
-		})
-		.on('paste:idle(1000)', function() {
-			var questions = null;
-			try {
-				questions = parseQuestions($blockquote.getMinimalisticFormatedContent());
-			} catch(e) {
-				alert(e.message);
-			} finally {
-				console.log('questions:'+questions.length)
-				$content.removeClass('processing');
-				$blockquote.innerHTML = '';
-				if(questions && questions.length) {
-					$blockquote.blur();
-					$importer.fire('found', {
-						result: questions
-					});
-				} else {
-					alert('提取试题失败！\n请确认粘贴的内容符合约定的格式。\n具体情况请参考“试题模版”。');
-					$blockquote.focus();
-				}
+	jQuery(document).on("click","#savequestion",function(e) {
+		jQuery.each(jQuery('.knowledgeids'), function(i,e) {
+			if (!isNaN(jQuery(e).attr('data-knowid')*1)) {
+				knowledgeids.push(jQuery(e).attr('data-knowid')*1);
 			}
 		});
+		console.log(knowledgeids)
+		console.log(knowledgeids)
+		if(knowledgeids&&knowledgeids.length<1){
+			layer.alert('请选择知识点');
+			return false;
+		}else if (jQuery('blockquote').text()=='') {
+			layer.alert('请粘贴题库到指定区域!');
+			return false;
+		}
+		var questions = null;
+		try {
+			questions = parseQuestions($blockquote.getMinimalisticFormatedContent());
+		} catch(e) {
+			alert(e.message);
+		} finally {
+			$content.removeClass('processing');
+			$blockquote.innerHTML = '';
+			console.log('questions:'+questions.length)
+			if(questions && questions.length) {
+				$blockquote.blur();
+				$importer.fire('found', {
+					result: questions
+				});
+			} else {
+				layer.alert('提取试题失败！\n请确认粘贴的内容符合约定的格式。\n具体情况请参考“试题模版”。');
+				$blockquote.focus();
+			}
+		}
+	});
+
+//	$blockquote.on('keydown', function(e) {
+//			var which = e.which;
+//			if(!(e.ctrlKey && which === 86 || which >= 112 && which <= 123)) {
+//				e.preventDefault();
+//			}
+//		})
+//		.on('drop', function(e) {
+//			e.preventDefault();
+//		})
+//		.on('paste', function() {
+//			$content.addClass('processing');
+//		})
+//		.on('paste:idle(1000)', function() {
+//			var questions = null;
+//			try {
+//				questions = parseQuestions($blockquote.getMinimalisticFormatedContent());
+//			} catch(e) {
+//				alert(e.message);
+//			} finally {
+//				console.log('questions:'+questions.length)
+//				$content.removeClass('processing');
+//				$blockquote.innerHTML = '';
+//				if(questions && questions.length) {
+//					$blockquote.blur();
+//					$importer.fire('found', {
+//						result: questions
+//					});
+//				} else {
+//					alert('提取试题失败！\n请确认粘贴的内容符合约定的格式。\n具体情况请参考“试题模版”。');
+//					$blockquote.focus();
+//				}
+//			}
+//		});
 
 	// //--------------------------------------------------[取消导入]
 	//   $back.on('click', function() {

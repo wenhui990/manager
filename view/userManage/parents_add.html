@@ -76,14 +76,14 @@
 						</label>
 						<div class="col-sm-3">
 							<input type="hidden" id="parents_id" value="" />
-							<input type="text" name="parents_name" id="parents_name" class="form-control" value="" />
+							<input type="text" name="parents_name" maxlength="20" id="parents_name" class="form-control" value="" />
 						</div>
 
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">家长手机号</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="parents_phone" id="parents_phone" class="form-control" value="" />
+							<input type="text" name="parents_phone" maxlength="11" id="parents_phone" class="form-control" value="" />
 						</div>
 					</div>
 
@@ -102,9 +102,6 @@
 							<div class="col-sm-3">
 								<select class=" form-control organization schoolLists">
 									<option value="">请选择</option>
-									<option value="2">县教育局</option>
-									<option value="3">直属教育局</option>
-									<option value="4">市教育局</option>
 								</select>
 							</div>
 							<label class="col-sm-2 control-label text-right">
@@ -113,9 +110,6 @@
 							<div class="col-sm-3">
 								<select class=" form-control organization gradeLists">
 									<option value="">请选择</option>
-									<option value="2">一年级</option>
-									<option value="3">二年级</option>
-									<option value="4">三年级</option>
 								</select>
 							</div>
 						</div>
@@ -126,9 +120,6 @@
 							<div class="col-sm-3">
 								<select class=" form-control organization classGradeLists">
 									<option value="">请选择</option>
-									<option value="2">一年级1班</option>
-									<option value="3">二年级2班</option>
-									<option value="4">三年级3班</option>
 								</select>
 							</div>
 							<label class="col-sm-2 control-label text-right">
@@ -137,9 +128,6 @@
 							<div class="col-sm-3">
 								<select class=" form-control organization studentLists">
 									<option value="">请选择</option>
-									<option value="2">张三</option>
-									<option value="3">李四</option>
-									<option value="4">王二麻子</option>
 								</select>
 							</div>
 						</div>
@@ -172,7 +160,7 @@
 								</label>
 							</div>
 							<div class="col-sm-2">
-								<input type="button" name="" class="change_relate" value="删除" />
+								<input type="button" name="" class="change_relate none" value="删除" />
 							</div>
 						</div>
 						
@@ -202,9 +190,6 @@
 				<div class="col-sm-3">
 					<select class=" form-control organization schoolLists">
 						<option value="">请选择</option>
-						<option value="2">县教育局</option>
-						<option value="3">直属教育局</option>
-						<option value="4">市教育局</option>
 					</select>
 				</div>
 				<label class="col-sm-2 control-label text-right">
@@ -213,9 +198,6 @@
 				<div class="col-sm-3">
 					<select class=" form-control organization gradeLists">
 						<option value="">请选择</option>
-						<option value="2">一年级</option>
-						<option value="3">二年级</option>
-						<option value="4">三年级</option>
 					</select>
 				</div>
 			</div>
@@ -226,9 +208,6 @@
 				<div class="col-sm-3">
 					<select class=" form-control organization classGradeLists">
 						<option value="">请选择</option>
-						<option value="2">一年级1班</option>
-						<option value="3">二年级2班</option>
-						<option value="4">三年级3班</option>
 					</select>
 				</div>
 				<label class="col-sm-2 control-label text-right">
@@ -237,9 +216,6 @@
 				<div class="col-sm-3">
 					<select class=" form-control organization studentLists">
 						<option value="">请选择</option>
-						<option value="2">张三</option>
-						<option value="3">李四</option>
-						<option value="4">王二麻子</option>
 					</select>
 				</div>
 			</div>

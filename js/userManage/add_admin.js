@@ -1,4 +1,3 @@
-
 //获取url中字段
 function getUrlParams() {
 	var params = {};
@@ -13,13 +12,17 @@ function getUrlParams() {
 		}
 	}
 	return params;
-};	
+};
+if(getUrlParams().see){
+	$('#admin_roles').attr('disabled',true);
+	$('#admin_note,#admin_name,#admin_phone').attr('readonly',true);
+}
 
 //初始化数据
 function init(){	
 	$.ajax({
 		type:"get",
-		url: org_url + "/role?token="+sessionStorage.token,
+		url: org_url + dataUrl.roles + "?token="+sessionStorage.token,
 		async:false,
 		dataType:"json",
 		xhrFields: {
@@ -42,7 +45,7 @@ function init(){
 function load(id){	
 	$.ajax({
 		type:"get",
-		url: org_url + "/managers/"+id+"?token="+sessionStorage.token,
+		url: org_url + dataUrl.manager +id+"?token="+sessionStorage.token,
 		async:true,
 		dataType:"json",
 		xhrFields: {
@@ -98,13 +101,14 @@ function save(){
 		phone: $('#admin_phone').val(),
 		name: $('#admin_name').val(),
 		note: $('#admin_note').val(),
-		token:sessionStorage.token
 	};
-    url = org_url + "/managers";
+    url = org_url + dataUrl.manager;
     if(id!=null&&id!=""){
     	type = "put";
     	data.id = id;
-    	url += "/"+id;
+    	url += id+'?token='+sessionStorage.token;
+    }else{
+    	url = org_url + dataUrl.manager+'?token='+sessionStorage.token;
     }
     
 	$.ajax({
@@ -167,8 +171,8 @@ $(function (){
 	
 	//点击保存
 	$('.save').click(function (){
-		var admin_name=$('#admin_name').val();
-		var	admin_phone=$('#admin_phone').val();
+		var admin_name=$('#admin_name').val().trim();
+		var	admin_phone=$('#admin_phone').val().trim();
 		var	admin_roles = $('#admin_roles').val();
 		var	admin_note = $('#admin_note').val();
 		

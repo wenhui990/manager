@@ -40,12 +40,12 @@
 
 						<label for="secondname" class="col-sm-1 control-label text-center">教师姓名</label>
 						<div class="col-sm-2">
-							<input type="text" name="" class="form-control selectpicker" v-model="teachName"/>
+							<input type="text" name="" class="form-control selectpicker" maxlength="20" v-model="teachName"/>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">手机号</label>
 						<div class="col-sm-2">
-							<input type="tel" name="" class="form-control selectpicker" v-model="teachMobile"/>
+							<input type="tel" name="" class="form-control selectpicker" maxlength="11" v-model="teachMobile"/>
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
@@ -63,7 +63,7 @@
 			</div>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<a href="add_teacher.html"><input class="commonbtn" type="button" value="新建教师"/></a>
+					<a href="add_teacher.html?action=add"><input class="commonbtn" type="button" value="新建教师"/></a>
 					<a href="javascript:;" class="commonbtn" v-on:click="exportTeacherFile($event)">导出教师</a>
 					<a href="javascript:;" class="commonbtn" v-on:click="importTeacherFile()">导入教师</a>
 					<a href="../../plugin/教师信息模版.xls" class="downloadTemplate">下载导入模版</a>
@@ -78,8 +78,8 @@
 								<td><strong>学校</strong></td>
 								<td><strong>教师姓名</strong></td>
 								<td><strong>手机号</strong></td>
-								 <td><strong>任教科目</strong></td> 
-								<td><strong>任教班级</strong></td>
+								 <td><strong>任教科目及班级</strong></td> 
+								<!-- <td><strong>班级</strong></td> -->
 								<td><strong>用户状态</strong></td>
 								<td><strong>操作</strong></td>
 							</tr>
@@ -89,24 +89,19 @@
 								<td>{{item.name}}</td>
 								<td>{{item.phone}}</td>
 								<td>
-									<template v-if="item['clazzlis'].length>0">
-										{{item['clazzlis'][0].coursename}}
+									<template v-for="(subitem, subindex) in item['clazzlis']">
+										{{subitem.coursename + "&nbsp;&nbsp;&nbsp;&nbsp;" + subitem.clazzname}}
+										<br>
 									</template>
 								</td> 
-								<!-- <td>{{item.clazzname}}</td> -->
-								<td>
-									<template v-for="(subitem, subindex) in item['clazzlis']">
-										{{subitem.clazzname}}&nbsp;&nbsp;
-									</template>
-								</td>
 								<td v-if="item.valid==1">启用</td>
 								<td v-else>禁用</td>
 								<td>
 									<a class="forbidden" href="javascript:;" v-on:click="editTeacher($event,index,'see')">查看</a>
-									<a class="forbidden" href="javascript:;" v-on:click="editTeacher($event,index)">编辑</a>
-									<a href="javascript:;" class="_a_space forbidden" v-if="item.valid==1" v-on:click="enableValid($event,item.id,index)">禁用</a>
-									<a href="javascript:;" class="_a_space forbidden" v-else v-on:click="enableValid($event,item.id,index)">启用</a>
-									<a href="javascript:;" class="forbidden" v-on:click="delTeacher($event, item.id, index)">删除</a>
+									<a class="forbidden _a_space" href="javascript:;" v-on:click="editTeacher($event,index)">编辑</a>
+									<a href="javascript:;" class="forbidden" v-if="item.valid==1" v-on:click="enableValid($event,item.id,index)">禁用</a>
+									<a href="javascript:;" class="forbidden" v-else v-on:click="enableValid($event,item.id,index)">启用</a>
+									<a href="javascript:;" class="forbidden _a_space" v-on:click="delTeacher($event, item.id, index)">删除</a>
 								</td>
 							</tr>
 						</table>
@@ -202,7 +197,7 @@
 					enableValid: function(event, itemid, index){
 						var tmpvalid = (vvm.teachers[index]['valid'] == "1" ? "0":"1");
 						enableTeacher(function(){
-							layer.alert((tmpvalid==1)?"启用成功":"禁用成功");
+							commonMsg("成功");
 							vvm.teachers[index]['valid'] = tmpvalid;
 						}, itemid, tmpvalid);
 					},
@@ -231,9 +226,11 @@
 							}
 							teacher['clazzlis'].push(o);
 						}
-						var uri = "add_teacher.html?data=" + encodeURI(JSON.stringify(teacher));
+						var uri;
 						if (see) {
-							uri = "see_teacher.html?data=" + encodeURI(JSON.stringify(teacher));
+							uri = "add_teacher.html?data=" + encodeURI(JSON.stringify(teacher)) + "&action=view";
+						}else{
+							uri = "add_teacher.html?data=" + encodeURI(JSON.stringify(teacher)) + "&action=edit";
 						}
 						$(event.target).attr('href', uri);
 					},
@@ -245,7 +242,7 @@
 						$('.modal-title').text('导入选择！');
 					},
 					exportTeacherFile: function(event){
-						url = org_url + dataUrl.teacher.exportTeacher;
+						url = org_url + dataUrl.excelteacher;
 						req = "?token=" + sessionStorage.token;
 
 						if (this.selectedSchool != 0){
@@ -309,7 +306,7 @@
 					vvm.teachers = vvm.teachers.concat(resp['data']);
 					vvm.total = resp['total'];
 				}
-			}, vvm.page, vvm.pagesize, vvm.selectedSchool, vvm.teachName, vvm.teachMobile, vvm.teacherStatus);
+			}, vvm.page, vvm.pagesize, vvm.selectedSchool, vvm.teachName.trim(), vvm.teachMobile.trim(), vvm.teacherStatus);
 		}
 
 		function paging(){

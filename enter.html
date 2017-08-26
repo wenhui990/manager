@@ -93,6 +93,9 @@
 							}else{
 								$(".hint").text('用户名或密码错误！');
 							}
+						},
+						error: function(){
+							$(".hint").text('网络错误，请联系管理员！');
 						}
 					});
 					

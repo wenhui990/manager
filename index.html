@@ -84,7 +84,7 @@
 				$(window).resize(function() {
 					$("#main-container").height($(window).height() - 76);
 					$("#iframe").height($(window).height() - 140);
-					console.log($(window).height() - 99);
+//					console.log($(window).height() - 99);
 					$(".sidebar").height($(window).height() - 99);
 
 					var thisHeight = $("#nav_list").height($(window).outerHeight() - 130);
@@ -207,8 +207,9 @@
 			<div class="navbar-container" id="navbar-container">
 				<div class="navbar-header pull-left">
 					<a href="javascript:void(0)" class="navbar-brand">
+						<img src="images/logo.png" alt="logo"/>
 						<small class="logo_txt">					
-							领信自适应学习系统运营管理平台
+							睿博教育
 						</small>
 					</a>
 					<!-- /.brand -->
@@ -266,13 +267,13 @@
 								<a href="javascript:;" class="dropdown-toggle"><i class="icon- fa fa-book"></i><span class="menu-text"> 知识体系管理 </span><b class="arrow fa fa-angle-down"></b></a>
 								<ul class="submenu" id="Sort_link_0">
 									<li class="home nav_lis showli" style="height: 36px;" data-id='2'>
-										<a href="javascript:void(0)" name="view/dataManage/version/versionManage_list.html" title="版本管理" class="iframeurl"><i class="icon- fa fa-angle-right"></i>版本管理</a>
+										<a href="javascript:void(0)" name="view/dataManage/versionManage_list.html" title="版本管理" class="iframeurl"><i class="icon- fa fa-angle-right"></i>版本管理</a>
 									</li>
 									<li class="home nav_lis showli" style="height: 36px;" data-id='3'>
-										<a href="javascript:void(0)" name="view/dataManage/chapterList/chapterList.html" title="教材管理" class="iframeurl"><i class="icon- fa fa-angle-right"></i>教材管理</a>
+										<a href="javascript:void(0)" name="view/dataManage/chapterList.html" title="教材管理" class="iframeurl"><i class="icon- fa fa-angle-right"></i>教材管理</a>
 									</li>
 									<li class="home nav_lis showli" style="height: 36px;" data-id='4'>
-										<a href="javascript:void(0)" name="view/dataManage/textbook/textbook.html" title="教材设置" class="iframeurl"><i class="icon- fa fa-angle-right"></i>教材设置</a>
+										<a href="javascript:void(0)" name="view/dataManage/textbook.html" title="教材设置" class="iframeurl"><i class="icon- fa fa-angle-right"></i>教材设置</a>
 									</li>
 								</ul>
 							</li>
@@ -280,7 +281,7 @@
 								<a href="javascript:;" name="view/questionBank/questionbank.html" title="题库管理" class="iframeurl"><i class="icon- fa fa-file-text"></i><span class="menu-text"> 题库管理 </span></a>
 							</li>
 							<li class="nav_lis showli" data-id='6'>
-								<a href="javascript:;" name="view/dataManage/version/versionManage_list.html" title="微课管理" class="iframeurl"><i class="icon- fa fa-play-circle"></i><span class="menu-text"> 微课管理 </span></a>
+								<a href="javascript:;" name="view/onlinevideo/videolist.html" title="微课管理" class="iframeurl"><i class="icon- fa fa-play-circle"></i><span class="menu-text"> 微课管理 </span></a>
 							</li>
 							<li data-id='7' class=" showli">
 								<a href="javascript:;" class="dropdown-toggle"><i class="icon- fa fa-graduation-cap"></i><span class="menu-text"> 机构管理 </span><b class="arrow fa fa-angle-down"></b></a>
@@ -315,6 +316,17 @@
 							</li>
 							<li class="nav_lis showli" data-id='16'>
 								<a href="javascript:;" class="iframeurl" name="view/mySeting/myset.html"><i class="icon- fa fa-user"></i><span class="menu-text"> 个人设置 </span></a>
+							</li>
+							<li data-id='1' class="showli">
+								<a href="javascript:;" class="dropdown-toggle"><i class="icon- fa fa-bar-chart"></i><span class="menu-text"> 统计报表 </span><b class="arrow fa fa-angle-down"></b></a>
+								<ul class="submenu" id="Sort_link_0">
+									<li class="home nav_lis showli" style="height: 36px;" data-id='2'>
+										<a href="javascript:void(0)" name="view/report/recharge.html" title="学习币充值" class="iframeurl"><i class="icon- fa fa-angle-right"></i>学习币充值</a>
+									</li>
+									<li class="home nav_lis showli" style="height: 36px;" data-id='3'>
+										<a href="javascript:void(0)" name="view/report/consume.html" title="学习币消费" class="iframeurl"><i class="icon- fa fa-angle-right"></i>学习币消费</a>
+									</li>
+								</ul>
 							</li>
 						</ul>
 					</div>
@@ -396,6 +408,9 @@
 	</body>
 	<script type="text/javascript" src="js/layer/layer.js"></script>
 	<script type="text/javascript">
+		if(!sessionStorage.userid){
+			window.location.href = "enter.html";
+		}
 		$.ajax({
 			type:"get",
 			url: org_url + dataUrl.manager+sessionStorage.userid+"/entry",
@@ -415,10 +430,10 @@
 					var datas = data.sort(function(a,b){return a>b});
 					$.each($('.showli'),function(i,e){
 						$.each(datas, function(f,ev) {
-							console.log(ev==$(e).attr('data-id'))
+//							console.log(ev==$(e).attr('data-id'))
 							if (ev==$(e).attr('data-id')) {
 								$(e).show();
-								console.log(e)
+//								console.log(e)
 								return false;
 							}
 						});

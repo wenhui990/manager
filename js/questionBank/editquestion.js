@@ -8,7 +8,7 @@ console.log(id)
 var setting2 = {
 	async: {
 		enable: true,
-		url: org_url + dataUrl.knowledge.sectiontreeAll + "?courseid="+courseid+"&stageid="+stageid+"&token="+sessionStorage.token,
+		url: org_url + dataUrl.knowledgetree + "?courseid="+courseid+"&stageid="+stageid+"&token="+sessionStorage.token,
 		dataFilter: filter,
 		type: 'get'
 	},
@@ -65,18 +65,19 @@ question = new Vue({
 		questiontype: '', //题目类型
 		knowledges: [], //知识点列表,
 		knowledgtreeid: '', //知识点树id
-		difficulty: '',   //难度
+		difficulty: '',   //难度分值
 		picked: 'S',       //题库对象，是老师还是学生
 		blockquotetable:false, //题干是否可编辑
 		questionoption: '', //题目选项,
 		optionstype: '',  //选项类型1=A,2=B,3=C,4=D
 		rightanswers:'',   //正确答案
+		difficultylevel: '',//难度类型
 	},
 	beforeCreate:function(){
 		//获取所有学段，学科目录
 		$.ajax({
 			type:"get",
-			url: org_url+dataUrl.questionbank.commonlist+'?token='+sessionStorage.token,
+			url: org_url+dataUrl.commons+'?token='+sessionStorage.token,
 			success: function(data){
 				question.courses = data.courses;
 				question.stages = data.stages;
@@ -85,22 +86,25 @@ question = new Vue({
 		//根据题目id查询详细信息
 		$.ajax({
 			type:"get",
-			url: org_url+dataUrl.questionbank.questionlist+id+'?token='+sessionStorage.token,
+			url: org_url+dataUrl.question+id+'?token='+sessionStorage.token,
 			data:{
 				courseid:courseid,
 				stageid:stageid,
 			},
 			success: function(data){
 				var datas = data[0];
-				if (datas.options.indexOf(',')>-1) {
-					var newoption = JSON.parse(datas.options);
-					question.questionoption = newoption;
+				if(datas.options){
+					if (datas.options.indexOf(',')>-1) {
+						var newoption = JSON.parse(datas.options);
+						question.questionoption = newoption;
+					}
 				}
 				question.questionoptiondata = datas;
 				question.knowledges = datas.knowledges;
 				question.stageid = stageid;
 				question.rightanswers = datas.answer;
-				question.difficulty = datas.difficulty;
+				question.difficulty = datas.difficulty||'';
+				question.difficultylevel = datas.difficultylevel||'';
 				if(datas.answer=='A'){
 					question.optionstype=0;
 				}else if(datas.answer=='B'){
@@ -131,7 +135,12 @@ question = new Vue({
 		},
 		//添加选项
 		addOption:function(){
-			question.questionoption.push('');
+			console.log(question.questionoption)
+			if (question.questionoption.length<4) {
+				question.questionoption.push('');
+			}else{
+				layer.alert('最多只能添加4个选项');
+			}
 		},
 		//编辑题干
 		editQuestionStems: function(){
@@ -182,12 +191,17 @@ question = new Vue({
 			$.each($('.questionoptionlist'), function(i,e) {
 				options.push($(e).html());
 			});
-			if (question.difficulty<0 || question.difficulty>1) {
-				layer.alert('难度系数只能填写0-1之间的数字');
+//			if (question.difficulty<0 || question.difficulty>1) {
+//				layer.alert('难度系数只能填写0-1之间的数字');
+//			}
+			if (question.difficultylevel=='') {
+				layer.alert('难度不能为空');
+				return false;
 			}
 			var data = {
 				knowledgeids:knowledgeids, //知识点
 //				stage:stageids,//学段
+				difficultylevel:question.difficultylevel,//难度类型
 				difficulty:question.difficulty,//难度
 				answer:question.rightanswers, //正确答案
 				analysis:$('#questionanalysis').html(), //解析
@@ -203,13 +217,15 @@ question = new Vue({
 //			return
 			$.ajax({
 				type:"put",
-				url:org_url+dataUrl.questionbank.updatequestion+'?token='+sessionStorage.token,
+				url:org_url+dataUrl.question+'?token='+sessionStorage.token,
 				contentType: "application/json; charset=utf-8",
 		        data: JSON.stringify(data),
 		        dataType: "json",
 				success: function(data){
 					if (data.result==1) {
-						layer.alert('修改成功！')
+						layer.alert('修改成功！',function(){
+							window.location.href = 'questionbank.html?courseid='+courseid+'&stageid='+stageid;
+						})
 					}else{
 						layer.alert('修改失败！'+data.msg)
 					}

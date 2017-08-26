@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>教材管理</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugin/paging/paging.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+		<!-- <link rel="stylesheet" href="../../../plugin/vue-pagination/index.css"/> -->
+	</head>
+	<body>
+		<style type="text/css">
+			[v-cloak] {
+			  display: none;
+			}
+		</style>
+		<div class="main container-fluid" id="chaptermain" v-cloak>
+			<div class="row head">
+				<h3 class="col-xs-2">查询区</h3>
+				<div class="col-sm-9 col-xs-3"></div>
+			</div>
+			<div class="row state">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="" class="col-sm-1 control-label text-center ">知识结构标准</label>
+						<div class="col-sm-2">
+							<select class="form-control _select" v-model="selectedTextBookType">
+								<option v-bind:value="0">全部</option>
+								<option v-bind:value="1">课标版</option>
+								<option v-bind:value="2">非课标版</option>
+							</select>
+						</div>
+						<label for="" class="col-sm-1 control-label text-center ">学段</label>
+						<div class="col-sm-2">
+							<select class="form-control _select" v-model="selectedStage">
+								<option v-bind:value="0">全部</option>
+								<option v-bind:value="2">小学</option>
+								<option v-bind:value="3">初中</option>
+								<option v-bind:value="4">高中</option>
+							</select>
+						</div>
+						<label for="" class="col-sm-1 control-label text-center ">科目</label>
+						<div class="col-sm-2">
+							<select class="form-control _select" v-model="selectedCourse">
+								<option v-for="course in courses" v-bind:value="course.id">
+									{{ course.title }}
+								</option>
+							</select>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-1 control-label text-center ">版本</label>
+						<div class="col-sm-2">
+							<select class="form-control _select" v-model="selectedEdtion">
+								<option v-for="edition in editions" v-bind:value="edition.id">
+									{{ edition.title }}
+								</option>
+							</select>
+						</div>
+						<label for="" class="col-sm-1 control-label text-center ">年级/课本</label>
+						<div class="col-sm-2">
+							<select class="form-control _select" v-model="selectedTerm">
+								<option v-for="term in terms" v-bind:value="term.id">
+									{{ term.title }}
+								</option>
+							</select>
+						</div>
+						<label for="statue" class="col-sm-1 control-label text-center ">启用状态</label>
+						<div class="col-sm-2">
+							<select class="form-control _select" v-model="selectedStatus">
+								<option v-bind:value="2">全部</option>
+								<option v-bind:value="1">已启用</option>
+								<option v-bind:value="0">已禁用</option>
+							</select>
+						</div>
+						<div class="col-sm-1"></div>
+						<div class="search_0 col-sm-offset-" v-on:click="queryTextbook($event)">查询</div>
+					</div>
+				</form>
+			</div>
+			<div class="row head numshu_btm">
+				<div class="btngroup">
+					<a href="addChapter.html"><input class="commonbtn" type="button" value="新建"/></a>
+				</div>
+			</div>
+			<div class="numshu_btm">
+				<div class="row head list-shu">
+					<h3 class="col-xs-2">列表区</h3>
+				</div>
+				<div class="list_btm">
+					<div class="table-responsive">
+						<table id="examTable" class="table addlist text-center">
+							<tr>
+								<td><strong>序号</strong></td>
+								<td><strong>知识结构标准类型</strong></td>
+								<td><strong>学段</strong></td>
+								<td><strong>科目</strong></td>
+								<td><strong>版本</strong></td>
+								<td><strong>年级/课本</strong></td>
+								<td><strong>启用状态</strong></td>
+								<td><strong>操作</strong></td>
+							</tr>
+							<tr v-for="(item, index) in textbooks">
+								<td>{{(page - 1) * pagesize + index + 1}}</td>
+
+								<td v-if="item.editionid!=null">非课标版</td>
+								<td v-else>课标版</td>
+
+								<td v-if="item.stageid==1">幼儿园</td>
+								<td v-else-if="item.stageid==2">小学</td>
+								<td v-else-if="item.stageid==3">初中</td>
+								<td v-else>高中</td>
+
+								<td>{{item.course}}</td>
+								<td>{{item.edition}}</td>
+								<td>{{item.term}}</td>
+								<td v-if="item.valid == '1'">启用</td>
+								<td v-else>禁用</td>
+								<td>
+									<a v-bind:href="'editChapter.html?id=' + item.id">修改</a>
+									<a href="javascript:;" class="forbidden" v-bind:id="item.id" v-if="item.valid == '1'" v-on:click="enableValid($event, index)">禁用</a>
+									<a href="javascript:;" class="forbidden" v-bind:id="item.id" v-else v-on:click="enableValid($event, index)">启用</a>
+									<a v-bind:href="'setChapter.html?id=' + item.id +'&courseid='+item.courseid+'&stageid='+item.stageid+'&previa='+item.previa" v-if="item.editionid!=null">设置章节</a>
+									<a v-bind:href="'setKonwledge.html?id=' + item.id+'&courseid='+item.courseid+'&stageid='+item.stageid+'&previa='+item.previa" v-else>设置知识点</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="row pro_list_btm">
+						<div class="col-xs-6 col-sm-3 text-center">
+
+						</div>
+						<div class="col-xs-7 col-sm-9">
+							<div id="pageToolbar" style="float: right;margin-right: 20px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../js/commonutil.js" ></script>
+	<script>
+		var vvm = null;
+		$(document).ready(function() {
+			vm_init();
+			getEds();
+		});
+
+		function vm_init(){
+			vvm = new Vue({
+				el: '#chaptermain',
+				data:{
+					courses : [],
+					editions : [],
+					terms : [],
+					textbooks: [],
+					selectedTextBookType : "0",
+					selectedStage : "0",
+					selectedCourse : "0",
+					selectedEdtion : "0",
+					selectedTerm : "0",
+					selectedStatus : "2",
+
+					page:1,
+					pagesize:10,
+					total:0
+				},
+				methods:{
+					enableValid: function(event, index){
+						var id = this.textbooks[index]['id'];
+						var tmpvalid = (this.textbooks[index]['valid'] == "1" ? "0":"1");
+						var textbooktype = "1";
+						if (this.textbooks[index]['edition']){
+							textbooktype = "2";
+						}
+						enableTextbook(function(resp){
+							commonMsg("成功");
+							vvm.textbooks[index]['valid'] = tmpvalid;
+						}, id, tmpvalid, textbooktype);
+					},queryTextbook: function(event){
+						getTbs();
+					}
+				}
+			});
+		}
+
+		function getEds(){
+			//FIXME 为了一次取出所有记录，定义一个大数
+			var pagesize = 1000000;
+			var page = 1;
+
+			getEditions(function (resp){
+				vvm.editions.push({"title":"全部", "id":0});
+				for (e of resp['data']){
+					if (e['valid'] == 1){
+						vvm.editions.push(e);
+					}
+				}
+	            getTms();
+			}, page, pagesize);
+		}
+
+		function getTms(){
+			var pagesize = 1000000;
+			var page = 1;
+			getTerms(function (resp){
+				vvm.terms.push({"title":"全部", "id":0});
+				vvm.terms = vvm.terms.concat(resp['data']);
+				getCrs();
+			}, page, pagesize);
+		}
+
+		function getCrs(){
+			var pagesize = 1000000;
+			var page = 1;
+			getCourses(function(resp){
+				vvm.courses.push({"title":"全部", "id":0});
+				vvm.courses = vvm.courses.concat(resp['data']);
+				getTbs();
+			}, page, pagesize);
+		}
+
+		function getTbs(){
+			getTextbooks(function(resp){
+				for (var i = 0; i < resp['data'].length; i++){
+					var item = resp['data'][i];
+					for (var j = 0; j < vvm.courses.length; j++){
+						if (item['courseid'] == vvm.courses[j]['id']){
+							item['course'] = vvm.courses[j]['title'];
+							break;
+						}
+					}
+					for (var k = 0; k < vvm.editions.length; k++){
+						if (item['editionid'] == vvm.editions[k]['id']){
+							item['edition'] = vvm.editions[k]['title'];
+							break;
+						}
+					}
+					for (var p = 0; p < vvm.terms.length; p++){
+						if (item['termid'] == vvm.terms[p]['id']){
+							item['term'] = vvm.terms[p]['title'];
+							break;
+						}
+					}
+				}
+				vvm.textbooks = resp['data'];
+				vvm.total = resp['total'];
+
+				if (vvm.page == 1){
+					paging();
+				}
+			}, vvm.page, vvm.pagesize, vvm.selectedTextBookType, vvm.selectedStage, vvm.selectedCourse, vvm.selectedEdtion, vvm.selectedTerm, vvm.selectedStatus);
+		}
+
+		function paging(){
+			$('#pageToolbar').html('');
+			$('#pageToolbar').Paging({
+				pagesize: vvm.pagesize,
+				count: vvm.total,
+				toolbar: true,
+				hash: true,
+				callback: function(page, size, count) {
+					vvm.page = page;
+					getTbs();
+				},
+				changePagesize:function(ps){
+					vvm.pagesize = ps;
+					getTbs();
+				}
+			});
+		}
+	</script>
+</html>
+

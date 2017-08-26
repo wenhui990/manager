@@ -8,6 +8,8 @@
 		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
 		<link rel="stylesheet" href="../../css/common/common_list.css" />
 		<link rel="stylesheet" href="../../css/common/common.css" />
+		<link rel="stylesheet" href="../../css/knowledge/knowledge_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/zTreeStyle/zTreeStyle.css" />
 
 		<style type="text/css">
 			body {
@@ -44,27 +46,79 @@
 				"
 
 			}
+			.list_btm{
+				border: 0;
+			}
 			
 			blockquote {
-				border: 0;
+				border: 1px solid #eee;
+			}
+			.knowledgeids {
+				background: url(../../images/_left_000.png) no-repeat right;
+				background-origin: content-box;
+				cursor: pointer;
+				background-color: #fff !important;
+			}
+			/*#questionMain .stagelist{
+				background: #fff;
+			}*/
+			.btngroup a{
+				margin: 5px 20px;
 			}
 		</style>
 	</head>
 
 	<body>
 		<div class="main container-fluid" style="overflow:inherit;padding: 0;" id="questionMain">
+			
 			<div class="list_btm">
+				
 				<div class="form-horizontal knowledgelists" v-cloak>
 					<div class="form-group">
 						<label class="col-sm-2 control-label text-right">
-							<span class="warn" style="padding-left: 20px;">科目</span>
+							<span class="" style="padding-left: 20px;">当前科目:</span>
 						</label>
 						<div class="col-sm-2">
-							<select class="form-control" v-model="courseId">
+							<select class="form-control" v-model="courseId" :disabled="coursedisabled">
 								<option value="">请选择</option>
 								<option v-for="(value,key) in courses" :value="key">{{value}}</option>
 							</select>
 						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">知识点1</span>
+						</label>
+						<div class="col-sm-2">
+							<select class="form-control stagelist" v-model="stageVal" disabled>
+								<option value="">请选择</option>
+								<option v-for="(value,key) in stages" :value="key">{{value}}</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+							<input id="prevknowledgeName1" class="form-control knowledgeids" type="text"  @click="showMenu(1)" readonly="">
+						</div>
+					</div>
+					
+					<div class="form-group" v-for="(knowledg,index) in knowledges">
+						<label class="col-sm-2 control-label text-right">
+							<span class="warn" style="padding-left: 20px;">知识点{{index+2}}</span>
+						</label>
+						<div class="col-sm-2">
+							<select class="form-control stagelist"  v-model="stageVal" disabled>
+								<option value="">请选择</option>
+								<option v-for="(value,key) in stages" :value="key">{{value}}</option>
+							</select>
+						</div>
+						<div class="col-sm-3">
+							<input :id="'prevknowledgeName'+(index+2)" class="form-control knowledgeids" type="text" @click="showMenu(index+2)" readonly=""   :data-knowid="knowledg.id">
+						</div>
+						<label class="col-sm-2 control-label text-right">
+							<a class="delknowledge" @click="delknowledge()" style="padding-left: 20px;">删除</a>
+						</label>
+					</div>
+					<div class="form-group">
+						<a href="javascript:;" class="col-sm-2 text-right addknowledge" @click="addKnowledge()">+添加知识点</a>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 text-right">
@@ -107,49 +161,99 @@
 									</>
 								</div>
 							</section>
-							<a href="../../plugin/questions.docx" target="_blank" style="text-decoration: underline;">下载模版</a>
+							<a href="../../plugin/题库导入模板.docx" target="_blank" style="text-decoration: underline;">下载模版</a>
 						</div>
 					</div>
 				</div>
-
+				<div class="col-sm-offset-1" style="margin-bottom: 20px;padding: 10px 20px;text-align: center;">
+					<div class="btngroup">
+						<a href="javascript:;" class="btn btn-info" id="savequestion">保存</a>
+						<a href="javascript:;" class="btn btn-default" @click="back">返回</a>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="menuContent" class="menuContent" style="display:none; position: absolute;">
 			<ul id="treeDemo1" class="ztree ztree1"></ul>
 		</div>
 	</body>
-	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js"></script>
+	<script type="text/javascript" src="../../js/common/jquery.min2.0.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/query.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../js/jquery.ztree.exedit.js"></script>
 	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script type="text/javascript">
-		var questionvue = new Vue({
-			el: '#questionMain',
-			data: {
-				courses: '', //科目id
-				picked: 'S',
-				courseId: ''
+		
+		console.log(getUrlParams().courseid)
+		var courseid,stageid,question,knownum;
+		courseid = getUrlParams().courseid;
+		stageid = getUrlParams().stageid;
+		console.log(org_url + dataUrl.knowledgetree + "?courseid="+courseid+"&stageid="+stageid+"&token="+sessionStorage.token)
+		//下拉框知识点树菜单
+		var setting2 = {
+			async: {
+				enable: true,
+				url: org_url + dataUrl.knowledgetree + "?courseid="+courseid+"&stageid="+stageid+"&token="+sessionStorage.token,
+				dataFilter: filter,
+				type: 'get'
 			},
-			beforeCreate: function() {
-				//获取所有学段，学科目录
-				$.ajax({
-					type: "get",
-					url: org_url + dataUrl.questionbank.commonlist+'?token='+sessionStorage.token,
-					success: function(data) {
-						if (data.code=='10010') {
-							layer.alert('身份验证失败！请重新登录！',{yes:function(){
-								parent.location.href = "../../enter.html";
-							},cancel:function(){
-								parent.location.href = "../../enter.html";
-							}});
-							return false;
-						}
-						questionvue.courses = data.courses;
-						questionvue.courseId = getUrlParams().courseid;
-					}
-				});
+			view: {
+				dblClickExpand: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: onClick1,
 			}
-		});
+		};
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes) return null;
+			for (var i=0, l=childNodes.length; i<l; i++) {
+				if (childNodes[i].name) {
+					childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+				} else{
+					childNodes[i].name='';
+				}
+			}
+			return childNodes;
+		}
+		
+		function hideMenu() {
+			jQuery("#menuContent").fadeOut("fast");
+			jQuery("body").unbind("mousedown", onBodyDown1);
+		}
+		function onBodyDown1(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "knowledgeName" || event.target.id == "menuContent" || jQuery(event.target).parents("#menuContent").length>0)) {
+				hideMenu();
+			}
+		}
+		
+		
+		
+		var questionvue = '';
+		//树节点点击事件
+		function onClick1(e, treeId, treeNode) {
+			console.log(treeNode)
+			var check = (treeNode.type !== 1);
+			if (treeNode.type === 1) {
+				layer.alert("只能选择知识点,不能选择章和节！");
+				return;
+			};
+			console.log(questionvue.knowledgtreeid)
+			jQuery(questionvue.knowledgtreeid).val(treeNode.name);
+			jQuery(questionvue.knowledgtreeid).attr({"data-id":treeNode.id,"data-knowid":treeNode.knowid});
+			hideMenu();
+		}
 		//获取url中字段
 		function getUrlParams() {
 			var params = {};
@@ -165,11 +269,84 @@
 			}
 			return params;
 		};
-		
+		function getcommons(t){
+			//获取所有学段，学科目录
+			jQuery.ajax({
+				type: "get",
+				url: org_url + dataUrl.commons+'?token='+sessionStorage.token,
+//					async:false,
+				success: function(data) {
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
+					questionvue.courses = data.courses;
+					questionvue.stages = data.stages;
+					t.$forceUpdate();
+					console.log(t.$forceUpdate())
+					setTimeout(function(){
+						questionvue.stageVal = stageid;
+						questionvue.courseId = courseid;
+					},1000);
+				}
+			});
+		}
+		questionvue = new Vue({
+			el: '#questionMain',
+			data: {
+				courses: '', //科目
+				picked: 'S',
+				courseId: 1,//科目id
+				coursedisabled:true,
+				knowledges:[],
+				stages:'',
+				knowledgtreeid: '',
+				stageVal: 2
+			},
+			methods:{
+				//添加知识点
+				addKnowledge: function(){
+					questionvue.knowledges.push({id:''});
+				},
+				delknowledge: function(){
+					questionvue.knowledges.pop('');
+				},
+				//点击每个知识点框对应显示树
+				showMenu: function(id){
+					questionvue.knowledgtreeid = "#prevknowledgeName"+id;
+					var cityObj = jQuery("#prevknowledgeName"+id);
+					var cityOffset = jQuery("#prevknowledgeName"+id).offset();
+					jQuery("#menuContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+					jQuery("body").bind("mousedown", onBodyDown1);
+				},
+				back:function(){
+					window.location.href = 'questionbank.html?courseid='+courseid+'&stageid='+stageid;
+				}
+			},
+			watch:{
+				picked:function(){
+					
+				},
+				courseId:function(){
+					
+				}
+			}
+		});
+		getcommons(questionvue);
+		$(function(){
+			jQuery.fn.zTree.init(jQuery("#treeDemo1"), setting2);
+			
+			questionvue.stageVal = stageid;
+			questionvue.courseId = courseid;
+		})
 	</script>
 
 	<script src="../../js/questionBank/our.js"></script>
 	<script src="../../js/questionBank/common.js"></script>
-	<script src="../../js/questionBank/uploadingquestion.js" type="text/javascript" charset="utf-8"></script>
-
+	<!--<script src="../../js/questionBank/uploadingquestion.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="../../js/questionBank/uploadingquestion_new.js" type="text/javascript" charset="utf-8"></script>
 </html>

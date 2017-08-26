@@ -26,10 +26,17 @@ $(function() {
 				var _self = this;
 				$.ajax({
 					type: "get",
-					url: org_url + dataUrl.organization.educationAll,
-					data:{token: sessionStorage.token},
+					url: org_url + dataUrl.institutions+"?token="+sessionStorage.token,
 					async: true,
 					success: function(data) {
+						if (data.code=='10010') {
+							layer.alert('身份验证失败！请重新登录！',{yes:function(){
+								parent.location.href = "../../enter.html";
+							},cancel:function(){
+								parent.location.href = "../../enter.html";
+							}});
+							return false;
+						}
 						_self.datas = data;
 					},
 					error: function(data) {
@@ -43,6 +50,17 @@ $(function() {
 	if (window.location.href.indexOf('add_school')>-1) {
 		educationLists();
 	}
+	
+//	//学校学段单选框点击事件
+	$('.learning_period').dblclick(function(){
+		var ischecked = $(this).prop('checked');
+		if (ischecked) {
+//			$(this).click(function(){
+				$(this).prop('checked',!ischecked)
+//			})
+		}
+		console.log(ischecked)
+	})
 	
 	//查询学校
 	//	var selectSchool = Vue({
@@ -61,7 +79,7 @@ $(function() {
 		$('title').text('编辑学校');
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.schoolLists + urlId,
+			url: org_url + dataUrl.school + urlId+'?token='+sessionStorage.token,
 			async: true,
 			success: function(data) {
 				//编辑学校
@@ -119,19 +137,28 @@ $(function() {
 	if(getUrlParams().clazzid) {
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.clazz.clazz + getUrlParams().clazzid,
+			url: org_url + dataUrl.clazzs + getUrlParams().clazzid+"?token="+sessionStorage.token,
 			async: true,
-			data:{token: sessionStorage.token},
 			success: function(data) {
+				if (data.code=='10010') {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						parent.location.href = "../../enter.html";
+					},cancel:function(){
+						parent.location.href = "../../enter.html";
+					}});
+					return false;
+				}
 				gradeId = data.gradeid;
 				$('#grade_name').val(data.name);
 				$('.charge_teacher_name').text(data.advisername);
-
-				$.each(JSON.parse(data.textbookids), function(i, e) {
-					teacherindex = i;
-					$('.teacher_lists').append('<tr><td><select name="" class="form-control subject_list"><option value="' + e.courseId + '" selected>' + e.courseTitle + '</option></select></td><td class="teacher_subject_grade' + i + '" data-id="' + e.teacherId + '">' + e.teacherName + '</td><td><a href="javascript:;" class="edit_teacher">选择</a>&nbsp;<a href="javascript:;" class="delete_teacher">删除</a></td></tr>');
-					//					subjectslist();
-				});
+				if(data.textbookids&&data.textbookids.length>1){
+					$.each(JSON.parse(data.textbookids), function(i, e) {
+						teacherindex = i;
+						$('.teacher_lists').append('<tr><td><select name="" class="form-control subject_list"><option value="' + e.courseId + '" selected>' + e.courseTitle + '</option></select></td><td class="teacher_subject_grade' + i + '" data-id="' + e.teacherId + '">' + e.teacherName + '</td><td><a href="javascript:;" class="edit_teacher">选择</a>&nbsp;<a href="javascript:;" class="delete_teacher">删除</a></td></tr>');
+						//					subjectslist();
+					});
+				}
+				
 				subjectslist();
 			}
 
@@ -179,7 +206,7 @@ $(function() {
 			phone: phone,
 			site: site,
 			stages: JSON.stringify(statges),
-			token: sessionStorage.token
+//			token: sessionStorage.token
 		}
 		console.log(data)
 		//		return
@@ -194,9 +221,17 @@ $(function() {
 		} else {
 			$.ajax({
 				type: urlId ? 'put' : 'post',
-				url: urlId ? org_url + dataUrl.schoolLists + urlId : org_url + dataUrl.schoolLists,
+				url: urlId ? org_url + dataUrl.school + urlId+"?token="+sessionStorage.token : org_url + dataUrl.school+"?token="+sessionStorage.token,
 				data: data,
 				success: function(res) {
+					if (res.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 					var tip='';
 					if(res==1){
 						urlId?tip = '修改学校成功!':tip = '新建学校成功!';
@@ -234,7 +269,7 @@ $(function() {
 	//返回班级管理
 	$('.back_grademanage').click(function() {
 		$('.breadcrumb>li:gt(2)', window.parent.document).remove();
-		window.location.href = 'gradeManage.html?id=' + getUrlParams().schoolId + '&name=' + getUrlParams().schoolName;
+		window.location.href = 'gradeManage.html?id=' + getUrlParams().schoolId + '&name=' + getUrlParams().schoolName+'&add=ok';
 	});
 
 	//选择班主任弹出层
@@ -273,22 +308,29 @@ $(function() {
 
 	//查询老师
 	$(document).on('click', '.select_teacher', function() {
-		var tname = $(this).prev().val();
+		var tname = $(this).prev().val().trim();
 		var $tda = $(this).nextAll('table').find('tr').eq(1).find('td').eq(2).find('a')
 		var cls = $tda.attr('class');
 		var edit_class = $tda.attr('data-class');
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.clazz.teacher,
+			url: org_url + dataUrl.teachers+"?token="+sessionStorage.token+"&schoolid="+schoolId,
 			async: true,
 			data: {
 				name: tname,
-				token: sessionStorage.token
 			},
 			success: function(data) {
+				if (data.code=='10010') {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						parent.location.href = "../../enter.html";
+					},cancel:function(){
+						parent.location.href = "../../enter.html";
+					}});
+					return false;
+				}
 				console.log(data);
 				$('.teacher_table_list').html("");
-				$.each(data, function(i, e) {
+				$.each(data.data, function(i, e) {
 					$('.teacher_table_list').append('<tr><td>' + e.name + '</td><td>' + e.phone + '</td><td><a href="javascript:;" class="' + cls + '" data-class="' + edit_class + '" data-id="' + e.id + '">确定</a></td></tr>');
 				});
 			}
@@ -298,7 +340,7 @@ $(function() {
 	function teacherlist(cls, t,scholid) {
 		$('#pageToolbar').html('');
 		var tablehtml = '';
-		var edit_class = cls == "selected_teacher" ? $(t).parent().prev().attr('class') : "charge_teacher_name";
+		var edit_class = (cls == "selected_teacher" ? $(t).parent().prev().attr('class') : "charge_teacher_name");
 		var count = 0;
 		teacherlistajax();
 
@@ -306,12 +348,21 @@ $(function() {
 			$('.teacher_table_list').html("");
 			$.ajax({
 				type: "get",
-				data:{token: sessionStorage.token},
-				url: scholid?org_url + dataUrl.clazz.teacher+'?schoolid='+scholid:org_url + dataUrl.clazz.teacher,
+//				data:{token: sessionStorage.token},
+//				url: scholid ? org_url + dataUrl.teachers+'?schoolid='+scholid+"&token="+sessionStorage.token : org_url + dataUrl.teachers+"?token="+sessionStorage.token,
+				url: org_url + dataUrl.teachers+'?schoolid='+schoolId+"&token="+sessionStorage.token,
 				async: true,
 				success: function(data) {
+					if (data.code=='10010') {
+						layer.alert('身份验证失败！请重新登录！',{yes:function(){
+							parent.location.href = "../../enter.html";
+						},cancel:function(){
+							parent.location.href = "../../enter.html";
+						}});
+						return false;
+					}
 					count = data.length;
-					$.each(data, function(i, e) {
+					$.each(data.data, function(i, e) {
 						$('.teacher_table_list').append('<tr><td>' + e.name + '</td><td>' + e.phone + '</td><td><a href="javascript:;" class="' + cls + '" data-class="' + edit_class + '" data-id="' + e.id + '">确定</a></td></tr>');
 					});
 					//分页
@@ -327,13 +378,21 @@ $(function() {
 							nowpage = page;
 							$.ajax({
 								type: "get",
-								url: org_url + dataUrl.schoolLists,
+								url: org_url + dataUrl.schools,
 								data: {
 									page: nowpage,
 									size: 10,
 									token: sessionStorage.token
 								},
 								success: function(data) {
+									if (data.code=='10010') {
+										layer.alert('身份验证失败！请重新登录！',{yes:function(){
+											parent.location.href = "../../enter.html";
+										},cancel:function(){
+											parent.location.href = "../../enter.html";
+										}});
+										return false;
+									}
 									teacherlistajax()
 								}
 							});
@@ -342,13 +401,21 @@ $(function() {
 							console.log(ps)
 							$.ajax({
 								type: "get",
-								url: org_url + dataUrl.schoolLists,
+								url: org_url + dataUrl.schools,
 								data: {
 									page: nowpage,
 									size: ps,
 									token: sessionStorage.token
 								},
 								success: function(data) {
+									if (data.code=='10010') {
+										layer.alert('身份验证失败！请重新登录！',{yes:function(){
+											parent.location.href = "../../enter.html";
+										},cancel:function(){
+											parent.location.href = "../../enter.html";
+										}});
+										return false;
+									}
 									teacherlistajax()
 								}
 							});
@@ -427,10 +494,10 @@ $(function() {
 		if(getUrlParams().clazzid) {
 			type = 'put';
 			grade.id = getUrlParams().clazzid;
-			url = org_url + dataUrl.clazz.clazz + getUrlParams().clazzid;
+			url = org_url + dataUrl.clazzs + getUrlParams().clazzid;
 		} else {
 			type = 'post';
-			url = org_url + dataUrl.clazz.clazz;
+			url = org_url + dataUrl.clazzs;
 		}
 
 		$.ajax({
@@ -439,6 +506,14 @@ $(function() {
 			async: true,
 			data: grade,
 			success: function(data) {
+				if (data.code=='10010') {
+					layer.alert('身份验证失败！请重新登录！',{yes:function(){
+						parent.location.href = "../../enter.html";
+					},cancel:function(){
+						parent.location.href = "../../enter.html";
+					}});
+					return false;
+				}
 				console.log(data);
 				if(data == 1) {
 					layer.alert('保存成功！',function(){
@@ -446,7 +521,7 @@ $(function() {
 						window.location.href = 'gradeManage.html?id=' + schoolId + '&name=' + schoolNmae+'&add=ok';
 					});
 				}else{
-					layer.alert('保存失败！');
+					layer.alert('保存失败！'+data.msg);
 				}
 			}
 		});
@@ -456,7 +531,7 @@ $(function() {
 	function subjectslist() {
 		$.ajax({
 			type: "get",
-			url: org_url + dataUrl.clazz.course,
+			url: org_url + dataUrl.course,
 			async: true,
 			data:{token: sessionStorage.token},
 			success: function(data) {

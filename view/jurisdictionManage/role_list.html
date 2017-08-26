@@ -15,20 +15,22 @@
 	</head>
 	<style type="text/css">
 		[v-cloak] {
-		  display: none;
+			display: none;
 		}
-		td.notes{
+		
+		td.notes {
 			width: 30em;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
 	</style>
+
 	<body>
 		<div class="main container-fluid" id="roleList" v-cloak>
 			<div class="row head numshu_btm">
 				<div class="btngroup">
-					<a class="commonbtn" href="javascript:;" value="新建角色" v-on:click="operaterole('新建角色',$event)" >新建角色</a>
+					<a class="commonbtn" href="javascript:;" value="新建角色" v-on:click="operaterole('新建角色',$event)">新建角色</a>
 				</div>
 			</div>
 			<div class="numshu_btm">
@@ -49,13 +51,13 @@
 									<td>{{item.name}}</td>
 									<td class="notes">{{item.note}}</td>
 									<td>
-										<a v-bind:href="'config_user.html?id='+item.id+'&name='+item.name">配置用户</a>
-										<a v-bind:href="'config_gurisdiction.html?id='+item.id+'&name='+item.name">配置权限</a>
+										<a v-bind:href="'config_user.html?id='+item.id+'&name='+encodeURIComponent(item.name)">配置用户</a>
+										<a v-bind:href="'config_gurisdiction.html?id='+item.id+'&name='+encodeURIComponent(item.name)">配置权限</a>
 										<a href="javascript:;" v-on:click="editUser(item.id,$event)">编辑</a>
-										<a href="javascript:;" v-on:click="delteAdmin(item.id,$event)">删除</a>
+										<a href="javascript:;" v-on:click="delteAdmin(item.id,$event,index)">删除</a>
 									</td>
 								</tr>
-							</tbody>	
+							</tbody>
 						</table>
 					</div>
 					<div class="row pro_list_btm">
@@ -80,21 +82,23 @@
 	<script src="../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
 	<script>
+//		encodeURIComponent()
+//		decodeURIComponent()
 		var page = 1;
-		var pagesize =10;
+		var pagesize = 10;
 		var datajson = {};
 		var roleList = new Vue({
 			el: '#roleList',
 			data: {
 				data: "",
-				schoolName:"",
-				schoolcount:'',
-				pagesize:'',
+				schoolName: "",
+				schoolcount: '',
+				pagesize: '',
 			},
 			methods: {
-				operaterole: function(text,$event) {
+				operaterole: function(text, $event) {
 					$('.breadcrumb', window.parent.document).append('<li class="active add_school"><span class="Current_page iframeurl" name="view/jurisdictionManage/role_add.html" style="color: rgb(51, 51, 51); cursor: default;">' + text + '</span></li>');
-					$event.target.setAttribute('href','role_add.html');
+					$event.target.setAttribute('href', 'role_add.html');
 				},
 				//配置用户
 				/*configUser: function(id,name,e){
@@ -105,56 +109,67 @@
 					e.target.setAttribute('href',+id);
 				},*/
 				//编辑
-				editUser: function(id,e){
-					e.target.setAttribute('href','role_add.html?id='+id);
+				editUser: function(id, e) {
+					e.target.setAttribute('href', 'role_add.html?id=' + id);
 				},
 				//删除
-				delteAdmin: function(id,e){
+				delteAdmin: function(id, e,ind) {
 					layer.open({
-					  title: '提示',
-					  shadeClose: false,
-					  content: '是否确定删除该角色？',
-					  skin: 'layui-layer-lana',
-					  btn: ['确定', '取消'],
-					  yes: function(){
-					  	$.ajax({
-							type: 'delete',
-							url: org_url + dataUrl.jurisdiction.role+id+'?token='+sessionStorage.token,
-							success: function(data){
-								if (data.code=='10010') {
-									layer.alert('身份验证失败！请重新登录！',{yes:function(){
-										parent.location.href = "../../enter.html";
-									},cancel:function(){
-										parent.location.href = "../../enter.html";
-									}});
-									return false;
+						title: '提示',
+						shadeClose: false,
+						content: '是否确定删除该角色？',
+						skin: 'layui-layer-lana',
+						btn: ['确定', '取消'],
+						yes: function() {
+							$.ajax({
+								type: 'delete',
+								url: org_url + dataUrl.role + id + '?token=' + sessionStorage.token,
+								success: function(data) {
+									if(data.code == '10010') {
+										layer.alert('身份验证失败！请重新登录！', {
+											yes: function() {
+												parent.location.href = "../../enter.html";
+											},
+											cancel: function() {
+												parent.location.href = "../../enter.html";
+											}
+										});
+										return false;
+									}
+									if(data === 1) {
+										layer.alert('删除成功！', function(index) {
+											layer.close(index);
+											$(e.target).parents('tr').remove();
+											if(ind==0){
+												roleList.data = '';
+												pages('', page-1);
+											}
+										});
+
+									} else {
+										layer.alert('删除失败！');
+									}
 								}
-								if (data===1) {
-									layer.alert('删除成功！');
-									$(e.target).parents('tr').remove();
-								} else{
-									layer.alert('删除失败！');
-								}
-							}
-						})
-					  }
-					}); 
+							})
+						}
+					});
 				}
 			}
 		});
-		
-		pages('',page);
-		function pages(name,page){
+
+		pages('', page);
+
+		function pages(name, page) {
 			$('#pageToolbar').html('');
-			
-			if (name) {
+
+			if(name) {
 				datajson = {
 					page: page,
 					size: pagesize,
 					name: name,
 					token: sessionStorage.token
 				}
-			} else{
+			} else {
 				datajson = {
 					page: page,
 					size: pagesize,
@@ -164,10 +179,21 @@
 			console.log(datajson)
 			$.ajax({
 				type: "get",
-				url: org_url + dataUrl.jurisdiction.role,
+				url: org_url + dataUrl.roles,
 				data: datajson,
 				async: true,
 				success: function(data) {
+					if(data.code == '10010') {
+						layer.alert('身份验证失败！请重新登录！', {
+							yes: function() {
+								parent.location.href = "../../enter.html";
+							},
+							cancel: function() {
+								parent.location.href = "../../enter.html";
+							}
+						});
+						return false;
+					}
 					roleList.data = data.data;
 					$('#pageToolbar').Paging({
 						pagesize: datajson.size,
@@ -178,22 +204,49 @@
 							console.log(p)
 							datajson.page = p;
 							datajson.size = size;
+							page = p;
+							pagesize = size;
 							$.ajax({
 								type: "get",
-								url: org_url + dataUrl.jurisdiction.role,
+								url: org_url + dataUrl.roles,
 								data: datajson,
-								success: function(data){
+								success: function(data) {
+									if(data.code == '10010') {
+										layer.alert('身份验证失败！请重新登录！', {
+											yes: function() {
+												parent.location.href = "../../enter.html";
+											},
+											cancel: function() {
+												parent.location.href = "../../enter.html";
+											}
+										});
+										return false;
+									}
 									roleList.data = data.data;
 								}
 							});
 						},
-						changePagesize:function(ps){
+						changePagesize: function(ps) {
 							datajson.size = ps;
+							page =1;
+							datajson.page = 1;
+//							pagesize = ps;
 							$.ajax({
 								type: "get",
-								url: org_url + dataUrl.jurisdiction.role,
+								url: org_url + dataUrl.roles,
 								data: datajson,
-								success: function(data){
+								success: function(data) {
+									if(data.code == '10010') {
+										layer.alert('身份验证失败！请重新登录！', {
+											yes: function() {
+												parent.location.href = "../../enter.html";
+											},
+											cancel: function() {
+												parent.location.href = "../../enter.html";
+											}
+										});
+										return false;
+									}
 									roleList.data = data.data;
 								}
 							});
@@ -202,7 +255,6 @@
 				}
 			});
 		}
-		
 	</script>
 
 </html>

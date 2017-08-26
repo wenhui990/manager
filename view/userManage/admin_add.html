@@ -50,11 +50,12 @@
 					<div class="form-group">
 					</div>
 					<div class="form-group">
+						<input id="admin_id" type="hidden">
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">姓名</span>
 						</label>
 						<div class="col-sm-3">
-							<input type="text" name="admin_name" id="admin_name" maxlength="20" class="form-control" value="" />
+							<input type="text" name="admin_name" maxlength="20" id="admin_name" class="form-control" value="" />
 						</div>
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">手机号</span>
@@ -67,10 +68,10 @@
 						<label class="col-sm-2 control-label text-right">
 							<span class="warn" style="padding-left: 20px;">所属角色</span>
 						</label>
-						<div class="col-sm-8" id="dd">
-							<select class="selectpicker form-control organization" id="admin_roles" multiple=”multiple” style="width:36%">						      
-						    	<option value="">请选择</option>
-							</select>
+						<div class="col-sm-8">
+							<select  id="admin_roles" class="selectpicker form-control organization" multiple>
+						     
+						    </select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -78,7 +79,7 @@
 							<span class="" style="padding-left: 20px;">备注</span>
 						</label>
 						<div class="col-sm-8">
-							<textarea name="" id="admin_note" class="form-control" rows="5" ></textarea>
+							<textarea name="" id="admin_note" class="form-control" maxlength="200" rows="5" ></textarea>
 						</div>
 					</div>
 				</div>
@@ -92,9 +93,7 @@
 	<script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
 	<script type="text/javascript" src="../../plugin/bootstrap-select/js/bootstrap-select.min.js" ></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
-	<script type="text/javascript" src="../../js/userManage/add_admin.js" ></script>
 	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
-	<script>
-
-	</script>
+	<script type="text/javascript" src="../../js/userManage/add_admin.js" ></script>
+	
 </html>

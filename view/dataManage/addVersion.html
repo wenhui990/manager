@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新建版本</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/reset.css"/>
+		<link rel="stylesheet" href="../../plugin/bootstrap/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/common/common.css" />
+	</head>
+	<body>
+		<div class="main container-fluid" id="version">
+			<div class="row head">
+				<div class="btngroup">
+					<input class="commonbtn" type="button" value="保存" v-on:click="add()"/>
+					<a href="versionManage_list.html"><input class="commonbtn" type="button" value="返回"/></a>
+				</div>
+			</div>
+			<div class="numshu_btm state" style="border-top: 1px solid #CCD2D8;height: auto;">
+				<form class="form-horizontal pad_l_40" role="form">
+					<div class="form-group" style="height: 34px;">
+						<label for="" class="col-sm-1 control-label text-center warn">版本名称</label>
+						<div class="col-sm-2">
+							<input class="form-control" type="text" placeholder="" name="email" v-validate="'required|email'" v-model="title">
+						</div>
+					</div>
+					<div class="form-group" style="height: 34px;">
+						<label for="" class="col-sm-1 control-label text-center">排序</label>
+						<div class="col-sm-2">
+							<input class="form-control" type="text" placeholder="" v-model="sn">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-1 control-label text-center">版本描述</label>
+						<textarea class="col-sm-4" name="" rows="10" style="margin-left: 12px;resize: none;" maxlength="200" v-model="note"></textarea>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../js/common/Jquery.3.1.1.js" ></script>
+	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
+	<script type="text/javascript" src="../../js/dataUrl.js" ></script>
+	<script type="text/javascript" src="../../plugin/vue/vue.js"></script>
+	<script type="text/javascript" src="../../js/dataManage/apicontainer.js" ></script>
+	<script type="text/javascript" src="../../js/commonutil.js" ></script>
+	<script type="text/javascript" src="../../js/checkutil.js" ></script>
+	<script src="../../../js/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-rc.3/vee-validate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		Vue.use(VeeValidate);
+		console.log(VeeValidate)
+		
+		
+		var vvm = null;
+
+		$(document).ready(function() {
+			vvm_init();
+		});
+
+		function vvm_init(){
+			vvm = new Vue({
+				el: '#version',
+				data:{
+					title:"",
+					sn:"",
+					note:""
+				},
+				methods:{
+					add: function(){
+						var title = this.title.trim();
+					    if (title=='') {
+					        alertMsg('版本名称不能为空！');
+					        return false;
+					    }
+					    
+					    var sn;
+					    if(isNull(this.sn)){
+					        sn = '99';
+					    }else if(isNumber(this.sn)){
+					        if (this.sn<1||this.sn>99) {
+					        	alertMsg('排序必须输入1-99之间的数字');
+					            return false;
+					        }else{
+					            sn = this.sn;
+					        }
+					    }else{
+					        alertMsg('排序必须输入1-99之间的数字');
+					        return false;
+					    }
+
+						addEdition(function(resp){
+							commonMsg("添加成功", function(){
+								window.location.href = 'versionManage_list.html';
+							});
+						}, title, sn, vvm.note);
+					}
+				}
+			});
+		}
+	</script>
+</html>
+
+

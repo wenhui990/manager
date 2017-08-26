@@ -25,12 +25,12 @@
 					<div class="form-group">
 						<label for="secondname" class="col-sm-1 control-label text-center">姓名</label>
 						<div class="col-sm-2">
-							<input type="text" id="name" name="" class="form-control admin_name" />
+							<input type="text" id="name" name="" maxlength="20" class="form-control admin_name" />
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">手机号</label>
 						<div class="col-sm-2">
-							<input type="tel" id="phone" name="" class="form-control admin_phone" />
+							<input type="tel" id="phone" name="" maxlength="11" class="form-control admin_phone" />
 						</div>
 
 						<label for="secondname" class="col-sm-1 control-label text-center">用户状态</label>
@@ -44,7 +44,6 @@
 						<div id="btnSearch" onclick="search()" class="search_01 col-sm-2 col-sm-offset-1">查询</div>
 					</div>
 
-					
 				</form>
 			</div>
 			<div class="row head numshu_btm">
@@ -55,10 +54,10 @@
 			<div class="numshu_btm">
 				<div class="list_btm">
 					<div class="table-responsive">
-						<table class="table table-condensed addlist" style="text-align: center;table-layout: fixed;">							
-													
+						<table class="table table-condensed addlist" style="text-align: center;table-layout: fixed;">
+
 						</table>
-						<script id="manager_list_tmpl" type="text/x-dot-template">	
+						<script id="manager_list_tmpl" type="text/x-dot-template">
 							<tr>
 								<td><strong>序号</strong></td>
 								<td><strong>姓名</strong></td>
@@ -67,23 +66,23 @@
 								<td><strong>用户状态</strong></td>
 								<td><strong>操作</strong></td>
 							</tr>
-							{{~it:value:index}}									
+							{{~it:value:index}}
 							<tr id="manager{{=value.id}}">
 								<td>{{=index+1}}</td>
 								<td>{{=value.name}}</td>
 								<td>{{=value.phone}}</td>
 								<td>{{=value.roles}}</td>
 								<td><input id="valid{{=value.id}}" type="hidden" value='{{=value.valid}}'>
-								<span id="validText{{=value.id}}">{{?value.valid=='0'}}已启用{{??}}已启用{{?}}</span></td>
+									<span id="validText{{=value.id}}">{{?value.valid=='0'}}已启用{{??}}已启用{{?}}</span></td>
 								<td>
-									<a href="javascript:;" onclick="seeAdmin(this)">查看</a>&nbsp;
+									<a href="javascript:;" onclick="seeAdmin({{=value.id}},'see')">查看</a>&nbsp;
 									<a href="javascript:;" onclick="editAdmin({{=value.id}})">编辑</a>&nbsp;
 									<a id="validHref{{=value.id}}" href="javascript:;" onclick="off({{=value.id}})">{{?value.valid=='0'}}启用{{??}}禁用{{?}}</a>&nbsp;
 									<a href="javascript:;" onclick="delteAdmin({{=value.id}})">删除</a>&nbsp;
 								</td>
 							</tr>
 							{{~}}
-							</script>
+						</script>
 					</div>
 					<div class="row pro_list_btm">
 						<div class="col-xs-6 col-sm-3 text-center">
@@ -106,140 +105,181 @@
 	<script type="text/javascript" src="../../plugin/paging/paging.js"></script>
 	<script type="text/javascript" src="../../plugin/layer/layer.js"></script>
 	<script src="../../js/dataUrl.js" type="text/javascript" charset="utf-8"></script>
-	
+
 	<!--<script type="text/javascript" src="../../js/knowledge/knowledge_list.js" ></script>-->
 	<script>
 		var evalText;
-		$(function(){
+		$(function() {
 			evalText = doT.template($("#manager_list_tmpl").text());
-			search();			
+			search();
 		})
-	
+
 		//搜索分页
-		function search(){
+		function search() {
 			$('#pageToolbar').html("");
 			$.ajax({
-				type:"get",
-				url: org_url + "/managers",
-				data:{
-					page:1,
-					size:5,
+				type: "get",
+				url: org_url + dataUrl.managers + "?token=" + sessionStorage.token,
+				data: {
+					page: 1,
+					size: 10,
 					phone: $("#phone").val().trim(),
 					name: $("#name").val().trim(),
-					valid:$("#valid").val(),
-					token:sessionStorage.token
+					valid: $("#valid").val(),
 				},
-				async:true,
-				dataType:"json",
+				async: true,
+				dataType: "json",
 				xhrFields: {
-			        withCredentials: true
-			    },
-			    crossDomain: true,
-			    success: function(data){
-			    	$(".addlist").html(evalText(data.data));
-			    	$('#pageToolbar').Paging({
-						pagesize: 5,
+					withCredentials: true
+				},
+				crossDomain: true,
+				success: function(data) {
+					if(data.code == '10010') {
+						layer.alert('身份验证失败！请重新登录！', {
+							yes: function() {
+								parent.location.href = "../../enter.html";
+							},
+							cancel: function() {
+								parent.location.href = "../../enter.html";
+							}
+						});
+						return false;
+					}
+					$(".addlist").html(evalText(data.data));
+					$('#pageToolbar').Paging({
+						pagesize: 10,
 						count: data.total,
-						toolbar: false,
+						toolbar: true,
+						hash: true,
 						callback: function(page, size, count) {
 							//console.log(page+'***'+size+'------'+count)
 							$.ajax({
-								type:"get",
-								url: org_url + "/managers",
-								data:{
-									page:page,
-									size:size,
-									phone: $("#phone").val(),
-									name: $("#name").val(),
-									valid:$("#valid").val(),
-									token:sessionStorage.token
+								type: "get",
+								url: org_url + dataUrl.managers + "?token=" + sessionStorage.token,
+								data: {
+									page: page,
+									size: size,
+									phone: $("#phone").val().trim(),
+									name: $("#name").val().trim(),
+									valid: $("#valid").val(),
 								},
-								async:true,
+								async: true,
 								xhrFields: {
-							        withCredentials: true
-							    },
-							    dataType:"json",
-							    crossDomain: true,
-							    success: function(data){
-									$(".addlist").html(evalText(data.data));	
-							    }
-							});  
+									withCredentials: true
+								},
+								dataType: "json",
+								crossDomain: true,
+								success: function(data) {
+									if(data.code == '10010') {
+										layer.alert('身份验证失败！请重新登录！', {
+											yes: function() {
+												parent.location.href = "../../enter.html";
+											},
+											cancel: function() {
+												parent.location.href = "../../enter.html";
+											}
+										});
+										return false;
+									}
+									$(".addlist").html(evalText(data.data));
+								}
+							});
+						},
+						changePagesize: function(ps) {
+							$.ajax({
+								type: "get",
+								url: org_url + dataUrl.managers + "?token=" + sessionStorage.token,
+								data: {
+									page: 1,
+									size: ps,
+									phone: $("#phone").val().trim(),
+									name: $("#name").val().trim(),
+									valid: $("#valid").val(),
+								},
+								success: function(data) {
+									if(data.code == '10010') {
+										layer.alert('身份验证失败！请重新登录！', {
+											yes: function() {
+												parent.location.href = "../../enter.html";
+											},
+											cancel: function() {
+												parent.location.href = "../../enter.html";
+											}
+										});
+										return false;
+									}
+									$(".addlist").html(evalText(data.data));
+								}
+							});
 						}
-					});					
-			    }
-			});
-		}
-		
-		//点击新建管理员
-		$('.addAdmin').click(function() {
-//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建用户</span></li>');
-			window.location.href='admin_add.html';
-		});
-		
-		//点击查看
-		function seeAdmin(t){
-			var $trs = $(t).parents('tr');
-			var tname = $trs.find('td').eq(1).text(),
-				tphone = $trs.find('td').eq(2).text(),
-				trole = $trs.find('td').eq(3).text(),
-				tstatus = $trs.find('td').eq(4).text(),
-				tnotes = '';
-			var teacherhtml = '<p>管理员姓名：'+tname+'</p><p>手机号：'+tphone+'</p><p>所属角色：'+trole+'<p>用户状态：'+tstatus+'</p><p>备注：</p>';
-			layer.open({
-				title: "",
-				content: teacherhtml,
-				skin: 'layui-layer-lana',
-				shadeClose: 'true',
-				btn: ['确定', "取消"],
-				yes: function(index, layero) {
-					layer.close(index);
-				},
-				btn2: function(index, layero) {
-					//按钮【按钮二】的回调
-					layer.close(index);
-				},
-				cancel: function() {
-					//右上角关闭回调
+					});
 				}
 			});
 		}
-		
-		//点击编辑
-		function editAdmin(id){
-//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑教师</span></li>');
-			window.location.href='admin_edit.html?id='+id;
+
+		//点击新建管理员
+		$('.addAdmin').click(function() {
+			//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_add.html" style="color: rgb(51, 51, 51); cursor: default;">新建用户</span></li>');
+			window.location.href = 'admin_add.html';
+		});
+
+		//点击查看
+		function seeAdmin(id, see) {
+			window.location.href = 'admin_add.html?id=' + id + '&see=' + see;
 		}
-		
+
+		//点击编辑
+		function editAdmin(id) {
+			//			$('.breadcrumb',window.parent.document).append('<li class="active add_teacher_bar"><span class="Current_page iframeurl" name="view/userManage/admin_edit.html" style="color: rgb(51, 51, 51); cursor: default;">编辑教师</span></li>');
+			window.location.href = 'admin_edit.html?id=' + id;
+		}
+
 		//点击禁用用户
 		function off(id) {
-			var v = ($("#valid"+id).val()=='0'?'1':'0');
+			var v = ($("#valid" + id).val() == '0' ? '1' : '0');
 			$.ajax({
-				type:"put",
-				url: org_url + "/managers/"+id,
-				async:true,
-				dataType:"json",
+				type: "put",
+				url: org_url + dataUrl.managersstaus + id + "?token=" + sessionStorage.token,
+				async: true,
+				dataType: "json",
 				xhrFields: {
-			        withCredentials: true
-			    },
-			    data:{
-			    	valid:v,
-			    	token:sessionStorage.token
-			    },
-			    crossDomain: true,
-			    success: function(data){
-			    	//alert(v);
-			    	$("#valid"+id).val(v);
-			    	$("#validText"+id).html(v=="0"?"已禁用":"已启用");
-			    	$("#validHref"+id).html(v=="0"?"启用":"禁用");
-			    	//window.location.href='admin_list.html';
-		            //$('.add_teacher_bar',window.parent.document).remove();   	
-			    }
+					withCredentials: true
+				},
+				data: {
+					valid: v,
+				},
+				crossDomain: true,
+				success: function(data) {
+					if(data.code == '10010') {
+						layer.alert('身份验证失败！请重新登录！', {
+							yes: function() {
+								parent.location.href = "../../enter.html";
+							},
+							cancel: function() {
+								parent.location.href = "../../enter.html";
+							}
+						});
+						return false;
+					}
+					//alert(v);
+					if(data == 1) {
+						layer.alert(v == "0" ? "已禁用" : "已启用");
+						$("#valid" + id).val(v);
+						$("#validText" + id).html(v == "0" ? "已禁用" : "已启用");
+						$("#validHref" + id).html(v == "0" ? "启用" : "禁用");
+					} else {
+						layer.alert("修改失败！");
+					}
+
+					//window.location.href='admin_list.html';
+					//$('.add_teacher_bar',window.parent.document).remove();   	
+				}
 			});
 
 		}
-		
+
 		//点击删除用户
-		function delteAdmin(id){
+		function delteAdmin(id) {
 			layer.open({
 				title: "",
 				content: '确定删除该用户吗？',
@@ -248,19 +288,36 @@
 				btn: ['确定', "取消"],
 				yes: function(index, layero) {
 					$.ajax({
-						type:"delete",
-						url: org_url + "/managers/"+id+'?token='+sessionStorage.token,
-						async:true,
-						dataType:"json",
+						type: "delete",
+						url: org_url + dataUrl.manager + id + '?token=' + sessionStorage.token,
+						async: true,
+						dataType: "json",
 						xhrFields: {
-					        withCredentials: true
-					    },
-					    crossDomain: true,
-					    success: function(data){
-					    	if(data==1){
-						    	$("#manager"+id).remove();
-						    }  	
-					    }
+							withCredentials: true
+						},
+						crossDomain: true,
+						success: function(data) {
+							if(data.code == '10010') {
+								layer.alert('身份验证失败！请重新登录！', {
+									yes: function() {
+										parent.location.href = "../../enter.html";
+									},
+									cancel: function() {
+										parent.location.href = "../../enter.html";
+									}
+								});
+								return false;
+							}
+							if(data == 1) {
+								layer.alert('删除成功！', function(index) {
+									layer.close(index);
+									$("#manager" + id).remove();
+									search();
+								});
+							} else {
+								layer.alert('删除失败！' + data.msg);
+							}
+						}
 					});
 					layer.close(index);
 				},
@@ -270,8 +327,6 @@
 				}
 			});
 		}
-		
-		
 	</script>
 
 </html>

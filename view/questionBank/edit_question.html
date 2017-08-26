@@ -50,7 +50,7 @@
 				"
 
 			}
-			blockquote{border: 0;}
+			blockquote{border: 1px solid #eee;}
 		</style>
 	</head>
 
@@ -69,7 +69,7 @@
 							<span class="warn" style="padding-left: 20px;">知识点{{index+1}}</span>
 						</label>
 						<div class="col-sm-2">
-							<select class="form-control stagelist">
+							<select class="form-control stagelist" v-model="stageid" disabled>
 								<option value="">请选择</option>
 								<option v-for="(value,key) in stages" :value="key" :selected="knowledg.stageid==key">{{value}}</option>
 							</select>
@@ -90,12 +90,18 @@
 						<label class="col-sm-2 text-right">
 							<span class="warn" style="padding-left: 20px;">难度系数：</span>
 						</label>
-						<div class="col-sm-1">
-							<input type="text" style="width: 100%;" v-model="difficulty" />
+						<div class="col-sm-2">
+							<!--<input type="text" style="width: 100%;" v-model="difficulty" />-->
+							<select class="form-control" v-model="difficultylevel">
+								<option value="">请选择</option>
+								<option value="hard">难</option>
+								<option value="norm">中</option>
+								<option value="easy">易</option>
+							</select>
 						</div>
-						<div class="col-sm-3">
+						<!--<div class="col-sm-3">
 							只能填写0-1之间的数字
-						</div>
+						</div>-->
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 text-right">
@@ -130,10 +136,9 @@
 							<span class="warn" style="padding-left: 20px;" v-if="index==1">选项B：</span>
 							<span class="warn" style="padding-left: 20px;" v-if="index==2">选项C：</span>
 							<span class="warn" style="padding-left: 20px;" v-if="index==3">选项D：</span>
-							<span class="warn" style="padding-left: 20px;" v-if="index==4">选项E：</span>
 						</label>
 						<div class="col-sm-5 questionoptions">
-							<blockquote class="questionoptionlist" contenteditable="blockquotetable" @focus="focusOption($event)" @blur="blurOption($event)" >{{opt}}</blockquote>
+							<blockquote class="questionoptionlist" contenteditable="blockquotetable" @focus="focusOption($event)" @blur="blurOption($event)" v-html="opt"></blockquote>
 						</div>
 						<div class="col-sm-2 control-label text-right" v-if="optionstype==index">
 							<button class="btn btn-sm btn-default btn-info">【正确答案】</button>

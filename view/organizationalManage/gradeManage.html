@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				<div class="box_border" style="padding: 10px 20px;">
-					<table border="1" class="table" >
+					<table border="1" class="table table-hover" >
 						<thead>
 							<th>班级名称</th>
 							<th>班主任</th>
@@ -115,7 +115,7 @@
 
 	<script>
 			var gradelist='';
-			
+			console.log(getUrlParams().name)
 			//获取url中字段
 			function getUrlParams() {
 				var params = {};
@@ -133,6 +133,12 @@
 			};	
 			$('.school_all_name').text(decodeURIComponent(getUrlParams().name))
 			var teacerjson,page=1,gradecount=0;
+			
+			if (getUrlParams().add=='ok') {
+				navClic(sessionStorage.gradeid,getUrlParams().id);
+				console.log($('.nav_lis'))
+				
+			}
 			//点击保存后班级管理页面显示新添加的班级
 			if(getUrlParams().id){
 				$('.add_grade').click(function(){
@@ -142,10 +148,9 @@
 				})
 				$.ajax({
 					type: "get",
-					url: org_url + dataUrl.clazz.grades,
+					url: org_url + dataUrl.grades+"?token="+sessionStorage.token,
 					data: {
 						schoolId: getUrlParams().id,
-						token: sessionStorage.token
 					},
 					async: true,
 					success: function(data) {
@@ -289,20 +294,15 @@
 				sessionStorage.id = $(this).attr('data-id');
 			})
 			
-			if (getUrlParams().add=='ok') {
-				navClic(sessionStorage.gradeid,getUrlParams().id);
-	console.log($('.nav_lis'))
-				
-			}
+			
 			function navClic(gradeid,schoolid){
 				$.ajax({
 					type:"get",
-					url:org_url + dataUrl.clazz.clazz,
+					url:org_url + dataUrl.clazzs+"?token="+sessionStorage.token,
 					async:true,
 					data:{
 						gradeid: gradeid,
 						schoolid: getUrlParams().id,
-						token: sessionStorage.token
 					},
 					success: function(data){
 						if (data.code=='10010') {
@@ -337,12 +337,12 @@
 			
 			//添加班级
 			$('.add_grade').click(function (){
-				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html" style="color: rgb(51, 51, 51); cursor: default;">新建班级</span></li>');
+//				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html" style="color: rgb(51, 51, 51); cursor: default;">新建班级</span></li>');
 			});
 			
 			//编辑班级
 			$(document).on('click','.edit_class',function (){
-				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html?id=123" style="color: rgb(51, 51, 51); cursor: default;">编辑班级</span></li>');
+//				$('.breadcrumb',window.parent.document).append('<li class="active add_grade_title"><span class="Current_page iframeurl" name="view/organizationalManage/add_grade.html?id=123" style="color: rgb(51, 51, 51); cursor: default;">编辑班级</span></li>');
 				var clazzid = $(this).attr('data-id');
 				var gradeid = $('.grade_lists').attr('data-gradeid');
 				console.log(gradeid)
@@ -361,7 +361,7 @@
 					yes:function(){
 						$.ajax({
 							type:"delete",
-							url: org_url + dataUrl.clazz.clazz+delid+"?token"+sessionStorage.token,
+							url: org_url + dataUrl.clazzs+delid+"?token="+sessionStorage.token,
 							async:true,
 							success: function(data){
 								if (data.code=='10010') {

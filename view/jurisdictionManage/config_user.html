@@ -108,10 +108,7 @@
 				var _self = this;
 				$.ajax({
 					type:"get",
-					url: org_url + dataUrl.manager,
-					data:{
-						token:sessionStorage.token
-					},
+					url: org_url + dataUrl.managers+"?token="+sessionStorage.token,
 					xhrFields: {
 				        withCredentials: true
 				    },
@@ -123,7 +120,7 @@
 				});
 				$.ajax({
 					type:"get",
-					url:org_url + dataUrl.jurisdiction.role + getUrlParams().id +"/manager",
+					url:org_url + dataUrl.role + getUrlParams().id +"/manager",
 					async:true,
 					data:{
 						token:sessionStorage.token
@@ -147,7 +144,7 @@
 					});
 					$.ajax({
 						type:"put",
-						url: org_url + dataUrl.jurisdiction.role + getUrlParams().id +"/manager",
+						url: org_url + dataUrl.role + getUrlParams().id +"/manager",
 						async:true,
 						data: {
 							id: getUrlParams().id,
