@@ -267,7 +267,8 @@ function getCourses(cbfunc, page, size){
  *  教材
  */
 // 获取教材列表
-function getTextbooks(cbfunc, page=1, size=10, textbooktype=0, stage=0, course=0, editon=0, term=0, status=2){
+// var page=1, size=10, textbooktype=0, stage=0, course=0, editon=0, term=0, status=2;
+function getTextbooks(cbfunc, page, size, textbooktype, stage, course, editon, term, status){
     var reqs = {};
 
     reqs['page'] = page;

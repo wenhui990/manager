@@ -17,7 +17,8 @@ var setting2 = {
 		type: 'get'
 	},
 	view: {
-		dblClickExpand: false
+		dblClickExpand: false,
+		fontCss: setFontCss
 	},
 	data: {
 		simpleData: {
@@ -27,6 +28,10 @@ var setting2 = {
 	callback: {
 		onClick: onClick1,
 	}
+};
+
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
 };
 
 function filter(treeId, parentNode, childNodes) {

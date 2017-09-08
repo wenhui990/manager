@@ -133,9 +133,9 @@
 							<button type="submit" class="btn btn-default" @click="teacherStudent('S')">学生题</button>
 						</div>
 						<div class="questionbutton none">
-							<button type="submit" class="btn btn-default" @click="backstageTeacher('')">全部</button>
-							<button type="submit" class="btn btn-default" @click="backstageTeacher(1)">后台上传</button>
-							<button type="submit" class="btn btn-default" @click="backstageTeacher(2)">教师上传</button>
+							<button type="submit" class="btn btn-default" @click="backstageTeacher()">全部</button>
+							<button type="submit" class="btn btn-default" @click="backstageTeacher('back')">后台上传</button>
+							<button type="submit" class="btn btn-default" @click="backstageTeacher('teacher')">教师上传</button>
 						</div>
 						<div class="questionbutton none">
 							<button type="submit" class="btn btn-default" @click="questionType('')">全部题型</button>
@@ -164,7 +164,11 @@
 							<div class="clearfix"></div>
 							<div class="col-sm-12 questiontool">
 								<a href="javascript:;" @click="seeAnalysis(question.analysis)">查看解析</a> 
-								<span>难度值：<span class="difficultynum">{{question.difficulty}}</span></span>
+								<span>难度值：
+									<span class="difficultynum" v-if="question.difficultylevel=='hard'">难</span>
+									<span class="difficultynum" v-if="question.difficultylevel=='norm'">中</span>
+									<span class="difficultynum" v-if="question.difficultylevel=='easy'">易</span>
+								</span>
 								<span class="promulgator" v-if="question.ownerId==''||question.ownerId=='null'||!question.ownerId">管理员</span>
 								<span class="promulgator" v-else>{{question.schoolname+' '+(question.teachername||'')}}</span>
 							</div>

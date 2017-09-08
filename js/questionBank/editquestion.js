@@ -13,7 +13,8 @@ var setting2 = {
 		type: 'get'
 	},
 	view: {
-		dblClickExpand: false
+		dblClickExpand: false,
+		fontCss: setFontCss
 	},
 	data: {
 		simpleData: {
@@ -23,6 +24,9 @@ var setting2 = {
 	callback: {
 		onClick: onClick1,
 	}
+};
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
 };
 function filter(treeId, parentNode, childNodes) {
 	if (!childNodes) return null;
@@ -225,9 +229,9 @@ question = new Vue({
 					if (data.result==1) {
 						layer.alert('修改成功！',function(){
 							window.location.href = 'questionbank.html?courseid='+courseid+'&stageid='+stageid;
-						})
+						});
 					}else{
-						layer.alert('修改失败！'+data.msg)
+						layer.alert('修改失败！'+data.msg);
 					}
 				}
 			});

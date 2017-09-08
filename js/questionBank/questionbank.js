@@ -159,7 +159,11 @@ var question = new Vue({
 		},
 		backstageTeacher: function(id){
 			console.log(id)
-			dataobj.uploadtype = id;
+			if (id) {
+				dataobj.ownerid = id;
+			}else{
+				delete dataobj.ownerid
+			}
 			questionList('',dataobj);
 		},
 		questionType: function(id){
@@ -171,6 +175,7 @@ var question = new Vue({
 		seeAnalysis: function(imgsrc){
 			layer.open({
 			  type: 1,
+			  title:'解析',
 			  area: ['auto', 'auto'], //宽高
 			  content: '<div style="padding:10px 20px">'+imgsrc+'</div>'
 			})
@@ -234,7 +239,8 @@ var question = new Vue({
 	},
 	watch:{
 		stageid: function(n,o){
-			treeNodes(n,'s',false);
+			question.courseid = '';
+//			treeNodes(n,'s',false);
 		},
 		courseid: function(n,o){
 			treeNodes(n,false,'c');
@@ -337,9 +343,7 @@ var setting = {
 	view: {
 		expandSpeed:"",
 		selectedMulti: false,
-		fontCss:{
-			"fontSize": "14px"
-		}
+		fontCss: setFontCss
 	},
 	data: {
 		simpleData: {
@@ -349,6 +353,10 @@ var setting = {
 	callback: {
 		onClick:OnClick
 	}
+};
+
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
 };
 
 function filter(treeId, parentNode, childNodes) {
@@ -373,9 +381,11 @@ function OnClick(event, treeId, treeNode) {
 	question.questiontype='';
 	var id=[],type;
 	catalog =[];
-	if (treeNode.level == 1) {
+	if (treeNode.level >= 1) {
+		id.push(treeNode.id.substring(1));
 		if (treeNode.children) {
 			$.each(treeNode.children, function(i,e) {
+				id.push(e.id.substring(1));
 				if(e.children){
 					$.each(e.children, function(f,ev) {
 						if(ev.children){
@@ -390,16 +400,16 @@ function OnClick(event, treeId, treeNode) {
 			});
 		}
 	}
-	if (treeNode.level == 2) {
-		if (treeNode.children) {
-			$.each(treeNode.children, function(i,e) {
-				id.push(e.id.substring(1));
-			});
-		}
-	}
-	if (treeNode.level == 3) {
-		id.push(treeNode.id.substring(1));
-	}
+//	if (treeNode.level == 2) {
+//		if (treeNode.children) {
+//			$.each(treeNode.children, function(i,e) {
+//				id.push(e.id.substring(1));
+//			});
+//		}
+//	}
+//	if (treeNode.level == 3) {
+//		id.push(treeNode.id.substring(1));
+//	}
 	
 	dataobj = {
 		knowledgeids: JSON.stringify(id),
@@ -507,6 +517,7 @@ function jsonsData() {
 			jsonNode.code = e.code;
 			jsonObjs.push(jsonNode);
 			jsonObjs.dropInner = false;
+			jsonNode.type = e.type;
 			if(e.children) {
 				jsonsObj(e.children);
 			}

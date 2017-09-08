@@ -187,6 +187,10 @@
 			$('#edit_phone_html').modal('show');
 		});
 		$(document).on('click','.get_code',function(){
+			if ($('#newphone').val()==$('#now_phone').text()) {
+				layer.alert('与当前用户手机号相同！');
+				return false;
+			}
 			if ($('#newphone').val()=='') {
 				layer.alert('请输入手机号！');
 				return false;
@@ -196,7 +200,7 @@
 				return false;
 			}
 			var count=60,timer;
-			$('.count_down').text(count+'S后重新获取');
+//			$('.count_down').text(count+'S后重新获取');
 			$.ajax({
 				type:"put",
 				url: org_url+dataUrl.getcode+sessionStorage.userid+'/phone?token='+sessionStorage.token+'&phone='+$('#newphone').val(),

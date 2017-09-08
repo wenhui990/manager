@@ -17,6 +17,9 @@
 			  display: none;
 			}
 			.schoolnamewidth{max-width: 200px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+			#mainContent td{
+				border-top: 1px solid #ddd;
+			}
 		</style>
 	</head>
 	
@@ -46,13 +49,15 @@
 				<div class="list_btm">
 					<div class="table-responsive">
 						<table class="table table-condensed addlist school_lists" style="text-align: center;">
-							<tr>
-								<td><strong>序号</strong></td>
-								<td><strong>学校名称</strong></td>
-								<td><strong>上级管理机构</strong></td>
-								<td><strong>最后编辑时间</strong></td>
-								<td><strong>操作</strong></td>
-							</tr>
+							<thead>
+								<tr>
+									<td><strong>序号</strong></td>
+									<td><strong>学校名称</strong></td>
+									<td><strong>上级管理机构</strong></td>
+									<td><strong>最后编辑时间</strong></td>
+									<td><strong>操作</strong></td>
+								</tr>
+							</thead>
 							<tbody id="schools">
 								<tr v-for="(vals,index) in data">
 									<td>{{index+1}}</td>

@@ -20,6 +20,9 @@
 			[v-cloak] {
 			  display: none;
 			}
+			.dropdown-toggle{
+				text-align: center;
+			}
 		</style>
 		<div id="textbookmain" v-cloak>
 		<div class="main container-fluid" style="overflow:inherit;">
@@ -38,15 +41,15 @@
 					<ul class="nav nav-list box_border" id="mainbody">
 						<li class="">
 							<a href="javascript:;" class="dropdown-toggle">
-								<i class="icon-dashboard "></i>
+								<i class="icon"></i>
 								<span class="menu-text school_all_name">{{schoolName}}</span>
-								<b class="arrow icon-angle-down"></b>
+								<b class="arrow icon"></b>
 							</a>
 						</li>
 						<li v-if="hasprimary > 0" id="primarygrade">
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-desktop"></i>
-								<span class="menu-text">小学</span><b class="arrow icon-angle-down"></b>
+								<i class="icon"></i>
+								<span class="menu-text">小学</span><b class="arrow icon"></b>
 							</a>
 							<ul class="submenu" style="display: block;" v-for="item, index in primary">
 								<li class="nav_lis" data-id="'+e.id+'">
@@ -56,8 +59,8 @@
 						</li>
 						<li v-if="hasjunior > 0" id="junirograde">
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-desktop"></i>
-								<span class="menu-text">初中</span><b class="arrow icon-angle-down"></b>
+								<i class="icon"></i>
+								<span class="menu-text">初中</span><b class="arrow icon"></b>
 							</a>
 							<ul class="submenu" style="display: block;" v-for="item, index in junior">
 								<li class="nav_lis" data-id="'+e.id+'">
@@ -67,8 +70,8 @@
 						</li>
 						<li v-if="hassenior > 0" id="seniorgrade">
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-desktop"></i>
-								<span class="menu-text">高中</span><b class="arrow icon-angle-down"></b>
+								<i class="icon"></i>
+								<span class="menu-text">高中</span><b class="arrow icon"></b>
 							</a>
 							<ul class="submenu" style="display: block;" v-for="item, index in senior">
 								<li class="nav_lis" data-id="'+e.id+'">
@@ -112,7 +115,7 @@
 								</td>
 								<td>
 									<a href="javascript:;" v-on:click="editGradeTbs(index)">编辑</a>
-									<a href="javascript:;" v-on:click="delGradeTbs(index)">删除</a>
+									<a href="javascript:;" v-on:click="delGradeTbs(index)" v-if="index>0">删除</a>
 								</td>
 							</tr>
 						</table>
@@ -377,7 +380,7 @@
 					submit: function($event){  //给学校的年级添加教材	
 						//上学期
 						var lasttb = [];
-						for (item of this.lasttbs){
+						for (item in this.lasttbs){
 							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, item.selectedEdition, item.selectedTerm);
 							if (tbid == null){
 								return;
@@ -389,7 +392,7 @@
 						}
 						//下学期
 						var nexttb = [];
-						for (item of this.nexttbs){
+						for (item in this.nexttbs){
 							var tbid = findTb(vvm.selectedCourse, vvm.selectedStage, item.selectedEdition, item.selectedTerm);
 							if (tbid == null){
 								return;
@@ -431,7 +434,8 @@
 						this.selectedCourse = cid;
 
 						vvm.lasttbs = [];
-						for (lastitem of tbs.last){
+						for (var i = 0; i < tbs.last.length; i++){
+							var lastitem = tbs.last[i];
 							var moditem = {};
 							moditem['editions'] = mapEditions(this.selectedStage, this.selectedCourse, null, null);
 							moditem['selectedEdition'] = lastitem['edition']['id'];
@@ -441,7 +445,8 @@
 						}
 
 						vvm.nexttbs = [];
-						for (nextitem of tbs['next']){
+						for (var i = 0;  i < tbs.next.length; i++){
+							var nextitem = tbs.next[i];
 							var moditem = {};
 							moditem['editions'] = mapEditions(this.selectedStage, this.selectedCourse, null, null);
 							moditem['selectedEdition'] = nextitem['edition']['id'];
@@ -804,7 +809,8 @@
 		//根据科目，学段，版本，课本，找出对应的教材列表
 		function filterTbs(stageid, courseid, editionid, termid){
 			var tbs = []
-			for (var item of vvm.textbooks){
+			for (var i = 0; i < vvm.textbooks.length; i++){
+				var item = vvm.textbooks[i];
 				if (courseid == null){
 					if (item['stageid'] == stageid){
 						tbs.push(item['id']);
@@ -830,7 +836,8 @@
 		function mapCourses(stageid){
 			var tbs = filterTbs(stageid, null, null, null);
 			var courses = []
-			for (var tbid of tbs){
+			for (var i = 0; i < tbs.length; i++){
+				var tbid = tbs[i];
 				var obj = {};
 				var tb = getTbDetail(tbid);
 				obj.id = tb['course']['id'];
@@ -843,7 +850,8 @@
 		function mapEditions(stageid, courseid){
 			var tbs = filterTbs(stageid, courseid, null, null);
 			var editions = []
-			for (var tbid of tbs){
+			for (var i = 0; i < tbs.length; i++){
+				var tbid = tbs[i];
 				var obj = {};
 				var tb = getTbDetail(tbid);
 				obj.id = tb['edition']['id'];
@@ -856,7 +864,8 @@
 		function mapTerms(stageid, courseid, editionid){
 			var tbs = filterTbs(stageid, courseid, editionid, null);
 			var terms = []
-			for (var tbid of tbs){
+			for (var i = 0; i < tbs.length; i++){
+				var tbid = tbs[i];
 				var obj = {};
 				var tb = getTbDetail(tbid);
 				obj.id = tb['term']['id'];
@@ -868,7 +877,8 @@
 
 		//push obj, 但是去重
 		function pushUniqe(obj, list){
-			for (l of list){
+			for (var i = 0; i < list.length; i++){
+				var l = list[i];
 				if (l['id'] == obj['id'] && l['title'] == obj['title']){
 					return;
 				}
@@ -897,10 +907,10 @@
 			console.log("cid: " + courseid + ', stageid: ' + stageid + ", editionid: " + editionid + ", termid: " + termid);
 			for (var i = 0; i < vvm.textbooks.length; i++){
 				var item = vvm.textbooks[i];
-				if (item['courseid'].toString() == courseid.toString() &&
-				    item['stageid'].toString() == stageid.toString() &&
-				    item['editionid'].toString() == editionid.toString() &&
-				    item['termid'].toString() == termid.toString()){
+				if (item['courseid'] == courseid &&
+				    item['stageid'] == stageid &&
+				    item['editionid'] == editionid &&
+				    item['termid'] == termid){
 					return item['id'];
 				}
 			}

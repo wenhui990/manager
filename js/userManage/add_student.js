@@ -312,7 +312,9 @@ $(function() {
 
 	//验证身份证号码
 	$('#student_ID').blur(function() {
-		IdentityCodeValid($(this).val().replace(/x/,'X'));
+		if($(this).val().length>0){
+			IdentityCodeValid($(this).val().replace(/x/,'X'));
+		}
 	});
 
 	//点击新建保存     // 编辑保存学生
@@ -365,7 +367,12 @@ $(function() {
 			});
 			return false;
 		}
-		IdentityCodeValid(student_ID.replace(/x/,'X'));
+		
+		var flaId = IdentityCodeValid(student_ID.replace(/x/,'X'));
+		
+		if(!flaId){
+			return false;
+		}
 		if(isphone) {
 			if($('#patriarch1_name').val() == '' && $(this).attr('id') == 'patriarch1_phone') {
 				layer.msg('请输入家长一姓名');

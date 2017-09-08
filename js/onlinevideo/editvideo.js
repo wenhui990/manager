@@ -5,6 +5,9 @@ id = getUrlParams().id;
 console.log(id)
 
 //下拉框知识点树菜单
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
+};
 
 function filter(treeId, parentNode, childNodes) {
 	if (!childNodes) return null;
@@ -269,7 +272,8 @@ var setting2 = {
 		type: 'get'
 	},
 	view: {
-		dblClickExpand: false
+		dblClickExpand: false,
+		fontCss: setFontCss
 	},
 	data: {
 		simpleData: {

@@ -105,19 +105,6 @@
 				getconfig: ''
 			},
 			beforeCreate: function(){
-				var _self = this;
-				$.ajax({
-					type:"get",
-					url: org_url + dataUrl.managers+"?token="+sessionStorage.token,
-					xhrFields: {
-				        withCredentials: true
-				    },
-				    crossDomain: true,
-					async:true,
-					success: function(data){
-						_self.data = data.data;
-					}
-				});
 				$.ajax({
 					type:"get",
 					url:org_url + dataUrl.role + getUrlParams().id +"/manager",
@@ -203,7 +190,10 @@
 			if(!$('.beselect li').hasClass('active')){
 				layer.alert('请在左侧待选用户中至少选择一个用户，才能添加！');
 			}else{
-				var isli = false;
+				$('.selected').append(leftselect);
+				
+				
+				/*var isli = false;
 				if(rightselect.length<1){
 					$('.selected').append(leftselect.clone(true));
 				}else{
@@ -220,14 +210,14 @@
 						$('.selected').append(leftselect.clone(true));
 						$('.selected li').addClass('rightli');
 					}
-				}
+				}*/
 			}
 		});
 		$(document).on('click','.leftli',function(){
 			$('.leftli').removeClass('active');
 			$(this).addClass('active');
 		});
-		$(document).on('dblclick','.leftli',function(){
+		$(document).on('dblclick','.beselect li',function(){
 			$(this).addClass('active');
 			$('#add').click();
 		});
@@ -242,24 +232,27 @@
 //		});
 		//移除
 		$(document).on('click','#remove',function (){
+			var rightselect = $('.selected li.active');
+//			var leftselect = $('.beselect li');
 			if(!$('.selected li').hasClass('active')){
 				layer.alert('请在右侧待选用户中至少选择一个用户，才能移除！');
 			}
-			$('.selected li').each(function (){
+			$('.beselect').append(rightselect);
+			/*$('.selected li').each(function (){
 				var $ele=$(this);
 				if(($ele).hasClass('active'))
 				{
 					$ele.removeClass('active').remove();
 				}
-			});
+			});*/
 		});
 		$(document).on('click','.rightli',function(e){
-			$('.rightli').removeClass('active');
+//			$('.rightli').removeClass('active');
 			$(this).addClass('active').removeClass('leftli');
 		});
-		$(document).on('dblclick','.rightli',function(){
-			$('.rightli').removeClass('active');
-			$(this).addClass('active');
+		$(document).on('dblclick','.selected li',function(){
+//			$('.rightli').removeClass('active');
+//			$(this).addClass('active');
 			$('#remove').click();
 		});
 		//移除全部
@@ -271,7 +264,30 @@
 //		});
 		$(function(){
 			console.log(org_url + dataUrl.manager);
-			
+			$.ajax({
+				type:"get",
+				url: org_url + dataUrl.managers+"?token="+sessionStorage.token,
+				xhrFields: {
+			        withCredentials: true
+			    },
+			    crossDomain: true,
+				async:true,
+				success: function(data){
+					var newdata = data.data;
+					var newconfig = roleConfig.getconfig;
+					$.each(roleConfig.getconfig, function(i,e) {
+						$.each(newdata, function(ii,ee) {
+							console.log(e.managerid+'-----'+ee.id)
+							if (e.managerid==ee.id) {
+								newdata.splice(ii,1);
+								return false;
+							}
+							console.log(newdata)
+						});
+					});
+					roleConfig.data = newdata;
+				}
+			});
 		})
 	</script>
 </html>

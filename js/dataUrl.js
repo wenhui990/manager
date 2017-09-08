@@ -136,7 +136,7 @@ var dataUrl = {
 	"commonlist": "/c/" + apiver + "/commons",  //教师
 	"sectiontree":"/m/" + apiver + "/section/tree", //章节树
 	"section":"/m/" + apiver + "/section", //章节
-	"sectionknowledge":"/m/" + apiver + "/sectionknowledge", //章节
+	"sectionknowledge":"/m/" + apiver + "/sectionknowledge", //知识点
 	"knowledge":"/m/" + apiver + "/knowledge", //章节
 	"sectioneditiontree":"/m/" + apiver +"/section/sectioneditiontree",
 	

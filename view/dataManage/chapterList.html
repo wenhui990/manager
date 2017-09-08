@@ -104,7 +104,7 @@
 								<td><strong>操作</strong></td>
 							</tr>
 							<tr v-for="(item, index) in textbooks">
-								<td>{{(page - 1) * pagesize + index + 1}}</td>
+								<td>{{index + 1}}</td>
 
 								<td v-if="item.editionid!=null">非课标版</td>
 								<td v-else>课标版</td>
@@ -202,7 +202,8 @@
 
 			getEditions(function (resp){
 				vvm.editions.push({"title":"全部", "id":0});
-				for (e of resp['data']){
+				for (var i = 0; i < resp['data'].length; i++){
+					var e = resp['data'][i];
 					if (e['valid'] == 1){
 						vvm.editions.push(e);
 					}
@@ -275,6 +276,7 @@
 					getTbs();
 				},
 				changePagesize:function(ps){
+					vvm.page = 1;
 					vvm.pagesize = ps;
 					getTbs();
 				}

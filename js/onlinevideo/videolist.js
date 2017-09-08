@@ -269,9 +269,7 @@ var setting = {
 	view: {
 		expandSpeed:"",
 		selectedMulti: false,
-		fontCss:{
-			"fontSize": "14px"
-		}
+		fontCss: setFontCss
 	},
 	data: {
 		simpleData: {
@@ -282,6 +280,10 @@ var setting = {
 //		onAsyncSuccess: zTreeOnAsyncSuccess,
 		onClick:OnClick
 	}
+};
+
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
 };
 
 function filter(treeId, parentNode, childNodes) {
@@ -402,6 +404,7 @@ function jsonsData() {
 			jsonNode.code = e.code;
 			jsonObjs.push(jsonNode);
 			jsonObjs.dropInner = false;
+			jsonNode.type = e.type;
 			if(e.children) {
 				jsonsObj(e.children);
 			}

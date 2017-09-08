@@ -33,9 +33,7 @@ var setting = {
 		addHoverDom: addHoverDom,
 		removeHoverDom: removeHoverDom,
 		selectedMulti: false,
-		fontCss: {
-			"fontSize": "14px"
-		}
+		fontCss: setFontCss
 	},
 	edit: {
 		enable: true,
@@ -56,6 +54,11 @@ var setting = {
 		onClick: OnClick
 	}
 };
+
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
+};
+
 
 function filter(treeId, parentNode, childNodes) {
 	if(!childNodes) return null;
@@ -81,10 +84,8 @@ function onRemove(event, treeId, treeNode) {
 	console.log(treeNode);
 	var delurl = '';
 	if(treeNode.type == 1) {
-		//delurl = org_url + dataUrl.chapter.section +'?id='+treeNode.id.substring(1)+'&upper='+treeNode.pId.substring(1)+'&textbookid='+chapterid+'&token='+sessionStorage.token;
 		delurl = org_url + dataUrl.section + '?id=' + treeNode.id.substring(1) + '&upper=' + (treeNode.pId.substring(1)||"") + '&textbookid=' + chapterid + '&token=' + sessionStorage.token;
 	} else if(treeNode.type == 2) {
-		//delurl = org_url + dataUrl.knowledge.sectionKnowledge +'?id='+treeNode.id.substring(1)+'&sectionid='+treeNode.pId.substring(1)+'&knowid='+treeNode.knowid+'&token='+sessionStorage.token;
 		delurl = org_url + dataUrl.sectionknowledge + '?id=' + treeNode.id.substring(1) + '&sectionid=' + treeNode.pId.substring(1) + '&knowid=' + treeNode.knowid + '&token=' + sessionStorage.token;
 	}
 	$.ajax({
@@ -142,7 +143,6 @@ var drapurl = '',
 
 function onDrap(event, treeId, treeNodes, targetNode) {
 	if(treeNodes[0].type == 1) {
-		//drapurl = org_url + dataUrl.chapter.section;
 		drapurl = org_url + dataUrl.section+'?token='+sessionStorage.token;
 		data = {
 			textbookid: chapterid,
@@ -153,7 +153,6 @@ function onDrap(event, treeId, treeNodes, targetNode) {
 			code: treeNodes[0].code,
 		}
 	} else if(treeNodes[0].type == 2) {
-		//drapurl = org_url + dataUrl.knowledge.sectionKnowledge;
 		drapurl = org_url + dataUrl.sectionknowledge+'?token='+sessionStorage.token;;
 		data = {
 			textbookid: chapterid,
@@ -274,26 +273,40 @@ function OnClick(event, treeId, treeNode) {
 	treeNodeObjs.code = treeNode.code;
 	treeNodeObjs.level = treeNode.level;
 	treeNodeObjs.knowid = treeNode.knowid || 0;
+	treeNodeObjs.type = treeNode.type;
 	$('input[name="chapterknowledge"]').each(function() {
-		if(treeNode.type == 1 || treeNode.level < 3) {
-			$('#chapterName2').removeAttr('checked').attr({
-				'disabled': 'true'
-			});
-			$('#chapterName1').attr('checked', 'true');
-			$('#otherNode').show();
-			$('.otherNode_konwled').hide();
+		if (treeNode.id) {
+			if (treeNode.type==1) {
+				$('#chapterName2').removeAttr('checked').attr({'disabled':'true'});
+				$('#chapterName1').attr({'checked':'true'});
+				$('#otherNode').show();
+				$('.otherNode_konwled').hide();
+			}
+			if (treeNode.type==2) {
+				$('#chapterName1').removeAttr('checked').attr({'disabled':'true'});
+				$('#chapterName2').attr({'checked':'true'});
+				$('.otherNode_konwled').show();
+				$('#otherNode').hide();
+			}
+		}else{
+			$('#chapterName2').attr({'disabled':false});
+			$('#chapterName1').attr({'disabled':false});
 		}
-		if(treeNode.type == 2 || treeNode.level == 3) {
-			$('#otherNode').hide();
-			$('.otherNode_konwled').show();
-			$('#chapterName1').removeAttr('checked').attr({
-				'disabled': 'true'
-			});
-			$('#chapterName2').attr('checked', 'true');
-		}
+//		if(treeNode.type == 1) {
+//			$('#chapterName2').removeAttr('checked');
+//			$('#chapterName1').attr('checked', 'true');
+//			$('#otherNode').show();
+//			$('.otherNode_konwled').hide();
+//		}
+//		if(treeNode.type == 2) {
+//			$('#otherNode').hide();
+//			$('.otherNode_konwled').show();
+//			$('#chapterName1').removeAttr('checked');
+//			$('#chapterName2').attr('checked', 'true');
+//		}
 	})
 
-	if(treeNode.level === 3) {
+	if(treeNode.type === 2) {
 		$('#konwledgeCode').val(treeNode.code);
 		$('#konwledgeName').val(treeNode.name.split(' ')[1]);
 		$('#'+treeNode.tId).find('span.add,span.remove').hide();
@@ -347,7 +360,8 @@ var setting2 = {
 		type: 'get'
 	},
 	view: {
-		dblClickExpand: false
+		dblClickExpand: false,
+		fontCss: setFontCss
 	},
 	data: {
 		simpleData: {
@@ -357,6 +371,9 @@ var setting2 = {
 	callback: {
 		onClick: onClick1,
 	}
+};
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
 };
 
 function onClick1(e, treeId, treeNode) {
@@ -420,7 +437,7 @@ $('.save_knonwledge').click(function() {
 	var url = '',
 		types = '',
 		datas = {};
-	if(treeNodeObjs.level >= 3) {
+	if(treeNodeObjs.type == 2||$('input[name="chapterknowledge"]:checked').val()=='2') {
 		if($('#konwledgeCode').val() == '') {
 			layer.alert('知识点编号不能为空！');
 			$('#konwledgeCode').focus();
@@ -448,7 +465,7 @@ $('.save_knonwledge').click(function() {
 		return false;
 	}
 	if(treeNodeObjs.id) {
-		//url = org_url + dataUrl.chapter.section;
+//		url = org_url + dataUrl.section;
 		url = org_url + dataUrl.editkonwledname;
 		types = 'put';
 		datas = {
@@ -458,9 +475,10 @@ $('.save_knonwledge').click(function() {
 			sn: treeNodeObjs.sn,
 			upper: treeNodeObjs.upper.substring(1) || 0,
 			code: $('#chapterCode').val(),
-			token: sessionStorage.token
+			token: sessionStorage.token,
+			type:$('input[name="chapterknowledge"]:checked').val()
 		}
-		if(treeNodeObjs.knowid > 0 || treeNodeObjs.level == 3) {
+		if(treeNodeObjs.knowid > 0 || treeNodeObjs.type == 2) {
 			//url = org_url + dataUrl.knowledge.sectionKnowledge
 			url = org_url + dataUrl.sectionknowledge;
 			datas.knowid = treeNodeObjs.knowid || 0;
@@ -481,9 +499,10 @@ $('.save_knonwledge').click(function() {
 			sn: treeNodeObjs.sn,
 			upper: treeNodeObjs.upper.substring(1) || 0,
 			code: $('#chapterCode').val(),
-			token: sessionStorage.token
+			token: sessionStorage.token,
+			type:$('input[name="chapterknowledge"]:checked').val()
 		}
-		if(treeNodeObjs.knowid > 0 || treeNodeObjs.level == 3) {
+		if($('input[name="chapterknowledge"]:checked').val()=='2') {
 			//url = org_url + dataUrl.knowledge.sectionKnowledge
 			url = org_url + dataUrl.sectionknowledge;
 			datas.knowid = treeNodeObjs.knowid || 0;

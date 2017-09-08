@@ -31,9 +31,7 @@ var setting = {
 		addHoverDom: addHoverDom,
 		removeHoverDom: removeHoverDom,
 		selectedMulti: false,
-		fontCss:{
-			"fontSize": "14px"
-		}
+		fontCss:setFontCss
 	},
 	edit: {
 		enable: true,
@@ -54,6 +52,11 @@ var setting = {
 		onClick:OnClick
 	}
 };
+
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
+};
+
 
 function filter(treeId, parentNode, childNodes) {
 	if (!childNodes) return null;
@@ -236,18 +239,24 @@ function OnClick(event, treeId, treeNode) {
 	treeNodeObjs.title = treeNode.name.split(' ')[1];
 	treeNodeObjs.code = treeNode.code;
 	treeNodeObjs.level = treeNode.level;
+	treeNodeObjs.type = treeNode.type;
 	$('input[name="chapterknowledge"]').each(function(){
-		if (treeNode.type==1||treeNode.level<3) {
-			$('#chapterName2').removeAttr('checked').attr({'disabled':'true'});
-			$('#chapterName1').attr({'checked':'true'});
-			$('#otherNode').show();
-			$('#knowledge').hide();
-		}
-		if (treeNode.type==2||treeNode.level==3) {
-			$('#chapterName1').removeAttr('checked').attr({'disabled':'true'});
-			$('#chapterName2').attr({'checked':'true'});
-			$('#knowledge').show();
-			$('#otherNode').hide();
+		if (treeNode.id) {
+			if (treeNode.type==1) {
+				$('#chapterName2').removeAttr('checked').attr({'disabled':'true'});
+				$('#chapterName1').attr({'checked':'true'});
+				$('#otherNode').show();
+				$('#knowledge').hide();
+			}
+			if (treeNode.type==2) {
+				$('#chapterName1').removeAttr('checked').attr({'disabled':'true'});
+				$('#chapterName2').attr({'checked':'true'});
+				$('#knowledge').show();
+				$('#otherNode').hide();
+			}
+		}else{
+			$('#chapterName2').attr({'disabled':false});
+			$('#chapterName1').attr({'disabled':false});
 		}
 	})
 	if(treeNode.id){
@@ -271,7 +280,8 @@ var setting2 = {
 		type: 'get'
 	},
 	view: {
-		dblClickExpand: false
+		dblClickExpand: false,
+		fontCss:setFontCss
 	},
 	data: {
 		simpleData: {
@@ -282,6 +292,11 @@ var setting2 = {
 		onClick: onClick1,
 	}
 };
+
+function setFontCss(treeId, treeNode) {
+	return treeNode.type == 2 ? {color:"#068fe2"} : {};
+};
+
 
 function onClick1(e, treeId, treeNode) {
 	console.log(treeNode)
@@ -333,7 +348,7 @@ $(document).ready(function(){
 $('.save_chapter').click(function(){
 	console.log(treeNodeObjs)
 	var url = '',types='',data={};
-	if(treeNodeObjs.level==3){
+	if(treeNodeObjs.type==2){
 		if ($('#knowledgeName').val()=='') {
 			layer.alert('知识点名称不能为空！');
 			$('#knowledgeName').focus();
@@ -355,9 +370,10 @@ $('.save_chapter').click(function(){
 			sn: treeNodeObjs.sn,
 			upper: treeNodeObjs.upper.substring(1) || 0,
 			code: $('#chapterCode').val(),
-			token: sessionStorage.token
+			token: sessionStorage.token,
+			type: treeNodeObjs.type
 		}
-		if(treeNodeObjs.knowid>0||treeNodeObjs.level==3){
+		if(treeNodeObjs.knowid>0||treeNodeObjs.type==2){
 			// url = org_url + dataUrl.knowledge.sectionKnowledge
 			url = org_url + dataUrl.sectionknowledge;
 			data.knowid = treeNodeObjs.knowid;
@@ -377,9 +393,10 @@ $('.save_chapter').click(function(){
 			sn: treeNodeObjs.sn,
 			upper: treeNodeObjs.upper.substring(1) || 0,
 			code: $('#chapterCode').val(),
-			token: sessionStorage.token
+			token: sessionStorage.token,
+			type: $('input[name="chapterknowledge"]:checked').val()
 		}
-		if(treeNodeObjs.knowid>0||treeNodeObjs.level==3){
+		if(treeNodeObjs.knowid>0||data.type=='2'){
 			// url = org_url + dataUrl.knowledge.sectionKnowledge
 			url = org_url + dataUrl.sectionknowledge;
 			data.knowid = treeNodeObjs.knowid;

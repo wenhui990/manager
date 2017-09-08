@@ -216,12 +216,12 @@
 						teacher['id'] = tc['id'];
 						teacher['schoolid'] = tc['schoolid'];
 						teacher['clazzlis'] = []
-						for (item of tc['clazzlis']){
+						for (item in tc['clazzlis']){
 							var o = {};
 							o['gradeid'] = item['gradeid'];
 							o['clazzid'] = item['clazzid'];
 							o['courseid'] = item['courseid'];
-							if ("adviserid" in item){
+							if (item.adviserid){
 								o['adviserid'] = item['adviserid'];
 							}
 							teacher['clazzlis'].push(o);

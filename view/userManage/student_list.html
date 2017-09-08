@@ -56,6 +56,9 @@
 			[v-cloak] {
 				display: none;
 			}
+			#studentMain th{
+				border-top: 1px solid #ddd;
+			}
 		</style>
 	</head>
 
@@ -129,17 +132,19 @@
 					<div class="list_btm">
 						<div class="table-responsive">
 							<table class="table table-hover addlist" style="text-align: center;">
-								<tr>
-									<th><input type="checkbox" id="checkAll" name="checkAll" @click="checkAll($event)" v-model="checkeds" /></th>
-									<th><strong>序号</strong></th>
-									<th><strong>学校</strong></th>
-									<th><strong>年级</strong></th>
-									<th><strong>班级</strong></th>
-									<th><strong>学生姓名</strong></th>
-									<th><strong>身份证号</strong></th>
-									<th><strong>用户状态</strong></th>
-									<th><strong>操作</strong></th>
-								</tr>
+								<thead>
+									<tr>
+										<th><input type="checkbox" id="checkAll" name="checkAll" @click="checkAll($event)" v-model="checkeds" /></th>
+										<th><strong>序号</strong></th>
+										<th><strong>学校</strong></th>
+										<th><strong>年级</strong></th>
+										<th><strong>班级</strong></th>
+										<th><strong>学生姓名</strong></th>
+										<th><strong>身份证号</strong></th>
+										<th><strong>用户状态</strong></th>
+										<th><strong>操作</strong></th>
+									</tr>
+								</thead>
 								<tbody>
 									<tr v-for="(student,index) in studentLists" :class="{warning:iswarning}">
 										<td><input type="checkbox" v-bind:value="student.id" class="checkItem" :checked="allchecked" @click="checkOne($event)" /></td>
